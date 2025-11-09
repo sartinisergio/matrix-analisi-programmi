@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Fase C - Verifica Funzioni</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        h1 { color: #333; }
+        h2 { color: #666; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Fase C Step 1 - Verifica Funzionalità</h1>
+    
+    <div class="test success">
+        <h2>✅ Test 1: Database INDICI_MANUALI</h2>
+        <p><strong>Obiettivo:</strong> Verificare che il database indici sia caricato correttamente</p>
+        <p id="test1-result">In attesa...</p>
+    </div>
+    
+    <div class="test success">
+        <h2>✅ Test 2: Funzioni Fase C Definite</h2>
+        <p><strong>Obiettivo:</strong> Verificare che tutte le funzioni Fase C siano definite</p>
+        <p id="test2-result">In attesa...</p>
+    </div>
+    
+    <div class="test success">
+        <h2>✅ Test 3: Variabile postItGenerati</h2>
+        <p><strong>Obiettivo:</strong> Verificare che la variabile globale postItGenerati sia inizializzata</p>
+        <p id="test3-result">In attesa...</p>
+    </div>
+    
+    <div class="test success">
+        <h2>✅ Test 4: View Colloquio</h2>
+        <p><strong>Obiettivo:</strong> Verificare che la view colloquio esista nel DOM</p>
+        <p id="test4-result">In attesa...</p>
+    </div>
+    
+    <h2>📊 Riepilogo</h2>
+    <div id="summary" style="padding: 15px; background: #e7f3ff; border-radius: 5px; margin-top: 20px;">
+        <p><strong>Test completati:</strong> <span id="completed">0</span>/4</p>
+        <p><strong>Test passati:</strong> <span id="passed">0</span>/4</p>
+        <p><strong>Test falliti:</strong> <span id="failed">0</span>/4</p>
+    </div>
+    
+    <script src="index.html"></script>
+    <script>
+        let completed = 0;
+        let passed = 0;
+        let failed = 0;
+        
+        function updateSummary() {
+            document.getElementById('completed').textContent = completed;
+            document.getElementById('passed').textContent = passed;
+            document.getElementById('failed').textContent = failed;
+        }
+        
+        function runTest(testId, testName, testFn) {
+            try {
+                const result = testFn();
+                if (result.success) {
+                    document.getElementById(testId + '-result').innerHTML = `<strong style="color: green;">✅ PASSATO</strong><br>${result.message}`;
+                    passed++;
+                } else {
+                    document.getElementById(testId + '-result').innerHTML = `<strong style="color: red;">❌ FALLITO</strong><br>${result.message}`;
+                    document.querySelector(`#${testId}-result`).parentElement.classList.remove('success');
+                    document.querySelector(`#${testId}-result`).parentElement.classList.add('error');
+                    failed++;
+                }
+            } catch (error) {
+                document.getElementById(testId + '-result').innerHTML = `<strong style="color: red;">❌ ERRORE</strong><br>${error.message}`;
+                document.querySelector(`#${testId}-result`).parentElement.classList.remove('success');
+                document.querySelector(`#${testId}-result`).parentElement.classList.add('error');
+                failed++;
+            }
+            completed++;
+            updateSummary();
+        }
+        
+        // Test 1: Database INDICI_MANUALI
+        runTest('test1', 'Database INDICI_MANUALI', () => {
+            if (typeof INDICI_MANUALI === 'undefined') {
+                return { success: false, message: 'INDICI_MANUALI non definito' };
+            }
+            if (!INDICI_MANUALI.manuali || !Array.isArray(INDICI_MANUALI.manuali)) {
+                return { success: false, message: 'INDICI_MANUALI.manuali non è un array' };
+            }
+            const count = INDICI_MANUALI.manuali.length;
+            const hart = INDICI_MANUALI.manuali.find(m => m.id === 'hart');
+            const mcmurryFond = INDICI_MANUALI.manuali.find(m => m.id === 'mcmurry_fondamenti');
+            const mcmurryBio = INDICI_MANUALI.manuali.find(m => m.id === 'mcmurry_biologico');
+            
+            if (!hart || !mcmurryFond || !mcmurryBio) {
+                return { success: false, message: 'Mancano alcuni manuali nel database' };
+            }
+            
+            return { 
+                success: true, 
+                message: `Database caricato: ${count} manuali<br>` +
+                        `- Hart: ${hart.capitoli.length} capitoli<br>` +
+                        `- McMurry Fondamenti: ${mcmurryFond.capitoli.length} capitoli<br>` +
+                        `- McMurry Biologico: ${mcmurryBio.capitoli.length} capitoli`
+            };
+        });
+        
+        // Test 2: Funzioni Fase C
+        runTest('test2', 'Funzioni Fase C', () => {
+            const funzioni = [
+                'preparaColloquio',
+                'mostraInterfacciaColloquio',
+                'generaPostIt',
+                'generaSingoloPostIt',
+                'mostraPostItGenerati',
+                'esportaPostItPDF'
+            ];
+            
+            const mancanti = funzioni.filter(fn => typeof window[fn] !== 'function');
+            
+            if (mancanti.length > 0) {
+                return { 
+                    success: false, 
+                    message: `Funzioni mancanti: ${mancanti.join(', ')}` 
+                };
+            }
+            
+            return { 
+                success: true, 
+                message: `Tutte le ${funzioni.length} funzioni Fase C sono definite:<br>` +
+                        funzioni.map(fn => `- ${fn}()`).join('<br>')
+            };
+        });
+        
+        // Test 3: Variabile postItGenerati
+        runTest('test3', 'Variabile postItGenerati', () => {
+            if (typeof postItGenerati === 'undefined') {
+                return { success: false, message: 'postItGenerati non definita' };
+            }
+            if (!Array.isArray(postItGenerati)) {
+                return { success: false, message: 'postItGenerati non è un array' };
+            }
+            return { 
+                success: true, 
+                message: `postItGenerati inizializzata correttamente (array vuoto: ${postItGenerati.length} elementi)` 
+            };
+        });
+        
+        // Test 4: View Colloquio
+        runTest('test4', 'View Colloquio', () => {
+            const viewColloquio = document.getElementById('viewColloquio');
+            if (!viewColloquio) {
+                return { success: false, message: 'viewColloquio non trovata nel DOM' };
+            }
+            return { 
+                success: true, 
+                message: 'viewColloquio presente nel DOM e pronta per l\'uso' 
+            };
+        });
+    </script>
+</body>
+</html>
