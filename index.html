@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Programmi Chimica Organica - Zanichelli v6.0 Step 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; }
+        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #4F46E5; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <svg class="h-8 w-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h1 class="text-2xl font-bold text-gray-900">Analisi Programmi v6.0</h1>
+                            <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">FASE C - STEP 1</span>
+                            <span id="apiKeyBadge" class="hidden px-2 py-1 text-xs font-medium rounded-full"></span>
+                        </div>
+                        <p class="text-sm text-gray-500">Chimica Organica - Zanichelli (Raccomandazioni Deterministiche)</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="showView('upload')" id="btnUpload" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        Nuova Analisi
+                    </button>
+                    <button onclick="showView('storico')" id="btnStorico" class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                        Storico
+                    </button>
+                    <button onclick="showView('settings')" id="btnSettings" class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center space-x-1">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Impostazioni</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Miglioramento -->
+    <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start space-x-3">
+            <svg class="h-6 w-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+                <h3 class="text-sm font-medium text-green-900">✅ Versione v6.0 Step 1 - Fase C: Prepara Colloquio</h3>
+                <p class="text-sm text-green-800 mt-1">Nuova funzionalità <strong>📝 Prepara Colloquio</strong>! Dopo l'analisi, genera automaticamente <strong>post-it commerciali</strong> basati sui gap identificati. Seleziona i manuali Zanichelli (Hart, McMurry Fondamenti, McMurry Biologico) ed esporta i post-it in PDF per il colloquio con il docente. I post-it includono <strong>capitoli specifici, pagine esatte e argomenti commerciali concreti</strong>!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Informativo Differenze Base/Avanzata -->
+    <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start space-x-3">
+            <svg class="h-6 w-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+                <h3 class="text-sm font-medium text-blue-900">💡 Differenze tra Analisi Base e Avanzata</h3>
+                <p class="text-sm text-blue-800 mt-1">
+                    Analisi Base e Avanzata dello stesso programma possono raccomandare manuali Zanichelli <strong>diversi</strong>. Questo non è un errore, ma riflette due approcci complementari:
+                </p>
+                <ul class="text-sm text-blue-800 mt-2 space-y-1 ml-4">
+                    <li><strong>⚡ Analisi Base:</strong> Privilegia manuali <strong>SINTETICI, PRATICI ed ECONOMICI</strong> (es. Hart) - ideali per corsi con meno CFU o studenti che cercano chiarezza e accessibilità.</li>
+                    <li><strong>🔬 Analisi Avanzata:</strong> Privilegia manuali <strong>COMPLETI, APPROFONDITI e ORIENTATI</strong> (es. McMurry Biologico) - ideali per corsi con più CFU o studenti che necessitano di preparazione avanzata per corsi successivi.</li>
+                </ul>
+                <p class="text-sm text-blue-800 mt-2">
+                    <strong>Entrambe le raccomandazioni sono valide:</strong> scegli in base al profilo del docente e agli obiettivi del corso. In caso di dubbio, l'analisi Avanzata fornisce argomentazioni commerciali più dettagliate per supportare la conversazione.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Benvenuto (solo per nuovi utenti) -->
+    <div id="welcomeBanner" class="hidden max-w-7xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start space-x-3">
+            <svg class="h-6 w-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+                <h3 class="text-sm font-medium text-blue-900">Benvenuto! Configurazione necessaria</h3>
+                <p class="text-sm text-blue-800 mt-1">Prima di iniziare, devi configurare la tua chiave API OpenAI. Clicca su <strong>Impostazioni</strong> per procedere.</p>
+                <button onclick="showView('settings'); document.getElementById('welcomeBanner').classList.add('hidden');" class="mt-2 text-sm font-medium text-blue-600 hover:text-blue-700">
+                    Vai alle Impostazioni →
+                </button>
+            </div>
+            <button onclick="document.getElementById('welcomeBanner').classList.add('hidden')" class="text-blue-400 hover:text-blue-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sezione FAQ -->
+    <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
+        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+            <button onclick="toggleFAQ()" class="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition">
+                <div class="flex items-center space-x-2">
+                    <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3 class="text-sm font-medium text-gray-900">❓ Perché analisi Base e Avanzata dello stesso programma raccomandano manuali Zanichelli diversi?</h3>
+                </div>
+                <svg id="faqChevron" class="h-5 w-5 text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div id="faqContent" class="hidden px-4 pb-4 text-sm text-gray-700 space-y-4">
+                <p class="font-medium text-gray-900">
+                    Questo comportamento è <strong>intenzionale</strong> e riflette due filosofie di raccomandazione complementari:
+                </p>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-3">
+                    <h4 class="font-semibold text-blue-900 mb-2">⚡ ANALISI BASE - Approccio "Pratico-Sintetico"</h4>
+                    <ul class="space-y-1 ml-4 list-disc text-blue-800">
+                        <li>Privilegia manuali più <strong>CONCISI</strong> (es. Hart - 520 pag)</li>
+                        <li>Focus su <strong>CHIAREZZA e ACCESSIBILITÀ</strong></li>
+                        <li><strong>Ideale per:</strong> Corsi base (4-6 CFU), studenti con difficoltà in chimica, programmi sintetici</li>
+                        <li><strong>Prezzo:</strong> Generalmente più economico (€60-70)</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-purple-50 border-l-4 border-purple-400 p-3">
+                    <h4 class="font-semibold text-purple-900 mb-2">🔬 ANALISI AVANZATA - Approccio "Completo-Approfondito"</h4>
+                    <ul class="space-y-1 ml-4 list-disc text-purple-800">
+                        <li>Privilegia manuali più <strong>DETTAGLIATI</strong> (es. McMurry Biologico - 896 pag)</li>
+                        <li>Focus su <strong>COMPLETEZZA e ORIENTAMENTO SPECIFICO</strong></li>
+                        <li><strong>Ideale per:</strong> Corsi avanzati (6-9 CFU), preparazione a corsi successivi (Biochimica), programmi con enfasi specifica (biomolecole)</li>
+                        <li><strong>Prezzo:</strong> Generalmente più alto (€90-100)</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-yellow-50 border border-yellow-200 rounded p-3">
+                    <h4 class="font-semibold text-yellow-900 mb-2">🎯 QUALE USARE?</h4>
+                    <p class="text-yellow-800 mb-2">Dipende dal profilo del docente e dagli obiettivi del corso:</p>
+                    <ul class="space-y-1 ml-4 list-disc text-yellow-800">
+                        <li><strong>Docente cerca sintesi/praticità</strong> → Usa raccomandazione Base</li>
+                        <li><strong>Docente cerca completezza/approfondimento</strong> → Usa raccomandazione Avanzata</li>
+                        <li><strong>Programma breve/essenziale</strong> → Considera Hart anche se Avanzata raccomanda McMurry</li>
+                        <li><strong>In dubbio</strong> → Presenta entrambe le opzioni e lascia scegliere</li>
+                    </ul>
+                    <p class="text-yellow-800 mt-2 text-sm italic">
+                        Nota: L'analisi Avanzata valuta anche <strong>adeguatezza</strong> (non solo completezza) e <strong>rapporto qualità/prezzo</strong>, quindi Hart ha più possibilità di essere raccomandato per programmi brevi o budget limitati.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 border border-gray-200 rounded p-3">
+                    <p class="text-gray-700">
+                        <strong>📌 NOTA:</strong> I punteggi di compatibilità (es. 85/100 vs 84/100) sono spesso molto vicini, quindi la scelta tra i manuali è più una questione di <strong>FILOSOFIA DIDATTICA</strong> che di superiorità assoluta.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        
+        <!-- Settings View -->
+        <div id="viewSettings" class="hidden">
+            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-4">Configurazione AI Provider</h2>
+                
+                <div class="space-y-6">
+                    <!-- Provider Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Provider AI</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="selectProvider('openai')" id="btnProviderOpenAI" class="px-4 py-3 border-2 border-indigo-600 bg-indigo-50 text-indigo-700 rounded-lg font-medium transition hover:bg-indigo-100">
+                                OpenAI
+                            </button>
+                            <button onclick="selectProvider('perplexity')" id="btnProviderPerplexity" class="px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50">
+                                Perplexity
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- OpenAI Configuration -->
+                    <div id="configOpenAI" class="space-y-4">
+                        <div class="border-t pt-4">
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">Configurazione OpenAI</h3>
+                            
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chiave API OpenAI</label>
+                                    <input type="password" id="apiKeyOpenAI" placeholder="sk-proj-xxxxxxxxxxxxx" 
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                    <p class="text-xs text-gray-500 mt-1">La chiave viene salvata solo nel tuo browser. <a href="https://platform.openai.com/api-keys" target="_blank" class="text-indigo-600 hover:underline">Ottieni chiave</a></p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Modello OpenAI</label>
+                                    <select id="modelOpenAI" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="gpt-4.1-mini">gpt-4.1-mini (Economico, veloce)</option>
+                                        <option value="gpt-4o">gpt-4o (Bilanciato)</option>
+                                        <option value="gpt-4-turbo">gpt-4-turbo (Potente)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Perplexity Configuration -->
+                    <div id="configPerplexity" class="space-y-4 hidden">
+                        <div class="border-t pt-4">
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">Configurazione Perplexity</h3>
+                            
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chiave API Perplexity</label>
+                                    <input type="password" id="apiKeyPerplexity" placeholder="pplx-xxxxxxxxxxxxx" 
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                    <p class="text-xs text-gray-500 mt-1">La chiave viene salvata solo nel tuo browser. <a href="https://www.perplexity.ai/settings/api" target="_blank" class="text-indigo-600 hover:underline">Ottieni chiave</a></p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Modello Perplexity</label>
+                                    <select id="modelPerplexity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="llama-3.1-sonar-large-128k-online">Sonar (Economico, veloce)</option>
+                                        <option value="llama-3.1-sonar-huge-128k-online">Sonar Pro (Potente, costoso)</option>
+                                        <option value="llama-3.1-sonar-large-128k-reasoning">Sonar Reasoning (Con ragionamento)</option>
+                                    </select>
+                                    <p class="text-xs text-gray-500 mt-1">Sonar è raccomandato per il miglior rapporto qualità/prezzo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Button -->
+                    <button onclick="saveConfiguration()" class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">
+                        Salva Configurazione
+                    </button>
+                    
+                    <!-- Status Message -->
+                    <div id="configStatus" class="hidden p-3 rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Upload View -->
+        <div id="viewUpload" class="hidden">
+            <div class="max-w-4xl mx-auto space-y-6">
+                
+                <!-- Step 1: Informazioni Contesto -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold mb-2">1. Informazioni sul Contesto</h2>
+                    <p class="text-sm text-gray-600 mb-6">Fornisci informazioni sul contesto didattico e il manuale adottato</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contesto Didattico *</label>
+                            <select id="contestoSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Seleziona contesto...</option>
+                                <option value="L-2">L-2: Biotecnologie</option>
+                                <option value="L-13">L-13: Scienze biologiche</option>
+                                <option value="L-25">L-25: Agraria</option>
+                                <option value="L-29">L-29: Scienze farmaceutiche</option>
+                                <option value="L-32">L-32: Scienze naturali/ambientali</option>
+                                <option value="L-38">L-38: Scienze zootecniche</option>
+                                <option value="L-8/9">L-8/9: Ingegneria</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Manuale Principale *</label>
+                            <select id="manualeSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Seleziona manuale principale...</option>
+                                <optgroup label="Manuali Zanichelli">
+                                    <option value="McMurryBiologico">McMurry - Chimica Organica: Un approccio biologico (Zanichelli)</option>
+                                    <option value="Hart">Hart - Chimica Organica (Zanichelli)</option>
+                                    <option value="McMurryFondamenti">McMurry - Fondamenti di Chimica Organica (Zanichelli)</option>
+                                </optgroup>
+                                <optgroup label="Altri Editori">
+                                    <option value="Botta">Botta (EdiErmes)</option>
+                                    <option value="Brown">Brown (Edises)</option>
+                                    <option value="Bruice">Bruice (Edises)</option>
+                                    <option value="GorzynskiSmith">Gorzynski Smith (McGraw-Hill)</option>
+                                    <option value="Wade">Wade (Piccin)</option>
+                                </optgroup>
+                                <option value="Altro">Altro manuale (specificare sotto)</option>
+                            </select>
+                            <p class="text-xs text-gray-500 mt-1">Il manuale principale sarà analizzato in dettaglio</p>
+                        </div>
+                        
+                        <!-- Campo testo per "Altro manuale" -->
+                        <div id="altroManualeField" style="display: none;">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Specifica il manuale adottato</label>
+                            <input type="text" id="altroManualeNome" placeholder="Es: Solomons, Vollhardt, Klein..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <p class="text-xs text-gray-500 mt-1">L'analisi si concentrerà sulle raccomandazioni Zanichelli basate sul programma</p>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Manuali Alternativi (opzionale)</label>
+                            <p class="text-xs text-gray-500 mb-2">Seleziona eventuali manuali alternativi per un confronto rapido</p>
+                            <div class="space-y-2 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                                <!-- Manuali Zanichelli -->
+                                <div class="border-b border-gray-300 pb-2 mb-2">
+                                    <p class="text-xs font-semibold text-gray-600 mb-2">Zanichelli</p>
+                                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                        <input type="checkbox" id="altMcMurryBiologico" value="McMurryBiologico" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                        <span class="text-sm text-gray-700">McMurry - Approccio Biologico</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                        <input type="checkbox" id="altHart" value="Hart" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                        <span class="text-sm text-gray-700">Hart - Chimica Organica</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                        <input type="checkbox" id="altMcMurryFondamenti" value="McMurryFondamenti" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                        <span class="text-sm text-gray-700">McMurry - Fondamenti</span>
+                                    </label>
+                                </div>
+                                <!-- Altri Editori -->
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 mb-2">Altri Editori</p>
+                                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                        <input type="checkbox" id="altBotta" value="Botta" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                        <span class="text-sm text-gray-700">Botta (EdiErmes)</span>
+                                    </label>
+                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                    <input type="checkbox" id="altBrown" value="Brown" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-700">Brown (Edises)</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                    <input type="checkbox" id="altBruice" value="Bruice" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-700">Bruice (Edises)</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                    <input type="checkbox" id="altGorzynski" value="GorzynskiSmith" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-700">Gorzynski Smith (McGraw-Hill)</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                    <input type="checkbox" id="altWade" value="Wade" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-700">Wade (Piccin)</span>
+                                </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                                        <input type="checkbox" id="altAltro" value="Altro" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                        <span class="text-sm text-gray-700">Altro/Non specificato</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo di Analisi *</label>
+                            <p class="text-xs text-gray-500 mb-3">Scegli il livello di dettaglio dell'analisi</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <label class="flex items-start space-x-3 p-4 border-2 border-indigo-600 bg-indigo-50 rounded-lg cursor-pointer hover:bg-indigo-100 transition">
+                                    <input type="radio" name="tipoAnalisi" value="base" checked class="mt-1 w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-indigo-900">⚡ Base</p>
+                                        <p class="text-xs text-indigo-700 mt-1">Analisi veloce ed essenziale. Ideale per una prima valutazione rapida del programma.</p>
+                                    </div>
+                                </label>
+                                <label class="flex items-start space-x-3 p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 hover:bg-indigo-50 transition">
+                                    <input type="radio" name="tipoAnalisi" value="avanzata" class="mt-1 w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-gray-900">🔬 Avanzata</p>
+                                        <p class="text-xs text-gray-700 mt-1">Analisi dettagliata e approfondita con argomentazioni commerciali complete.</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">CFU (Crediti)</label>
+                            <input type="number" id="cfuInput" placeholder="es. 9" min="1" max="20"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Ore Totali</label>
+                            <input type="number" id="oreInput" placeholder="es. 72" min="1"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Carica Programma -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold mb-2">2. Carica Programma Universitario</h2>
+                    <p class="text-sm text-gray-600 mb-6">Carica un file PDF o incolla il testo del programma</p>
+                    
+                    <div class="space-y-6">
+                        <!-- Upload File -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Carica File (PDF o TXT)</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-indigo-500 transition cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                                <input type="file" id="fileInput" accept=".pdf,.txt" class="hidden" onchange="handleFileSelect(event)">
+                                <svg class="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                <p id="fileNameDisplay" class="text-sm text-gray-600">Clicca per selezionare un file</p>
+                                <p class="text-xs text-gray-500 mt-2">PDF o TXT (max 16 MB)</p>
+                            </div>
+                        </div>
+
+                        <!-- Oppure -->
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-300"></div></div>
+                            <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-gray-500">oppure</span></div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Incolla il Testo</label>
+                            <textarea id="testoInput" placeholder="Incolla qui il testo del programma universitario..." 
+                                      class="w-full h-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"></textarea>
+                        </div>
+
+                        <!-- Error -->
+                        <div id="errorMessage" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
+                            <svg class="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p id="errorText" class="text-sm text-red-800"></p>
+                        </div>
+
+                        <!-- Button -->
+                        <button onclick="avviaAnalisi()" id="btnAnalizza" class="w-full px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-lg font-medium flex items-center justify-center">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Avvia Analisi Completa
+                        </button>
+                        <div id="loadingMessage" class="hidden text-center space-y-2">
+                            <div class="spinner mx-auto"></div>
+                            <p class="text-sm text-gray-600" id="loadingText">Analisi in corso...</p>
+                            <p class="text-xs text-gray-500">Questo può richiedere 30-60 secondi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risultati View -->
+        <div id="viewRisultati" class="hidden">
+            <!-- Contenuto dinamico generato da JavaScript -->
+        </div>
+
+        <!-- Storico View -->
+        <div id="viewStorico" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-4">Storico Analisi</h2>
+                <div id="storicoContent" class="space-y-3">
+                    <!-- Contenuto dinamico -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Colloquio View (Fase C) -->
+        <div id="viewColloquio" class="hidden">
+            <!-- Contenuto dinamico generato da JavaScript -->
+        </div>
+
+    </main>
+
+    <script>
+        // Configurazione PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // Database manuali (da report forniti)
+        const MANUALI_DB = {
+            'Botta': {
+                editore: 'EdiErmes',
+                caratteristiche: ['Approccio italiano', 'Focus biomolecole', 'Esempi biologici'],
+                punti_forza: ['Linguaggio accessibile', 'Applicazioni biologiche', 'Esercizi graduati'],
+                target: ['L-13', 'L-2']
+            },
+            'Brown': {
+                editore: 'Edises',
+                caratteristiche: ['Approccio problem-solving', 'Molti esercizi', 'Visione moderna'],
+                punti_forza: ['Chiarezza espositiva', 'Ricchezza esercizi', 'Aggiornato'],
+                target: ['L-13', 'L-29', 'L-32']
+            },
+            'Bruice': {
+                editore: 'Edises',
+                caratteristiche: ['Approccio biologico', 'Meccanismi dettagliati', 'Applicazioni mediche'],
+                punti_forza: ['Profondità meccanismi', 'Collegamenti biologia', 'Casi clinici'],
+                target: ['L-29', 'L-13']
+            },
+            'GorzynskiSmith': {
+                editore: 'McGraw-Hill',
+                caratteristiche: ['Approccio visuale', 'Molte illustrazioni', 'Sintesi organica'],
+                punti_forza: ['Chiarezza visiva', 'Sintesi organica', 'Meccanismi'],
+                target: ['L-13', 'L-29']
+            },
+            'Wade': {
+                editore: 'Piccin',
+                caratteristiche: ['Approccio sistematico', 'Meccanismi dettagliati', 'Esercizi'],
+                punti_forza: ['Sistematicità', 'Rigore', 'Completezza'],
+                target: ['L-13', 'L-29']
+            },
+            'McMurryBiologico': {
+                editore: 'Zanichelli',
+                caratteristiche: ['Orientamento biologico', 'Collegamenti biochimica', 'Biomolecole approfondite'],
+                punti_forza: ['Integrazione biologica continua', 'Preparazione ottimale per Biochimica', 'Meccanismi dettagliati'],
+                target: ['L-13', 'L-2', 'L-29']
+            },
+            'Hart': {
+                editore: 'Zanichelli',
+                caratteristiche: ['Sintesi e chiarezza', 'Biomolecole presenti', 'Esercizi graduati'],
+                punti_forza: ['Concisione', 'Linguaggio accessibile', 'Buona copertura argomenti base'],
+                target: ['L-13', 'L-25', 'L-32']
+            },
+            'McMurryFondamenti': {
+                editore: 'Zanichelli',
+                caratteristiche: ['Versione compatta', 'Meccanismi approfonditi', 'Stereochimica dettagliata'],
+                punti_forza: ['Rigore scientifico', 'Concisione', 'Linguaggio preciso'],
+                target: ['L-27', 'Ingegneria']
+            }
+        };
+
+        // Database indici manuali Zanichelli (per Fase C - Post-it)
+        const INDICI_MANUALI = {"versione":"2.0","data_aggiornamento":"2025-11-09","manuali":[{"id":"hart","nome":"Hart - Fondamenti di chimica organica","editore":"Zanichelli","pagine_totali":520,"capitoli":[{"numero":1,"titolo":"Il legame chimico e l'isomeria","pagina_inizio":1},{"numero":2,"titolo":"Gli alcani e i cicloalcani","pagina_inizio":37},{"numero":3,"titolo":"Gli alcheni e gli alchini","pagina_inizio":68},{"numero":4,"titolo":"I composti aromatici","pagina_inizio":113},{"numero":5,"titolo":"La stereoisomeria","pagina_inizio":140},{"numero":6,"titolo":"Composti organici alogenati","pagina_inizio":170},{"numero":7,"titolo":"Gli alcoli, i fenoli e i tioli","pagina_inizio":193},{"numero":8,"titolo":"Gli eteri e gli epossidi","pagina_inizio":220},{"numero":9,"titolo":"Le aldeidi e i chetoni","pagina_inizio":238},{"numero":10,"titolo":"Acidi carbossilici e derivati","pagina_inizio":272},{"numero":11,"titolo":"Le ammine e altri composti azotati","pagina_inizio":309},{"numero":12,"titolo":"La spettroscopia","pagina_inizio":333},{"numero":13,"titolo":"I composti eterociclici","pagina_inizio":360},{"numero":14,"titolo":"I polimeri sintetici","pagina_inizio":379},{"numero":15,"titolo":"I lipidi e i detergenti","pagina_inizio":405},{"numero":16,"titolo":"I carboidrati","pagina_inizio":426},{"numero":17,"titolo":"Amminoacidi, peptidi e proteine","pagina_inizio":455},{"numero":18,"titolo":"I nucleotidi e gli acidi nucleici","pagina_inizio":486}]},{"id":"mcmurry_fondamenti","nome":"McMurry - Fondamenti di chimica organica","editore":"Zanichelli","pagine_totali":896,"capitoli":[{"numero":1,"titolo":"Struttura e legame chimico; acidi e basi","pagina_inizio":1},{"numero":2,"titolo":"I composti organici: gli alcani","pagina_inizio":31},{"numero":3,"titolo":"Gli alcheni e gli alchini: le reazioni organiche","pagina_inizio":66},{"numero":4,"titolo":"Le reazioni degli alcheni e degli alchini","pagina_inizio":94},{"numero":5,"titolo":"I composti aromatici","pagina_inizio":131},{"numero":6,"titolo":"La stereochimica dei centri tetraedrici","pagina_inizio":161},{"numero":7,"titolo":"Gli organoalogenuri: sostituzioni nucleofile ed eliminazioni","pagina_inizio":190},{"numero":8,"titolo":"Alcoli, fenoli, eteri e loro analoghi solforati","pagina_inizio":221},{"numero":9,"titolo":"Aldeidi e chetoni: le reazioni di addizione nucleofila","pagina_inizio":255},{"numero":10,"titolo":"Gli acidi carbossilici e i loro derivati: reazioni di sostituzione nucleofila acilica","pagina_inizio":281},{"numero":11,"titolo":"Le reazioni di sostituzione in alfa al carbonile e le reazioni di condensazione","pagina_inizio":321},{"numero":12,"titolo":"Le ammine","pagina_inizio":348},{"numero":13,"titolo":"La determinazione della struttura","pagina_inizio":373},{"numero":14,"titolo":"Le biomolecole: i carboidrati","pagina_inizio":404},{"numero":15,"titolo":"Le biomolecole: amminoacidi, peptidi e proteine","pagina_inizio":432},{"numero":16,"titolo":"Le biomolecole: i lipidi e gli acidi nucleici","pagina_inizio":462},{"numero":17,"titolo":"La chimica organica dei percorsi metabolici","pagina_inizio":490}]},{"id":"mcmurry_biologico","nome":"McMurry - Chimica organica: un approccio biologico","editore":"Zanichelli","pagine_totali":1152,"capitoli":[{"numero":1,"titolo":"La struttura e il legame","pagina_inizio":1},{"numero":2,"titolo":"I legami covalenti polari; gli acidi e le basi","pagina_inizio":27},{"numero":3,"titolo":"I composti organici: gli alcani e la loro stereochimica","pagina_inizio":57},{"numero":4,"titolo":"I composti organici: i cicloalcani e la loro stereochimica","pagina_inizio":85},{"numero":5,"titolo":"Una panoramica sulle reazioni organiche","pagina_inizio":109},{"numero":6,"titolo":"Gli alcheni e gli alchini","pagina_inizio":140},{"numero":7,"titolo":"Le reazioni degli alcheni e degli alchini","pagina_inizio":170},{"numero":8,"titolo":"I composti aromatici","pagina_inizio":205},{"numero":9,"titolo":"La stereochimica","pagina_inizio":247},{"numero":10,"titolo":"Gli alogenuri alchilici: le sostituzioni nucleofile e le eliminazioni","pagina_inizio":281},{"numero":11,"titolo":"La determinazione della struttura: spettrometria di massa, spettroscopia infrarossa e ultravioletta","pagina_inizio":323},{"numero":12,"titolo":"La determinazione della struttura: la spettroscopia di risonanza magnetica nucleare","pagina_inizio":355},{"numero":13,"titolo":"Gli alcoli, i fenoli e i tioli; gli eteri e i solfuri","pagina_inizio":390},{"numero":14,"titolo":"Le aldeidi e i chetoni: le reazioni di addizione nucleofila","pagina_inizio":436},{"numero":15,"titolo":"Gli acidi carbossilici e i nitrili","pagina_inizio":470},{"numero":16,"titolo":"I derivati degli acidi carbossilici: le reazioni di sostituzione nucleofila acilica","pagina_inizio":494},{"numero":17,"titolo":"Le reazioni dei composti carbonilici in posizione alfa","pagina_inizio":525},{"numero":18,"titolo":"Le ammine e gli eterocicli","pagina_inizio":557},{"numero":19,"titolo":"Le biomolecole: i carboidrati","pagina_inizio":595},{"numero":20,"titolo":"Le biomolecole: gli amminoacidi, i peptidi e le proteine","pagina_inizio":636},{"numero":21,"titolo":"Le biomolecole: gli enzimi e la vitamina","pagina_inizio":676},{"numero":22,"titolo":"Le biomolecole: i lipidi","pagina_inizio":710},{"numero":23,"titolo":"Le biomolecole: gli acidi nucleici","pagina_inizio":747},{"numero":24,"titolo":"La chimica organica dei percorsi metabolici","pagina_inizio":779}]}]};
+                
+                // Prompt diverso per Base vs Avanzata
+                const istruzioniDettaglio = tipoAnalisi === 'avanzata' ? `
+MODALITÀ ANALISI AVANZATA:
+- Per ogni punto di forza/debolezza, fornisci una spiegazione dettagliata (1-2 frasi) con esempi concreti
+- Nel campo "note", scrivi un'analisi dettagliata (100-150 parole) che spieghi:
+  * Come il manuale tratta gli argomenti chiave del programma
+  * Limitazioni specifiche con esempi concreti (es. "quando spiega l'addizione elettrofila, si concentra su...")
+  * Conseguenze per gli studenti (es. "questo impedisce agli studenti di...")
+- Usa linguaggio descrittivo e professionale, evita percentuali generiche` : `
+MODALITÀ ANALISI BASE:
+- Punti di forza/debolezza sintetici (1 frase ciascuno)
+- Note concise (50-100 parole)`;
+                
+                const gapManuale = await callLLM( `Valuta il manuale "${manuale}" (${manualeInfo.editore || ''}) rispetto a questo programma usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
+
+PROGRAMMA:
+${testo.substring(0, 3000)}
+
+CONTESTO:
+- Classe di Laurea: ${contesto}
+- CFU: ${cfu || 'Non specificato'}
+
+CARATTERISTICHE MANUALE ${manuale}:
+${JSON.stringify(manualeInfo.caratteristiche || [])}
+
+FRAMEWORK VALUTAZIONE MANUALI (270 punti):
+Valuta il manuale su 5 criteri principali considerando le PRIORITÀ per ${contesto}:
+
+1. OBIETTIVI FORMATIVI (max 40):
+   - Completezza, Chiarezza, Coerenza standard, Interdisciplinarità
+
+2. CONTENUTI PROGRAMMATICI (max 130):
+   Valuta copertura dei 10 MODULI rispetto al programma:
+   - MOD-01 Struttura/legami, MOD-02 Nomenclatura, MOD-03 Gruppi funzionali
+   - MOD-04 Stereochimica, MOD-05 Meccanismi, MOD-06 Aromatici
+   - MOD-07 Carbonilici, MOD-08 Polimeri, MOD-09 Biomolecole, MOD-10 Tecniche
+   
+   PRIORITÀ ${contesto}:
+   - L-2/L-13: MOD-09 (biomolecole) e MOD-10 (tecniche) CRITICI
+   - L-29: MOD-04 (stereochimica) e MOD-02 (nomenclatura) CRITICI
+   - L-8/9: MOD-08 (polimeri) e MOD-10 (tecniche) CRITICI
+   - L-32: MOD-08-ARG-05 (degradazione ambientale) CRITICO
+
+3. METODOLOGIA DIDATTICA (max 40):
+   - Didattica attiva, Materiali, Valutazione, Supporto studente
+
+4. ALLINEAMENTO CURRICULUM (max 30):
+   - Coerenza moduli, Progressione, Flessibilità
+
+5. RISULTATI ATTESI (max 30):
+   - Competenze tecnico-scientifiche, trasversali, preparazione professionale
+
+ANALISI DETTAGLIATA:
+1. Argomenti del programma COPERTI dal manuale
+2. Argomenti del programma NON COPERTI (gap) - CRITICI per ${contesto}
+3. Argomenti del manuale ECCEDENTI rispetto al programma
+4. PUNTI DI FORZA del manuale per questo programma
+5. PUNTI DI DEBOLEZZA del manuale per questo programma
+
+Rispondi SOLO con un JSON valido:
+{
+  "coperti": ["arg1", "arg2"],
+  "gap": ["arg_mancante1", "arg_mancante2"],
+  "eccedenti": ["arg_extra1"],
+  "punti_forza": ["forza1", "forza2", "forza3"],
+  "punti_debolezza": ["debolezza1", "debolezza2"],
+  "copertura_percentuale": numero,
+  "compatibilita": "Alta/Media/Bassa",
+  "punteggio_framework": numero_su_270,
+  "note": "commento dettagliato sulla compatibilità considerando le priorità ${contesto}"
+}`, 0.1);
+
+                const gapManualeObj = JSON.parse(sanitizeJSON(gapManuale));
+
+                // Fase 3b: Analisi gap manuali alternativi (se presenti)
+                const gapAlternativi = [];
+                if (manualiAlternativi.length > 0) {
+                    updateLoadingText(`Fase 3b/4: Analisi ${manualiAlternativi.length} manuali alternativi...`);
+                    
+                    for (const manualeAlt of manualiAlternativi) {
+                        const manualeInfo = MANUALI_DB[manualeAlt] || {};
+                        const gapAlt = await callLLM(`Valuta il manuale "${manualeAlt}" (${manualeInfo.editore || ''}) rispetto a questo programma usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
+
+PROGRAMMA:
+${testo.substring(0, 3000)}
+
+CONTESTO:
+- Classe di Laurea: ${contesto}
+- CFU: ${cfu || 'Non specificato'}
+
+CARATTERISTICHE MANUALE ${manualeAlt}:
+${JSON.stringify(manualeInfo.caratteristiche || [])}
+
+FRAMEWORK VALUTAZIONE MANUALI (270 punti):
+Valuta il manuale su 5 criteri principali considerando le PRIORITÀ per ${contesto}:
+
+1. OBIETTIVI FORMATIVI (max 40):
+   - Completezza, Chiarezza, Coerenza standard, Interdisciplinarità
+
+2. CONTENUTI PROGRAMMATICI (max 130):
+   Valuta copertura dei 10 MODULI rispetto al programma:
+   - MOD-01 Struttura/legami, MOD-02 Nomenclatura, MOD-03 Gruppi funzionali
+   - MOD-04 Stereochimica, MOD-05 Meccanismi, MOD-06 Aromatici
+   - MOD-07 Carbonilici, MOD-08 Polimeri, MOD-09 Biomolecole, MOD-10 Tecniche
+   
+   PRIORITÀ ${contesto}:
+   - L-2/L-13: MOD-09 (biomolecole) e MOD-10 (tecniche) CRITICI
+   - L-29: MOD-04 (stereochimica) e MOD-02 (nomenclatura) CRITICI
+   - L-8/9: MOD-08 (polimeri) e MOD-10 (tecniche) CRITICI
+   - L-32: MOD-08-ARG-05 (degradazione ambientale) CRITICO
+
+3. METODOLOGIA DIDATTICA (max 40):
+   - Didattica attiva, Materiali, Valutazione, Supporto studente
+
+4. ALLINEAMENTO CURRICULUM (max 30):
+   - Coerenza moduli, Progressione, Flessibilità
+
+5. RISULTATI ATTESI (max 30):
+   - Competenze tecnico-scientifiche, trasversali, preparazione professionale
+
+ANALISI DETTAGLIATA:
+1. Argomenti del programma COPERTI dal manuale
+2. Argomenti del programma NON COPERTI (gap) - CRITICI per ${contesto}
+3. Argomenti del manuale ECCEDENTI rispetto al programma
+4. PUNTI DI FORZA del manuale per questo programma
+5. PUNTI DI DEBOLEZZA del manuale per questo programma
+
+Rispondi SOLO con un JSON valido:
+{
+  "manuale": "${manualeAlt}",
+  "coperti": ["arg1", "arg2"],
+  "gap": ["arg_mancante1", "arg_mancante2"],
+  "eccedenti": ["arg_extra1"],
+  "punti_forza": ["forza1", "forza2", "forza3"],
+  "punti_debolezza": ["debolezza1", "debolezza2"],
+  "copertura_percentuale": numero,
+  "compatibilita": "Alta/Media/Bassa",
+  "punteggio_framework": numero_su_270,
+  "note": "commento dettagliato sulla compatibilità considerando le priorità ${contesto}"
+}`, 0.1);
+
+                        try {
+                            console.log(`Risposta GPT per ${manualeAlt}:`, gapAlt);
+                            const gapAltObj = JSON.parse(sanitizeJSON(gapAlt));
+                            console.log(`JSON parsed per ${manualeAlt}:`, gapAltObj);
+                            gapAlternativi.push(gapAltObj);
+                        } catch (e) {
+                            console.error(`Errore parsing gap ${manualeAlt}:`, e);
+                            console.error(`Risposta raw:`, gapAlt);
+                        }
+                    }
+                }
+
+                // Fase 4: Valutazione Zanichelli (TEMPERATURE ABBASSATA A 0.1)
+                updateLoadingText('Fase 4/4: Valutazione compatibilità Zanichelli...');
+                
+                // Verifica se il manuale adottato è Zanichelli
+                const manualiZanichelli = ['McMurryBiologico', 'Hart', 'McMurryFondamenti'];
+                const isZanichelliAdottato = manualiZanichelli.includes(manuale);
+                
+                // Istruzioni per modalità avanzata Zanichelli
+                const istruzioniZanichelli = tipoAnalisi === 'avanzata' ? `
+MODALITÀ ANALISI AVANZATA:
+- Per ogni punto di forza, fornisci spiegazione dettagliata (1-2 frasi) con esempi concreti di come il manuale tratta gli argomenti
+- Per ogni gap, spiega le conseguenze per gli studenti
+- Nel campo "quando_preferirlo", scrivi un paragrafo dettagliato (80-100 parole) che spieghi:
+  * Caratteristiche del corso ideale (CFU, obiettivi, contesto)
+  * Tipologia di studenti più adatta
+  * Vantaggi specifici per quel contesto
+- Nel campo "confronto_bibliografia", scrivi un'analisi dettagliata (100-120 parole) che confronti:
+  * Come il manuale Zanichelli risolve le limitazioni del manuale adottato
+  * Esempi concreti di argomenti trattati meglio
+- Usa linguaggio descrittivo e argomentazioni commerciali esplicite` : `
+MODALITÀ ANALISI BASE:
+- Punti di forza/gap sintetici (1 frase ciascuno)
+- Quando preferirlo: descrizione breve (50 parole)
+- Confronto bibliografia: sintesi concisa (50-100 parole)`;
+                
+                const zanichelli = await callLLM( `Valuta la compatibilità di TUTTI E 3 i manuali Zanichelli di Chimica Organica con questo programma:${istruzioniZanichelli}
+
+1. Hart - Fondamenti di chimica organica (520 pag, €65, livello base)
+2. McMurry - Fondamenti di chimica organica (536 pag, €67.50, livello intermedio)  
+3. McMurry - Chimica organica: approccio biologico (896 pag, €101.40, livello avanzato con focus bio)
+
+Programma:
+${testo.substring(0, 2000)}
+
+Contesto: ${contesto}
+Bibliografia adottata: ${Array.isArray(manuale) ? manuale.join(' + ') : manuale}
+
+${isZanichelliAdottato ? `
+IMPORTANTE: Il manuale attualmente adottato È GIÀ ZANICHELLI (${manuale}).
+Devi valutare se:
+- MANTENERE il manuale attuale (se è ottimale)
+- UPGRADE a un altro Zanichelli (se ce n'è uno migliore)
+- DOWNGRADE a un altro Zanichelli (se il programma è più semplice)
+
+Nel campo "raccomandazione" usa: "MANTENERE", "UPGRADE", o "DOWNGRADE".
+` : `
+IMPORTANTE: Il manuale attualmente adottato NON È ZANICHELLI (${manuale}).
+Stai raccomandando un NUOVO manuale Zanichelli per sostituire quello attuale.
+
+Nel campo "raccomandazione" usa SEMPRE:
+- "RACCOMANDATO" per il manuale più compatibile
+- "ALTERNATIVA" per gli altri due manuali
+
+NON usare MAI "MANTENERE" perché il docente non usa attualmente Zanichelli.
+`}
+
+CRITERI DI VALUTAZIONE:
+1. Compatibilità con il programma (copertura argomenti)
+2. Adeguatezza al livello del corso (un manuale troppo completo per un programma breve è uno SVANTAGGIO!)
+3. Rapporto qualità/prezzo (Hart €65 vs McMurry €90-100)
+4. Accessibilità per gli studenti (520 pag vs 896 pag)
+
+Raccomanda il manuale con il MIGLIOR EQUILIBRIO tra questi fattori, non necessariamente il più completo.
+
+IMPORTANTE SU HART:
+Hart è il manuale più SINTETICO (€65, 520 pag) ed ECONOMICO.
+Raccomandalo quando:
+- Programma < 6 CFU o essenziale (solo reazioni base)
+- Nessuna enfasi particolare su biomolecole
+- Studenti con difficoltà in chimica (sintesi = vantaggio)
+- Budget limitato
+NON penalizzarlo solo perché è più breve! La SINTESI può essere un VANTAGGIO.
+
+Ordina i 3 manuali per compatibilità (dal più al meno compatibile) e fornisci per ognuno:
+- Punteggio compatibilità (0-100)
+- Punti di forza specifici
+- Gap specifici (se presenti)
+- Quando preferirlo (contesto ideale)
+- Confronto con bibliografia adottata
+- Raccomandazione (MANTENERE/UPGRADE/DOWNGRADE/RACCOMANDATO)
+
+Rispondi SOLO con un JSON valido:
+{
+  "raccomandato": {
+    "titolo": "Nome manuale più compatibile",
+    "punteggio": numero,
+    "compatibilita": "Alta/Media/Bassa",
+    "raccomandazione": "MANTENERE/UPGRADE/DOWNGRADE/RACCOMANDATO",
+    "punti_forza": ["punto1", "punto2"],
+    "gap": ["gap1", "gap2"],
+    "quando_preferirlo": "descrizione contesto ideale",
+    "confronto_bibliografia": "confronto con bibliografia adottata",
+    "prezzo": "€XX"
+  },
+  "alternative": [
+    {
+      "titolo": "Seconda scelta",
+      "punteggio": numero,
+      "compatibilita": "Alta/Media/Bassa",
+      "raccomandazione": "MANTENERE/UPGRADE/DOWNGRADE/ALTERNATIVA", 
+      "punti_forza": ["punto1", "punto2"],
+      "gap": ["gap1", "gap2"],
+      "quando_preferirlo": "descrizione",
+      "confronto_bibliografia": "confronto",
+      "prezzo": "€XX"
+    },
+    {
+      "titolo": "Terza scelta",
+      "punteggio": numero,
+      "compatibilita": "Alta/Media/Bassa",
+      "raccomandazione": "MANTENERE/UPGRADE/DOWNGRADE/ALTERNATIVA",
+      "punti_forza": ["punto1", "punto2"], 
+      "gap": ["gap1", "gap2"],
+      "quando_preferirlo": "descrizione",
+      "confronto_bibliografia": "confronto",
+      "prezzo": "€XX"
+    }
+  ],
+  "raccomandazioni_generali": ["racc1", "racc2"]
+}`, 0.1);
+
+                const zanichelliObj = JSON.parse(sanitizeJSON(zanichelli));
+
+                // Crea risultato
+                currentProgramma = {
+                    id: Date.now(),
+                    ...metadataObj,
+                    contesto: contesto,
+                    manuale_adottato: manuale === 'Altro' ? manualeNomePersonalizzato : manuale,
+                    manuale_adottato_tipo: manuale, // 'Altro' o nome manuale standard
+                    manuali_alternativi: manualiAlternativi,
+                    cfu: cfu || null,
+                    ore: ore || null,
+                    punteggi: {
+                        obiettivi: valutazioneObj.obiettivi.punteggio,
+                        contenuti: valutazioneObj.contenuti.punteggio,
+                        metodologia: valutazioneObj.metodologia.punteggio,
+                        allineamento: valutazioneObj.allineamento.punteggio,
+                        risultati: valutazioneObj.risultati.punteggio,
+                        totale: totale
+                    },
+                    valutazione: valutazioneObj,
+                    gap_manuale: gapManualeObj,
+                    gap_alternativi: gapAlternativi,
+                    zanichelli: zanichelliObj,
+                    tipo_analisi: tipoAnalisi,
+                    created_at: new Date().toISOString()
+                };
+
+                // Salva nello storico
+                saveToStorico(currentProgramma);
+
+                // Mostra risultati
+                mostraRisultati(currentProgramma);
+
+            } catch (error) {
+                showError('Errore durante l\'analisi: ' + error.message);
+                console.error(error);
+            } finally {
+                document.getElementById('btnAnalizza').disabled = false;
+                document.getElementById('loadingMessage').classList.add('hidden');
+            }
+        }
+
+        // Funzione per sanitizzare JSON da risposte GPT-4
+        function sanitizeJSON(text) {
+            // Rimuovi markdown code blocks
+            text = text.replace(/```json|```/g, '').trim();
+            
+            // Prova prima il parsing diretto
+            try {
+                JSON.parse(text);
+                return text; // Se funziona, ritorna così com'è
+            } catch (e) {
+                // Se fallisce, prova a riparare il JSON
+                console.log('JSON non valido, tento riparazione:', e.message);
+                
+                // Strategia: trova e sostituisci caratteri di controllo dentro le stringhe
+                // Usa una regex per trovare tutte le stringhe JSON e sanitizzarle
+                let fixed = text.replace(/"([^"]*)"/g, (match, content) => {
+                    // Escapa caratteri di controllo dentro le stringhe
+                    let sanitized = content
+                        .replace(/\n/g, '\\n')  // A capo
+                        .replace(/\r/g, '\\r')  // Carriage return
+                        .replace(/\t/g, '\\t')  // Tab
+                        .replace(/\f/g, '\\f')  // Form feed
+                        .replace(/\b/g, '\\b'); // Backspace
+                    return '"' + sanitized + '"';
+                });
+                
+                // Verifica se ora funziona
+                try {
+                    JSON.parse(fixed);
+                    console.log('JSON riparato con successo!');
+                    return fixed;
+                } catch (e2) {
+                    console.error('Impossibile riparare il JSON:', e2.message);
+                    console.error('JSON originale:', text.substring(0, 500));
+                    throw new Error('JSON non valido anche dopo sanitizzazione: ' + e2.message);
+                }
+            }
+        }
+
+        // Chiamata LLM Unificata (OpenAI o Perplexity) con Retry Automatico
+        async function callLLM(prompt, temperature, maxRetries = 3) {
+            const provider = localStorage.getItem('ai_provider') || 'openai';
+            
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    console.log(`Tentativo ${attempt}/${maxRetries} per chiamata LLM...`);
+                    
+                    let response;
+                    if (provider === 'openai') {
+                        response = await callOpenAI(prompt, temperature);
+                    } else {
+                        response = await callPerplexity(prompt, temperature);
+                    }
+                    
+                    // Verifica che la risposta non sia vuota
+                    if (!response || response.trim().length === 0) {
+                        throw new Error('Risposta vuota da GPT-4');
+                    }
+                    
+                    console.log(`Risposta ricevuta (${response.length} caratteri)`);
+                    return response;
+                    
+                } catch (error) {
+                    console.error(`Tentativo ${attempt} fallito:`, error.message);
+                    
+                    if (attempt === maxRetries) {
+                        // Ultimo tentativo fallito, lancia errore
+                        throw new Error(`Chiamata LLM fallita dopo ${maxRetries} tentativi: ${error.message}`);
+                    }
+                    
+                    // Attendi prima di riprovare (backoff esponenziale)
+                    const waitTime = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+                    console.log(`Attendo ${waitTime/1000}s prima di riprovare...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                }
+            }
+        }
+        
+        async function callOpenAI(prompt, temperature) {
+            const apiKey = localStorage.getItem('openai_api_key') || null; // null = userà quella su Netlify
+            const model = localStorage.getItem('openai_model') || 'gpt-4.1-mini';
+            
+            // Usa il proxy Netlify invece della chiamata diretta
+            const response = await fetch('/.netlify/functions/openai-proxy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    apiKey: apiKey,
+                    model: model,
+                    messages: [{role: 'user', content: prompt}],
+                    temperature: temperature,
+                    max_tokens: 16000
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error?.message || error.message || 'Errore API OpenAI');
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
+        }
+        
+        async function callPerplexity(prompt, temperature) {
+            const apiKey = localStorage.getItem('perplexity_api_key');
+            const model = localStorage.getItem('perplexity_model') || 'llama-3.1-sonar-large-128k-online';
+            
+            if (!apiKey) {
+                throw new Error('Chiave API Perplexity non configurata');
+            }
+            
+            // Usa il proxy Netlify invece della chiamata diretta
+            const response = await fetch('/.netlify/functions/perplexity-proxy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    apiKey: apiKey,
+                    model: model,
+                    messages: [{role: 'user', content: prompt}],
+                    temperature: temperature,
+                    max_tokens: 16000
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error?.message || error.message || 'Errore API Perplexity');
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
+        }
+
+        // Mostra risultati (continua nel prossimo blocco...)
+        function mostraRisultati(prog) {
+            const getPunteggioColor = (p, max) => {
+                const perc = (p / max) * 100;
+                return perc >= 80 ? 'text-green-600' : perc >= 60 ? 'text-yellow-600' : 'text-red-600';
+            };
+
+            const getPunteggioLabel = (p, max) => {
+                const perc = (p / max) * 100;
+                return perc >= 80 ? 'Ottimo' : perc >= 60 ? 'Buono' : perc >= 40 ? 'Sufficiente' : 'Insufficiente';
+            };
+
+            const getCompatibilitaColor = (comp) => {
+                return comp === 'Alta' ? 'text-green-600' : comp === 'Media' ? 'text-yellow-600' : 'text-red-600';
+            };
+
+            const html = `
+                <div class="space-y-6">
+                    <!-- Header -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h2 class="text-2xl font-bold">${prog.denominazione_corso}</h2>
+                                <div class="mt-2 space-y-1 text-sm text-gray-600">
+                                    <p><strong>Università:</strong> ${prog.università}</p>
+                                    <p><strong>Corso di Laurea:</strong> ${prog.corso_laurea_nome} (${prog.contesto})</p>
+                                    ${prog.docente ? `<p><strong>Docente:</strong> ${prog.docente}</p>` : ''}
+                                    ${prog.cfu ? `<p><strong>CFU:</strong> ${prog.cfu}</p>` : ''}
+                                    ${prog.ore ? `<p><strong>Ore:</strong> ${prog.ore}</p>` : ''}
+                                    <p><strong>Manuale Adottato:</strong> ${prog.manuale_adottato}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-4xl font-bold text-indigo-600">
+                                    ${prog.punteggi.totale}<span class="text-xl text-gray-400">/270</span>
+                                </div>
+                                <p class="text-sm font-medium mt-1 ${getPunteggioColor(prog.punteggi.totale, 270)}">
+                                    ${getPunteggioLabel(prog.punteggi.totale, 270)}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sezione 1: Analisi Programma -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span>
+                            Analisi Dettagliata Programma
+                        </h3>
+                        
+                        <!-- Punteggi -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                            ${['obiettivi', 'contenuti', 'metodologia', 'allineamento', 'risultati'].map(dim => {
+                                const max = dim === 'contenuti' ? 130 : dim === 'obiettivi' || dim === 'metodologia' ? 40 : 30;
+                                const label = {obiettivi: 'Obiettivi Formativi', contenuti: 'Contenuti Programmatici', 
+                                              metodologia: 'Metodologia Didattica', allineamento: 'Allineamento Curriculum', 
+                                              risultati: 'Risultati Attesi'}[dim];
+                                return `
+                                    <div class="border rounded-lg p-4">
+                                        <h4 class="text-sm font-medium text-gray-600 mb-2">${label}</h4>
+                                        <div class="flex items-baseline space-x-2 mb-2">
+                                            <span class="text-3xl font-bold ${getPunteggioColor(prog.punteggi[dim], max)}">
+                                                ${prog.punteggi[dim]}
+                                            </span>
+                                            <span class="text-gray-400">/${max}</span>
+                                        </div>
+                                        ${prog.valutazione[dim]?.giudizio ? `<p class="text-sm font-semibold ${getPunteggioColor(prog.punteggi[dim], max)} mb-1">${prog.valutazione[dim].giudizio}</p>` : ''}
+                                        ${prog.valutazione[dim]?.note ? `<p class="text-xs text-gray-600">${prog.valutazione[dim].note}</p>` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        ${prog.valutazione.sintesi ? `
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-sm font-medium text-gray-700 mb-2">Sintesi dell'Analisi</h4>
+                                <p class="text-sm text-gray-700">${prog.valutazione.sintesi}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <!-- Sezione 2: Gap Analysis Manuale Adottato -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span>
+                            Analisi Manuale Adottato: ${prog.manuale_adottato}
+                        </h3>
+                        
+
+
+                        ${prog.gap_manuale.note ? `
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                                <p class="text-sm text-blue-900">${prog.gap_manuale.note}</p>
+                            </div>
+                        ` : ''}
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            ${prog.gap_manuale.coperti?.length ? `
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <svg class="h-4 w-4 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Argomenti Coperti
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${prog.gap_manuale.coperti.map(arg => 
+                                            `<span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">${arg}</span>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${prog.gap_manuale.gap?.length ? `
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <svg class="h-4 w-4 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Gap (Non Coperti)
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${prog.gap_manuale.gap.map(arg => 
+                                            `<span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">${arg}</span>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${prog.gap_manuale.eccedenti?.length ? `
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <svg class="h-4 w-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                        </svg>
+                                        Argomenti Eccedenti
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${prog.gap_manuale.eccedenti.map(arg => 
+                                            `<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">${arg}</span>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Sezione 2b: Confronto Manuali Alternativi -->
+                    ${prog.gap_alternativi && prog.gap_alternativi.length > 0 ? `
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-xl font-bold mb-4 flex items-center">
+                                <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2b</span>
+                                Confronto Manuali Alternativi
+                            </h3>
+                            
+                            <p class="text-sm text-gray-600 mb-4">Valutazione rapida dei manuali alternativi selezionati</p>
+                            
+                            <div class="space-y-6">
+                                ${prog.gap_alternativi.map(alt => `
+                                    <div class="border-2 rounded-lg p-6 hover:shadow-lg transition">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <h4 class="text-lg font-bold text-gray-900">${alt.manuale}</h4>
+                                            <span class="px-3 py-1 rounded-full text-sm font-bold ${getCompatibilitaColor(alt.compatibilita)}">${alt.compatibilita}</span>
+                                        </div>
+                                        
+
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                            ${alt.punti_forza && alt.punti_forza.length > 0 ? `
+                                                <div class="bg-green-50 rounded-lg p-3">
+                                                    <h5 class="text-sm font-semibold text-green-900 mb-2 flex items-center">
+                                                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                        Punti di Forza
+                                                    </h5>
+                                                    <ul class="space-y-1">
+                                                        ${alt.punti_forza.map(f => `<li class="text-xs text-green-800">• ${f}</li>`).join('')}
+                                                    </ul>
+                                                </div>
+                                            ` : ''}
+                                            
+                                            ${alt.punti_debolezza && alt.punti_debolezza.length > 0 ? `
+                                                <div class="bg-orange-50 rounded-lg p-3">
+                                                    <h5 class="text-sm font-semibold text-orange-900 mb-2 flex items-center">
+                                                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                                        </svg>
+                                                        Punti di Debolezza
+                                                    </h5>
+                                                    <ul class="space-y-1">
+                                                        ${alt.punti_debolezza.map(d => `<li class="text-xs text-orange-800">• ${d}</li>`).join('')}
+                                                    </ul>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                        
+                                        ${alt.gap && alt.gap.length > 0 ? `
+                                            <div class="mb-3">
+                                                <h5 class="text-sm font-semibold text-red-900 mb-2">Gap (Argomenti Non Coperti)</h5>
+                                                <div class="flex flex-wrap gap-1">
+                                                    ${alt.gap.map(g => `<span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">${g}</span>`).join('')}
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        ${alt.note ? `
+                                            <div class="bg-gray-50 rounded-lg p-3 mt-3">
+                                                <p class="text-sm text-gray-700">${alt.note}</p>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Sezione 3: Valutazione Zanichelli -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span>
+                            Valutazione Compatibilità Manuale Zanichelli
+                        </h3>
+                        
+                        <!-- Manuale Raccomandato -->
+                        ${prog.zanichelli.raccomandato ? `
+                            <div class="${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'bg-blue-50 border-2 border-blue-500' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'bg-green-50 border-2 border-green-500' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-50 border-2 border-yellow-500' : 'bg-green-50 border-2 border-green-500'} rounded-lg p-6 mb-6">
+                                <div class="flex items-center mb-4">
+                                    <span class="${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'bg-blue-600' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'bg-green-600' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-600' : 'bg-green-600'} text-white px-3 py-1 rounded-full text-sm font-bold mr-3">${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? '✅ MANTENERE' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? '⬆️ UPGRADE' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? '⬇️ DOWNGRADE' : '⭐ RACCOMANDATO'}</span>
+                                    <h4 class="text-xl font-bold ${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'text-blue-900' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'text-green-900' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'text-yellow-900' : 'text-green-900'}">${prog.zanichelli.raccomandato.titolo}</h4>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Compatibilità</p>
+                                        <p class="text-2xl font-bold ${getCompatibilitaColor(prog.zanichelli.raccomandato.compatibilita)}">${prog.zanichelli.raccomandato.compatibilita}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Punteggio</p>
+                                        <p class="text-2xl font-bold text-green-600">${prog.zanichelli.raccomandato.punteggio}/100</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Prezzo</p>
+                                        <p class="text-2xl font-bold text-gray-900">${prog.zanichelli.raccomandato.prezzo}</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    ${prog.zanichelli.raccomandato.punti_forza?.length ? `
+                                        <div>
+                                            <h5 class="text-sm font-medium text-gray-700 mb-2">✅ Punti di Forza</h5>
+                                            <ul class="space-y-1">
+                                                ${prog.zanichelli.raccomandato.punti_forza.map(pf => 
+                                                    `<li class="text-sm text-gray-600 flex items-start">
+                                                        <span class="text-green-600 mr-2">•</span>${pf}
+                                                    </li>`
+                                                ).join('')}
+                                            </ul>
+                                        </div>
+                                    ` : ''}
+
+                                    ${prog.zanichelli.raccomandato.gap?.length ? `
+                                        <div>
+                                            <h5 class="text-sm font-medium text-gray-700 mb-2">⚠️ Gap</h5>
+                                            <ul class="space-y-1">
+                                                ${prog.zanichelli.raccomandato.gap.map(g => 
+                                                    `<li class="text-sm text-gray-600 flex items-start">
+                                                        <span class="text-yellow-600 mr-2">•</span>${g}
+                                                    </li>`
+                                                ).join('')}
+                                            </ul>
+                                        </div>
+                                    ` : ''}
+                                </div>
+
+                                ${prog.zanichelli.raccomandato.quando_preferirlo ? `
+                                    <div class="bg-white rounded-lg p-4 mt-4">
+                                        <h5 class="text-sm font-medium text-gray-700 mb-2">💡 Quando Preferirlo</h5>
+                                        <p class="text-sm text-gray-600">${prog.zanichelli.raccomandato.quando_preferirlo}</p>
+                                    </div>
+                                ` : ''}
+
+                                ${prog.zanichelli.raccomandato.confronto_bibliografia ? `
+                                    <div class="bg-white rounded-lg p-4 mt-4">
+                                        <h5 class="text-sm font-medium text-gray-700 mb-2">📚 Confronto con Bibliografia Adottata</h5>
+                                        <p class="text-sm text-gray-600">${prog.zanichelli.raccomandato.confronto_bibliografia}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+
+                        <!-- Alternative -->
+                        ${prog.zanichelli.alternative?.length ? `
+                            <div class="mb-6">
+                                <h4 class="text-lg font-bold mb-4">Alternative Zanichelli</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    ${prog.zanichelli.alternative.map(alt => `
+                                        <div class="border rounded-lg p-4 bg-gray-50">
+                                            <div class="flex flex-col mb-3">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <h5 class="font-bold text-gray-900">${alt.titolo}</h5>
+                                                    <span class="text-sm font-medium ${getCompatibilitaColor(alt.compatibilita)}">${alt.compatibilita}</span>
+                                                </div>
+                                                ${alt.raccomandazione ? `
+                                                    <span class="text-xs px-2 py-1 rounded-full w-fit ${alt.raccomandazione === 'MANTENERE' ? 'bg-blue-100 text-blue-800' : alt.raccomandazione === 'UPGRADE' ? 'bg-green-100 text-green-800' : alt.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'}">${alt.raccomandazione === 'MANTENERE' ? '✅ MANTENERE' : alt.raccomandazione === 'UPGRADE' ? '⬆️ UPGRADE' : alt.raccomandazione === 'DOWNGRADE' ? '⬇️ DOWNGRADE' : '↔️ ALTERNATIVA'}</span>
+                                                ` : ''}
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-2 mb-3 text-sm">
+                                                <div>
+                                                    <span class="text-gray-600">Punteggio:</span>
+                                                    <span class="font-bold">${alt.punteggio}/100</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-gray-600">Prezzo:</span>
+                                                    <span class="font-bold">${alt.prezzo}</span>
+                                                </div>
+                                            </div>
+
+                                            ${alt.punti_forza?.length ? `
+                                                <div class="mb-2">
+                                                    <p class="text-xs font-medium text-gray-700 mb-1">✅ Punti di Forza</p>
+                                                    <ul class="text-xs text-gray-600 space-y-1">
+                                                        ${alt.punti_forza.slice(0,2).map(pf => `<li>• ${pf}</li>`).join('')}
+                                                    </ul>
+                                                </div>
+                                            ` : ''}
+
+                                            ${alt.gap?.length ? `
+                                                <div class="mb-2">
+                                                    <p class="text-xs font-medium text-gray-700 mb-1">⚠️ Gap</p>
+                                                    <ul class="text-xs text-gray-600 space-y-1">
+                                                        ${alt.gap.slice(0,2).map(g => `<li>• ${g}</li>`).join('')}
+                                                    </ul>
+                                                </div>
+                                            ` : ''}
+
+                                            ${alt.quando_preferirlo ? `
+                                                <div class="bg-white rounded p-2 mt-2">
+                                                    <p class="text-xs"><strong>💡 Quando preferirlo:</strong> ${alt.quando_preferirlo}</p>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Raccomandazioni Generali -->
+                        ${prog.zanichelli.raccomandazioni_generali?.length ? `
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-sm font-medium text-gray-700 mb-2">Raccomandazioni Generali</h4>
+                                <ul class="space-y-1">
+                                    ${prog.zanichelli.raccomandazioni_generali.map(racc => 
+                                        `<li class="text-sm text-gray-600 flex items-start">
+                                            <span class="text-indigo-600 mr-2">→</span>${racc}
+                                        </li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button onclick="preparaColloquio()" class="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium flex items-center justify-center space-x-2">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span>📝 Prepara Colloquio</span>
+                        </button>
+                        <button onclick="showView('upload'); resetForm();" class="px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                            Nuova Analisi
+                        </button>
+                        <button onclick="exportResults()" class="px-4 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                            Esporta Risultati
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('viewRisultati').innerHTML = html;
+            showView('risultati');
+        }
+
+        function resetForm() {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('testoInput').value = '';
+            document.getElementById('contestoSelect').value = '';
+            document.getElementById('manualeSelect').value = '';
+            document.getElementById('cfuInput').value = '';
+            document.getElementById('oreInput').value = '';
+            document.getElementById('fileNameDisplay').textContent = 'Clicca per selezionare un file';
+            fileContent = null;
+        }
+
+        function exportResults() {
+            if (!currentProgramma) return;
+            const dataStr = JSON.stringify(currentProgramma, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `analisi_${currentProgramma.id}.json`;
+            link.click();
+        }
+
+        // Storico
+        function saveToStorico(prog) {
+            let storico = JSON.parse(localStorage.getItem('storico_analisi') || '[]');
+            storico.unshift(prog);
+            if (storico.length > 50) storico = storico.slice(0, 50);
+            localStorage.setItem('storico_analisi', JSON.stringify(storico));
+            loadStorico();
+        }
+
+        function deleteFromStorico(index) {
+            if (!confirm('Sei sicuro di voler eliminare questa analisi?')) {
+                return;
+            }
+            let storico = JSON.parse(localStorage.getItem('storico_analisi') || '[]');
+            storico.splice(index, 1);
+            localStorage.setItem('storico_analisi', JSON.stringify(storico));
+            loadStorico();
+        }
+
+        function loadStorico() {
+            const storico = JSON.parse(localStorage.getItem('storico_analisi') || '[]');
+            const container = document.getElementById('storicoContent');
+            
+            if (storico.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8">Nessun programma analizzato</p>';
+                return;
+            }
+
+            const getPunteggioColor = (p, max) => {
+                const perc = (p / max) * 100;
+                return perc >= 80 ? 'text-green-600' : perc >= 60 ? 'text-yellow-600' : 'text-red-600';
+            };
+
+            const getPunteggioLabel = (p, max) => {
+                const perc = (p / max) * 100;
+                return perc >= 80 ? 'Ottimo' : perc >= 60 ? 'Buono' : perc >= 40 ? 'Sufficiente' : 'Insufficiente';
+            };
+
+            container.innerHTML = storico.map((prog, index) => `
+                <div class="border rounded-lg p-4 hover:bg-gray-50 transition">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1 cursor-pointer" onclick='visualizzaProgramma(${JSON.stringify(prog).replace(/'/g, "&apos;")})'>
+                            <div class="flex items-center space-x-2 mb-1">
+                                <h3 class="font-medium text-gray-900">${prog.denominazione_corso}</h3>
+                                <span class="px-2 py-0.5 text-xs font-medium rounded ${prog.tipo_analisi === 'avanzata' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">
+                                    ${prog.tipo_analisi === 'avanzata' ? '🔬 Avanzata' : '⚡ Base'}
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-600">${prog.università} - ${prog.contesto}</p>
+                            <p class="text-xs text-gray-500 mt-1">Manuale: ${prog.manuale_adottato} | ${new Date(prog.created_at).toLocaleDateString('it-IT')}</p>
+                        </div>
+                        <div class="flex items-center space-x-3 ml-4">
+                            <div class="text-right cursor-pointer" onclick='visualizzaProgramma(${JSON.stringify(prog).replace(/'/g, "&apos;")})'>  
+                                <div class="text-2xl font-bold text-indigo-600">
+                                    ${prog.punteggi.totale}<span class="text-sm text-gray-400">/270</span>
+                                </div>
+                                <p class="text-xs font-medium ${getPunteggioColor(prog.punteggi.totale, 270)}">
+                                    ${getPunteggioLabel(prog.punteggi.totale, 270)}
+                                </p>
+                            </div>
+                            <button onclick="event.stopPropagation(); esportaPDF(${index});" class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition" title="Esporta PDF">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="event.stopPropagation(); deleteFromStorico(${index});" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Elimina analisi">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function esportaPDF(index) {
+            const storico = JSON.parse(localStorage.getItem('storico_analisi') || '[]');
+            const prog = storico[index];
+            
+            if (!prog) {
+                alert('Analisi non trovata');
+                return;
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            let y = 20;
+            const lineHeight = 7;
+            const pageHeight = 280;
+            const margin = 20;
+            const maxWidth = 170;
+            
+            // Funzione per aggiungere testo con wrap e gestione pagine
+            function addText(text, fontSize = 10, isBold = false) {
+                doc.setFontSize(fontSize);
+                doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+                const lines = doc.splitTextToSize(text, maxWidth);
+                
+                lines.forEach(line => {
+                    if (y > pageHeight) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.text(line, margin, y);
+                    y += lineHeight;
+                });
+            }
+            
+            function addSpace(space = 5) {
+                y += space;
+            }
+            
+            // Intestazione
+            doc.setFontSize(16);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Analisi Programma Chimica Organica', margin, y);
+            y += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`${prog.università} | ${prog.corso_laurea_nome || prog.contesto}`, margin, y);
+            y += 6;
+            doc.text(`Docente: ${prog.docente || 'N/D'} | CFU: ${prog.cfu || 'N/D'}`, margin, y);
+            y += 6;
+            doc.text(`Tipo Analisi: ${prog.tipo_analisi === 'avanzata' ? 'Avanzata' : 'Base'}`, margin, y);
+            y += 10;
+            
+            // Linea separatore
+            doc.setDrawColor(79, 70, 229);
+            doc.setLineWidth(0.5);
+            doc.line(margin, y, 190, y);
+            y += 10;
+            
+            // Sintesi
+            if (prog.valutazione?.sintesi) {
+                addText('SINTESI', 12, true);
+                addSpace(3);
+                addText(prog.valutazione.sintesi);
+                addSpace(8);
+            }
+            
+            // Valutazione Programma
+            addText('VALUTAZIONE PROGRAMMA', 12, true);
+            addSpace(3);
+            addText(`Punteggio Totale: ${prog.punteggi.totale}/270`);
+            addText(`Obiettivi Formativi: ${prog.punteggi.obiettivi}/40`);
+            addText(`Contenuti Programmatici: ${prog.punteggi.contenuti}/130`);
+            addText(`Metodologia Didattica: ${prog.punteggi.metodologia}/40`);
+            addText(`Allineamento Curriculum: ${prog.punteggi.allineamento}/30`);
+            addText(`Risultati Attesi: ${prog.punteggi.risultati}/30`);
+            addSpace(8);
+            
+            // Manuale Adottato
+            addText('MANUALE ADOTTATO: ' + prog.manuale_adottato, 12, true);
+            addSpace(3);
+            
+            if (prog.gap_manuale?.note) {
+                addText(prog.gap_manuale.note);
+                addSpace(5);
+            }
+            
+            if (prog.gap_manuale?.gap?.length > 0) {
+                addText('Gap (Argomenti Non Coperti):', 10, true);
+                prog.gap_manuale.gap.forEach(gap => {
+                    addText('• ' + gap);
+                });
+                addSpace(5);
+            }
+            
+            if (prog.gap_manuale?.punti_debolezza?.length > 0) {
+                addText('Punti di Debolezza:', 10, true);
+                prog.gap_manuale.punti_debolezza.forEach(deb => {
+                    addText('• ' + deb);
+                });
+                addSpace(8);
+            }
+            
+            // Raccomandazione Zanichelli
+            if (prog.zanichelli?.raccomandato) {
+                addText('RACCOMANDAZIONE ZANICHELLI', 12, true);
+                addSpace(3);
+                addText(`Manuale Raccomandato: ${prog.zanichelli.raccomandato.titolo}`, 11, true);
+                addText(`Compatibilità: ${prog.zanichelli.raccomandato.compatibilita} (${prog.zanichelli.raccomandato.punteggio}/100)`);
+                addText(`Prezzo: ${prog.zanichelli.raccomandato.prezzo}`);
+                addSpace(5);
+                
+                if (prog.zanichelli.raccomandato.confronto_bibliografia) {
+                    addText('Confronto con Bibliografia Adottata:', 10, true);
+                    addText(prog.zanichelli.raccomandato.confronto_bibliografia);
+                    addSpace(5);
+                }
+                
+                if (prog.zanichelli.raccomandato.punti_forza?.length > 0) {
+                    addText('Punti di Forza:', 10, true);
+                    prog.zanichelli.raccomandato.punti_forza.forEach(forza => {
+                        addText('• ' + forza);
+                    });
+                    addSpace(5);
+                }
+                
+                if (prog.zanichelli.raccomandato.quando_preferirlo) {
+                    addText('Quando Raccomandare:', 10, true);
+                    addText(prog.zanichelli.raccomandato.quando_preferirlo);
+                }
+            }
+            
+            // Footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Generato il ${new Date().toLocaleDateString('it-IT')} - Zanichelli Editore - Pagina ${i}/${pageCount}`, margin, 290);
+            }
+            
+            // Salva PDF
+            const filename = `Analisi_${prog.università.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+            doc.save(filename);
+        }
+
+        function visualizzaProgramma(prog) {
+            currentProgramma = prog;
+            mostraRisultati(prog);
+        }
+
+        function toggleFAQ() {
+            const content = document.getElementById('faqContent');
+            const chevron = document.getElementById('faqChevron');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // ============================================
+        // FASE C: PREPARA COLLOQUIO (POST-IT)
+        // ============================================
+
+        function preparaColloquio() {
+            if (!currentProgramma) {
+                alert('Nessun programma analizzato!');
+                return;
+            }
+
+            // Mostra interfaccia Prepara Colloquio
+            mostraInterfacciaColloquio();
+        }
+
+        function mostraInterfacciaColloquio() {
+            const prog = currentProgramma;
+            
+            const html = `
+                <div class="max-w-6xl mx-auto space-y-6">
+                    <!-- Header -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-900 flex items-center space-x-2">
+                                    <span>📝</span>
+                                    <span>Prepara Colloquio</span>
+                                </h2>
+                                <p class="text-sm text-gray-600 mt-2">
+                                    ${prog.università} | ${prog.denominazione_corso}
+                                </p>
+                            </div>
+                            <button onclick="showView('risultati'); mostraRisultati(currentProgramma);" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+                                ← Torna ai Risultati
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Selezione Manuali -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-bold mb-4">1. Seleziona i manuali per cui generare i post-it</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition" id="optionRaccomandato">
+                                <input type="radio" name="selezioneManuale" value="raccomandato" checked class="w-5 h-5 text-green-600">
+                                <div>
+                                    <div class="font-medium text-gray-900">🎯 Solo Manuale Raccomandato</div>
+                                    <div class="text-sm text-gray-600">${prog.zanichelli?.raccomandato?.titolo || 'N/D'}</div>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition" id="optionHart">
+                                <input type="radio" name="selezioneManuale" value="hart" class="w-5 h-5 text-green-600">
+                                <div>
+                                    <div class="font-medium text-gray-900">📘 Solo Hart</div>
+                                    <div class="text-sm text-gray-600">Hart - Fondamenti di chimica organica (520 pagine)</div>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition" id="optionMcMurryFond">
+                                <input type="radio" name="selezioneManuale" value="mcmurry_fondamenti" class="w-5 h-5 text-green-600">
+                                <div>
+                                    <div class="font-medium text-gray-900">📙 Solo McMurry Fondamenti</div>
+                                    <div class="text-sm text-gray-600">McMurry - Fondamenti di chimica organica (896 pagine)</div>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition" id="optionTutti">
+                                <input type="radio" name="selezioneManuale" value="tutti" class="w-5 h-5 text-green-600">
+                                <div>
+                                    <div class="font-medium text-gray-900">📚 Tutti e 3 i Manuali</div>
+                                    <div class="text-sm text-gray-600">Hart, McMurry Fondamenti, McMurry Biologico</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pulsante Genera -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <button onclick="generaPostIt()" id="btnGeneraPostIt" class="w-full px-6 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-bold text-lg flex items-center justify-center space-x-2">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span>Genera Post-it Automatici</span>
+                        </button>
+                        <p class="text-sm text-gray-500 text-center mt-2">
+                            Verranno generati 3-5 post-it basati sui gap identificati nell'analisi
+                        </p>
+                    </div>
+
+                    <!-- Area Post-it Generati -->
+                    <div id="areaPostIt" class="hidden">
+                        <!-- Contenuto dinamico -->
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('viewColloquio').innerHTML = html;
+            showView('colloquio');
+        }
+
+        async function generaPostIt() {
+            const prog = currentProgramma;
+            if (!prog) return;
+
+            // Ottieni selezione manuale
+            const selezione = document.querySelector('input[name="selezioneManuale"]:checked')?.value;
+            if (!selezione) {
+                alert('Seleziona un\'opzione!');
+                return;
+            }
+
+            // Determina quali manuali includere
+            let manualiDaUsare = [];
+            if (selezione === 'raccomandato') {
+                const raccomandato = prog.zanichelli?.raccomandato?.titolo;
+                if (raccomandato?.includes('Hart')) manualiDaUsare = ['hart'];
+                else if (raccomandato?.includes('McMurry') && raccomandato?.includes('Fondamenti')) manualiDaUsare = ['mcmurry_fondamenti'];
+                else if (raccomandato?.includes('McMurry') && raccomandato?.includes('biologico')) manualiDaUsare = ['mcmurry_biologico'];
+            } else if (selezione === 'hart') {
+                manualiDaUsare = ['hart'];
+            } else if (selezione === 'mcmurry_fondamenti') {
+                manualiDaUsare = ['mcmurry_fondamenti'];
+            } else if (selezione === 'tutti') {
+                manualiDaUsare = ['hart', 'mcmurry_fondamenti', 'mcmurry_biologico'];
+            }
+
+            // Disabilita pulsante e mostra loading
+            const btn = document.getElementById('btnGeneraPostIt');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div><span class="ml-2">Generazione in corso...</span>';
+
+            try {
+                // Estrai gap dall'analisi
+                const gap = prog.gap_manuale?.gap || [];
+                
+                if (gap.length === 0) {
+                    alert('Nessun gap identificato nell\'analisi. Non è possibile generare post-it.');
+                    return;
+                }
+
+                // Limita a 5 gap massimo
+                const gapSelezionati = gap.slice(0, 5);
+
+                // Genera post-it per ogni gap e manuale
+                postItGenerati = [];
+                
+                for (const manuale of manualiDaUsare) {
+                    for (const gapItem of gapSelezionati) {
+                        const postIt = await generaSingoloPostIt(gapItem, manuale, prog);
+                        if (postIt) {
+                            postItGenerati.push(postIt);
+                        }
+                    }
+                }
+
+                // Mostra post-it generati
+                mostraPostItGenerati();
+
+            } catch (error) {
+                console.error('Errore generazione post-it:', error);
+                alert('Errore durante la generazione dei post-it: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>Genera Post-it Automatici</span>';
+            }
+        }
+
+        async function generaSingoloPostIt(gap, manualeId, prog) {
+            // Trova il manuale nel database
+            const manuale = INDICI_MANUALI.manuali.find(m => m.id === manualeId);
+            if (!manuale) return null;
+
+            // Prepara il prompt per GPT-4
+            const prompt = `Sei un esperto di chimica organica e rappresentante commerciale Zanichelli.
+
+CONTESTO:
+- Università: ${prog.università}
+- Corso: ${prog.denominazione_corso}
+- Contesto: ${prog.contesto}
+- Manuale adottato: ${prog.manuale_adottato}
+
+MANUALE ZANICHELLI DA PROMUOVERE:
+${manuale.nome}
+
+INDICE DEL MANUALE:
+${JSON.stringify(manuale.capitoli.map(c => ({
+    numero: c.numero,
+    titolo: c.titolo,
+    pagina: c.pagina_inizio
+})), null, 2)}
+
+GAP IDENTIFICATO:
+"${gap}"
+
+COMPITO:
+Genera un post-it commerciale per il rappresentante Zanichelli da usare durante il colloquio con il docente.
+
+IL POST-IT DEVE:
+1. Riferirsi SPECIFICAMENTE al gap "${gap}"
+2. Indicare il CAPITOLO ESATTO e le PAGINE del manuale Zanichelli che coprono questo argomento
+3. Fornire un ARGOMENTO COMMERCIALE concreto (es: "Il capitolo X alle pagine Y-Z tratta questo argomento con esempi biologici/esercizi graduati/meccanismi dettagliati")
+4. Essere BREVE (max 3-4 righe)
+5. Essere PRATICO e UTILIZZABILE durante il colloquio
+
+FORMATO RISPOSTA (JSON):
+{
+  "argomento": "${gap}",
+  "capitolo": "Numero e titolo capitolo",
+  "pagine": "Pagine specifiche",
+  "argomento_commerciale": "Testo dell'argomento commerciale"
+}`;
+
+            try {
+                const response = await fetch('/.netlify/functions/openai-proxy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: 'system', content: 'Sei un assistente esperto in chimica organica e vendita di manuali didattici. Rispondi SOLO con JSON valido.' },
+                            { role: 'user', content: prompt }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 500
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Errore chiamata API');
+                }
+
+                const data = await response.json();
+                const content = data.choices[0].message.content.trim();
+                
+                // Parse JSON response
+                const jsonMatch = content.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) {
+                    throw new Error('Risposta non valida da GPT-4');
+                }
+                
+                const postItData = JSON.parse(jsonMatch[0]);
+                
+                return {
+                    manuale: manuale.nome,
+                    manualeId: manualeId,
+                    ...postItData
+                };
+
+            } catch (error) {
+                console.error('Errore generazione singolo post-it:', error);
+                return null;
+            }
+        }
+
+        function mostraPostItGenerati() {
+            if (postItGenerati.length === 0) {
+                alert('Nessun post-it generato.');
+                return;
+            }
+
+            const html = `
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">📝 Post-it Generati (${postItGenerati.length})</h3>
+                        <button onclick="esportaPostItPDF()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center space-x-2">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span>Esporta PDF</span>
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${postItGenerati.map((postIt, index) => `
+                            <div class="border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4 shadow-md hover:shadow-lg transition">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="text-xs font-bold text-yellow-800 bg-yellow-200 px-2 py-1 rounded">
+                                        #${index + 1}
+                                    </div>
+                                    <div class="text-xs text-gray-600">${postIt.manuale}</div>
+                                </div>
+                                
+                                <h4 class="font-bold text-gray-900 mb-2">🎯 ${postIt.argomento}</h4>
+                                
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-start space-x-2">
+                                        <span class="font-semibold text-gray-700">📖</span>
+                                        <div>
+                                            <span class="font-semibold">Capitolo:</span> ${postIt.capitolo}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-2">
+                                        <span class="font-semibold text-gray-700">📌</span>
+                                        <div>
+                                            <span class="font-semibold">Pagine:</span> ${postIt.pagine}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3 p-3 bg-white rounded border border-yellow-200">
+                                        <p class="text-sm text-gray-800">
+                                            <span class="font-semibold">💬 Argomento:</span><br>
+                                            ${postIt.argomento_commerciale}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('areaPostIt').innerHTML = html;
+            document.getElementById('areaPostIt').classList.remove('hidden');
+            
+            // Scroll verso i post-it
+            document.getElementById('areaPostIt').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function esportaPostItPDF() {
+            if (postItGenerati.length === 0) {
+                alert('Nessun post-it da esportare!');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const prog = currentProgramma;
+            const margin = 15;
+            const pageWidth = 210;
+            const pageHeight = 297;
+            let y = margin;
+            
+            // Intestazione
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Post-it per Colloquio Commerciale', margin, y);
+            y += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`${prog.università} | ${prog.denominazione_corso}`, margin, y);
+            y += 6;
+            doc.text(`Docente: ${prog.docente || 'N/D'} | Manuale adottato: ${prog.manuale_adottato}`, margin, y);
+            y += 10;
+            
+            // Linea separatore
+            doc.setDrawColor(79, 70, 229);
+            doc.setLineWidth(0.5);
+            doc.line(margin, y, pageWidth - margin, y);
+            y += 10;
+            
+            // Post-it
+            postItGenerati.forEach((postIt, index) => {
+                // Controlla se serve nuova pagina
+                if (y > pageHeight - 80) {
+                    doc.addPage();
+                    y = margin;
+                }
+                
+                // Box post-it
+                doc.setFillColor(254, 252, 191); // Giallo post-it
+                doc.setDrawColor(234, 179, 8); // Bordo giallo
+                doc.setLineWidth(1);
+                doc.roundedRect(margin, y, pageWidth - 2 * margin, 65, 3, 3, 'FD');
+                
+                // Numero post-it
+                doc.setFontSize(8);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(133, 77, 14);
+                doc.text(`#${index + 1}`, margin + 3, y + 5);
+                
+                // Manuale
+                doc.setFontSize(7);
+                doc.setFont('helvetica', 'italic');
+                doc.setTextColor(100, 100, 100);
+                const manualeText = postIt.manuale;
+                const manualeWidth = doc.getTextWidth(manualeText);
+                doc.text(manualeText, pageWidth - margin - manualeWidth - 3, y + 5);
+                
+                y += 10;
+                
+                // Argomento (titolo)
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(0, 0, 0);
+                const argomentoLines = doc.splitTextToSize(postIt.argomento, pageWidth - 2 * margin - 10);
+                doc.text(argomentoLines, margin + 5, y);
+                y += argomentoLines.length * 5 + 3;
+                
+                // Capitolo
+                doc.setFontSize(9);
+                doc.setFont('helvetica', 'bold');
+                doc.text('📖 Capitolo:', margin + 5, y);
+                doc.setFont('helvetica', 'normal');
+                const capitoloLines = doc.splitTextToSize(postIt.capitolo, pageWidth - 2 * margin - 30);
+                doc.text(capitoloLines, margin + 25, y);
+                y += capitoloLines.length * 4 + 2;
+                
+                // Pagine
+                doc.setFont('helvetica', 'bold');
+                doc.text('📌 Pagine:', margin + 5, y);
+                doc.setFont('helvetica', 'normal');
+                doc.text(postIt.pagine, margin + 25, y);
+                y += 6;
+                
+                // Argomento commerciale
+                doc.setFont('helvetica', 'bold');
+                doc.text('💬 Argomento:', margin + 5, y);
+                y += 4;
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(8);
+                const argomentoCommLines = doc.splitTextToSize(postIt.argomento_commerciale, pageWidth - 2 * margin - 10);
+                doc.text(argomentoCommLines, margin + 5, y);
+                y += argomentoCommLines.length * 3.5 + 10;
+            });
+            
+            // Footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(100, 100, 100);
+                doc.text(`Generato il ${new Date().toLocaleDateString('it-IT')} - Zanichelli Editore - Pagina ${i}/${pageCount}`, margin, pageHeight - 10);
+            }
+            
+            // Salva PDF
+            const filename = `PostIt_${prog.università.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+            doc.save(filename);
+        }
+    </script>
+
+</body>
+</html>
