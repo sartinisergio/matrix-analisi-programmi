@@ -1,0 +1,325 @@
+{
+  "versione": "2.0",
+  "data_aggiornamento": "2025-11-09",
+  "manuali": [
+    {
+      "id": "hart",
+      "nome": "Hart - Fondamenti di chimica organica",
+      "editore": "Zanichelli",
+      "pagine_totali": 520,
+      "capitoli": [
+        {
+          "numero": 1,
+          "titolo": "Il legame chimico e l'isomeria",
+          "pagina_inizio": 1
+        },
+        {
+          "numero": 2,
+          "titolo": "Gli alcani e i cicloalcani",
+          "pagina_inizio": 37
+        },
+        {
+          "numero": 3,
+          "titolo": "Gli alcheni e gli alchini",
+          "pagina_inizio": 68
+        },
+        {
+          "numero": 4,
+          "titolo": "I composti aromatici",
+          "pagina_inizio": 113
+        },
+        {
+          "numero": 5,
+          "titolo": "La stereoisomeria",
+          "pagina_inizio": 140
+        },
+        {
+          "numero": 6,
+          "titolo": "Composti organici alogenati",
+          "pagina_inizio": 170
+        },
+        {
+          "numero": 7,
+          "titolo": "Gli alcoli, i fenoli e i tioli",
+          "pagina_inizio": 193
+        },
+        {
+          "numero": 8,
+          "titolo": "Gli eteri e gli epossidi",
+          "pagina_inizio": 220
+        },
+        {
+          "numero": 9,
+          "titolo": "Le aldeidi e i chetoni",
+          "pagina_inizio": 238
+        },
+        {
+          "numero": 10,
+          "titolo": "Acidi carbossilici e derivati",
+          "pagina_inizio": 272
+        },
+        {
+          "numero": 11,
+          "titolo": "Le ammine e altri composti azotati",
+          "pagina_inizio": 309
+        },
+        {
+          "numero": 12,
+          "titolo": "La spettroscopia",
+          "pagina_inizio": 333
+        },
+        {
+          "numero": 13,
+          "titolo": "I composti eterociclici",
+          "pagina_inizio": 360
+        },
+        {
+          "numero": 14,
+          "titolo": "I polimeri sintetici",
+          "pagina_inizio": 379
+        },
+        {
+          "numero": 15,
+          "titolo": "I lipidi e i detergenti",
+          "pagina_inizio": 405
+        },
+        {
+          "numero": 16,
+          "titolo": "I carboidrati",
+          "pagina_inizio": 426
+        },
+        {
+          "numero": 17,
+          "titolo": "Amminoacidi, peptidi e proteine",
+          "pagina_inizio": 455
+        },
+        {
+          "numero": 18,
+          "titolo": "I nucleotidi e gli acidi nucleici",
+          "pagina_inizio": 486
+        }
+      ]
+    },
+    {
+      "id": "mcmurry_fondamenti",
+      "nome": "McMurry - Fondamenti di chimica organica",
+      "editore": "Zanichelli",
+      "pagine_totali": 896,
+      "capitoli": [
+        {
+          "numero": 1,
+          "titolo": "Struttura e legame chimico; acidi e basi",
+          "pagina_inizio": 1
+        },
+        {
+          "numero": 2,
+          "titolo": "I composti organici: gli alcani",
+          "pagina_inizio": 31
+        },
+        {
+          "numero": 3,
+          "titolo": "Gli alcheni e gli alchini: le reazioni organiche",
+          "pagina_inizio": 66
+        },
+        {
+          "numero": 4,
+          "titolo": "Le reazioni degli alcheni e degli alchini",
+          "pagina_inizio": 94
+        },
+        {
+          "numero": 5,
+          "titolo": "I composti aromatici",
+          "pagina_inizio": 131
+        },
+        {
+          "numero": 6,
+          "titolo": "La stereochimica dei centri tetraedrici",
+          "pagina_inizio": 161
+        },
+        {
+          "numero": 7,
+          "titolo": "Gli organoalogenuri: sostituzioni nucleofile ed eliminazioni",
+          "pagina_inizio": 190
+        },
+        {
+          "numero": 8,
+          "titolo": "Alcoli, fenoli, eteri e loro analoghi solforati",
+          "pagina_inizio": 221
+        },
+        {
+          "numero": 9,
+          "titolo": "Aldeidi e chetoni: le reazioni di addizione nucleofila",
+          "pagina_inizio": 255
+        },
+        {
+          "numero": 10,
+          "titolo": "Gli acidi carbossilici e i loro derivati: reazioni di sostituzione nucleofila acilica",
+          "pagina_inizio": 281
+        },
+        {
+          "numero": 11,
+          "titolo": "Le reazioni di sostituzione in alfa al carbonile e le reazioni di condensazione",
+          "pagina_inizio": 321
+        },
+        {
+          "numero": 12,
+          "titolo": "Le ammine",
+          "pagina_inizio": 348
+        },
+        {
+          "numero": 13,
+          "titolo": "La determinazione della struttura",
+          "pagina_inizio": 373
+        },
+        {
+          "numero": 14,
+          "titolo": "Le biomolecole: i carboidrati",
+          "pagina_inizio": 404
+        },
+        {
+          "numero": 15,
+          "titolo": "Le biomolecole: amminoacidi, peptidi e proteine",
+          "pagina_inizio": 432
+        },
+        {
+          "numero": 16,
+          "titolo": "Le biomolecole: i lipidi e gli acidi nucleici",
+          "pagina_inizio": 462
+        },
+        {
+          "numero": 17,
+          "titolo": "La chimica organica dei percorsi metabolici",
+          "pagina_inizio": 490
+        }
+      ]
+    },
+    {
+      "id": "mcmurry_biologico",
+      "nome": "McMurry - Chimica organica: un approccio biologico",
+      "editore": "Zanichelli",
+      "pagine_totali": 1152,
+      "capitoli": [
+        {
+          "numero": 1,
+          "titolo": "La struttura e il legame",
+          "pagina_inizio": 1
+        },
+        {
+          "numero": 2,
+          "titolo": "I legami covalenti polari; gli acidi e le basi",
+          "pagina_inizio": 27
+        },
+        {
+          "numero": 3,
+          "titolo": "I composti organici: gli alcani e la loro stereochimica",
+          "pagina_inizio": 57
+        },
+        {
+          "numero": 4,
+          "titolo": "I composti organici: i cicloalcani e la loro stereochimica",
+          "pagina_inizio": 85
+        },
+        {
+          "numero": 5,
+          "titolo": "Una panoramica sulle reazioni organiche",
+          "pagina_inizio": 109
+        },
+        {
+          "numero": 6,
+          "titolo": "Gli alcheni e gli alchini",
+          "pagina_inizio": 140
+        },
+        {
+          "numero": 7,
+          "titolo": "Le reazioni degli alcheni e degli alchini",
+          "pagina_inizio": 170
+        },
+        {
+          "numero": 8,
+          "titolo": "I composti aromatici",
+          "pagina_inizio": 205
+        },
+        {
+          "numero": 9,
+          "titolo": "La stereochimica",
+          "pagina_inizio": 247
+        },
+        {
+          "numero": 10,
+          "titolo": "Gli alogenuri alchilici: le sostituzioni nucleofile e le eliminazioni",
+          "pagina_inizio": 281
+        },
+        {
+          "numero": 11,
+          "titolo": "La determinazione della struttura: spettrometria di massa, spettroscopia infrarossa e ultravioletta",
+          "pagina_inizio": 323
+        },
+        {
+          "numero": 12,
+          "titolo": "La determinazione della struttura: la spettroscopia di risonanza magnetica nucleare",
+          "pagina_inizio": 355
+        },
+        {
+          "numero": 13,
+          "titolo": "Gli alcoli, i fenoli e i tioli; gli eteri e i solfuri",
+          "pagina_inizio": 390
+        },
+        {
+          "numero": 14,
+          "titolo": "Le aldeidi e i chetoni: le reazioni di addizione nucleofila",
+          "pagina_inizio": 436
+        },
+        {
+          "numero": 15,
+          "titolo": "Gli acidi carbossilici e i nitrili",
+          "pagina_inizio": 470
+        },
+        {
+          "numero": 16,
+          "titolo": "I derivati degli acidi carbossilici: le reazioni di sostituzione nucleofila acilica",
+          "pagina_inizio": 494
+        },
+        {
+          "numero": 17,
+          "titolo": "Le reazioni dei composti carbonilici in posizione alfa",
+          "pagina_inizio": 525
+        },
+        {
+          "numero": 18,
+          "titolo": "Le ammine e gli eterocicli",
+          "pagina_inizio": 557
+        },
+        {
+          "numero": 19,
+          "titolo": "Le biomolecole: i carboidrati",
+          "pagina_inizio": 595
+        },
+        {
+          "numero": 20,
+          "titolo": "Le biomolecole: gli amminoacidi, i peptidi e le proteine",
+          "pagina_inizio": 636
+        },
+        {
+          "numero": 21,
+          "titolo": "Le biomolecole: gli enzimi e la vitamina",
+          "pagina_inizio": 676
+        },
+        {
+          "numero": 22,
+          "titolo": "Le biomolecole: i lipidi",
+          "pagina_inizio": 710
+        },
+        {
+          "numero": 23,
+          "titolo": "Le biomolecole: gli acidi nucleici",
+          "pagina_inizio": 747
+        },
+        {
+          "numero": 24,
+          "titolo": "La chimica organica dei percorsi metabolici",
+          "pagina_inizio": 779
+        }
+      ]
+    }
+  ]
+}
