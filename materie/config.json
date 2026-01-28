@@ -1,0 +1,126 @@
+{
+  "materie": {
+    "chimica-organica": {
+      "id": "chimica-organica",
+      "nome": "Chimica Organica",
+      "descrizione": "Analisi programmi universitari di Chimica Organica",
+      "framework_inline": true,
+      "manuali_zanichelli": [
+        {
+          "id": "McMurryBiologico",
+          "nome": "McMurry - Chimica Organica: Un approccio biologico",
+          "prezzo": 101.40,
+          "pagine": 896
+        },
+        {
+          "id": "Hart",
+          "nome": "Hart - Fondamenti di chimica organica",
+          "prezzo": 65,
+          "pagine": 520
+        },
+        {
+          "id": "McMurryFondamenti",
+          "nome": "McMurry - Fondamenti di chimica organica",
+          "prezzo": 67.50,
+          "pagine": 536
+        }
+      ],
+      "manuali_competitor": [
+        {
+          "id": "Botta",
+          "nome": "Botta",
+          "editore": "EdiErmes"
+        },
+        {
+          "id": "Brown",
+          "nome": "Brown",
+          "editore": "Edises"
+        },
+        {
+          "id": "Bruice",
+          "nome": "Bruice",
+          "editore": "Edises"
+        },
+        {
+          "id": "GorzynskiSmith",
+          "nome": "Gorzynski Smith",
+          "editore": "McGraw-Hill"
+        },
+        {
+          "id": "Wade",
+          "nome": "Wade",
+          "editore": "Piccin"
+        }
+      ],
+      "classi_laurea": [
+        "L-2",
+        "L-13",
+        "L-25",
+        "L-29",
+        "L-32",
+        "L-38",
+        "L-8/9"
+      ]
+    },
+    "chimica-generale": {
+      "id": "chimica-generale",
+      "nome": "Chimica Generale e Inorganica",
+      "descrizione": "Analisi programmi universitari di Chimica Generale con elementi di Chimica Inorganica",
+      "framework_file": "/frameworks/chimica_generale.json",
+      "manuali_zanichelli": [
+        {
+          "id": "Silberberg_Chimica",
+          "nome": "Silberberg - Chimica",
+          "prezzo": 85,
+          "pagine": 1200,
+          "file": "/manuali/Silberberg_Chimica.json"
+        },
+        {
+          "id": "Atkins_Jones",
+          "nome": "Atkins, Jones - Chimica Generale",
+          "prezzo": 78,
+          "pagine": 1100,
+          "file": "/manuali/Atkins_Jones.json"
+        }
+      ],
+      "manuali_competitor": [
+        {
+          "id": "Petrucci_Chimica",
+          "nome": "Petrucci - Chimica",
+          "editore": "Piccin",
+          "prezzo": 89,
+          "pagine": 1400,
+          "file": "/manuali/Petrucci_Chimica_Piccin.json"
+        },
+        {
+          "id": "Kotz_Chimica",
+          "nome": "Kotz - Chimica",
+          "editore": "EdiSES",
+          "prezzo": 82,
+          "pagine": 1250
+        },
+        {
+          "id": "Chang_Chimica",
+          "nome": "Chang - Chimica",
+          "editore": "McGraw-Hill",
+          "prezzo": 87,
+          "pagine": 1300
+        }
+      ],
+      "classi_laurea": [
+        "L-2",
+        "L-7",
+        "L-8",
+        "L-9",
+        "L-13",
+        "L-25",
+        "L-26",
+        "L-27",
+        "L-29",
+        "L-32",
+        "L-34",
+        "LM-13"
+      ]
+    }
+  }
+}
