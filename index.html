@@ -1218,7 +1218,7 @@ Usa SEMPRE virgolette doppie per le stringhe. Non usare apici singoli.
 Evita caratteri speciali non escapati nelle stringhe.
 
 PROGRAMMA DEL CORSO:
-${testo.substring(0, 3000)}
+${testo.substring(0, 8000)}
 
 CONTESTO:
 - Materia: ${materiaName}
@@ -1230,13 +1230,13 @@ Genera un JSON con questa struttura esatta:
 
 {
   "quadro_generale": {
-    "tipologia": "descrizione breve del tipo di corso (max 100 caratteri)",
+    "tipologia": "descrizione breve del tipo di corso (max 250 caratteri)",
     "distribuzione_tematica": [
       {"area": "nome area", "percentuale": 40},
       {"area": "altra area", "percentuale": 30}
     ],
     "livello_complessita": "base o intermedio o avanzato",
-    "note": "osservazioni generali (max 200 caratteri)"
+    "note": "osservazioni generali (max 400 caratteri)"
   },
   "profilo_pedagogico": {
     "approccio": "teorico o applicativo o sperimentale o interdisciplinare o misto",
@@ -1244,7 +1244,7 @@ Genera un JSON con questa struttura esatta:
     "enfasi": ["argomento1", "argomento2", "argomento3"],
     "stile": "classico o moderno o innovativo o tradizionale",
     "orientamento": "puro o applicato o misto",
-    "note": "caratteristiche distintive (max 150 caratteri)"
+    "note": "caratteristiche distintive (max 300 caratteri)"
   }
 }
 
@@ -1320,7 +1320,7 @@ CONTESTO:
 - Ore: ${ore || 'Non specificato'}
 
 TESTO PROGRAMMA:
-${testo.substring(0, 3000)}
+${testo}
 
 FRAMEWORK DI VALUTAZIONE (270 punti totali):
 
@@ -1412,7 +1412,7 @@ MATERIA: ${materiaName}
 FRAMEWORK: ${frameworkName}
 
 PROGRAMMA:
-${testo.substring(0, 3000)}
+${testo}
 
 CONTESTO:
 - Classe di Laurea: ${contesto}
@@ -1479,7 +1479,7 @@ MATERIA: ${materiaName}
 FRAMEWORK: ${frameworkName}
 
 PROGRAMMA:
-${testo.substring(0, 3000)}
+${testo}
 
 CONTESTO:
 - Classe di Laurea: ${contesto}
@@ -1576,7 +1576,7 @@ MANUALI ZANICHELLI DISPONIBILI:
 ${manualiInfo}
 
 PROGRAMMA DEL CORSO:
-${testo.substring(0, 2500)}
+${testo}
 
 CONTESTO:
 - Classe di Laurea: ${contesto}
