@@ -815,7 +815,7 @@
             const competitorHTML = competitor.map(manual => `
                 <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
                     <input type="checkbox" id="alt${manual.id}" value="${manual.id}" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                    <span class="text-sm text-gray-700">${manual.author ? `${manual.author} - ${manual.title}` : manual.title}</span>
+                    <span class="text-sm text-gray-700">${manual.author ? `${manual.author} - ${manual.title} (${manual.publisher})` : `${manual.title} (${manual.publisher})`}</span>
                 </label>
             `).join('');
             
