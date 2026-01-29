@@ -1523,6 +1523,111 @@ Rispondi SOLO con un JSON valido:
                     }
                 }
 
+                // Fase 4: Valutazione Manuali Zanichelli (DINAMICA)
+                updateLoadingText('Fase 4/5: Valutazione manuali consigliati...');
+                
+                // Filtra manuali Zanichelli per la materia corrente
+                const manualiZanichelliPerMateria = Object.values(MANUAL_CATALOG.manuals).filter(m => 
+                    m.type === 'zanichelli' && m.subject === materiaName
+                );
+                
+                console.log(`📚 Trovati ${manualiZanichelliPerMateria.length} manuali Zanichelli per ${materiaName}`);
+                
+                let zanichelliObj = null;
+                
+                if (manualiZanichelliPerMateria.length === 0) {
+                    console.warn('⚠️ Nessun manuale Zanichelli trovato per questa materia');
+                    zanichelliObj = {
+                        manuali: [],
+                        nota: `Nessun manuale Zanichelli disponibile nel catalogo per ${materiaName}`
+                    };
+                } else {
+                    // Genera valutazione dinamica per i manuali Zanichelli
+                    const manualiInfo = manualiZanichelliPerMateria.slice(0, 3).map((m, idx) => 
+                        `${idx + 1}. ${m.author} - ${m.title} (${m.pages} pag, €${m.price || 'N/D'})`
+                    ).join('\n');
+                    
+                    const zanichelliPrompt = `Sei un esperto valutatore di manuali universitari.
+
+Valuta la compatibilità dei seguenti manuali Zanichelli con questo programma di ${materiaName}:
+
+MANUALI ZANICHELLI DISPONIBILI:
+${manualiInfo}
+
+PROGRAMMA DEL CORSO:
+${testo.substring(0, 2500)}
+
+CONTESTO:
+- Classe di Laurea: ${contesto}
+- CFU: ${cfu || 'Non specificato'}
+- Ore: ${ore || 'Non specificato'}
+- Framework: ${frameworkName}
+
+PROFILO PEDAGOGICO (Fase 0):
+- Approccio: ${fase0.profilo_pedagogico.approccio}
+- Livello: ${fase0.profilo_pedagogico.livello}
+- Enfasi: ${fase0.profilo_pedagogico.enfasi.join(', ')}
+
+BIBLIOGRAFIA ADOTTATA:
+${Array.isArray(manuale) ? manuale.join(' + ') : manuale}
+
+COMPITO:
+Ordina i manuali Zanichelli per compatibilità con questo programma specifico.
+Per ogni manuale, valuta:
+
+1. COMPATIBILITÀ CON IL PROGRAMMA (0-100 punti):
+   - Copertura degli argomenti del programma
+   - Allineamento con il profilo pedagogico del docente
+   - Adeguatezza al livello del corso
+
+2. PUNTI DI FORZA:
+   - Aspetti distintivi del manuale
+   - Quando è particolarmente adatto
+
+3. GAP (se presenti):
+   - Argomenti del programma non coperti
+   - Limitazioni rispetto alle esigenze del corso
+
+4. RACCOMANDAZIONE:
+   - "RACCOMANDATO" per il manuale più compatibile
+   - "ALTERNATIVA" per gli altri manuali
+
+5. CONFRONTO CON BIBLIOGRAFIA ADOTTATA:
+   - Come il manuale Zanichelli si confronta con quello attualmente adottato
+   - Vantaggi specifici
+
+Rispondi SOLO con un JSON valido:
+{
+  "manuali": [
+    {
+      "nome": "nome completo manuale",
+      "autore": "autore",
+      "compatibilita": numero_0_100,
+      "punti_forza": ["forza1", "forza2", "forza3"],
+      "gap": ["gap1", "gap2"] oppure [],
+      "quando_preferirlo": "descrizione contesto ideale",
+      "confronto_bibliografia": "confronto con manuale adottato",
+      "raccomandazione": "RACCOMANDATO|ALTERNATIVA"
+    }
+  ],
+  "sintesi": "sintesi generale della valutazione"
+}`;
+
+                    try {
+                        const zanichelliResponse = await callLLM(zanichelliPrompt, 0.2);
+                        zanichelliObj = JSON.parse(sanitizeJSON(zanichelliResponse));
+                        console.log('✅ Valutazione Zanichelli completata:', zanichelliObj);
+                    } catch (error) {
+                        console.error('❌ Errore valutazione Zanichelli:', error);
+                        zanichelliObj = {
+                            manuali: [],
+                            errore: error.message,
+                            nota: 'Impossibile completare la valutazione Zanichelli'
+                        };
+                    }
+                }
+                
+                /* VECCHIA FASE 4 - DISABILITATA
                 // Fase 4: Valutazione Zanichelli (TEMPERATURE ABBASSATA A 0.1)
                 updateLoadingText('Fase 4/5: Valutazione compatibilità Zanichelli...');
                 
@@ -1645,7 +1750,8 @@ Rispondi SOLO con un JSON valido:
 }`, 0.1);
 
                 const zanichelliObj = JSON.parse(sanitizeJSON(zanichelli));
-
+                */  // FINE VECCHIA FASE 4 - DISABILITATA
+                
                 // Crea risultato
                 currentProgramma = {
                     id: Date.now(),
