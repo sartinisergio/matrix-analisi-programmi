@@ -2310,12 +2310,149 @@ Rispondi SOLO con un JSON valido:
                     <!-- Sezione 3: Valutazione Zanichelli -->
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <h3 class="text-xl font-bold mb-4 flex items-center">
-                            <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span>
-                            Valutazione Compatibilità Manuale Zanichelli
+                            <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">4</span>
+                            Valutazione Compatibilità Manuali Consigliati
                         </h3>
                         
-                        <!-- Manuale Raccomandato -->
-                        ${prog.zanichelli.raccomandato ? `
+                        ${prog.zanichelli.nota ? `
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                <p class="text-sm text-yellow-700">${prog.zanichelli.nota}</p>
+                            </div>
+                        ` : ''}
+                        
+                        ${prog.zanichelli.manuali?.length ? `
+                            <!-- NUOVA STRUTTURA DINAMICA -->
+                            ${prog.zanichelli.manuali.map((manuale, idx) => `
+                                <div class="${manuale.raccomandazione === 'RACCOMANDATO' ? 'bg-green-50 border-2 border-green-500' : 'bg-gray-50 border-2 border-gray-300'} rounded-lg p-6 ${idx > 0 ? 'mt-4' : ''}">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="flex items-center">
+                                            ${manuale.raccomandazione === 'RACCOMANDATO' ? 
+                                                '<span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">⭐ RACCOMANDATO</span>' : 
+                                                '<span class="bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">↔️ ALTERNATIVA</span>'
+                                            }
+                                            <h4 class="text-xl font-bold ${manuale.raccomandazione === 'RACCOMANDATO' ? 'text-green-900' : 'text-gray-900'}">${manuale.autore} - ${manuale.nome}</h4>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-3xl font-bold text-indigo-600">${manuale.compatibilita}<span class="text-lg text-gray-400">/100</span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                        ${manuale.punti_forza?.length ? `
+                                            <div>
+                                                <h5 class="text-sm font-medium text-gray-700 mb-2">✅ Punti di Forza</h5>
+                                                <ul class="space-y-1">
+                                                    ${manuale.punti_forza.map(pf => 
+                                                        `<li class="text-sm text-gray-600 flex items-start">
+                                                            <span class="text-green-600 mr-2">•</span>${pf}
+                                                        </li>`
+                                                    ).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+
+                                        ${manuale.gap?.length ? `
+                                            <div>
+                                                <h5 class="text-sm font-medium text-gray-700 mb-2">⚠️ Gap (se presenti)</h5>
+                                                <ul class="space-y-1">
+                                                    ${manuale.gap.map(g => 
+                                                        `<li class="text-sm text-gray-600 flex items-start">
+                                                            <span class="text-yellow-600 mr-2">•</span>${g}
+                                                        </li>`
+                                                    ).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+
+                                    ${manuale.quando_preferirlo ? `
+                                        <div class="bg-white rounded-lg p-4 mt-4">
+                                            <h5 class="text-sm font-medium text-gray-700 mb-2">💡 Quando Preferirlo</h5>
+                                            <p class="text-sm text-gray-600">${manuale.quando_preferirlo}</p>
+                                        </div>
+                                    ` : ''}
+
+                                    ${manuale.confronto_bibliografia ? `
+                                        <div class="bg-white rounded-lg p-4 mt-4">
+                                            <h5 class="text-sm font-medium text-gray-700 mb-2">📚 Confronto con Bibliografia Adottata</h5>
+                                            <p class="text-sm text-gray-600">${manuale.confronto_bibliografia}</p>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                            
+                            ${prog.zanichelli.sintesi ? `
+                                <div class="bg-indigo-50 rounded-lg p-4 mt-6">
+                                    <h4 class="text-sm font-medium text-indigo-900 mb-2">📋 Sintesi Generale</h4>
+                                    <p class="text-sm text-indigo-800">${prog.zanichelli.sintesi}</p>
+                                </div>
+                            ` : ''}
+                        ` : prog.zanichelli.raccomandato ? `
+                            <!-- VECCHIA STRUTTURA (BACKWARD COMPATIBILITY) -->
+                            <div class="${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'bg-blue-50 border-2 border-blue-500' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'bg-green-50 border-2 border-green-500' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-50 border-2 border-yellow-500' : 'bg-green-50 border-2 border-green-500'} rounded-lg p-6 mb-6">
+                                <div class="flex items-center mb-4">
+                                    <span class="${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'bg-blue-600' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'bg-green-600' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-600' : 'bg-green-600'} text-white px-3 py-1 rounded-full text-sm font-bold mr-3">${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? '✅ MANTENERE' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? '⬆️ UPGRADE' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? '⬇️ DOWNGRADE' : '⭐ RACCOMANDATO'}</span>
+                                    <h4 class="text-xl font-bold ${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'text-blue-900' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'text-green-900' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'text-yellow-900' : 'text-green-900'}">${prog.zanichelli.raccomandato.titolo}</h4>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Compatibilità</p>
+                                        <p class="text-2xl font-bold ${getCompatibilitaColor(prog.zanichelli.raccomandato.compatibilita)}">${prog.zanichelli.raccomandato.compatibilita}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Punteggio</p>
+                                        <p class="text-2xl font-bold text-green-600">${prog.zanichelli.raccomandato.punteggio}/100</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Prezzo</p>
+                                        <p class="text-2xl font-bold text-gray-900">${prog.zanichelli.raccomandato.prezzo}</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    ${prog.zanichelli.raccomandato.punti_forza?.length ? `
+                                        <div>
+                                            <h5 class="text-sm font-medium text-gray-700 mb-2">✅ Punti di Forza</h5>
+                                            <ul class="space-y-1">
+                                                ${prog.zanichelli.raccomandato.punti_forza.map(pf => 
+                                                    `<li class="text-sm text-gray-600 flex items-start">
+                                                        <span class="text-green-600 mr-2">•</span>${pf}
+                                                    </li>`
+                                                ).join('')}
+                                            </ul>
+                                        </div>
+                                    ` : ''}
+
+                                    ${prog.zanichelli.raccomandato.gap?.length ? `
+                                        <div>
+                                            <h5 class="text-sm font-medium text-gray-700 mb-2">⚠️ Gap</h5>
+                                            <ul class="space-y-1">
+                                                ${prog.zanichelli.raccomandato.gap.map(g => 
+                                                    `<li class="text-sm text-gray-600 flex items-start">
+                                                        <span class="text-yellow-600 mr-2">•</span>${g}
+                                                    </li>`
+                                                ).join('')}
+                                            </ul>
+                                        </div>
+                                    ` : ''}
+                                </div>
+
+                                ${prog.zanichelli.raccomandato.quando_preferirlo ? `
+                                    <div class="bg-white rounded-lg p-4 mt-4">
+                                        <h5 class="text-sm font-medium text-gray-700 mb-2">💡 Quando Preferirlo</h5>
+                                        <p class="text-sm text-gray-600">${prog.zanichelli.raccomandato.quando_preferirlo}</p>
+                                    </div>
+                                ` : ''}
+
+                                ${prog.zanichelli.raccomandato.confronto_bibliografia ? `
+                                    <div class="bg-white rounded-lg p-4 mt-4">
+                                        <h5 class="text-sm font-medium text-gray-700 mb-2">📚 Confronto con Bibliografia Adottata</h5>
+                                        <p class="text-sm text-gray-600">${prog.zanichelli.raccomandato.confronto_bibliografia}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
                             <div class="${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'bg-blue-50 border-2 border-blue-500' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'bg-green-50 border-2 border-green-500' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-50 border-2 border-yellow-500' : 'bg-green-50 border-2 border-green-500'} rounded-lg p-6 mb-6">
                                 <div class="flex items-center mb-4">
                                     <span class="${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? 'bg-blue-600' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? 'bg-green-600' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? 'bg-yellow-600' : 'bg-green-600'} text-white px-3 py-1 rounded-full text-sm font-bold mr-3">${prog.zanichelli.raccomandato.raccomandazione === 'MANTENERE' ? '✅ MANTENERE' : prog.zanichelli.raccomandato.raccomandazione === 'UPGRADE' ? '⬆️ UPGRADE' : prog.zanichelli.raccomandato.raccomandazione === 'DOWNGRADE' ? '⬇️ DOWNGRADE' : '⭐ RACCOMANDATO'}</span>
