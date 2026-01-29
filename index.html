@@ -30,7 +30,7 @@
                             <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">v1.0</span>
                             <span id="apiKeyBadge" class="hidden px-2 py-1 text-xs font-medium rounded-full"></span>
                         </div>
-                        <p class="text-sm text-gray-500">Chimica Organica - Zanichelli (Raccomandazioni Deterministiche)</p>
+                        <p id="headerSubtitle" class="text-sm text-gray-500">Multi-Analysis Teaching Resource Intelligence X-platform</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -685,6 +685,7 @@
             try {
                 const framework = await fetch(frameworkPath).then(r => r.json());
                 CURRENT_FRAMEWORK = framework;
+                window.lastFrameworkPath = frameworkPath; // Salva per uso in avviaAnalisi()
                 
                 console.log('✅ Framework caricato:', frameworkPath);
                 
@@ -705,6 +706,12 @@
                 const displayName = frameworkPath.split('/').pop().replace('.json', '');
                 document.getElementById('frameworkInfo').style.display = 'block';
                 document.getElementById('frameworkName').textContent = displayName;
+                
+                // Aggiorna subtitle header
+                const headerSubtitle = document.getElementById('headerSubtitle');
+                if (headerSubtitle && frameworkObj) {
+                    headerSubtitle.textContent = `${frameworkObj.name} - Analisi Multi-Editore`;
+                }
                 
             } catch (error) {
                 console.error('❌ Errore caricamento framework:', error);
@@ -1169,6 +1176,20 @@
                 showError('Seleziona contesto didattico e manuale adottato');
                 return;
             }
+            
+            // Verifica che sia stato selezionato un framework
+            if (!CURRENT_FRAMEWORK) {
+                showError('Seleziona prima una materia e un framework specifico');
+                return;
+            }
+            
+            // Estrai il nome del framework dal catalogo o usa un fallback
+            const frameworkInfo = FRAMEWORK_CATALOG?.frameworks?.find(f => f.filepath === window.lastFrameworkPath);
+            const frameworkName = frameworkInfo ? frameworkInfo.name : 'del corso';
+            const materiaName = frameworkInfo ? frameworkInfo.subject : 'la materia selezionata';
+            
+            console.log('📚 Framework selezionato:', frameworkName);
+            console.log('📖 Materia:', materiaName);
 
             if (!testo) {
                 showError('Carica un file o incolla il testo del programma');
@@ -1241,7 +1262,7 @@ Rispondi SOLO con un JSON valido, senza altri testi:
 
                 // Fase 1: Estrai metadata
                 updateLoadingText('Fase 1/5: Estrazione metadata...');
-                const metadata = await callLLM( `Analizza il seguente programma universitario di chimica organica ed estrai i seguenti metadati:
+                const metadata = await callLLM( `Analizza il seguente programma universitario di ${materiaName} ed estrai i seguenti metadati:
 
 Testo del programma:
 ${testo.substring(0, 2000)}
@@ -1264,7 +1285,7 @@ Rispondi SOLO con un JSON valido, senza altri testi:
 
                 // Fase 2: Analizza programma (TEMPERATURE ABBASSATA A 0.1 per massima coerenza)
                 updateLoadingText('Fase 2/5: Valutazione programma (5 dimensioni)...');
-                const valutazione = await callLLM( `Analizza questo programma universitario di chimica organica secondo il FRAMEWORK DI VALUTAZIONE STRUTTURATO.
+                const valutazione = await callLLM( `Analizza questo programma universitario di ${materiaName} secondo il FRAMEWORK DI VALUTAZIONE STRUTTURATO.
 
 CONTESTO:
 - Classe di Laurea: ${contesto}
@@ -1629,6 +1650,8 @@ Rispondi SOLO con un JSON valido:
                 currentProgramma = {
                     id: Date.now(),
                     ...metadataObj,
+                    framework_name: frameworkName, // Nome del framework selezionato
+                    materia: materiaName, // Nome della materia
                     contesto: contesto,
                     manuale_adottato: manuale === 'Altro' ? manualeNomePersonalizzato : manuale,
                     manuale_adottato_tipo: manuale, // 'Altro' o nome manuale standard
@@ -2431,7 +2454,7 @@ Rispondi SOLO con un JSON valido:
             // Intestazione
             doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
-            doc.text('Analisi Programma Chimica Organica', margin, y);
+            doc.text(`Analisi Programma ${prog.framework_name || prog.denominazione_corso}`, margin, y);
             y += 10;
             
             doc.setFontSize(10);
@@ -2708,7 +2731,7 @@ MATRICE DI VALUTAZIONE:
 ${JSON.stringify(matrice, null, 2)}
 
 COMPITO:
-Identifica 3-5 argomenti/temi di chimica organica particolarmente rilevanti per la classe di laurea ${classeLaurea}.
+Identifica 3-5 argomenti/temi di ${ultimaAnalisi.materia || ultimaAnalisi.framework_name || 'la materia'} particolarmente rilevanti per la classe di laurea ${classeLaurea}.
 Per OGNI argomento, identifica il capitolo e le pagine specifiche del manuale Zanichelli dove viene trattato.
 
 REGOLE:
