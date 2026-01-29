@@ -1299,7 +1299,10 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`, 0.1);
                 updateLoadingText('Fase 2/5: Valutazione programma (5 dimensioni)...');
                 
                 // Costruzione dinamica del prompt basato sul framework caricato
-                const frameworkData = window.currentFramework;
+                const frameworkData = CURRENT_FRAMEWORK;
+                if (!frameworkData || !frameworkData.content) {
+                    throw new Error('Framework non caricato. Seleziona prima un framework valido.');
+                }
                 const moduliList = frameworkData.content.syllabus_modules.map((mod, idx) => {
                     const modNum = String(idx + 1).padStart(2, '0');
                     const keyConcepts = mod.key_concepts.map(k => typeof k === 'string' ? k : k.concetto).join(', ');
@@ -1383,7 +1386,10 @@ Rispondi SOLO con un JSON valido:
                 const manualeInfo = MANUALI_DB[manuale] || {};
                 
                 // Costruzione dinamica del prompt basato sul framework caricato
-                const frameworkData3 = window.currentFramework;
+                const frameworkData3 = CURRENT_FRAMEWORK;
+                if (!frameworkData3 || !frameworkData3.content) {
+                    throw new Error('Framework non caricato. Seleziona prima un framework valido.');
+                }
                 const moduliList3 = frameworkData3.content.syllabus_modules.map((mod, idx) => {
                     const modNum = String(idx + 1).padStart(2, '0');
                     return `   - MOD-${modNum} ${mod.name}`;
