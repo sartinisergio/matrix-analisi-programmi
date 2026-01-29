@@ -1208,7 +1208,10 @@
             try {
                 // Fase 0: Analisi Preliminare (Quadro Generale + Profilo Pedagogico)
                 updateLoadingText('Fase 0/5: Analisi preliminare del programma...');
-                const analisiPreliminare = await callLLM(`Sei un esperto analista di programmi didattici universitari.
+                
+                let fase0;
+                try {
+                    const analisiPreliminare = await callLLM(`Sei un esperto analista di programmi didattici universitari.
 
 Analizza il seguente programma del corso e genera:
 
@@ -1253,16 +1256,24 @@ Rispondi SOLO con un JSON valido, senza altri testi:
   }
 }`, 0.2);
 
-                const fase0 = JSON.parse(sanitizeJSON(analisiPreliminare));
-                
-                // Salva fase 0 per uso successivo
-                window.currentAnalisiPreliminare = fase0;
-                
-                console.log('✅ Fase 0 completata:', fase0);
+                    console.log('📝 Risposta Fase 0 (lunghezza):', analisiPreliminare.length);
+                    fase0 = JSON.parse(sanitizeJSON(analisiPreliminare));
+                    
+                    // Salva fase 0 per uso successivo
+                    window.currentAnalisiPreliminare = fase0;
+                    
+                    console.log('✅ Fase 0 completata:', fase0);
+                } catch (error) {
+                    console.error('❌ ERRORE Fase 0:', error.message);
+                    throw new Error('Fase 0 fallita: ' + error.message);
+                }
 
                 // Fase 1: Estrai metadata
                 updateLoadingText('Fase 1/5: Estrazione metadata...');
-                const metadata = await callLLM( `Analizza il seguente programma universitario di ${materiaName} ed estrai i seguenti metadati:
+                
+                let metadataObj;
+                try {
+                    const metadata = await callLLM( `Analizza il seguente programma universitario di ${materiaName} ed estrai i seguenti metadati:
 
 Testo del programma:
 ${testo.substring(0, 2000)}
@@ -1281,7 +1292,13 @@ Rispondi SOLO con un JSON valido, senza altri testi:
   "docente": "..."
 }`, 0.3);
 
-                const metadataObj = JSON.parse(sanitizeJSON(metadata));
+                    console.log('📝 Risposta Fase 1 (lunghezza):', metadata.length);
+                    metadataObj = JSON.parse(sanitizeJSON(metadata));
+                    console.log('✅ Fase 1 completata:', metadataObj);
+                } catch (error) {
+                    console.error('❌ ERRORE Fase 1:', error.message);
+                    throw new Error('Fase 1 fallita: ' + error.message);
+                }
 
                 // Fase 2: Analizza programma (TEMPERATURE ABBASSATA A 0.1 per massima coerenza)
                 updateLoadingText('Fase 2/5: Valutazione programma (5 dimensioni)...');
@@ -1801,36 +1818,70 @@ Rispondi SOLO con un JSON valido:
             // Rimuovi markdown code blocks
             text = text.replace(/```json|```/g, '').trim();
             
+            // Rimuovi eventuali testi prima/dopo il JSON
+            // Cerca il primo { e l'ultimo }
+            const firstBrace = text.indexOf('{');
+            const lastBrace = text.lastIndexOf('}');
+            
+            if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+                text = text.substring(firstBrace, lastBrace + 1);
+            }
+            
             // Prova prima il parsing diretto
             try {
                 JSON.parse(text);
                 return text; // Se funziona, ritorna così com'è
             } catch (e) {
                 // Se fallisce, prova a riparare il JSON
-                console.log('JSON non valido, tento riparazione:', e.message);
+                console.log('⚠️ JSON non valido, tento riparazione:', e.message);
+                console.log('📄 Primi 500 caratteri:', text.substring(0, 500));
                 
-                // Strategia: trova e sostituisci caratteri di controllo dentro le stringhe
-                // Usa una regex per trovare tutte le stringhe JSON e sanitizzarle
-                let fixed = text.replace(/"([^"]*)"/g, (match, content) => {
-                    // Escapa caratteri di controllo dentro le stringhe
+                // Strategia 1: Rimuovi caratteri di controllo
+                let fixed = text
+                    .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Rimuovi caratteri di controllo
+                    .replace(/\n/g, ' ') // Sostituisci newline con spazio
+                    .replace(/\r/g, ' ') // Sostituisci carriage return
+                    .replace(/\t/g, ' '); // Sostituisci tab
+                
+                // Strategia 2: Fixa virgole mancanti o extra
+                fixed = fixed
+                    .replace(/,\s*([}\]])/g, '$1') // Rimuovi virgole prima di } o ]
+                    .replace(/([}\]])\s*([^,}\]])/g, '$1,$2'); // Aggiungi virgole mancanti
+                
+                // Strategia 3: Fixa apici non escaped
+                fixed = fixed.replace(/"([^"\\]*(?:\\.[^"\\]*)*)"/g, (match, content) => {
+                    // Escape caratteri speciali dentro le stringhe
                     let sanitized = content
-                        .replace(/\n/g, '\\n')  // A capo
-                        .replace(/\r/g, '\\r')  // Carriage return
-                        .replace(/\t/g, '\\t')  // Tab
-                        .replace(/\f/g, '\\f')  // Form feed
-                        .replace(/\b/g, '\\b'); // Backspace
+                        .replace(/\\/g, '\\\\')  // Escape backslash
+                        .replace(/"/g, '\\"')    // Escape quote
+                        .replace(/\n/g, '\\n')   // Escape newline
+                        .replace(/\r/g, '\\r')   // Escape carriage return
+                        .replace(/\t/g, '\\t');  // Escape tab
                     return '"' + sanitized + '"';
                 });
                 
                 // Verifica se ora funziona
                 try {
                     JSON.parse(fixed);
-                    console.log('JSON riparato con successo!');
+                    console.log('✅ JSON riparato con successo!');
                     return fixed;
                 } catch (e2) {
-                    console.error('Impossibile riparare il JSON:', e2.message);
-                    console.error('JSON originale:', text.substring(0, 500));
-                    throw new Error('JSON non valido anche dopo sanitizzazione: ' + e2.message);
+                    console.error('❌ Impossibile riparare il JSON:', e2.message);
+                    console.error('📄 JSON originale (primi 800 caratteri):', text.substring(0, 800));
+                    console.error('🔧 JSON riparato (primi 800 caratteri):', fixed.substring(0, 800));
+                    
+                    // Ultimo tentativo: prova con json-repair library logic
+                    // (implementazione manuale di fix comuni)
+                    try {
+                        // Strategia 4: Aggiungi virgolette mancanti alle chiavi
+                        let lastFix = fixed.replace(/([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:/g, '$1"$2":');
+                        JSON.parse(lastFix);
+                        console.log('✅ JSON riparato con fix chiavi!');
+                        return lastFix;
+                    } catch (e3) {
+                        console.error('❌ Tutti i tentativi di riparazione falliti');
+                        throw new Error('JSON non valido anche dopo sanitizzazione: ' + e2.message);
+                    }
                 }
             }
         }
