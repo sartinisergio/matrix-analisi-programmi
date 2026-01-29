@@ -1302,9 +1302,24 @@ Rispondi SOLO con un JSON valido, senza altri testi:
 
                 // Fase 2: Analizza programma (TEMPERATURE ABBASSATA A 0.1 per massima coerenza)
                 updateLoadingText('Fase 2/5: Valutazione programma (5 dimensioni)...');
+                
+                // Costruzione dinamica del prompt basato sul framework caricato
+                const frameworkData = window.currentFramework;
+                const moduliList = frameworkData.content.syllabus_modules.map((mod, idx) => {
+                    const modNum = String(idx + 1).padStart(2, '0');
+                    const keyConcepts = mod.key_concepts.map(k => typeof k === 'string' ? k : k.concetto).join(', ');
+                    return `   MOD-${modNum} ${mod.name} (0-13): ${keyConcepts}`;
+                }).join('\n');
+                
+                const profilesList = frameworkData.content.program_profiles.map(prof => {
+                    return `   - ${prof.name}: ${prof.priority_modules}`;
+                }).join('\n');
+                
                 const valutazione = await callLLM( `Analizza questo programma universitario di ${materiaName} secondo il FRAMEWORK DI VALUTAZIONE STRUTTURATO.
 
 CONTESTO:
+- Materia: ${materiaName}
+- Framework: ${frameworkName}
 - Classe di Laurea: ${contesto}
 - CFU: ${cfu || 'Non specificato'}
 - Ore: ${ore || 'Non specificato'}
@@ -1321,27 +1336,12 @@ FRAMEWORK DI VALUTAZIONE (270 punti totali):
    - Interdisciplinarità (0-10): Collegamenti con altre discipline
 
 2. CONTENUTI PROGRAMMATICI (max 130 punti):
-   Valuta la copertura dei 10 MODULI CORE basandoti sulle PRIORITÀ per ${contesto}:
+   Valuta la copertura dei MODULI del framework ${frameworkName} basandoti sulle PRIORITÀ per ${contesto}:
    
-   MOD-01 Struttura e legami (0-13): Ibridazione, geometria, legami H
-   MOD-02 Nomenclatura (0-13): IUPAC generale e avanzata
-   MOD-03 Gruppi funzionali (0-13): Identificazione e proprietà
-   MOD-04 Stereochimica (0-13): Isomeria, chiralità, attività ottica
-   MOD-05 Meccanismi di reazione (0-13): SN1/SN2, SEA, addizioni, eliminazioni, radicali, cinetica
-   MOD-06 Composti aromatici (0-13): Aromaticità e reazioni
-   MOD-07 Carbonilici e derivati (0-13): Aldeidi, chetoni, acidi, condensazioni
-   MOD-08 Polimeri e macromolecole (0-13): Classificazione, meccanismi, proprietà
-   MOD-09 Chimica biomolecole (0-13): Carboidrati, amminoacidi, lipidi, acidi nucleici, metabolismo
-   MOD-10 Tecniche sperimentali (0-13): Sintesi, IR, UV, NMR, Massa, Cromatografia
+${moduliList}
    
-   PRIORITÀ SPECIFICHE PER ${contesto}:
-   - L-2 Biotecnologie: MOD-09 (biomolecole) FONDAMENTALE, MOD-10 (tecniche) FONDAMENTALE
-   - L-13 Scienze Biologiche: MOD-09 (biomolecole) FONDAMENTALE, MOD-04 (stereochimica) FONDAMENTALE
-   - L-25 Agraria: MOD-03 (gruppi funzionali) priorità per applicazioni agronomiche
-   - L-29 Scienze Farmaceutiche: MOD-04 (stereochimica) CRITICO, MOD-02 (nomenclatura) FONDAMENTALE
-   - L-8/9 Ingegneria: MOD-08 (polimeri) FONDAMENTALE, MOD-10 (tecniche) FONDAMENTALE
-   - L-32 Scienze Naturali/Ambientali: MOD-08-ARG-05 (degradazione ambientale) FONDAMENTALE
-   - L-38 Scienze Zootecniche: MOD-09 (biomolecole) FONDAMENTALE
+   PRIORITÀ SPECIFICHE PER CLASSE DI LAUREA:
+${profilesList}
    
    Organizzazione didattica e materiale (0-13): Qualità supporti, esercizi, esempi
 
@@ -1387,20 +1387,34 @@ Rispondi SOLO con un JSON valido:
                 updateLoadingText('Fase 3/5: Analisi gap con manuale adottato...');
                 const manualeInfo = MANUALI_DB[manuale] || {};
                 
+                // Costruzione dinamica del prompt basato sul framework caricato
+                const frameworkData3 = window.currentFramework;
+                const moduliList3 = frameworkData3.content.syllabus_modules.map((mod, idx) => {
+                    const modNum = String(idx + 1).padStart(2, '0');
+                    return `   - MOD-${modNum} ${mod.name}`;
+                }).join('\n');
+                
+                const profilesList3 = frameworkData3.content.program_profiles.map(prof => {
+                    return `   - ${prof.name}: ${prof.priority_modules}`;
+                }).join('\n');
+                
                 // Prompt diverso per Base vs Avanzata
                 const istruzioniDettaglio = tipoAnalisi === 'avanzata' ? `
 MODALITÀ ANALISI AVANZATA:
-- Per ogni punto di forza/debolezza, fornisci una spiegazione dettagliata (1-2 frasi) con esempi concreti
+- Per ogni punto di forza/debolezza, fornisci una spiegazione dettagliata (1-2 frasi) con esempi concreti dal contenuto del manuale
 - Nel campo "note", scrivi un'analisi dettagliata (100-150 parole) che spieghi:
   * Come il manuale tratta gli argomenti chiave del programma
-  * Limitazioni specifiche con esempi concreti (es. "quando spiega l'addizione elettrofila, si concentra su...")
-  * Conseguenze per gli studenti (es. "questo impedisce agli studenti di...")
+  * Limitazioni specifiche con esempi concreti
+  * Conseguenze per gli studenti
 - Usa linguaggio descrittivo e professionale, evita percentuali generiche` : `
 MODALITÀ ANALISI BASE:
 - Punti di forza/debolezza sintetici (1 frase ciascuno)
 - Note concise (50-100 parole)`;
                 
-                const gapManuale = await callLLM( `Valuta il manuale "${manuale}" (${manualeInfo.editore || ''}) rispetto a questo programma usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
+                const gapManuale = await callLLM( `Valuta il manuale "${manuale}" (${manualeInfo.editore || ''}) rispetto a questo programma di ${materiaName} usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
+
+MATERIA: ${materiaName}
+FRAMEWORK: ${frameworkName}
 
 PROGRAMMA:
 ${testo.substring(0, 3000)}
@@ -1408,6 +1422,7 @@ ${testo.substring(0, 3000)}
 CONTESTO:
 - Classe di Laurea: ${contesto}
 - CFU: ${cfu || 'Non specificato'}
+- Ore: ${ore || 'Non specificato'}
 
 CARATTERISTICHE MANUALE ${manuale}:
 ${JSON.stringify(manualeInfo.caratteristiche || [])}
@@ -1419,16 +1434,11 @@ Valuta il manuale su 5 criteri principali considerando le PRIORITÀ per ${contes
    - Completezza, Chiarezza, Coerenza standard, Interdisciplinarità
 
 2. CONTENUTI PROGRAMMATICI (max 130):
-   Valuta copertura dei 10 MODULI rispetto al programma:
-   - MOD-01 Struttura/legami, MOD-02 Nomenclatura, MOD-03 Gruppi funzionali
-   - MOD-04 Stereochimica, MOD-05 Meccanismi, MOD-06 Aromatici
-   - MOD-07 Carbonilici, MOD-08 Polimeri, MOD-09 Biomolecole, MOD-10 Tecniche
+   Valuta copertura dei MODULI del framework ${frameworkName} rispetto al programma:
+${moduliList3}
    
-   PRIORITÀ ${contesto}:
-   - L-2/L-13: MOD-09 (biomolecole) e MOD-10 (tecniche) CRITICI
-   - L-29: MOD-04 (stereochimica) e MOD-02 (nomenclatura) CRITICI
-   - L-8/9: MOD-08 (polimeri) e MOD-10 (tecniche) CRITICI
-   - L-32: MOD-08-ARG-05 (degradazione ambientale) CRITICO
+   PRIORITÀ SPECIFICHE PER CLASSE DI LAUREA:
+${profilesList3}
 
 3. METODOLOGIA DIDATTICA (max 40):
    - Didattica attiva, Materiali, Valutazione, Supporto studente
@@ -1468,7 +1478,10 @@ Rispondi SOLO con un JSON valido:
                     
                     for (const manualeAlt of manualiAlternativi) {
                         const manualeInfo = MANUALI_DB[manualeAlt] || {};
-                        const gapAlt = await callLLM(`Valuta il manuale "${manualeAlt}" (${manualeInfo.editore || ''}) rispetto a questo programma usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
+                        const gapAlt = await callLLM(`Valuta il manuale "${manualeAlt}" (${manualeInfo.editore || ''}) rispetto a questo programma di ${materiaName} usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
+
+MATERIA: ${materiaName}
+FRAMEWORK: ${frameworkName}
 
 PROGRAMMA:
 ${testo.substring(0, 3000)}
@@ -1476,6 +1489,7 @@ ${testo.substring(0, 3000)}
 CONTESTO:
 - Classe di Laurea: ${contesto}
 - CFU: ${cfu || 'Non specificato'}
+- Ore: ${ore || 'Non specificato'}
 
 CARATTERISTICHE MANUALE ${manualeAlt}:
 ${JSON.stringify(manualeInfo.caratteristiche || [])}
@@ -1487,16 +1501,11 @@ Valuta il manuale su 5 criteri principali considerando le PRIORITÀ per ${contes
    - Completezza, Chiarezza, Coerenza standard, Interdisciplinarità
 
 2. CONTENUTI PROGRAMMATICI (max 130):
-   Valuta copertura dei 10 MODULI rispetto al programma:
-   - MOD-01 Struttura/legami, MOD-02 Nomenclatura, MOD-03 Gruppi funzionali
-   - MOD-04 Stereochimica, MOD-05 Meccanismi, MOD-06 Aromatici
-   - MOD-07 Carbonilici, MOD-08 Polimeri, MOD-09 Biomolecole, MOD-10 Tecniche
+   Valuta copertura dei MODULI del framework ${frameworkName} rispetto al programma:
+${moduliList3}
    
-   PRIORITÀ ${contesto}:
-   - L-2/L-13: MOD-09 (biomolecole) e MOD-10 (tecniche) CRITICI
-   - L-29: MOD-04 (stereochimica) e MOD-02 (nomenclatura) CRITICI
-   - L-8/9: MOD-08 (polimeri) e MOD-10 (tecniche) CRITICI
-   - L-32: MOD-08-ARG-05 (degradazione ambientale) CRITICO
+   PRIORITÀ SPECIFICHE PER CLASSE DI LAUREA:
+${profilesList3}
 
 3. METODOLOGIA DIDATTICA (max 40):
    - Didattica attiva, Materiali, Valutazione, Supporto studente
