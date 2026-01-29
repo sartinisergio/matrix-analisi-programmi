@@ -681,23 +681,35 @@
         }
 
         // Carica framework JSON e popola form
-        async function loadFramework(frameworkPath, frameworkSubject) {
+        async function loadFramework(frameworkPath, frameworkName) {
             try {
                 const framework = await fetch(frameworkPath).then(r => r.json());
                 CURRENT_FRAMEWORK = framework;
                 
-                console.log('✅ Framework caricato:', frameworkPath);
+                console.log('✅ Framework caricato:', frameworkPath, 'Nome:', frameworkName);
                 
                 // Popola contesti dal framework
                 populateContestoSelect(framework.content.program_profiles);
                 
-                // Popola manuali filtrati per subject
-                populateManualeSelect(frameworkSubject);
+                // Determina il subject corretto per i manuali basandosi sul nome del framework
+                let manualSubject = frameworkName;
+                
+                // Mapping specifico per Chimica
+                if (frameworkName.includes('Generale') || frameworkName.includes('Inorganica')) {
+                    manualSubject = 'Chimica Generale';
+                } else if (frameworkName.includes('Organica')) {
+                    manualSubject = 'Chimica Organica';
+                }
+                
+                console.log('🔍 Filtro manuali per subject:', manualSubject);
+                
+                // Popola manuali filtrati per subject corretto
+                populateManualeSelect(manualSubject);
                 
                 // Mostra conferma
-                const frameworkName = frameworkPath.split('/').pop().replace('.json', '');
+                const displayName = frameworkPath.split('/').pop().replace('.json', '');
                 document.getElementById('frameworkInfo').style.display = 'block';
-                document.getElementById('frameworkName').textContent = frameworkName;
+                document.getElementById('frameworkName').textContent = displayName;
                 
             } catch (error) {
                 console.error('❌ Errore caricamento framework:', error);
@@ -809,9 +821,9 @@
                     if (!frameworkPath) return;
                     
                     const selectedOption = this.options[this.selectedIndex];
-                    const frameworkSubject = selectedOption.dataset.subject;
+                    const frameworkName = selectedOption.textContent; // Nome completo del framework
                     
-                    loadFramework(frameworkPath, frameworkSubject);
+                    loadFramework(frameworkPath, frameworkName);
                 });
             }
             checkApiKey();
