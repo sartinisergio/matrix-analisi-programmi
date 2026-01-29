@@ -16,31 +16,45 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
+    <!-- Header MATRIX -->
+    <header class="bg-gradient-to-r from-green-600 to-green-700 shadow-lg border-b border-green-800">
         <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <svg class="h-8 w-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
+                <div class="flex items-center space-x-4">
+                    <!-- Logo MATRIX -->
+                    <div class="bg-white rounded-lg p-2 shadow-md">
+                        <span class="text-3xl">🎓</span>
+                    </div>
                     <div>
                         <div class="flex items-center space-x-2">
-                            <h1 class="text-2xl font-bold text-gray-900">Analisi Programmi v6.0</h1>
-                            <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">FASE C - STEP 1</span>
+                            <h1 class="text-2xl font-bold text-white">MATRIX</h1>
+                            <span class="px-2 py-1 text-xs font-medium bg-yellow-400 text-yellow-900 rounded-full">v1.0</span>
                             <span id="apiKeyBadge" class="hidden px-2 py-1 text-xs font-medium rounded-full"></span>
                         </div>
-                        <p class="text-sm text-gray-500">Chimica Organica - Zanichelli (Raccomandazioni Deterministiche)</p>
+                        <p class="text-sm text-green-100">Multi-Analysis Teaching Resource Intelligence X-platform</p>
                     </div>
                 </div>
+                
+                <!-- Controlli destra -->
                 <div class="flex items-center space-x-2">
-                    <button onclick="showView('upload')" id="btnUpload" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                    <!-- Dropdown Selezione Materia -->
+                    <div class="relative">
+                        <select id="subjectSelector" onchange="cambiaMateria()" 
+                                class="px-4 py-2 bg-white text-gray-700 border border-green-300 rounded-lg hover:bg-gray-50 transition appearance-none pr-10 font-medium">
+                            <option value="">📚 Seleziona Materia...</option>
+                        </select>
+                        <svg class="absolute right-3 top-3 h-4 w-4 text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    
+                    <button onclick="showView('upload')" id="btnUpload" class="px-4 py-2 bg-white text-green-700 rounded-lg hover:bg-green-50 transition font-medium border border-green-200">
                         Nuova Analisi
                     </button>
-                    <button onclick="showView('storico')" id="btnStorico" class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                    <button onclick="showView('storico')" id="btnStorico" class="px-4 py-2 bg-green-800 text-white rounded-lg hover:bg-green-900 transition">
                         Storico
                     </button>
-                    <button onclick="showView('settings')" id="btnSettings" class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center space-x-1">
+                    <button onclick="showView('settings')" id="btnSettings" class="px-4 py-2 bg-green-800 text-white rounded-lg hover:bg-green-900 transition flex items-center space-x-1">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -51,37 +65,65 @@
             </div>
         </div>
     </header>
-
-    <!-- Banner Miglioramento -->
-    <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
-        <div class="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start space-x-3">
-            <svg class="h-6 w-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <div class="flex-1">
-                <h3 class="text-sm font-medium text-green-900">✅ Versione v5.7 - Bilanciamento Criteri Valutazione</h3>
-                <p class="text-sm text-green-800 mt-1">Questa versione <strong>bilancia i criteri di valutazione</strong> nell'analisi Avanzata: oltre alla completezza, considera anche <strong>adeguatezza al programma</strong>, <strong>rapporto qualità/prezzo</strong> e <strong>accessibilità</strong>. Hart (manuale sintetico ed economico) ha ora più possibilità di essere raccomandato per programmi brevi o budget limitati!</p>
+    
+    <!-- Barra Info Materia Selezionata -->
+    <div id="subjectInfoBar" class="hidden max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
+        <div class="bg-white border border-gray-200 rounded-lg p-3 flex items-center justify-between shadow-sm">
+            <div class="flex items-center space-x-3">
+                <span id="subjectIcon" class="text-2xl">📚</span>
+                <div>
+                    <p class="text-sm font-semibold text-gray-900" id="subjectName">Nessuna materia selezionata</p>
+                    <p class="text-xs text-gray-600" id="subjectFrameworks">Seleziona una materia dal menu</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span id="frameworkCount" class="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">0 framework</span>
+                <span id="manualCount" class="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">0 manuali</span>
             </div>
         </div>
     </div>
 
-    <!-- Banner Informativo Differenze Base/Avanzata -->
+    <!-- Banner MATRIX v1.0 -->
+    <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg p-4 flex items-start space-x-3 shadow-md">
+            <svg class="h-6 w-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+                <h3 class="text-sm font-medium text-green-900">🎓 MATRIX v1.0 - Multi-Analysis Teaching Resource Intelligence X-platform</h3>
+                <p class="text-sm text-green-800 mt-1">
+                    <strong>Benvenuto nella piattaforma MATRIX!</strong> Sistema unificato per l'analisi intelligente di programmi didattici universitari. 
+                    Ora supporta <strong>21 framework disciplinari</strong> e <strong>85 manuali</strong> (27 Zanichelli + 58 Competitor) su 8 materie.
+                </p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">🧪 Chimica</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">⚛️ Fisica</span>
+                    <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded">📐 Matematica</span>
+                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded">💰 Economia</span>
+                    <span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded">🔬 Biologia</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Informativo Analisi -->
     <div class="max-w-7xl mx-auto px-4 pt-4 sm:px-6 lg:px-8">
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start space-x-3">
             <svg class="h-6 w-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <div class="flex-1">
-                <h3 class="text-sm font-medium text-blue-900">💡 Differenze tra Analisi Base e Avanzata</h3>
+                <h3 class="text-sm font-medium text-blue-900">💡 Sistema di Analisi MATRIX</h3>
                 <p class="text-sm text-blue-800 mt-1">
-                    Analisi Base e Avanzata dello stesso programma possono raccomandare manuali Zanichelli <strong>diversi</strong>. Questo non è un errore, ma riflette due approcci complementari:
+                    MATRIX utilizza un <strong>approccio multi-dimensionale</strong> per la valutazione dei manuali:
                 </p>
                 <ul class="text-sm text-blue-800 mt-2 space-y-1 ml-4">
-                    <li><strong>⚡ Analisi Base:</strong> Privilegia manuali <strong>SINTETICI, PRATICI ed ECONOMICI</strong> (es. Hart) - ideali per corsi con meno CFU o studenti che cercano chiarezza e accessibilità.</li>
-                    <li><strong>🔬 Analisi Avanzata:</strong> Privilegia manuali <strong>COMPLETI, APPROFONDITI e ORIENTATI</strong> (es. McMurry Biologico) - ideali per corsi con più CFU o studenti che necessitano di preparazione avanzata per corsi successivi.</li>
+                    <li><strong>📊 Valutazione Assoluta:</strong> Analisi intrinseca del manuale rispetto al framework teorico della materia (permanente, salvata)</li>
+                    <li><strong>🎯 Valutazione Dinamica:</strong> Analisi contestuale rispetto al programma specifico e al profilo pedagogico del docente (temporanea)</li>
+                    <li><strong>👤 Profilo Pedagogico:</strong> Identificazione automatica dell'approccio didattico, livello di approfondimento ed enfasi del docente</li>
                 </ul>
                 <p class="text-sm text-blue-800 mt-2">
-                    <strong>Entrambe le raccomandazioni sono valide:</strong> scegli in base al profilo del docente e agli obiettivi del corso. In caso di dubbio, l'analisi Avanzata fornisce argomentazioni commerciali più dettagliate per supportare la conversazione.
+                    <strong>Seleziona la materia</strong> dal menu in alto per iniziare l'analisi!
                 </p>
             </div>
         </div>
@@ -258,6 +300,20 @@
         <!-- Upload View -->
         <div id="viewUpload" class="hidden">
             <div class="max-w-4xl mx-auto space-y-6">
+                
+                <!-- Avviso Selezione Materia -->
+                <div id="noSubjectWarning" class="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 flex items-start space-x-3">
+                    <svg class="h-6 w-6 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <div class="flex-1">
+                        <h3 class="text-sm font-medium text-yellow-900">⚠️ Seleziona prima una materia</h3>
+                        <p class="text-sm text-yellow-800 mt-1">
+                            Prima di iniziare l'analisi, <strong>seleziona una materia</strong> dal menu in alto. 
+                            MATRIX adatterà automaticamente i framework di valutazione e i manuali disponibili.
+                        </p>
+                    </div>
+                </div>
                 
                 <!-- Step 1: Informazioni Contesto -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
@@ -517,7 +573,278 @@
 
     </main>
 
-    <script>
+        // ============================================
+        // MATRIX CONFIGURATION & MULTI-SUBJECT SYSTEM
+        // ============================================
+        
+        let MATRIX_CONFIG = null;
+        let FRAMEWORK_CATALOG = null;
+        let MANUAL_CATALOG = null;
+        let currentSubject = null;
+        let currentFramework = null;
+        
+        // Caricamento configurazione MATRIX all'avvio
+        async function loadMATRIXConfig() {
+            try {
+                console.log('🎓 Caricamento configurazione MATRIX...');
+                
+                // Carica i 3 file di configurazione in parallelo
+                const [config, frameworks, manuals] = await Promise.all([
+                    fetch('matrix_config.json').then(r => r.json()),
+                    fetch('framework_catalog.json').then(r => r.json()),
+                    fetch('manual_catalog.json').then(r => r.json())
+                ]);
+                
+                MATRIX_CONFIG = config;
+                FRAMEWORK_CATALOG = frameworks;
+                MANUAL_CATALOG = manuals;
+                
+                console.log('✅ MATRIX Config caricata:', {
+                    subjects: config.supported_subjects.length,
+                    frameworks: frameworks.total_frameworks,
+                    manuals: manuals.total_manuals
+                });
+                
+                // Popola dropdown materie
+                populateSubjectDropdown();
+                
+                // Ripristina ultima materia selezionata (se presente)
+                const lastSubject = localStorage.getItem('matrix_last_subject');
+                if (lastSubject) {
+                    document.getElementById('subjectSelector').value = lastSubject;
+                    cambiaMateria();
+                }
+                
+            } catch (error) {
+                console.error('❌ Errore caricamento MATRIX Config:', error);
+                alert('Errore nel caricamento della configurazione MATRIX. Ricaricare la pagina.');
+            }
+        }
+        
+        // Popola dropdown selezione materia
+        function populateSubjectDropdown() {
+            const selector = document.getElementById('subjectSelector');
+            
+            MATRIX_CONFIG.supported_subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = `${subject.icon} ${subject.name}`;
+                selector.appendChild(option);
+            });
+        }
+        
+        // Gestione cambio materia
+        async function cambiaMateria() {
+            const subjectId = document.getElementById('subjectSelector').value;
+            
+            if (!subjectId) {
+                // Nessuna materia selezionata - nascondi info bar
+                document.getElementById('subjectInfoBar').classList.add('hidden');
+                if (document.getElementById('noSubjectWarning')) {
+                    document.getElementById('noSubjectWarning').classList.remove('hidden');
+                }
+                currentSubject = null;
+                currentFramework = null;
+                return;
+            }
+            
+            // Nascondi avviso "nessuna materia"
+            if (document.getElementById('noSubjectWarning')) {
+                document.getElementById('noSubjectWarning').classList.add('hidden');
+            }
+            
+            // Trova la materia nei config
+            currentSubject = MATRIX_CONFIG.supported_subjects.find(s => s.id === subjectId);
+            
+            if (!currentSubject) {
+                console.error('Materia non trovata:', subjectId);
+                return;
+            }
+            
+            console.log('🎯 Materia selezionata:', currentSubject.name);
+            
+            // Salva preferenza
+            localStorage.setItem('matrix_last_subject', subjectId);
+            
+            // Aggiorna UI - Info Bar
+            updateSubjectInfoBar();
+            
+            // Carica framework e manuali per questa materia
+            await loadSubjectData();
+        }
+        
+        // Aggiorna barra info materia
+        function updateSubjectInfoBar() {
+            const infoBar = document.getElementById('subjectInfoBar');
+            const icon = document.getElementById('subjectIcon');
+            const name = document.getElementById('subjectName');
+            const frameworksInfo = document.getElementById('subjectFrameworks');
+            const frameworkCount = document.getElementById('frameworkCount');
+            const manualCount = document.getElementById('manualCount');
+            
+            // Mostra la barra
+            infoBar.classList.remove('hidden');
+            
+            // Aggiorna contenuti
+            icon.textContent = currentSubject.icon;
+            name.textContent = currentSubject.name;
+            
+            // Conta framework per questa materia
+            const subjectFrameworks = currentSubject.frameworks.length;
+            frameworkCount.textContent = `${subjectFrameworks} framework`;
+            
+            // Conta manuali per questa materia
+            const subjectManuals = countManualsForSubject(currentSubject);
+            manualCount.textContent = `${subjectManuals} manuali`;
+            
+            // Info framework disponibili
+            const frameworkNames = currentSubject.frameworks
+                .map(fid => {
+                    const fw = FRAMEWORK_CATALOG.frameworks.find(f => f.id === fid);
+                    return fw ? fw.name : fid;
+                })
+                .join(', ');
+            
+            frameworksInfo.textContent = `Framework: ${frameworkNames.substring(0, 100)}${frameworkNames.length > 100 ? '...' : ''}`;
+        }
+        
+        // Conta manuali per una materia
+        function countManualsForSubject(subject) {
+            let count = 0;
+            subject.manual_directory.forEach(dir => {
+                if (MANUAL_CATALOG.by_subject[capitalizeFirst(dir)]) {
+                    count += MANUAL_CATALOG.by_subject[capitalizeFirst(dir)].length;
+                } else {
+                    // Prova altre varianti di capitalizzazione
+                    Object.keys(MANUAL_CATALOG.by_subject).forEach(key => {
+                        if (key.toLowerCase().includes(dir.toLowerCase())) {
+                            count += MANUAL_CATALOG.by_subject[key].length;
+                        }
+                    });
+                }
+            });
+            return count;
+        }
+        
+        // Carica framework dinamico
+        async function loadFramework(frameworkId) {
+            try {
+                const framework = FRAMEWORK_CATALOG.frameworks.find(f => f.id === frameworkId);
+                if (!framework) {
+                    throw new Error(`Framework ${frameworkId} non trovato nel catalogo`);
+                }
+                
+                console.log(`📚 Caricamento framework: ${framework.name} da ${framework.filepath}`);
+                const data = await fetch(framework.filepath).then(r => r.json());
+                
+                return data;
+            } catch (error) {
+                console.error('❌ Errore caricamento framework:', error);
+                throw error;
+            }
+        }
+        
+        // Carica manuale dinamico
+        async function loadManual(manualId) {
+            try {
+                // Cerca il manuale nel catalogo
+                const manual = MANUAL_CATALOG.manuals.find(m => m.id === manualId);
+                if (!manual) {
+                    throw new Error(`Manuale ${manualId} non trovato nel catalogo`);
+                }
+                
+                console.log(`📖 Caricamento manuale: ${manual.name} da ${manual.filepath}`);
+                const data = await fetch(manual.filepath).then(r => r.json());
+                
+                return data;
+            } catch (error) {
+                console.error('❌ Errore caricamento manuale:', error);
+                throw error;
+            }
+        }
+        
+        // Ottieni badge editore per UI
+        function getPublisherBadge(publisherType) {
+            const publisher = MATRIX_CONFIG.publishers.find(p => p.id === publisherType);
+            
+            if (!publisher) {
+                return { emoji: '⚪', color: 'gray', name: 'Unknown' };
+            }
+            
+            return {
+                emoji: publisher.logo,
+                color: publisher.type === 'primary' ? 'green' : 'red',
+                name: publisher.name,
+                isPrimary: publisher.type === 'primary'
+            };
+        }
+        
+        // Ottieni colore badge per tipo editore
+        function getPublisherBadgeClass(publisherType) {
+            const badge = getPublisherBadge(publisherType);
+            
+            if (badge.isPrimary) {
+                return 'bg-green-100 text-green-800 border-green-300';
+            } else {
+                return 'bg-red-100 text-red-800 border-red-300';
+            }
+        }
+        
+        // Ottieni manuali per materia corrente
+        function getManualsForCurrentSubject() {
+            if (!currentSubject) return [];
+            
+            const manuals = [];
+            currentSubject.manual_directory.forEach(dir => {
+                // Normalizza nome directory per matching
+                const dirKey = Object.keys(MANUAL_CATALOG.by_subject).find(key => 
+                    key.toLowerCase().includes(dir.toLowerCase()) || 
+                    dir.toLowerCase().includes(key.toLowerCase())
+                );
+                
+                if (dirKey && MANUAL_CATALOG.by_subject[dirKey]) {
+                    MANUAL_CATALOG.by_subject[dirKey].forEach(manualId => {
+                        const manual = MANUAL_CATALOG.manuals.find(m => m.id === manualId);
+                        if (manual) {
+                            manuals.push(manual);
+                        }
+                    });
+                }
+            });
+            
+            return manuals;
+        }
+        
+        // Carica dati per materia corrente
+        async function loadSubjectData() {
+            if (!currentSubject) return;
+            
+            console.log('📦 Caricamento dati per materia:', currentSubject.name);
+            
+            // Carica il primo framework come default
+            if (currentSubject.frameworks.length > 0) {
+                try {
+                    currentFramework = await loadFramework(currentSubject.frameworks[0]);
+                    console.log('✅ Framework caricato:', currentFramework.name);
+                } catch (error) {
+                    console.error('❌ Errore caricamento framework:', error);
+                }
+            }
+            
+            // I manuali vengono caricati on-demand durante l'analisi
+            console.log('✅ Dati materia pronti');
+        }
+        
+        // Utility: Capitalizza prima lettera
+        function capitalizeFirst(str) {
+            if (!str) return '';
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // ============================================
+        // EXISTING CODE (MANUALI_DB, INDICI, etc.)
+        // ============================================
+        
         // Configurazione PDF.js
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -581,9 +908,17 @@
         let fileContent = null;
         let postItGenerati = [];
 
-        // Inizializzazione
-        document.addEventListener('DOMContentLoaded', function() {
+        // Inizializzazione MATRIX
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Avvio MATRIX...');
+            
+            // Carica configurazione MATRIX
+            await loadMATRIXConfig();
+            
+            // Check API Key
             checkApiKey();
+            
+            // Mostra vista upload
             showView('upload');
             
             // Listener per mostrare/nascondere campo "Altro manuale"
@@ -599,6 +934,8 @@
                     }
                 });
             }
+            
+            console.log('✅ MATRIX pronta!');
         });
 
         // Gestione Configurazione
