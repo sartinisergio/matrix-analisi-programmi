@@ -1,0 +1,82 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "biomedical_examples": "Il testo applica i principi al corpo umano? (es. Leve = articolazioni; Bernoulli = aneurisma; Ohm = canali ionici).",
+      "fluids_emphasis": "La fluidodinamica (fondamentale per cardiocircolatorio) è trattata in modo approfondito, inclusi viscosità e fenomeni reali?",
+      "math_level": "Il livello matematico è adeguato? (Troppo alto = inutile per medici; Troppo basso = insufficiente per capire i grafici fisiologici).",
+      "radiation_safety": "C'è un focus adeguato sulle radiazioni ionizzanti, dosimetria e radioprotezione (base per Radiologia)?"
+    },
+    "program_profiles": [
+      {
+        "name": "Semestre Filtro (Medicina/Odontoiatria/Veterinaria)",
+        "priority_modules": "Priorità assoluta ai Moduli 2 (Fluidi - Cardiovascolare), 5 (Elettricità - Neurofisiologia) e 6 (Radiazioni - Diagnostica). La meccanica classica (1) serve solo come base per la biomeccanica.",
+        "textbook_advice": "Testi specifici di 'Fisica Medica' o 'Fisica per le Scienze Biomediche'."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Grandezze fisiche, vettori, errori. Cinematica (moto rettilineo, circolare, armonico). Dinamica (Newton, forze fondamentali). Lavoro, Energia Cinetica/Potenziale e Potenza (metabolica).",
+        "key_concepts": [
+          "Dinamica Newtoniana",
+          "Vettori e Operazioni Vettoriali",
+          "Lavoro ed Energia"
+        ],
+        "name": "1. Metodi e Meccanica del Punto"
+      },
+      {
+        "core_contents": "Leve e statica del corpo (biomeccanica). Elasticità (Legge di Hooke, ossa/vasi). Statica dei fluidi (Stevino, Pascal, Archimede). Idrodinamica ideale (Bernoulli - aneurisma/stenosi) e reale (Poiseuille - resistenza vascolare). Tensione superficiale e Laplace (alveoli/capillari).",
+        "key_concepts": [
+          "Statica dei Fluidi",
+          "Principio di Archimede",
+          "Equazione di Bernoulli"
+        ],
+        "name": "2. Meccanica dei Sistemi e Fluidi"
+      },
+      {
+        "core_contents": "Onde periodiche. Suono e percezione (decibel, soglia uditiva). Effetto Doppler (flussimetria). Ultrasuoni.",
+        "key_concepts": [
+          "Onde periodiche",
+          "Onde meccaniche",
+          "Propagazione del suono"
+        ],
+        "name": "3. Onde Meccaniche e Acustica"
+      },
+      {
+        "core_contents": "Gas perfetti e reali. Primo principio (metabolismo). Trasmissione del calore (conduzione, convezione, irraggiamento/termoregolazione). Secondo principio ed Entropia nei sistemi biologici.",
+        "key_concepts": [
+          "Primo Principio Termodinamica",
+          "Secondo Principio Termodinamica",
+          "Entropia Sistemi Biologici"
+        ],
+        "name": "4. Termodinamica"
+      },
+      {
+        "core_contents": "Legge di Coulomb e Campo Elettrico. Potenziale e Condensatori (membrana cellulare). Corrente continua, Ohm, Joule. Magnetismo e Induzione (basi per risonanza magnetica e stimolazione nervosa).",
+        "key_concepts": [
+          "Legge di Coulomb",
+          "Campo Elettrico (Definizione e Calcolo)",
+          "Potenziale Elettrico"
+        ],
+        "name": "5. Elettricità e Magnetismo"
+      },
+      {
+        "core_contents": "Spettro elettromagnetico. Fotoni ed effetto fotoelettrico. Radiazioni ionizzanti (raggi X, gamma) e decadimento radioattivo (Medicina Nucleare). Ottica geometrica (rifrazione, lenti, occhio, microscopio).",
+        "key_concepts": [
+          "Spettro elettromagnetico",
+          "Effetto fotoelettrico",
+          "Radiazioni ionizzanti"
+        ],
+        "name": "6. Radiazioni e Ottica"
+      }
+    ],
+    "target_degrees": [
+      "LM-41 Medicina e Chirurgia",
+      "LM-42 Medicina Veterinaria",
+      "LM-46 Odontoiatria e Protesi Dentaria"
+    ]
+  },
+  "context_strategy": "Syllabus ufficiale di Fisica per il Semestre Filtro. L'obiettivo non è formare fisici, ma fornire gli strumenti quantitativi per comprendere la Fisiologia e la Diagnostica. Ogni argomento deve avere una ricaduta biomedica immediata (Biofisica). L'approccio matematico è 'algebra-based' (niente calcolo differenziale complesso), ma rigoroso sui principi.",
+  "id": "fisica_semestre_filtro_framework",
+  "name": "Fisica (Semestre Filtro)",
+  "subject": "Medicina e Chirurgia"
+}

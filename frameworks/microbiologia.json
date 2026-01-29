@@ -1,0 +1,174 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "LM-41 Medicina / LM-42 Veterinaria",
+        "priority_modules": "Focus assoluto e critico sulla clinica: Patogenesi (8), Virologia (5), Diagnostica (10) e soprattutto Antimicrobici/Resistenze (9). I moduli industriali o ambientali (11) sono trascurabili. Fondamentale il legame con l'immunologia (7)."
+      },
+      {
+        "name": "L-2 Biotecnologie",
+        "priority_modules": "Cruciale la comprensione profonda della Genetica (4), della Fisiologia (3) e delle Omiche (13) per la manipolazione dei microrganismi. Fondamentale il modulo Industriale (11). Meno rilevante la diagnostica clinica o la parassitologia descrittiva."
+      },
+      {
+        "name": "L-13 Scienze Biologiche",
+        "priority_modules": "Approccio bilanciato. Fondamentale la Citologia (2), la Fisiologia (3), la Genetica (4) e l'Ecologia microbica (11). La parte clinica (Patogenesi/Diagnostica) è importante ma trattata più come meccanismo biologico che come protocollo ospedaliero."
+      },
+      {
+        "name": "L-29/LM-13 Farmacia e CTF",
+        "priority_modules": "Focus strategico sul bersaglio del farmaco: Struttura (2) e Fisiologia (3). Cruciale il modulo Antimicrobici (9) e Resistenze. Importante la Biosicurezza (14) per la produzione sterile. Marginale l'ecologia e la diagnostica clinica."
+      },
+      {
+        "name": "L-25/L-26 Agraria e Alimentare",
+        "priority_modules": "Cruciale la Microbiologia Ambientale/Industriale (11) e le Fermentazioni (3). Fondamentale lo studio di muffe e lieviti (6) per le trasformazioni alimentari o le patologie vegetali. Marginale la patogenesi umana, salvo per le zoonosi e tossinfezioni alimentari."
+      },
+      {
+        "name": "L-SNT Professioni Sanitarie (Infermieristica/Tecnici)",
+        "priority_modules": "Focus estremamente pratico. Cruciale la Biosicurezza (14), la gestione del prelievo per la Diagnostica (10), la trasmissione delle infezioni (8, 12) e il controllo delle infezioni ospedaliere. Genetica molecolare, omiche e tassonomia complessa sono marginali."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Evoluzione storica della disciplina, postulati di Koch, sviluppo della microscopia e delle tecniche di coltura pura. Impatto dei microrganismi sugli ecosistemi e sulla salute umana.",
+        "key_concepts": [
+          "Postulati di Koch",
+          "Tecniche di coltura pura",
+          "Sviluppo della microscopia"
+        ],
+        "name": "1. Introduzione, storia e metodi"
+      },
+      {
+        "core_contents": "Confronto procarioti/eucarioti. Dettaglio dell'envelope batterico (parete, membrane, LPS, colorazione di Gram). Strutture accessorie: flagelli, pili, capsule e formazione delle endospore. Morfologia di miceti e protozoi.",
+        "key_concepts": [
+          "Confronto Procarioti Eucarioti",
+          "Envelope Batterico Dettagliato",
+          "Struttura Parete Cellulare"
+        ],
+        "name": "2. Struttura e funzione della cellula"
+      },
+      {
+        "core_contents": "Nutrizione microbica, classi nutrizionali (autotrofi, eterotrofi). Vie metaboliche centrali: respirazione aerobica/anaerobica, fermentazioni. Fattori di crescita fisici e chimici (temperatura, pH, osmolarità).",
+        "key_concepts": [
+          "Vie metaboliche centrali",
+          "Nutrizione microbica",
+          "Classi nutrizionali microbiche"
+        ],
+        "name": "3. Fisiologia microbica e metabolismo"
+      },
+      {
+        "core_contents": "Struttura del genoma batterico, replicazione e regolazione genica (operoni). Meccanismi di Trasferimento Genico Orizzontale (HGT): trasformazione, trasduzione, coniugazione. Mutazioni spontanee e indotte.",
+        "key_concepts": [
+          "Trasferimento Genico Orizzontale",
+          "Struttura genoma batterico",
+          "Regolazione genica operoni"
+        ],
+        "name": "4. Genetica microbica e variabilità"
+      },
+      {
+        "core_contents": "Classificazione di Baltimore, struttura del virione (capside, envelope). Cicli replicativi litici e lisogeni. Meccanismi di ingresso, replicazione del genoma e rilascio virale.",
+        "key_concepts": [
+          "Cicli replicativi virali",
+          "Classificazione di Baltimore",
+          "Struttura del virione"
+        ],
+        "name": "5. Virologia di base"
+      },
+      {
+        "core_contents": "Biologia dei funghi (lieviti vs muffe), dimorfismo fungino. Panoramica sui protozoi patogeni e cicli vitali degli elminti di interesse sanitario.",
+        "key_concepts": [
+          "Biologia generale dei funghi",
+          "Morfologia fungina (lieviti/muffe)",
+          "Dimorfismo fungino"
+        ],
+        "name": "6. Micologia e parassitologia essenziale"
+      },
+      {
+        "core_contents": "Concetti di microbiota, commensalismo, mutualismo e parassitismo. Barriere anatomiche, immunità innata (fagocitosi, infiammazione) e cenni di immunità specifica adattativa.",
+        "key_concepts": [
+          "Interazione ospite-microrganismo",
+          "Microbiota e suo ruolo",
+          "Commensalismo e mutualismo"
+        ],
+        "name": "7. Interazione ospite–microrganismo"
+      },
+      {
+        "core_contents": "Fattori di virulenza: adesine, esotossine, endotossine, sistemi di secrezione, meccanismi di evasione immunitaria. Vie di trasmissione e dinamiche dell'infezione.",
+        "key_concepts": [
+          "Fattori di virulenza microbica",
+          "Meccanismi di patogenesi batterica",
+          "Esotossine e loro azione"
+        ],
+        "name": "8. Patogenesi e virulenza"
+      },
+      {
+        "core_contents": "Meccanismi d'azione di antibiotici, antifungini e antivirali. Meccanismi genetici e biochimici dell'antibiotico-resistenza (AMR). Concetti di stewardship antimicrobica.",
+        "key_concepts": [
+          "Antibiotico-resistenza (AMR)",
+          "Meccanismi genetici AMR",
+          "Meccanismi biochimici AMR"
+        ],
+        "name": "9. Antimicrobici e resistenza"
+      },
+      {
+        "core_contents": "Fase pre-analitica (campionamento). Metodi diretti (microscopia, coltura, identificazione biochimica, MALDI-TOF, molecolari/PCR) e indiretti (sierologia). Interpretazione clinica del reperto.",
+        "key_concepts": [
+          "Diagnostica Microbiologica Clinica",
+          "Fase Pre-analitica e Campionamento",
+          "Metodi di Coltura Batterica"
+        ],
+        "name": "10. Diagnostica microbiologica"
+      },
+      {
+        "core_contents": "Ruolo nei cicli biogeochimici (C, N, S). Applicazioni biotecnologiche: biorisanamento, fermentazioni industriali, produzione di biomasse e metaboliti.",
+        "key_concepts": [
+          "Cicli biogeochimici microbici",
+          "Biorisanamento ambientale",
+          "Fermentazioni industriali"
+        ],
+        "name": "11. Microbiologia ambientale e industriale"
+      },
+      {
+        "core_contents": "Parametri epidemiologici (R0, incidenza, prevalenza), catene di contagio. Profilassi diretta (isolamento, sterilizzazione) e specifica (vaccini).",
+        "key_concepts": [
+          "Parametri epidemiologici",
+          "Tasso di riproduzione R0",
+          "Incidenza e prevalenza"
+        ],
+        "name": "12. Epidemiologia e sanità pubblica"
+      },
+      {
+        "core_contents": "Sequenziamento massivo (NGS), metagenomica, trascrittomica. Analisi del microbioma e utilizzo delle banche dati bioinformatiche.",
+        "key_concepts": [
+          "Sequenziamento massivo (NGS)",
+          "Metagenomica",
+          "Trascrittomica"
+        ],
+        "name": "13. Metodi omici"
+      },
+      {
+        "core_contents": "Livelli di biosicurezza (BSL 1-4), gestione del rischio biologico, smaltimento rifiuti infetti e norme comportamentali in laboratorio.",
+        "key_concepts": [
+          "Livelli di Biosicurezza (BSL 1-4)",
+          "Gestione del Rischio Biologico",
+          "Smaltimento Rifiuti Infetti"
+        ],
+        "name": "14. Biosicurezza ed etica"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "L-25 Scienze e tecnologie agrarie",
+      "L-26 Scienze e tecnologie alimentari",
+      "L-29 Scienze farmaceutiche",
+      "L-32 Scienze naturali e ambientali",
+      "LM-13 Farmacia",
+      "LM-41 Medicina e Chirurgia",
+      "LM-42 Medicina Veterinaria",
+      "L-SNT Professioni sanitarie"
+    ]
+  },
+  "context_strategy": "Insegnamento 'camaleontico'. Cambia volto a seconda del target: Clinico per Medici/Farmacisti (patogenesi, antibiotici, diagnosi); Industriale/Tecnologico per Biotecnologi (fermentazioni, genetica microbica); Ambientale/Produttivo per Agrari (cicli biogeochimici, malattie delle piante, trasformazioni alimentari)",
+  "id": "microbiologia_framework",
+  "name": "Microbiologia Generale e Clinica",
+  "subject": "Biologia e Medicina"
+}

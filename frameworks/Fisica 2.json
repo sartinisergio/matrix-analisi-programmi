@@ -1,0 +1,138 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "circuit_theory_depth": "Quanto spazio è dedicato ai circuiti in corrente alternata (metodo simbolico/fasori)? È un capitolo robusto (Ingegneria Elettronica) o un cenno (Fisica)?",
+      "materials_treatment": "C'è un focus sulla fisica microscopica dei dielettrici e dei materiali magnetici (polarizzazione/magnetizzazione)?",
+      "mathematical_formalism": "Verificare l'uso degli operatori vettoriali (Gradiente, Divergenza, Rotore): sono usati attivamente nelle dimostrazioni (Fisica/Matematica) o solo introdotti descrittivamente (Ingegneria Gestionale/Civile)?",
+      "maxwell_equations_form": "Le equazioni di Maxwell sono presentate principalmente in forma integrale (applicativa) o differenziale (locale/teorica)?",
+      "optics_focus": "L'ottica è trattata in modo geometrico (lenti/specchi) o ondulatorio (interferenza/diffrazione)?"
+    },
+    "program_profiles": [
+      {
+        "name": "L-30 Fisica / L-35 Matematica",
+        "priority_modules": "Focus sul rigore teorico dei Campi. Priorità assoluta ai Moduli 1, 4, 7 (Maxwell completo in forma differenziale) e 10 (Ottica fisica). I dielettrici e il magnetismo nella materia (2, 5) sono trattati a livello microscopico. I circuiti (3, 8) sono secondari rispetto alla teoria di campo."
+      },
+      {
+        "name": "L-8 Ingegneria dell'Informazione (Elettronica/Tlc/Informatica)",
+        "priority_modules": "Focus sui Segnali e Circuiti. Cruciali i Moduli 3 (Ohm/Kirchhoff), 6 (Induzione), 7 (Onde per le telecomunicazioni) e 8 (Circuiti AC e risonanza). L'ottica (9-10) è fondamentale per la fotonica. Serve un approccio molto operativo."
+      },
+      {
+        "name": "L-9 Ingegneria Industriale (Elettrica/Energetica)",
+        "priority_modules": "Focus sulla Potenza e Macchine. Cruciali i Moduli 6 (Induzione - base per motori/generatori), 5 (Ferromagnetismo/Isteresi) e 8 (Sistemi trifase/Potenza). L'ottica (9-10) è spesso marginale o assente."
+      },
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Focus sulle interazioni Materia-Campo. Fondamentali i Moduli 1 (Elettrostatica per legami ionici), 2 (Dielettrici/Solventi), 5 (Magnetismo/Spin) e 10 (Ottica per spettroscopia). Meno enfasi sui circuiti complessi o sulle equazioni di Maxwell differenziali pure."
+      },
+      {
+        "name": "L-7 Ingegneria Civile / L-34 Geologia",
+        "priority_modules": "Versione ridotta. Focus sui concetti base di Elettricità e Magnetismo (1, 3, 4) per applicazioni geofisiche o impiantistiche. Ottica geometrica (9) utile per topografia. Equazioni differenziali e teoria dei campi avanzata sono superflue."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Legge di Coulomb. Campo elettrico (E) e linee di forza. Legge di Gauss (flusso) e applicazioni. Potenziale elettrico (V), superfici equipotenziali e relazione tra E e V (gradiente). Dipolo elettrico.",
+        "key_concepts": [
+          "Legge di Coulomb",
+          "Campo elettrico",
+          "Legge di Gauss"
+        ],
+        "name": "1. Elettrostatica nel vuoto"
+      },
+      {
+        "core_contents": "Proprietà dei conduttori in equilibrio, capacità e condensatori. Energia del campo elettrostatico. Dielettrici: polarizzazione, vettore spostamento elettrico (D) e costante dielettrica.",
+        "key_concepts": [
+          "Capacità e Condensatori",
+          "Proprietà Conduttori Equilibrio Elettrostatico",
+          "Energia Campo Elettrostatico"
+        ],
+        "name": "2. Conduttori e Dielettrici"
+      },
+      {
+        "core_contents": "Intensità e densità di corrente, modello di conduzione (Drude). Legge di Ohm (microscopica e macroscopica) e resistenza. Effetto Joule. Circuiti in corrente continua e leggi di Kirchhoff.",
+        "key_concepts": [
+          "Leggi di Kirchhoff",
+          "Legge di Ohm (macroscopica)",
+          "Circuiti in Corrente Continua (CC)"
+        ],
+        "name": "3. Corrente Elettrica Stazionaria"
+      },
+      {
+        "core_contents": "Forza di Lorentz e moto di cariche in campi magnetici. Legge di Biot-Savart. Teorema di Ampère (circuitazione). Forza tra correnti e definizione dell'Ampère. Proprietà del campo magnetico (B).",
+        "key_concepts": [
+          "Forza di Lorentz vettoriale",
+          "Campo magnetico B",
+          "Legge di Biot-Savart"
+        ],
+        "name": "4. Magnetostatica nel vuoto"
+      },
+      {
+        "core_contents": "Magnetizzazione e vettore intensità magnetica (H). Classificazione dei materiali: diamagnetismo, paramagnetismo e ferromagnetismo (ciclo di isteresi).",
+        "key_concepts": [
+          "Magnetismo nella materia",
+          "Vettore Magnetizzazione (M)",
+          "Vettore Intensità Magnetica (H)"
+        ],
+        "name": "5. Magnetismo nella materia"
+      },
+      {
+        "core_contents": "Legge di Faraday-Neumann-Lenz sull'induzione elettromagnetica. Autoinduzione e Mutua induzione. Energia magnetica. Circuiti RL.",
+        "key_concepts": [
+          "Induzione elettromagnetica",
+          "Legge di Faraday-Neumann-Lenz",
+          "Flusso magnetico variabile"
+        ],
+        "name": "6. Campi elettrici e magnetici variabili (Induzione)"
+      },
+      {
+        "core_contents": "Corrente di spostamento e generalizzazione della legge di Ampère. Le 4 Equazioni di Maxwell (forme integrali e differenziali). Equazione delle onde, velocità della luce, vettore di Poynting (trasporto di energia), pressione di radiazione e polarizzazione.",
+        "key_concepts": [
+          "Equazioni di Maxwell (Forma Differenziale)",
+          "Equazioni di Maxwell (Forma Integrale)",
+          "Corrente di Spostamento"
+        ],
+        "name": "7. Equazioni di Maxwell e Onde Elettromagnetiche"
+      },
+      {
+        "core_contents": "Generatori AC. Circuiti RLC serie e parallelo. Metodo dei fasori (impedenza, reattanza). Risonanza elettrica, potenza attiva e reattiva. Trasformatore.",
+        "key_concepts": [
+          "Metodo dei Fasori",
+          "Impedenza complessa",
+          "Circuiti RLC serie"
+        ],
+        "name": "8. Circuiti in Corrente Alternata (AC)"
+      },
+      {
+        "core_contents": "Approssimazione dell'ottica geometrica. Riflessione e rifrazione (Legge di Snell). Specchi, diottri e lenti sottili. Strumenti ottici (occhio, microscopio, telescopio).",
+        "key_concepts": [
+          "Approssimazione ottica geometrica",
+          "Principio di Fermat",
+          "Leggi riflessione e rifrazione"
+        ],
+        "name": "9. Ottica Geometrica"
+      },
+      {
+        "core_contents": "Interferenza (esperimento di Young). Diffrazione (fenditura singola, reticoli). Criterio di risoluzione di Rayleigh. Dispersione e spettri.",
+        "key_concepts": [
+          "Ottica Ondulatoria",
+          "Principio di Huygens",
+          "Interferenza di onde"
+        ],
+        "name": "10. Ottica Ondulatoria"
+      }
+    ],
+    "target_degrees": [
+      "L-7 Ingegneria",
+      "L-8 Ingegneria",
+      "L-9 Ingegneria",
+      "L-27 Scienze chimiche",
+      "L-30 Fisica",
+      "L-34 Geologia",
+      "L-35 Matematica"
+    ]
+  },
+  "context_strategy": "Elettromagnetismo e Ottica avanzati. Distinzione netta tra approccio teorico di campo (Fisici: Maxwell differenziali) e approccio circuitale/applicativo (Ingegneri Elettronici/Industriali). L'ottica può essere geometrica (strumentale) o ondulatoria (fisica)",
+  "id": "fisica_generale_2_framework",
+  "name": "Fisica Generale 2 (Elettromagnetismo e Ottica)",
+  "subject": "Fisica"
+}

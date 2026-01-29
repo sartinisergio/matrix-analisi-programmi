@@ -1,0 +1,110 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "book_coverage_type": "Verifica critica: Il testo è un 'Tutto-in-uno' (Istologia + Embriologia), solo 'Istologia' o solo 'Embriologia'? Se separati, quale livello di dettaglio ha ciascuno?",
+      "clinical_correlations": "Sono presenti box clinici (es. patologie tissutali, malformazioni congenite) o è pura descrizione morfologica?",
+      "embryology_focus": "L'embriologia è trattata per sistemi (approccio clinico) o solo cronologica (settimana per settimana)? Include la teratologia clinica?",
+      "image_quality": "Valutare l'iconografia: prevalenza di schemi didattici vettoriali (per capire i processi) o micrografie reali (per il riconoscimento al microscopio)?"
+    },
+    "program_profiles": [
+      {
+        "name": "LM-41 Medicina / LM-46 Odontoiatria",
+        "priority_modules": "Focus Clinico Assoluto. Richiede la copertura totale di tutti i moduli. Cruciale il Modulo 6 (Anatomia Microscopica) per preparare a Patologia. Fondamentale il Modulo 8 (Organogenesi) per Pediatria e Chirurgia. Se il libro manca di Embriologia, va abbinato obbligatoriamente a un testo specifico. Iconografia mista (schemi + vetrini) essenziale."
+      },
+      {
+        "name": "L-2 Biotecnologie / L-13 Scienze Biologiche",
+        "priority_modules": "Focus su Citologia e Differenziamento. Priorità massima ai Moduli 1 (Cellula), 2-5 (Tessuti base) e 7 (Embriologia Generale/Gastrulazione). L'Anatomia Microscopica dettagliata (6) e l'Organogenesi clinica fine (8) sono meno rilevanti rispetto ai meccanismi molecolari di sviluppo e differenziamento."
+      },
+      {
+        "name": "L-SNT Professioni Sanitarie",
+        "priority_modules": "Focus Essenziale. Priorità ai Moduli 2-5 (I 4 tessuti fondamentali) per capire la fisiologia. L'Anatomia Microscopica (6) è ridotta agli organi principali. L'Embriologia (7-8) è spesso marginale o limitata ai concetti generali di sviluppo e placenta (per Ostetricia)."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Tecniche istologiche (preparazione, colorazioni, microscopia). Struttura della cellula eucariotica: membrana, organuli, nucleo, citoscheletro. Ciclo cellulare e differenziamento.",
+        "key_concepts": [
+          "Struttura cellula eucariotica",
+          "Tecniche istologiche fondamentali",
+          "Microscopia ottica ed elettronica"
+        ],
+        "name": "1. Citologia e Metodi"
+      },
+      {
+        "core_contents": "Epiteli di rivestimento (classificazione, specializzazioni di superficie). Epiteli ghiandolari esocrini ed endocrini. Giunzioni cellulari e polarità.",
+        "key_concepts": [
+          "Classificazione degli Epiteli di Rivestimento",
+          "Polarità Cellulare Epiteliale",
+          "Giunzioni Cellulari Interepiteliali"
+        ],
+        "name": "2. Istologia: Tessuti Epiteliali"
+      },
+      {
+        "core_contents": "Connettivi propriamente detti (cellule, matrice extracellulare, fibre). Tessuto adiposo (bianco/bruno). Tessuti di sostegno: Cartilagine e Osso (ossificazione, rimodellamento). Sangue e Linfa (elementi figurati).",
+        "key_concepts": [
+          "Tessuti Connettivi Propriamente Detti",
+          "Matrice Extracellulare e Fibre",
+          "Tessuto Osseo"
+        ],
+        "name": "3. Istologia: Tessuti Connettivi"
+      },
+      {
+        "core_contents": "Muscolo scheletrico (sarcomero, contrazione). Muscolo cardiaco (dischi intercalari). Muscolo liscio. Basi strutturali della contrazione.",
+        "key_concepts": [
+          "Tessuti muscolari",
+          "Muscolo scheletrico",
+          "Sarcomero"
+        ],
+        "name": "4. Istologia: Tessuti Muscolari"
+      },
+      {
+        "core_contents": "Neuroni (struttura, classificazione, trasporto assonico). Cellule della glia (SNC e SNP). Sinapsi e mielinizzazione.",
+        "key_concepts": [
+          "Struttura istologica del Neurone",
+          "Classificazione funzionale Neuroni",
+          "Cellule della Glia (SNC)"
+        ],
+        "name": "5. Istologia: Tessuto Nervoso"
+      },
+      {
+        "core_contents": "Analisi microscopica sistematica degli organi: Apparato Cardiovascolare, Linfatico/Immunitario, Respiratorio, Digerente (con ghiandole annesse), Urinario, Endocrino, Riproduttivo (M/F), Tegumentario e Organi di senso.",
+        "key_concepts": [
+          "Istologia Apparato Digerente e Ghiandole",
+          "Istologia Apparato Cardiovascolare",
+          "Istologia Apparato Respiratorio"
+        ],
+        "name": "6. Anatomia Microscopica (Istologia degli Organi)"
+      },
+      {
+        "core_contents": "Gametogenesi (spermatogenesi/ovogenesi) e Fecondazione. Prima settimana (segmentazione, blastocisti, impianto). Seconda settimana (disco bilaminare). Terza settimana (Gastrulazione, foglietti embrionali, notocorda). Quarta settimana (ripiegamenti, neurulazione, somiti). Annessi fetali e Placenta.",
+        "key_concepts": [
+          "Gastrulazione e Foglietti Embrionali",
+          "Neurulazione e Tubo Neurale",
+          "Gametogenesi (Spermatogenesi/Ovogenesi)"
+        ],
+        "name": "7. Embriologia Generale"
+      },
+      {
+        "core_contents": "Sviluppo dei singoli apparati: Scheletrico/Muscolare, Cardiovascolare (cuore e vasi), Respiratorio, Digerente, Urogenitale, Sistema Nervoso (SNC/SNP) e Organi di senso. Teratologia (malformazioni congenite).",
+        "key_concepts": [
+          "Organogenesi apparati specifici",
+          "Sviluppo sistema nervoso centrale",
+          "Embriogenesi cardiovascolare"
+        ],
+        "name": "8. Embriologia Speciale (Organogenesi)"
+      }
+    ],
+    "target_degrees": [
+      "LM-41 Medicina e Chirurgia",
+      "LM-46 Odontoiatria",
+      "LM-13 Farmacia",
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "L-SNT Professioni sanitarie"
+    ]
+  },
+  "context_strategy": "Volumi spesso venduti insieme o separati. A Medicina è cruciale l'approccio clinico e la copertura totale (Anatomia microscopica + Organogenesi). A Biologia/Biotecnologie il focus è su Citologia e Differenziamento, con meno dettaglio clinico-anatomico. Necessario verificare se il testo è 'tutto-in-uno' o solo parziale.",
+  "id": "istologia_embriologia_framework",
+  "name": "Istologia ed Embriologia Umana",
+  "subject": "Medicina e Biologia"
+}

@@ -1,0 +1,117 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "L-2 Biotecnologie",
+        "priority_modules": "Focus assoluto sul 'saper fare': Modulo 6 (Tecnologie Ricombinanti/CRISPR) e Modulo 7 (Genomica/NGS) sono il cuore del corso. Cruciale la Regolazione (5) per ingegnerizzare l'espressione. Meno prioritari i dettagli evolutivi o la struttura chimica fine delle forme Z del DNA."
+      },
+      {
+        "name": "LM-41 Medicina / LM-42 Veterinaria",
+        "priority_modules": "Focus patologico. Cruciale capire le Mutazioni/Riparazione (2) come base del cancro e delle malattie genetiche. Fondamentale la Genetica Virale (8) e le prospettive della Terapia Genica (9). Le tecniche di laboratorio (clonaggio, vettori plasmidici) sono trattate solo a livello concettuale."
+      },
+      {
+        "name": "L-13 Scienze Biologiche",
+        "priority_modules": "Approccio teorico-meccanicistico completo. Fondamentale il Dogma Centrale (Moduli 2, 3, 4) in ogni dettaglio molecolare. Importante l'aspetto evolutivo e la struttura della cromatina (1). Le applicazioni biotecnologiche spinte (Biologia sintetica) sono meno centrali rispetto alla comprensione dei processi naturali."
+      },
+      {
+        "name": "LM-13 Farmacia / CTF",
+        "priority_modules": "Focus sui target farmacologici. Cruciale la Sintesi Proteica (4) e la Replicazione (2) come bersagli di antibiotici e chemioterapici. Importante la Regolazione (5) e le nuove frontiere terapeutiche (RNA therapeutics, Terapia Genica 9). Tecniche di sequenziamento e bioinformatica sono marginali."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Chimica del DNA (forme A, B, Z) e topologia (superavvolgimenti). Organizzazione della cromatina (istoni, nucleosomi) e differenze strutturali tra genoma procariotico ed eucariotico (sequenze ripetute, DNA satellite).",
+        "key_concepts": [
+          "Organizzazione del Genoma",
+          "Struttura e Chimica del DNA",
+          "Topologia del DNA"
+        ],
+        "name": "1. Struttura e Organizzazione del Genoma"
+      },
+      {
+        "core_contents": "Meccanismo della forcella replicativa, enzimologia (polimerasi, primasi, elicasi) e gestione dei telomeri. Sistemi di riparazione del danno (BER, NER, MMR, SOS) e meccanismi di ricombinazione omologa e sito-specifica (inclusi trasposoni).",
+        "key_concepts": [
+          "Meccanismo forcella replicativa",
+          "Enzimologia replicazione DNA",
+          "DNA polimerasi"
+        ],
+        "name": "2. Replicazione e Mantenimento del DNA"
+      },
+      {
+        "core_contents": "RNA polimerasi e promotori (prok vs euk). Fattori di trascrizione generali. Processamento dell'mRNA: Capping, Poliadenilazione e meccanismo molecolare dello Splicing (spliceosoma). Degradazione e turnover dell'RNA.",
+        "key_concepts": [
+          "RNA Polimerasi",
+          "Promotori (Prokaryota vs Eukaryota)",
+          "Fattori di Trascrizione Generali"
+        ],
+        "name": "3. Trascrizione e Maturazione dell'RNA"
+      },
+      {
+        "core_contents": "Funzionamento del ribosoma, caricamento dei tRNA e fasi della traduzione (inizio, allungamento, termine). Controllo qualità, folding assistito da chaperoni e indirizzamento (targeting) delle proteine ai comparti cellulari.",
+        "key_concepts": [
+          "Fasi della Traduzione (Inizio, Allungamento, Termine)",
+          "Funzionamento e Struttura del Ribosoma",
+          "Caricamento e Ruolo dei tRNA"
+        ],
+        "name": "4. Sintesi Proteica e Post-Traduzione"
+      },
+      {
+        "core_contents": "Operoni batterici (Lac, Trp). Regolazione eucariotica: enhancer, silencer, insulator e fattori di trascrizione. Epigenetica: metilazione del DNA e codice istonico. Ruolo dell'RNA interference (miRNA, siRNA).",
+        "key_concepts": [
+          "Regolazione dell'Espressione Genica",
+          "Operoni Batterici",
+          "Fattori di Trascrizione"
+        ],
+        "name": "5. Regolazione dell'Espressione Genica"
+      },
+      {
+        "core_contents": "Enzimi di restrizione, vettori di clonaggio e plasmidi. PCR e sue varianti. Editing genomico tramite sistema CRISPR-Cas9. Tecniche di analisi dell'interazione DNA-proteina (EMSA, ChIP).",
+        "key_concepts": [
+          "Tecnologie DNA Ricombinante",
+          "Sistema CRISPR-Cas9",
+          "Reazione a Catena Polimerasi"
+        ],
+        "name": "6. Tecnologie del DNA Ricombinante"
+      },
+      {
+        "core_contents": "Dal metodo Sanger al Next Generation Sequencing (NGS). Assemblaggio genomico, annotazione e metagenomica. Tecniche di trascrittomica (RNA-Seq, Microarray) e proteomica di base.",
+        "key_concepts": [
+          "Next Generation Sequencing (NGS)",
+          "Sequenziamento del DNA",
+          "Assemblaggio Genomico"
+        ],
+        "name": "7. Genomica, Sequenziamento e Omiche"
+      },
+      {
+        "core_contents": "Organizzazione dei genomi virali (DNA/RNA), strategie di replicazione e trascrizione. Ciclo dei retrovirus, integrazione e trascrittasi inversa.",
+        "key_concepts": [
+          "Ciclo dei retrovirus",
+          "Trascrizione inversa",
+          "Integrazione genomica virale"
+        ],
+        "name": "8. Genetica Virale e Retroelementi"
+      },
+      {
+        "core_contents": "Terapia genica (vettori virali e non), correzione di difetti genetici in vivo/ex vivo. Biologia sintetica (sintesi geni/genomi) e bioinformatica applicata (banche dati, BLAST).",
+        "key_concepts": [
+          "Terapia genica",
+          "Vettori virali",
+          "Correzione difetti genetici"
+        ],
+        "name": "9. Applicazioni Mediche e Biotecnologiche"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "LM-13 Farmacia",
+      "LM-13 Chimica e Tecnologia Farmaceutiche (CTF)",
+      "LM-41 Medicina e Chirurgia",
+      "LM-42 Medicina Veterinaria"
+    ]
+  },
+  "context_strategy": "Regno dell'informazione genetica pura. Distinzione cruciale tra chi 'usa' queste tecniche (Biotecnologi: editing, vettori), chi deve capirne le implicazioni patologiche (Medici: mutazioni, terapia genica) e chi studia i meccanismi di base (Biologi: dogma centrale dettagliato).",
+  "id": "biologia_molecolare_gene_framework",
+  "name": "Biologia Molecolare del Gene",
+  "subject": "Biologia e Medicina"
+}

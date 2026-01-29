@@ -1,0 +1,91 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "biomolecule_structure": "Le strutture di carboidrati, lipidi e amminoacidi sono trattate con dettaglio stereochimico (Fisher, Haworth, L/D)?",
+      "organic_selectivity": "La chimica organica si concentra sui gruppi funzionali biologici o si perde in sintesi industriali inutili? (Es. focus su esteri/ammidi vs idrocarburi policiclici).",
+      "propedeutic_link": "Il testo fa esplicito riferimento a come queste reazioni avvengono nel metabolismo (es. legame fosfoanidridico nell'ATP)?",
+      "solution_chemistry": "Il calcolo di pH, tamponi e osmolarità è trattato con rigore quantitativo? (Cruciale per la fisiologia renale/respiratoria)."
+    },
+    "program_profiles": [
+      {
+        "name": "Semestre Filtro (Medicina/Odontoiatria/Veterinaria)",
+        "priority_modules": "Priorità massima ai Moduli 3 (Soluzioni/Osmosi), 5 (pH/Tamponi) e 7 (Biomolecole). Questi sono i pilastri su cui si costruirà tutto il corso di laurea. La chimica organica (6) deve essere funzionale al Modulo 7.",
+        "textbook_advice": "Testi unici di 'Chimica e Propedeutica Biochimica'. Evitare testi separati di Generale e Organica se troppo voluminosi."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Struttura atomica, isotopi (radioattività medica). Tavola periodica e proprietà periodiche. Legami chimici (ionico, covalente, VSEPR). Interazioni deboli (Idrogeno, Van der Waals) cruciali per le macromolecole.",
+        "key_concepts": [
+          "Struttura Atomica",
+          "Legami Chimici",
+          "Tavola Periodica"
+        ],
+        "name": "1. Struttura Atomica e Legami"
+      },
+      {
+        "core_contents": "Gas ideali e reali (respirazione). Liquidi e tensione superficiale. Termodinamica: Entalpia, Entropia, Energia Libera di Gibbs (reazioni endo/esoergoniche).",
+        "key_concepts": [
+          "Termodinamica Chimica",
+          "Energia Libera di Gibbs",
+          "Entropia (S)"
+        ],
+        "name": "2. Stati della Materia e Termodinamica"
+      },
+      {
+        "core_contents": "Concentrazioni (Molarità, % p/v). Solubilità e legge di Henry (gas nel sangue). Proprietà colligative: Osmosi, pressione osmotica, soluzioni iso/ipo/ipertoniche (fluidi biologici).",
+        "key_concepts": [
+          "Concentrazioni delle Soluzioni",
+          "Molarità (M)",
+          "Percentuale peso/volume (% p/v)"
+        ],
+        "name": "3. Soluzioni e Proprietà Colligative"
+      },
+      {
+        "core_contents": "Velocità di reazione, energia di attivazione e catalisi (enzimi). Equilibrio chimico, Le Chatelier. Equilibri eterogenei (prodotto di solubilità - calcoli renali/ossei).",
+        "key_concepts": [
+          "Equilibrio Chimico",
+          "Cinetica Chimica",
+          "Principio Le Chatelier"
+        ],
+        "name": "4. Equilibri e Cinetica"
+      },
+      {
+        "core_contents": "pH, pOH, acidi/basi forti e deboli. Idrolisi salina. Soluzioni tampone ed equazione di Henderson-Hasselbalch (tamponi ematici). Redox, Potenziali standard ed equazione di Nernst.",
+        "key_concepts": [
+          "Equilibri Acido-Base",
+          "pH e pOH",
+          "Acidi e Basi Forti/Deboli"
+        ],
+        "name": "5. Acidi, Basi e Elettrochimica"
+      },
+      {
+        "core_contents": "Ibridazione del Carbonio. Isomeria (strutturale e stereoisomeria/chiralità). Reattività di: Alcani/Alcheni/Aromatici (cenni), Alcoli/Fenoli/Eteri/Tioli, Aldeidi/Chetoni (tautomeria), Acidi Carbossilici e derivati (esteri, ammidi), Ammine.",
+        "key_concepts": [
+          "Ibridazione del Carbonio",
+          "Isomeria e Chiralità",
+          "Reattività dei Gruppi Funzionali"
+        ],
+        "name": "6. Chimica Organica: Gruppi Funzionali"
+      },
+      {
+        "core_contents": "Carboidrati (monosaccaridi, legame glicosidico, polisaccaridi). Lipidi (acidi grassi, trigliceridi, fosfolipidi, steroidi). Amminoacidi (struttura, punto isoelettrico, legame peptidico). Nucleotidi (ATP, legami fosfodiesterici).",
+        "key_concepts": [
+          "Struttura Amminoacidi",
+          "Legame Peptidico",
+          "Punto Isoelettrico"
+        ],
+        "name": "7. Propedeutica Biochimica (Macromolecole)"
+      }
+    ],
+    "target_degrees": [
+      "LM-41 Medicina e Chirurgia",
+      "LM-42 Medicina Veterinaria",
+      "LM-46 Odontoiatria e Protesi Dentaria"
+    ]
+  },
+  "context_strategy": "Syllabus ufficiale per l'insegnamento integrato di Chimica e Propedeutica Biochimica. Il corso è progettato per colmare il divario tra la chimica di base e la biochimica metabolica. Richiede una solida base di chimica generale (specialmente equilibri in soluzione e pH) e una trattazione mirata della chimica organica, finalizzata esclusivamente alla comprensione della struttura e reattività delle biomolecole (zuccheri, lipidi, proteine, nucleotidi).",
+  "id": "chimica_propedeutica_semestre_filtro_framework",
+  "name": "Chimica e Propedeutica Biochimica (Semestre Filtro)",
+  "subject": "Medicina e Chirurgia"
+}

@@ -1,0 +1,318 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "L-27 Scienze chimiche",
+        "priority_modules": "Cruciale la copertura totale e approfondita. Priorità massima su meccanismi (Moduli 5-13), sintesi avanzata e retrosintesi (18-20), spettroscopia avanzata (26) e chimica fisica organica (29). Necessaria competenza sui metodi computazionali (27)."
+      },
+      {
+        "name": "L-29/LM-13 Farmacia e CTF",
+        "priority_modules": "Focus assoluto su gruppi funzionali (Moduli 6-13), stereochimica (2) e biomolecole (14-17). Fondamentale la chimica medicinale (25), la sintesi di eterocicli e l'analisi spettroscopica (3). Marginale la parte computazionale avanzata e i polimeri industriali."
+      },
+      {
+        "name": "L-2/L-13 Biotecnologie e Biologia",
+        "priority_modules": "Cruciale la chimica delle biomolecole (Moduli 14-17) e i meccanismi enzimatici/metabolici (28). Fondamentale la stereochimica e le basi dei gruppi funzionali. Marginale la sintesi complessa, organometallica (18), polimeri (21) e spettroscopia avanzata fisica."
+      },
+      {
+        "name": "L-9 Ingegneria industriale",
+        "priority_modules": "Cruciale il modulo sui polimeri (21), chimica verde (23) e sicurezza (30). Importante la conoscenza di base dei gruppi funzionali e delle proprietà fisiche (4-5). Marginale tutta la parte bio-organica (zuccheri, DNA, peptidi) e la sintesi farmaceutica."
+      },
+      {
+        "name": "L-25/L-26 Agraria e Alimentare",
+        "priority_modules": "Focus strategico su lipidi, zuccheri e proteine (Moduli 14-16) per la chimica degli alimenti. Importante la sicurezza (30) e i metodi analitici (3). Meno rilevante la sintesi organica avanzata, organometallica e pericoiclica."
+      },
+      {
+        "name": "L-32/L-34 Scienze Naturali e Geologia",
+        "priority_modules": "Fondamentale la chimica degli idrocarburi (Moduli 4, 6) per la geochimica e la sicurezza ambientale (30, 23). Utile la spettroscopia di base (3) per l'analisi. Marginale la sintesi complessa, farmaceutica e biomolecolare avanzata."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Struttura elettronica, modelli di legame covalente, ibridazione e risonanza. Concetti di acidità e basicità secondo Brønsted e Lewis nel contesto organico, forze intermolecolari e nomenclatura sistematica IUPAC.",
+        "key_concepts": [
+          "Ibridazione e Geometria Molecolare",
+          "Struttura Elettronica",
+          "Risonanza e Delocalizzazione"
+        ],
+        "name": "1. Fondamenti di chimica organica"
+      },
+      {
+        "core_contents": "Classificazione dell'isomeria (costituzionale vs configurazionale), chiralità, enantiomeri e diastereoisomeri. Analisi conformazionale, attività ottica, risoluzione di racemi e proiezioni stereochimiche.",
+        "key_concepts": [
+          "Classificazione dell'isomeria",
+          "Isomeria configurazionale",
+          "Chiralità molecolare"
+        ],
+        "name": "2. Stereochimica"
+      },
+      {
+        "core_contents": "Principi fondamentali di caratterizzazione strutturale tramite spettroscopia IR (gruppi funzionali), NMR (connettività), Spettrometria di Massa, UV-Vis e tecniche cromatografiche di base.",
+        "key_concepts": [
+          "Caratterizzazione strutturale molecole organiche",
+          "Spettroscopia NMR (Risonanza Magnetica Nucleare)",
+          "Principi connettività strutturale NMR"
+        ],
+        "name": "3. Metodi di studio delle molecole organiche"
+      },
+      {
+        "core_contents": "Proprietà fisiche e reattività radicalica (alogenazione, combustione). Analisi conformazionale approfondita dei cicloalcani e stabilità dell'anello.",
+        "key_concepts": [
+          "Proprietà fisiche alcani",
+          "Reattività radicalica",
+          "Alogenazione radicalica"
+        ],
+        "name": "4. Alcani e cicloalcani"
+      },
+      {
+        "core_contents": "Meccanismi di addizione elettrofila, radicalica e nucleofila. Reazioni di ossidazione e riduzione, polimerizzazione e principi di regioselettività (Markovnikov) e stereoselettività.",
+        "key_concepts": [
+          "Meccanismi di addizione elettrofila",
+          "Regioselettività (Regola di Markovnikov)",
+          "Meccanismi di addizione radicalica"
+        ],
+        "name": "5. Alcheni e alchini"
+      },
+      {
+        "core_contents": "Teoria dell'aromaticità (Hückel), reazioni di Sostituzione Elettrofila Aromatica (SEAr) con effetti dei sostituenti (attivanti/disattivanti). Sostituzione nucleofila aromatica e sistemi eterociclici.",
+        "key_concepts": [
+          "Sostituzione Elettrofila Aromatica",
+          "Teoria dell'Aromaticità",
+          "Regola di Hückel"
+        ],
+        "name": "6. Composti aromatici"
+      },
+      {
+        "core_contents": "Analisi comparativa e meccanicistica delle reazioni di sostituzione nucleofila (SN1 vs SN2) e di eliminazione (E1 vs E2). Reattività degli alogenuri vinilici e arilici.",
+        "key_concepts": [
+          "Sostituzione Nucleofila (SN)",
+          "Meccanismo SN2",
+          "Meccanismo SN1"
+        ],
+        "name": "7. Alogenuri alchilici e solfonati"
+      },
+      {
+        "core_contents": "Sintesi e reattività degli alcoli (ossidazione, disidratazione). Acidità dei fenoli e loro reazioni specifiche. Sintesi (Williamson) e scissione degli eteri.",
+        "key_concepts": [
+          "Sintesi alcoli",
+          "Reattività alcoli",
+          "Ossidazione alcoli"
+        ],
+        "name": "8. Alcoli, fenoli ed eteri"
+      },
+      {
+        "core_contents": "Sintesi da alcheni, reattività di apertura dell'anello in condizioni acide vs basiche, stereochimica dell'apertura e sintesi asimmetrica.",
+        "key_concepts": [
+          "Sintesi epossidi da alcheni",
+          "Apertura anello epossidico",
+          "Reattività condizioni acide"
+        ],
+        "name": "9. Epossidi e ossiranni"
+      },
+      {
+        "core_contents": "Reattività del gruppo carbonilico: addizione nucleofila, formazione di acetali, imine ed enamine. Reazioni redox e condensazioni aldoliche semplici.",
+        "key_concepts": [
+          "Reattività Gruppo Carbonilico",
+          "Addizione Nucleofila",
+          "Aldeidi e Chetoni"
+        ],
+        "name": "10. Composti carbonilici: aldeidi e chetoni"
+      },
+      {
+        "core_contents": "Relazione struttura-acidità. Meccanismi di interconversione dei derivati (cloruri, anidridi, esteri, ammidi). Meccanismo di esterificazione di Fischer e saponificazione.",
+        "key_concepts": [
+          "Acidi carbossilici",
+          "Derivati degli acidi carbossilici",
+          "Relazione struttura-acidità"
+        ],
+        "name": "11. Acidi carbossilici e derivati"
+      },
+      {
+        "core_contents": "Chimica degli ioni enolato: acidità in alpha, condensazioni aldoliche, di Claisen e reazioni di Michael. Sintesi malonica e acetoacetica, annelazione di Robinson.",
+        "key_concepts": [
+          "Chimica degli ioni enolato",
+          "Acidità in alfa",
+          "Condensazione aldolica"
+        ],
+        "name": "12. Composti con enolati e alfa-carbonili"
+      },
+      {
+        "core_contents": "Basicità e nucleofilia delle ammine. Metodi di sintesi (alchilazione, riduzione), reazioni dei sali di diazonio (Sandmeyer) e chimica delle ammine aromatiche.",
+        "key_concepts": [
+          "Basicità delle ammine",
+          "Nucleofilia delle ammine",
+          "Sintesi ammine per alchilazione"
+        ],
+        "name": "13. Ammine e composti azotati"
+      },
+      {
+        "core_contents": "Struttura e stereochimica (Fischer/Haworth), mutarotazione, glicosidazione. Reazioni di ossido-riduzione dei monosaccaridi, formazione di disaccaridi e polisaccaridi.",
+        "key_concepts": [
+          "Struttura dei carboidrati",
+          "Stereochimica dei monosaccaridi",
+          "Proiezioni di Fischer"
+        ],
+        "name": "14. Zuccheri e carboidrati"
+      },
+      {
+        "core_contents": "Struttura zwitterionica, punto isoelettrico, formazione del legame peptidico. Strategie di sintesi peptidica (gruppi protettori, fase solida) e sequenziamento.",
+        "key_concepts": [
+          "Struttura zwitterionica aminoacidi",
+          "Punto isoelettrico (pI)",
+          "Formazione legame peptidico"
+        ],
+        "name": "15. Aminoacidi e peptidi"
+      },
+      {
+        "core_contents": "Classificazione e struttura di acidi grassi, trigliceridi, fosfolipidi e steroidi. Reazioni di saponificazione, idrogenazione e ossidazione lipidica.",
+        "key_concepts": [
+          "Struttura Acidi Grassi",
+          "Classificazione Lipidi",
+          "Struttura Trigliceridi"
+        ],
+        "name": "16. Lipidi"
+      },
+      {
+        "core_contents": "Componenti strutturali (basi, zuccheri, fosfati), struttura primaria e secondaria di DNA/RNA. Cenni sulla sintesi chimica di oligonucleotidi e interazioni con farmaci.",
+        "key_concepts": [
+          "Struttura nucleotidica fondamentale",
+          "Basi azotate (purine/pirimidine)",
+          "Zuccheri (ribosio/deossiribosio)"
+        ],
+        "name": "17. Nucleotidi e acidi nucleici"
+      },
+      {
+        "core_contents": "Reattivi di Grignard e organolitio. Catalisi con metalli di transizione (Palladio), reazioni di coupling (Suzuki, Heck, Sonogashira) e metatesi delle olefine.",
+        "key_concepts": [
+          "Chimica Organometallica",
+          "Reattivi di Grignard",
+          "Composti Organolitio"
+        ],
+        "name": "18. Chimica organometallica"
+      },
+      {
+        "core_contents": "Classificazione (cicloaddizioni, sigmatropiche, elettrociclizzazioni). Analisi degli orbitali di frontiera (FMO) e regole di Woodward-Hoffmann. Focus sulla Diels-Alder.",
+        "key_concepts": [
+          "Regole di Woodward-Hoffmann",
+          "Analisi Orbitali di Frontiera (FMO)",
+          "Reazioni pericicliche"
+        ],
+        "name": "19. Reazioni pericicliche"
+      },
+      {
+        "core_contents": "Approccio retrosintetico, disconnessioni logiche, uso strategico dei gruppi protettori, sintesi convergente vs lineare e controllo stereochimico.",
+        "key_concepts": [
+          "Approccio retrosintetico",
+          "Strategia di sintesi organica",
+          "Disconnessioni logiche"
+        ],
+        "name": "20. Sintesi e strategia"
+      },
+      {
+        "core_contents": "Meccanismi di polimerizzazione (radicalica, ionica, a stadi). Relazione struttura-proprietà, copolimeri e materiali biodegradabili.",
+        "key_concepts": [
+          "Meccanismi di polimerizzazione",
+          "Polimerizzazione a stadi",
+          "Polimerizzazione radicalica"
+        ],
+        "name": "21. Polimeri"
+      },
+      {
+        "core_contents": "Principi di fotofisica (Jablonski), reazioni fotochimiche fondamentali (isomerizzazioni, cicloaddizioni [2+2]) e applicazioni tecnologiche.",
+        "key_concepts": [
+          "Principi di Fotofisica",
+          "Diagramma di Jablonski",
+          "Reazioni Fotochimiche Fondamentali"
+        ],
+        "name": "22. Fotochimica organica"
+      },
+      {
+        "core_contents": "I 12 principi della Green Chemistry, metriche di efficienza (atom economy), solventi alternativi, catalisi e riduzione dell'impatto ambientale.",
+        "key_concepts": [
+          "Dodici Principi Chimica Verde",
+          "Economia Atomica (Atom Economy)",
+          "Metriche Efficienza Reazione"
+        ],
+        "name": "23. Chimica verde e sostenibile"
+      },
+      {
+        "core_contents": "Operazioni unitarie di laboratorio: purificazione (distillazione, cristallizzazione, cromatografia), estrazione e manipolazione in atmosfera inerte.",
+        "key_concepts": [
+          "Operazioni unitarie di laboratorio",
+          "Tecniche di purificazione",
+          "Distillazione frazionata"
+        ],
+        "name": "24. Tecniche sperimentali in organica"
+      },
+      {
+        "core_contents": "Relazioni struttura-attività (SAR), progettazione di farmaci, interazioni ligando-recettore, profarmaci e inibitori enzimatici.",
+        "key_concepts": [
+          "Relazioni Struttura-Attività (SAR)",
+          "Progettazione Razionale di Farmaci",
+          "Interazioni Ligando-Recettore"
+        ],
+        "name": "25. Bioorganica e chimica medicinale"
+      },
+      {
+        "core_contents": "Tecniche NMR bidimensionali (COSY, HSQC, HMBC), EPR e metodi fisici avanzati per la determinazione strutturale complessa.",
+        "key_concepts": [
+          "Spettroscopia NMR bidimensionale",
+          "Determinazione strutturale complessa",
+          "Tecnica COSY (Correlation Spectroscopy)"
+        ],
+        "name": "26. Spettroscopia avanzata"
+      },
+      {
+        "core_contents": "Modellistica molecolare, calcoli DFT, dinamica molecolare e docking per la previsione di proprietà e reattività.",
+        "key_concepts": [
+          "Calcoli di Teoria del Funzionale della Densità (DFT)",
+          "Modellistica Molecolare",
+          "Dinamica Molecolare"
+        ],
+        "name": "27. Chimica computazionale organica"
+      },
+      {
+        "core_contents": "Meccanismi chimici delle vie metaboliche principali: glicolisi, Krebs, biosintesi di terpeni e alcaloidi, biotrasformazioni.",
+        "key_concepts": [
+          "Meccanismi vie metaboliche",
+          "Glicolisi chimica",
+          "Ciclo di Krebs"
+        ],
+        "name": "28. Metabolismo organico"
+      },
+      {
+        "core_contents": "Profilo energetico di reazione, stato di transizione, postulato di Hammond, effetti isotopici e catalisi omogenea/eterogenea.",
+        "key_concepts": [
+          "Profilo energetico di reazione",
+          "Stato di transizione",
+          "Postulato di Hammond"
+        ],
+        "name": "29. Cinetica e termodinamica delle reazioni organiche"
+      },
+      {
+        "core_contents": "Gestione del rischio chimico, schede di sicurezza (SDS), smaltimento rifiuti, DPI e procedure per sostanze pericolose.",
+        "key_concepts": [
+          "Gestione del rischio chimico",
+          "Schede di dati di sicurezza (SDS)",
+          "Dispositivi di protezione individuale (DPI)"
+        ],
+        "name": "30. Sicurezza in laboratorio di organica"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-9 Ingegneria industriale",
+      "L-13 Scienze biologiche",
+      "L-25 Scienze e tecnologie agrarie",
+      "L-26 Scienze e tecnologie alimentari",
+      "L-27 Scienze chimiche",
+      "L-29 Scienze farmaceutiche",
+      "L-32 Scienze naturali e ambientali",
+      "L-34 Geologia",
+      "LM-13 Farmacia"
+    ]
+  },
+  "context_strategy": "Materia vasta che va differenziata drasticamente. Per i Chimici/Farmacisti è essenziale la sintesi complessa, i meccanismi di reazione dettagliati e la spettroscopia. Per Biotecnologi/Agrari/Biologi il focus deve spostarsi rapidamente sulle biomolecole (zuccheri, lipidi, amminoacidi), trattando i meccanismi di sintesi solo come base teorica",
+  "id": "chimica_organica_framework_completo",
+  "name": "Chimica Organica",
+  "subject": "Chimica"
+}

@@ -1,0 +1,288 @@
+{
+  "app_name": "MATRIX",
+  "app_version": "1.0.0",
+  "app_description": "Multi-Analysis Teaching Resource Intelligence X-platform",
+  "app_logo": "🎓",
+  
+  "supported_subjects": [
+    {
+      "id": "chimica",
+      "name": "Chimica",
+      "icon": "🧪",
+      "frameworks": [
+        "chimica_generale_inorganica_framework",
+        "chimica_organica_framework_completo"
+      ],
+      "manual_directory": ["chimica_generale", "chimica_organica"]
+    },
+    {
+      "id": "fisica",
+      "name": "Fisica",
+      "icon": "⚛️",
+      "frameworks": [
+        "fisica_generale_1_framework",
+        "fisica_generale_2_framework",
+        "fisica_generale_life_sciences_framework",
+        "fisica_semestre_filtro_framework"
+      ],
+      "manual_directory": ["fisica"]
+    },
+    {
+      "id": "matematica",
+      "name": "Matematica",
+      "icon": "📐",
+      "frameworks": [
+        "analisi_matematica_1_framework",
+        "analisi_matematica_2_framework",
+        "matematica_corso_unico_framework"
+      ],
+      "manual_directory": []
+    },
+    {
+      "id": "economia",
+      "name": "Economia",
+      "icon": "💰",
+      "frameworks": [
+        "economia_politica_framework",
+        "microeconomia_avanzata_framework",
+        "macroeconomia_framework"
+      ],
+      "manual_directory": ["economia"]
+    },
+    {
+      "id": "biologia",
+      "name": "Biologia e Medicina",
+      "icon": "🔬",
+      "frameworks": [
+        "biochimica_generale_framework",
+        "biologia_cellulare_molecolare_framework",
+        "biologia_molecolare_gene_framework",
+        "genetica_generale_framework",
+        "istologia_embriologia_framework",
+        "microbiologia_framework",
+        "biologia_semestre_filtro_framework",
+        "chimica_propedeutica_semestre_filtro_framework"
+      ],
+      "manual_directory": ["istologia"]
+    }
+  ],
+  
+  "publishers": [
+    {
+      "id": "zanichelli",
+      "name": "Zanichelli",
+      "type": "primary",
+      "color": "#00A651",
+      "logo": "🟢"
+    },
+    {
+      "id": "competitor",
+      "name": "Competitor",
+      "type": "secondary",
+      "color": "#DC3545",
+      "logo": "🔴"
+    },
+    {
+      "id": "mcgraw-hill",
+      "name": "McGraw-Hill",
+      "type": "selectable",
+      "color": "#0066CC",
+      "logo": "🔵"
+    },
+    {
+      "id": "pearson",
+      "name": "Pearson",
+      "type": "selectable",
+      "color": "#FF6B00",
+      "logo": "🟠"
+    },
+    {
+      "id": "edises",
+      "name": "EdiSES",
+      "type": "selectable",
+      "color": "#9C27B0",
+      "logo": "🟣"
+    },
+    {
+      "id": "piccin",
+      "name": "Piccin",
+      "type": "selectable",
+      "color": "#FF1744",
+      "logo": "🔴"
+    },
+    {
+      "id": "cea",
+      "name": "CEA",
+      "type": "selectable",
+      "color": "#607D8B",
+      "logo": "⚪"
+    }
+  ],
+  
+  "analysis_types": {
+    "absolute": {
+      "name": "Valutazione Assoluta",
+      "description": "Valutazione intrinseca del manuale rispetto al framework teorico della materia, indipendente da programmi specifici",
+      "icon": "📊",
+      "color": "#28A745",
+      "permanent": true,
+      "dimensions": [
+        {
+          "id": "copertura_moduli",
+          "name": "Copertura Moduli",
+          "weight": 0.35,
+          "max_score": 130
+        },
+        {
+          "id": "qualita_didattica",
+          "name": "Qualità Didattica",
+          "weight": 0.20,
+          "max_score": 40
+        },
+        {
+          "id": "approfondimento",
+          "name": "Approfondimento",
+          "weight": 0.20,
+          "max_score": 40
+        },
+        {
+          "id": "materiali_supplementari",
+          "name": "Materiali Supplementari",
+          "weight": 0.15,
+          "max_score": 30
+        },
+        {
+          "id": "rapporto_qualita_prezzo",
+          "name": "Rapporto Qualità/Prezzo",
+          "weight": 0.10,
+          "max_score": 30
+        }
+      ],
+      "total_score": 270
+    },
+    "dynamic": {
+      "name": "Valutazione Dinamica",
+      "description": "Valutazione rispetto al programma specifico analizzato, temporanea e contestuale",
+      "icon": "🎯",
+      "color": "#007BFF",
+      "permanent": false,
+      "dimensions": [
+        {
+          "id": "copertura_programma",
+          "name": "Copertura Programma Specifico",
+          "weight": 0.40,
+          "max_score": 100
+        },
+        {
+          "id": "adeguatezza_livello",
+          "name": "Adeguatezza Livello",
+          "weight": 0.25,
+          "max_score": 70
+        },
+        {
+          "id": "allineamento_enfasi",
+          "name": "Allineamento Enfasi Docente",
+          "weight": 0.20,
+          "max_score": 50
+        },
+        {
+          "id": "rapporto_qp_contestuale",
+          "name": "Rapporto Q/P Contestuale",
+          "weight": 0.15,
+          "max_score": 50
+        }
+      ],
+      "total_score": 270
+    }
+  },
+  
+  "evaluation_framework": {
+    "preliminary_analysis": {
+      "phase": 0,
+      "name": "Analisi Preliminare",
+      "components": [
+        {
+          "id": "quadro_generale",
+          "name": "Quadro Generale del Programma",
+          "description": "Visione d'insieme, struttura logica, distribuzione tematica",
+          "prompt_focus": [
+            "Analizzare la struttura complessiva del programma",
+            "Identificare le macro-aree tematiche e la loro distribuzione percentuale",
+            "Valutare l'equilibrio tra teoria e pratica",
+            "Determinare il livello di complessità generale"
+          ]
+        },
+        {
+          "id": "profilo_pedagogico",
+          "name": "Profilo Pedagogico del Docente",
+          "description": "Approccio didattico, livello di approfondimento, enfasi particolare, stile",
+          "prompt_focus": [
+            "Identificare l'approccio didattico prevalente (teorico/applicativo/sperimentale)",
+            "Determinare il livello di approfondimento (base/intermedio/avanzato)",
+            "Individuare le enfasi particolari del docente",
+            "Caratterizzare lo stile didattico (classico/moderno/interdisciplinare)",
+            "Identificare eventuali orientamenti disciplinari specifici"
+          ]
+        }
+      ]
+    },
+    "detailed_analysis": {
+      "phase": 1,
+      "name": "Analisi Dettagliata",
+      "uses_framework": true
+    }
+  },
+  
+  "ui_settings": {
+    "theme": "professional",
+    "primary_color": "#00A651",
+    "secondary_color": "#003D1C",
+    "accent_color": "#FFD700",
+    "max_file_size_mb": 10,
+    "supported_file_types": [".pdf", ".txt", ".docx"],
+    "default_publisher": "zanichelli",
+    "show_competitor_comparison": true,
+    "enable_post_it_generation": true,
+    "enable_pdf_export": true
+  },
+  
+  "ai_settings": {
+    "providers": ["openai", "perplexity"],
+    "default_provider": "openai",
+    "models": {
+      "openai": ["gpt-4", "gpt-4-turbo", "gpt-4o", "gpt-4o-mini"],
+      "perplexity": ["llama-3.1-sonar-large-128k-online"]
+    },
+    "default_model": {
+      "openai": "gpt-4o-mini",
+      "perplexity": "llama-3.1-sonar-large-128k-online"
+    },
+    "temperature": 0.2,
+    "max_tokens": 8000
+  },
+  
+  "storage": {
+    "absolute_evaluations_dir": "valutazioni_assolute",
+    "history_storage": "localStorage",
+    "export_format": "pdf"
+  },
+  
+  "version_info": {
+    "current_version": "1.0.0",
+    "release_date": "2025-01-29",
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-01-29",
+        "changes": [
+          "Prima release MATRIX",
+          "Supporto multi-materia (21 framework)",
+          "Supporto multi-editore",
+          "Valutazioni assolute e dinamiche",
+          "Analisi preliminare con profilo pedagogico",
+          "85 manuali integrati (27 Zanichelli + 58 Competitor)"
+        ]
+      }
+    ]
+  }
+}

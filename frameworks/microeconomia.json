@@ -1,0 +1,117 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "advanced_topics": "Contiene trattazioni moderne su Piattaforme digitali, Network Effects e Mechanism Design (Aste)?",
+      "behavioral_integration": "È presente un capitolo/sezione sull'Economia Comportamentale (Nudge, Prospect Theory) o è puramente neoclassico razionale?",
+      "duality_theory": "Viene trattata la dualità Costo-Produzione e l'equazione di Slutsky in modo formale?",
+      "game_theory_depth": "Il testo si ferma a Nash/Dilemma del Prigioniero o copre Giochi Bayesiani, Perfezione nei sottogiochi e Segnalazione?",
+      "mathematical_rigor": "Verificare il livello: Uso intensivo di Lagrangiane e derivate parziali (per L-33)? O approccio grafico/algebrico semplice (per L-18/L-36)?"
+    },
+    "program_profiles": [
+      {
+        "name": "L-33 Scienze Economiche",
+        "priority_modules": "Focus sul rigore analitico. Cruciale la padronanza formale dei Moduli 1 (Slutsky, Dualità), 5 (Giochi avanzati) e 6 (Equilibrio Generale). Il testo deve usare il calcolo differenziale (Lagrangiane) in modo pervasivo. Importante l'introduzione ai temi avanzati (9) come le aste e il mechanism design."
+      },
+      {
+        "name": "L-18 Economia Aziendale",
+        "priority_modules": "Focus strategico-applicativo. Priorità assoluta ai Moduli 2 (Costi), 4 (Oligopolio/Strategia competitiva) e 7 (Incertezza/Contratti/Asimmetrie). La Teoria dei Giochi (5) serve come strumento per capire la concorrenza, non come fine teorico. Slutsky e l'Equilibrio Generale puro sono meno rilevanti rispetto alle applicazioni industriali."
+      },
+      {
+        "name": "L-36 Scienze Politiche",
+        "priority_modules": "Focus su Policy e Benessere. Cruciali i Moduli 3 (Interventi pubblici), 8 (Fallimenti di Mercato/Esternalità) e 4 (Monopolio/Regolamentazione). La formalizzazione matematica spinta (Dualità, Giochi Bayesiani) è superflua; serve capire le intuizioni economiche dietro l'efficienza e l'equità."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Preferenze e assiomi, massimizzazione dell'utilità con vincolo di bilancio. Derivazione della Domanda Marshalliana e Compensata (Hicksiana). Equazione di Slutsky (effetti reddito/sostituzione). Surplus del consumatore e Variazioni Equivalenti/Compensative.",
+        "key_concepts": [
+          "Massimizzazione Utilità con Vincolo",
+          "Assiomi e Struttura delle Preferenze",
+          "Domanda Marshalliana"
+        ],
+        "name": "1. Teoria del Consumatore Avanzata"
+      },
+      {
+        "core_contents": "Tecnologia e Isoquanti. Massimizzazione del profitto e minimizzazione dei costi (Dualità). Funzioni di costo (Totale, Medio, Marginale) di breve e lungo periodo. Domanda condizionata dei fattori.",
+        "key_concepts": [
+          "Minimizzazione dei Costi",
+          "Massimizzazione del Profitto",
+          "Funzioni di Costo"
+        ],
+        "name": "2. Teoria della Produzione e dei Costi"
+      },
+      {
+        "core_contents": "Equilibrio parziale di breve e lungo periodo. Elasticità della domanda e dell'offerta. Analisi di benessere e perdita secca dovuta a tasse, sussidi e controlli sui prezzi.",
+        "key_concepts": [
+          "Equilibrio parziale",
+          "Mercati concorrenziali",
+          "Breve e lungo periodo"
+        ],
+        "name": "3. Mercati Concorrenziali ed Efficienza"
+      },
+      {
+        "core_contents": "Monopolio (potere di mercato, indice di Lerner) e Discriminazione di prezzo (I, II, III grado). Modelli di Oligopolio: Cournot (quantità), Bertrand (prezzo), Stackelberg (leader/follower). Collusione e Cartelli.",
+        "key_concepts": [
+          "Monopolio",
+          "Potere di Mercato",
+          "Indice di Lerner"
+        ],
+        "name": "4. Strutture di Mercato Non Concorrenziali"
+      },
+      {
+        "core_contents": "Giochi statici (Nash) e dinamici (induzione a ritroso). Strategie miste. Giochi ripetuti e credibilità delle minacce. Introduzione ai Giochi Bayesiani (informazione incompleta).",
+        "key_concepts": [
+          "Equilibrio di Nash",
+          "Giochi statici",
+          "Induzione a ritroso"
+        ],
+        "name": "5. Teoria dei Giochi Strategica"
+      },
+      {
+        "core_contents": "Scatola di Edgeworth (scambio e produzione). Frontiera delle possibilità produttive. Primo e Secondo Teorema dell'Economia del Benessere. Efficienza paretiana.",
+        "key_concepts": [
+          "Equilibrio Economico Generale",
+          "Efficienza Paretiana",
+          "Primo Teorema Benessere"
+        ],
+        "name": "6. Equilibrio Generale e Benessere"
+      },
+      {
+        "core_contents": "Teoria dell'Utilità Attesa (Von Neumann-Morgenstern) e avversione al rischio. Selezione Avversa (modello dei 'bidoni' di Akerlof), Azzardo Morale (relazione Principale-Agente), Segnalazione (modello di Spence) e Screening.",
+        "key_concepts": [
+          "Asimmetrie Informative",
+          "Teoria Utilità Attesa (VNM)",
+          "Selezione Avversa"
+        ],
+        "name": "7. Incertezza e Asimmetrie Informative"
+      },
+      {
+        "core_contents": "Esternalità (Pigou vs Coase). Beni Pubblici (free-riding). Risorse comuni (Tragedia dei commons). Meccanismi di regolamentazione e permessi negoziabili.",
+        "key_concepts": [
+          "Esternalità Negative e Positive",
+          "Fallimenti del Mercato",
+          "Teorema di Coase"
+        ],
+        "name": "8. Fallimenti del Mercato e Public Policy"
+      },
+      {
+        "core_contents": "Piattaforme a due versanti (Two-sided markets) ed effetti di rete. Teoria delle Aste. Economia Comportamentale: limiti della razionalità, euristiche, preferenze sociali.",
+        "key_concepts": [
+          "Economia Comportamentale",
+          "Piattaforme a due versanti",
+          "Limiti della razionalità"
+        ],
+        "name": "9. Temi Avanzati (Economia Digitale e Comportamentale)"
+      }
+    ],
+    "target_degrees": [
+      "L-18 Economia Aziendale",
+      "L-33 Scienze economiche",
+      "L-36 Scienze politiche"
+    ]
+  },
+  "context_strategy": "Corso avanzato per Economisti puri. La discriminante è il rigore matematico (uso di Lagrangiane, dualità) e la profondità teorica (Teoria dei Giochi avanzata, equilibrio generale). Si differenzia da Economia Politica per la tecnicità e l'assenza della parte macro",
+  "id": "microeconomia_avanzata_framework",
+  "name": "Microeconomia",
+  "subject": "Economia"
+}

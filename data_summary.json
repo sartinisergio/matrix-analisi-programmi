@@ -1,0 +1,280 @@
+{
+  "frameworks": [
+    {
+      "filename": "Analisi 1.json",
+      "id": "analisi_matematica_1_framework",
+      "name": "Analisi Matematica 1",
+      "subject": "Matematica",
+      "modules": 13
+    },
+    {
+      "filename": "Analisi 2.json",
+      "id": "analisi_matematica_2_framework",
+      "name": "Analisi Matematica 2",
+      "subject": "Matematica",
+      "modules": 12
+    },
+    {
+      "filename": "Biologia semestre filtro.json",
+      "id": "biologia_semestre_filtro_framework",
+      "name": "Biologia (Semestre Filtro)",
+      "subject": "Medicina e Chirurgia",
+      "modules": 7
+    },
+    {
+      "filename": "Chimica Generale.json",
+      "id": "chimica_generale_inorganica_framework",
+      "name": "Chimica Generale con Elementi di Chimica Inorganica",
+      "subject": "Chimica",
+      "modules": 15
+    },
+    {
+      "filename": "Chimica Organica.json",
+      "id": "chimica_organica_framework_completo",
+      "name": "Chimica Organica",
+      "subject": "Chimica",
+      "modules": 30
+    },
+    {
+      "filename": "Chimica semestre filtro.json",
+      "id": "chimica_propedeutica_semestre_filtro_framework",
+      "name": "Chimica e Propedeutica Biochimica (Semestre Filtro)",
+      "subject": "Medicina e Chirurgia",
+      "modules": 7
+    },
+    {
+      "filename": "Economia politica.json",
+      "id": "economia_politica_framework",
+      "name": "Economia Politica (Micro & Macro)",
+      "subject": "Economia",
+      "modules": 9
+    },
+    {
+      "filename": "Fisica 1.json",
+      "id": "fisica_generale_1_framework",
+      "name": "Fisica Generale 1 (Meccanica e Termodinamica)",
+      "subject": "Fisica",
+      "modules": 10
+    },
+    {
+      "filename": "Fisica 2.json",
+      "id": "fisica_generale_2_framework",
+      "name": "Fisica Generale 2 (Elettromagnetismo e Ottica)",
+      "subject": "Fisica",
+      "modules": 10
+    },
+    {
+      "filename": "Fisica Generale.json",
+      "id": "fisica_generale_life_sciences_framework",
+      "name": "Fisica Generale (Area Bio-Geo-Chimica)",
+      "subject": "Fisica",
+      "modules": 7
+    },
+    {
+      "filename": "Fisica semestre filtro.json",
+      "id": "fisica_semestre_filtro_framework",
+      "name": "Fisica (Semestre Filtro)",
+      "subject": "Medicina e Chirurgia",
+      "modules": 6
+    },
+    {
+      "filename": "biochimica.json",
+      "id": "biochimica_generale_framework",
+      "name": "Biochimica Generale",
+      "subject": "Biologia e Medicina",
+      "modules": 12
+    },
+    {
+      "filename": "biologia cellulare.json",
+      "id": "biologia_cellulare_molecolare_framework",
+      "name": "Biologia Molecolare della Cellula",
+      "subject": "Biologia e Medicina",
+      "modules": 16
+    },
+    {
+      "filename": "biologia molecolare.json",
+      "id": "biologia_molecolare_gene_framework",
+      "name": "Biologia Molecolare del Gene",
+      "subject": "Biologia e Medicina",
+      "modules": 9
+    },
+    {
+      "filename": "chimica_generale.json",
+      "id": "chimica_generale_inorganica_framework",
+      "name": "Chimica Generale con Elementi di Chimica Inorganica",
+      "subject": "Chimica",
+      "modules": 15
+    },
+    {
+      "filename": "genetica.json",
+      "id": "genetica_generale_framework",
+      "name": "Genetica Generale",
+      "subject": "Biologia",
+      "modules": 8
+    },
+    {
+      "filename": "istologia.json",
+      "id": "istologia_embriologia_framework",
+      "name": "Istologia ed Embriologia Umana",
+      "subject": "Medicina e Biologia",
+      "modules": 8
+    },
+    {
+      "filename": "macroeconomia.json",
+      "id": "macroeconomia_framework",
+      "name": "Macroeconomia",
+      "subject": "Economia",
+      "modules": 8
+    },
+    {
+      "filename": "matematica per biologia.json",
+      "id": "matematica_corso_unico_framework",
+      "name": "Istituzioni di Matematiche / Matematica Generale",
+      "subject": "Matematica",
+      "modules": 7
+    },
+    {
+      "filename": "microbiologia.json",
+      "id": "microbiologia_framework",
+      "name": "Microbiologia Generale e Clinica",
+      "subject": "Biologia e Medicina",
+      "modules": 14
+    },
+    {
+      "filename": "microeconomia.json",
+      "id": "microeconomia_avanzata_framework",
+      "name": "Microeconomia",
+      "subject": "Economia",
+      "modules": 9
+    }
+  ],
+  "manuals": {
+    "Chimica Generale": {
+      "zanichelli": 13,
+      "competitor": 21,
+      "other": 0,
+      "files": [
+        "Arnesano_Chimica_Base_Edises.json",
+        "Atkins_Chimica_Zanichelli.json",
+        "Atkins_Fondamenti_Zanichelli.json",
+        "Atkins_Principi_Zanichelli.json",
+        "Bertani_Fondamenti_Edises.json",
+        "Bertini_Chimica_CEA.json",
+        "Bertini_materia_CEA.json",
+        "Bertini_struttura_CEA.json",
+        "Brown_Fondamenti_Edises.json",
+        "Credi_Viaggio_Edises.json",
+        "DeMartin_Fondamenti_Edises.json",
+        "Kotz_Chimica_Edises.json",
+        "Manotti Lanfredi_Fondamenti_CEA.json",
+        "Masterton_Chimica_Piccin.json",
+        "McQuarrie_Chimica_Zanichelli.json",
+        "Munari_Fondamenti_CEA.json",
+        "Nobile_Chimica_CEA.json",
+        "Overby_Fondamenti_McGrawHill.json",
+        "Oxtoby_Chimica_Edises.json",
+        "Palmisano_Elementi_Edises.json",
+        "Peterson_Fondamenti_Pearson.json",
+        "Petrucci_Chimica_Piccin.json",
+        "Petrucci_Elementi_Piccin.json",
+        "Robinson_Chimica_Pearson.json",
+        "Schiavello_Fondamenti_Edises.json",
+        "Silberberg_Chimica_McGrawHill.json",
+        "Silvestroni_Chimica_CEA.json",
+        "Silvestroni_Fondamenti_CEA.json",
+        "Speranza_Chimica_Edi Ermes.json",
+        "Tagliatesta_Chimica_Edi Ermes.json",
+        "Tro_Chimica_Edises.json",
+        "Tro_Introduzione_Pearson.json",
+        "Whitten_Chimica_Piccin.json",
+        "Zanello_Conoscere_CEA.json"
+      ]
+    },
+    "Chimica Organica": {
+      "zanichelli": 5,
+      "competitor": 10,
+      "other": 0,
+      "files": [
+        "Botta_Chimica_organica_Edi_Ermes.json",
+        "Botta_Chimica_organica_essenziale_Edi_Ermes.json",
+        "Brown_Chimica_organica_Edises.json",
+        "Brown_Introduzione_chimica_organica_Edises.json",
+        "Bruice_Chimica_organica_Edises.json",
+        "Bruice_Elementi_chimica_organica_Edises.json",
+        "Clayden_Chimica_organica_Piccin.json",
+        "Gorzynski Smith_Fondamenti_chimica_organica_McGrawHill.json",
+        "Hart_Fondamenti_Zanichelli.json",
+        "Klein_Fondamenti_chimica_organica_Pearson.json",
+        "McMurry_Chimica_organica_approccio_biologico_Zanichelli.json",
+        "McMurry_Fondamenti_Zanichelli.json",
+        "Solomons_Zanichelli.json",
+        "Vollhardt_Chimica_organica_Zanichelli.json",
+        "Wade_Fondamenti_Piccin.json"
+      ]
+    },
+    "Fisica": {
+      "zanichelli": 4,
+      "competitor": 13,
+      "other": 0,
+      "files": [
+        "Alessandrini_Fisica_index.json",
+        "Bersani_Elementi_Piccin_.json",
+        "Contessa_Fisica_Zanichelli.json",
+        "De_Luca_Elementi_Edises.json",
+        "Giambattista_Fisica_McGrawHill.json",
+        "Giancoli_Fisica_Zanichelli.json",
+        "Giancoli_Fisica_moderna_Zanichelli.json",
+        "Halliday_Fondamenti_Zanichelli.json",
+        "Knight_Fondamenti_Piccin.json",
+        "Lascialfari_Principi_Edises.json",
+        "Miele_Pisanti_Introduzione_Edises.json",
+        "Ragozzino_Principi_Edises.json",
+        "Scannicchio_Elementi_Edises.json",
+        "Scannicchio_Fisica_Edises.json",
+        "Serway_Fondamenti_Edises.json",
+        "Serway_Principi_Edises.json",
+        "Walker_Fondamenti_Pearson.json"
+      ]
+    },
+    "Economia": {
+      "zanichelli": 4,
+      "competitor": 10,
+      "other": 0,
+      "files": [
+        "Acemoglu_Principi_Pearson.json",
+        "Antonelli_Economia_Giappichelli.json",
+        "Begg_Economia_McGrawHill.json",
+        "Bertola_Istituzioni_Il Mulino.json",
+        "Brue_Essenziale_Zanichelli.json",
+        "Frank_Principi_McGrawHill.json",
+        "Krugman_Essenziale_Zanichelli.json",
+        "Lieberman_Principi_Apogeo.json",
+        "Mankiw_Essenziale_Zanichelli.json",
+        "Mankiw_Principi_Zanichelli.json",
+        "Parravicini_Economia_Giappichelli.json",
+        "Samuelson_Economia_McGrawHill.json",
+        "Sloman_Elementi_Il Mulino.json",
+        "The Core_Economia_Il Mulino.json"
+      ]
+    },
+    "Istologia": {
+      "zanichelli": 1,
+      "competitor": 4,
+      "other": 0,
+      "files": [
+        "Anastasi_Edi_Ermes.json",
+        "Angelucci_Istologia_Idelson_Gnocchi.json",
+        "Monesi_Istologia_Piccin.json",
+        "Pawlina_Istologia_Zanichelli.json",
+        "Rosati_Istologia_Edi_Ermes.json"
+      ]
+    }
+  },
+  "totals": {
+    "frameworks": 21,
+    "manuals_zanichelli": 27,
+    "manuals_competitor": 58,
+    "manuals_other": 0,
+    "manuals_total": 85
+  }
+}

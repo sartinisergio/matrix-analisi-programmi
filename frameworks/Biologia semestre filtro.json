@@ -1,0 +1,97 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "genetics_integration": "Include una sezione solida di genetica formale (pedigree, probabilità) o richiede un testo a parte?",
+      "human_focus": "Il testo usa esempi umani/mammiferi (es. cariotipo umano, malattie genetiche) o generici?",
+      "molecular_depth": "Il dogma centrale (DNA->RNA->Proteine) è trattato con dettaglio sufficiente per capire le mutazioni patologiche?",
+      "signaling_coverage": "C'è un focus adeguato sulla trasduzione del segnale (recettori, secondi messaggeri) fondamentale per la farmacologia?"
+    },
+    "program_profiles": [
+      {
+        "name": "Semestre Filtro (Medicina/Odontoiatria/Veterinaria)",
+        "priority_modules": "Copertura totale obbligatoria. Cruciale il collegamento tra biologia cellulare e patologia (es. ciclo cellulare -> cancro; lisosomi -> malattie da accumulo; citoscheletro -> distrofie).",
+        "textbook_advice": "Testi di 'Biologia Cellulare e Genetica' con taglio medico."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Teoria cellulare e virus (ciclo litico/lisogeno, retrovirus). Macromolecole biologiche (carboidrati, lipidi, acidi nucleici, proteine). Differenze procarioti/eucarioti. Origine endosimbiotica dei mitocondri.",
+        "key_concepts": [
+          "Macromolecole biologiche fondamentali",
+          "Struttura e funzione proteine",
+          "Teoria cellulare"
+        ],
+        "name": "1. Organizzazione Biologica e Molecolare"
+      },
+      {
+        "core_contents": "Organizzazione del genoma eucariotico. Cromatina, istoni, nucleosomi. Epigenetica (metilazione, acetilazione). Sequenze ripetute e telomeri.",
+        "key_concepts": [
+          "Organizzazione Genoma Eucariotico",
+          "Cromatina",
+          "Istoni"
+        ],
+        "name": "2. Genoma e Cromatina"
+      },
+      {
+        "core_contents": "Replicazione del DNA. Trascrizione (promotori, fattori di trascrizione). Maturazione RNA (splicing, capping). Traduzione e codice genetico. Controllo post-traduzionale (folding, ubiquitina-proteasoma).",
+        "key_concepts": [
+          {
+            "concept": "Replicazione DNA semiconservativa"
+          },
+          {
+            "concept": "Trascrizione genica"
+          },
+          {
+            "concept": "Codice genetico e traduzione"
+          }
+        ],
+        "name": "3. Flusso dell'Informazione"
+      },
+      {
+        "core_contents": "Mutazioni geniche e cromosomiche. Meccanismi di riparo. Genetica Mendeliana: leggi, segregazione, alleli multipli (AB0), epistasi, pleiotropia. Pedigree e genetica umana. Cariotipo umano e aneuploidie (es. Trisomia 21).",
+        "key_concepts": [
+          "Genetica Mendeliana Classica",
+          "Mutazioni Geniche e Cromosomiche",
+          "Leggi di Segregazione e Assortimento"
+        ],
+        "name": "4. Genetica e Variazioni del Genoma"
+      },
+      {
+        "core_contents": "Membrane (trasporto attivo/passivo, potenziale). Nucleo e traffico nucleare. Mitocondri (bioenergetica e dinamica). Sistema endomembrane (RE, Golgi, Lisosomi, traffico vescicolare). Citoscheletro (microtubuli, actina, filamenti intermedi) e motori molecolari.",
+        "key_concepts": [
+          "Trasporto di membrana attivo e passivo",
+          "Potenziale di membrana",
+          "Bioenergetica mitocondriale"
+        ],
+        "name": "5. Strutture e Funzioni Cellulari"
+      },
+      {
+        "core_contents": "Matrice extracellulare e adesione (integrine, caderine). Giunzioni cellulari. Trasduzione del segnale: recettori (GPCR, RTK), secondi messaggeri, cascate chinasi (MAPK).",
+        "key_concepts": [
+          "Trasduzione del segnale",
+          "Recettori di membrana",
+          "Cascate chinasi MAPK"
+        ],
+        "name": "6. Segnalazione e Adesione Cellulare"
+      },
+      {
+        "core_contents": "Fasi del ciclo e checkpoint (cicline/CDK). Mitosi e Meiosi (gametogenesi). Controllo proliferazione (Rb, p53, oncogeni). Apoptosi (vie intrinseca/estrinseca) e necrosi.",
+        "key_concepts": [
+          "Ciclo Cellulare: Fasi e Checkpoint",
+          "Regolazione Ciclo: Cicline e CDK",
+          "Mitosi: Meccanismi e Significato"
+        ],
+        "name": "7. Ciclo Cellulare e Morte"
+      }
+    ],
+    "target_degrees": [
+      "LM-41 Medicina e Chirurgia",
+      "LM-42 Medicina Veterinaria",
+      "LM-46 Odontoiatria e Protesi Dentaria"
+    ]
+  },
+  "context_strategy": "Syllabus ufficiale per l'insegnamento di Biologia nel Semestre Filtro. Il corso fornisce le basi molecolari e cellulari indispensabili per i successivi studi di Fisiologia, Patologia e Genetica Medica. L'approccio non è naturalistico ma biomedico: focus totale su cellula eucariotica umana, meccanismi molecolari di base (replicazione/trascrizione/traduzione) e genetica mendeliana applicata all'uomo. Esclude botanica, zoologia sistematica ed ecologia.",
+  "id": "biologia_semestre_filtro_framework",
+  "name": "Biologia (Semestre Filtro)",
+  "subject": "Medicina e Chirurgia"
+}

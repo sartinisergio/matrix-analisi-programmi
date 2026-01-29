@@ -1,0 +1,156 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "LM-41 Medicina / LM-42 Veterinaria",
+        "priority_modules": "Focus assoluto sul Metabolismo Integrato (Moduli 6-9) e sulla sua regolazione ormonale. Cruciale la Bioenergetica (5) e le Vitamine (11). La struttura (2) è funzionale alla comprensione delle emoglobinopatie e degli enzimi sierici. Marginale la biochimica industriale e le tecniche di purificazione spinte."
+      },
+      {
+        "name": "L-29/LM-13 Farmacia e CTF",
+        "priority_modules": "Cruciale l'Enzimologia (3) come base per la farmacodinamica (inibitori). Fondamentale la struttura delle proteine (2) e dei recettori (10). Molto importante il metabolismo (6-9) per comprendere tossicità e metabolismo dei farmaci. Marginale l'evoluzione molecolare."
+      },
+      {
+        "name": "L-2 Biotecnologie",
+        "priority_modules": "Focus strategico sulle Tecniche (12) e sulla struttura/funzione delle proteine (2, 3) per la produzione di enzimi ricombinanti. Fondamentale la comprensione della bioenergetica (5). Il metabolismo clinico d'organo è meno prioritario rispetto ai pathway metabolici di base manipolabili."
+      },
+      {
+        "name": "L-26 Scienze Alimentari",
+        "priority_modules": "Cruciale la chimica di Carboidrati e Lipidi (4) e i relativi metabolismi. Fondamentale l'enzimologia (3) applicata alle trasformazioni alimentari. Importante il metabolismo nutrizionale (9, 11). Meno focus sulla biochimica del DNA o sulla segnalazione cellulare complessa."
+      },
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Approccio meccanicistico. Priorità massima su Termodinamica (1), Cinetica Enzimatica (3) e Struttura molecolare (2, 4). Il metabolismo (6-9) va visto come serie di reazioni organiche più che come fisiologia. Marginale la parte clinica e diagnostica."
+      },
+      {
+        "name": "L-13 Scienze Biologiche",
+        "priority_modules": "Approccio bilanciato. Tutti i pathway metabolici (6-9) sono fondamentali. Importante la visione evolutiva e la relazione struttura-funzione. Meno enfasi sulla patologia umana rispetto a Medicina."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Interazioni deboli nelle macromolecole biologiche. Termodinamica dei sistemi viventi, proprietà dell'acqua e sistemi tampone fisiologici (pH).",
+        "key_concepts": [
+          "Termodinamica dei sistemi viventi",
+          "Interazioni deboli non covalenti",
+          "Proprietà chimico-fisiche dell'acqua"
+        ],
+        "name": "1. Fondamenti Chimico-Fisici"
+      },
+      {
+        "core_contents": "Biochimica degli amminoacidi. Livelli strutturali (primaria-quaternaria), motivi e domini. Folding assistito da chaperoni, modificazioni post-traduzionali e relazione struttura-funzione (es. emoglobina/mioglobina).",
+        "key_concepts": [
+          "Livelli Strutturali Proteici",
+          "Relazione Struttura-Funzione",
+          "Biochimica degli Amminoacidi"
+        ],
+        "name": "2. Struttura e Funzione delle Proteine"
+      },
+      {
+        "core_contents": "Classificazione e nomenclatura. Cinetica di Michaelis-Menten, inibizione competitiva/non competitiva e regolazione allosterica. Ruolo di coenzimi e vitamine come cofattori.",
+        "key_concepts": [
+          "Cinetica Michaelis-Menten",
+          "Regolazione allosterica enzimatica",
+          "Inibizione competitiva/non competitiva"
+        ],
+        "name": "3. Enzimologia"
+      },
+      {
+        "core_contents": "Chimica dei monosaccaridi, disaccaridi e polisaccaridi (glicogeno, amido, cellulosa). Struttura e classificazione dei lipidi: acidi grassi, trigliceridi, fosfolipidi di membrana, steroidi ed eicosanoidi.",
+        "key_concepts": [
+          "Chimica Fosfolipidi Membrana",
+          "Struttura Classificazione Lipidi",
+          "Chimica Polisaccaridi Strutturali"
+        ],
+        "name": "4. Glucidi e Lipidi Strutturali"
+      },
+      {
+        "core_contents": "Ruolo dell'ATP e composti ad alta energia. Catena di trasporto degli elettroni mitocondriale, gradiente protonico e sintesi di ATP. Disaccoppianti e termogenesi.",
+        "key_concepts": [
+          "Fosforilazione Ossidativa",
+          "Catena di Trasporto Elettroni",
+          "Sintesi di ATP (ATP Sintasi)"
+        ],
+        "name": "5. Bioenergetica e Fosforilazione Ossidativa"
+      },
+      {
+        "core_contents": "Glicolisi, destino anaerobico del piruvato (fermentazioni). Ciclo di Krebs (TCA), Gluconeogenesi, Via dei Pentoso Fosfati e metabolismo del Glicogeno.",
+        "key_concepts": [
+          "Glicolisi",
+          "Ciclo di Krebs (TCA)",
+          "Gluconeogenesi"
+        ],
+        "name": "6. Metabolismo dei Carboidrati"
+      },
+      {
+        "core_contents": "Beta-ossidazione degli acidi grassi e chetogenesi. Biosintesi degli acidi grassi (lipogenesi), dei trigliceridi e del colesterolo. Metabolismo delle lipoproteine.",
+        "key_concepts": [
+          "Beta-ossidazione acidi grassi",
+          "Biosintesi acidi grassi (Lipogenesi)",
+          "Metabolismo delle Lipoproteine"
+        ],
+        "name": "7. Metabolismo dei Lipidi"
+      },
+      {
+        "core_contents": "Degradazione degli amminoacidi, transaminazione e Ciclo dell'Urea. Biosintesi degli amminoacidi non essenziali. Metabolismo dei nucleotidi (purine e pirimidine) e vie di recupero.",
+        "key_concepts": [
+          "Ciclo dell'Urea",
+          "Degradazione amminoacidi",
+          "Transaminazione e deaminazione"
+        ],
+        "name": "8. Metabolismo dell'Azoto"
+      },
+      {
+        "core_contents": "Controllo ormonale (Insulina, Glucagone, Adrenalina). Metabolismo tessuto-specifico (fegato, muscolo, cervello, adipe) nel ciclo digiuno-alimentazione.",
+        "key_concepts": [
+          "Regolazione Metabolica Integrata",
+          "Controllo Ormonale Metabolismo",
+          "Ruolo Fisiologico Insulina"
+        ],
+        "name": "9. Regolazione Metabolica Integrata"
+      },
+      {
+        "core_contents": "Meccanismi molecolari della trasduzione del segnale: recettori GPCR, RTK, secondi messaggeri (cAMP, IP3, DAG) e cascate di fosforilazione.",
+        "key_concepts": [
+          "Trasduzione del segnale",
+          "Meccanismi molecolari",
+          "Recettori GPCR"
+        ],
+        "name": "10. Segnalazione Cellulare (Biochimica)"
+      },
+      {
+        "core_contents": "Struttura chimica e funzione coenzimatica delle vitamine idrosolubili (Gruppo B, C) e ruolo delle liposolubili (A, D, E, K). Patologie da carenza.",
+        "key_concepts": [
+          "Funzione coenzimatica vitamine",
+          "Struttura chimica vitamine",
+          "Vitamine idrosolubili"
+        ],
+        "name": "11. Vitamine e Cofattori"
+      },
+      {
+        "core_contents": "Metodologie di purificazione (cromatografia, elettroforesi), analisi strutturale e dosaggi enzimatici. Cenni di biochimica clinica (biomarcatori) e industriale.",
+        "key_concepts": [
+          "Metodologie di purificazione proteica",
+          "Cromatografia biochimica avanzata",
+          "Tecniche elettroforetiche analitiche"
+        ],
+        "name": "12. Tecniche e Biochimica Applicata"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "L-26 Scienze e tecnologie alimentari",
+      "L-27 Scienze chimiche",
+      "L-29 Scienze farmaceutiche",
+      "LM-13 Farmacia",
+      "LM-13 Chimica e Tecnologia Farmaceutiche (CTF)",
+      "LM-41 Medicina e Chirurgia",
+      "LM-42 Medicina Veterinaria",
+      "L-SNT Professioni sanitarie"
+    ]
+  },
+  "context_strategy": "Punto di raccordo tra chimica e biologia. Tre anime distinte: Clinica/Metabolica (Medici/Farmacisti: ormoni, patologie); Strutturale/Industriale (Biotecnologi/Chimici: enzimi, purificazione); Nutrizionale (Agrari/Alimentari: lipidi, carboidrati, fermentazioni)",
+  "id": "biochimica_generale_framework",
+  "name": "Biochimica Generale",
+  "subject": "Biologia e Medicina"
+}

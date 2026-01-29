@@ -1,0 +1,108 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "examples_context": "Gli esercizi sono astratti (blocchi su piani inclinati) o contestualizzati (flusso sanguigno, pompe ioniche, biomeccanica)?",
+      "mathematical_level": "Verificare l'approccio: 'Calculus-based' (uso di integrali/derivate, tipico per Chimica) o 'Algebra-based' (formule finite, tipico per Biologia/Agraria)?",
+      "modern_physics_coverage": "Il modulo di fisica moderna è un'appendice rapida o un ponte solido verso la Chimica Quantistica?",
+      "thermo_depth": "La termodinamica include l'entropia statistica e i potenziali termodinamici (utile per chimici) o si ferma alle macchine termiche?"
+    },
+    "program_profiles": [
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Focus 'Strumentale'. Cruciale l'Elettromagnetismo (6) per capire i legami chimici e la strumentazione. Fondamentale la Termodinamica (5) e la Fisica Moderna (7) come prerequisito alla Chimica Fisica. Serve un approccio 'Calculus-based' rigoroso. Meno rilevante la fluidodinamica complessa."
+      },
+      {
+        "name": "L-13 Biologia / L-2 Biotecnologie / LM-13 Farmacia",
+        "priority_modules": "Focus 'Fisiologico'. Priorità assoluta ai Fluidi (4) per la circolazione/trasporti e all'Elettricità (6) per i potenziali di membrana/nerve impulse. Termodinamica (5) essenziale per il metabolismo. La meccanica del corpo rigido (3) e la fisica moderna (7) sono marginali. Spesso preferito approccio con meno calcolo integrale."
+      },
+      {
+        "name": "L-34 Geologia / L-32 Scienze Naturali",
+        "priority_modules": "Focus 'Meccanico-Ambientale'. Cruciale la Meccanica (1-2), la Gravitazione (4) e la Fluidodinamica (4) per idrogeologia e geofisica. Importante la Termodinamica (5) per i processi magmatici/atmosferici. Elettromagnetismo e Fisica Moderna sono molto meno prioritari."
+      },
+      {
+        "name": "L-25/L-26 Agraria e Alimentare",
+        "priority_modules": "Focus 'Tecnologico'. Fondamentale la Termodinamica (5) per i processi di conservazione/trasformazione e la Fluidodinamica (4) per impianti e irrigazione. La meccanica (1-2) serve per le macchine agricole. Elettromagnetismo e Quantistica sono marginali."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Algebra vettoriale. Moto rettilineo, circolare e parabolico. I tre principi della Dinamica (Newton). Analisi delle forze: peso, normale, tensione, attrito viscoso e radente.",
+        "key_concepts": [
+          "Algebra Vettoriale",
+          "Principi Dinamica Newton",
+          "Cinematica Punto Materiale"
+        ],
+        "name": "1. Cinematica e Dinamica del Punto"
+      },
+      {
+        "core_contents": "Lavoro come prodotto scalare. Teorema dell'energia cinetica. Forze conservative ed energia potenziale (gravitazionale ed elastica). Conservazione dell'energia meccanica. Quantità di moto, impulso e urti (elastici/anelastici).",
+        "key_concepts": [
+          "Lavoro come prodotto scalare",
+          "Teorema dell'energia cinetica",
+          "Forze conservative e non conservative"
+        ],
+        "name": "2. Lavoro ed Energia"
+      },
+      {
+        "core_contents": "Centro di massa. Momento d'inerzia e assi principali. Momento torcente e momento angolare. Equilibrio statico dei corpi rigidi (leve) e dinamica rotazionale di base.",
+        "key_concepts": [
+          "Centro di Massa",
+          "Momento d'Inerzia",
+          "Dinamica Rotazionale"
+        ],
+        "name": "3. Dinamica dei Sistemi e Corpo Rigido"
+      },
+      {
+        "core_contents": "Legge di Gravitazione Universale e leggi di Keplero. Oscillatore armonico semplice. Statica dei fluidi (Stevino, Archimede) e Dinamica dei fluidi ideali (Bernoulli, Continuità) con cenni alla viscosità (Poiseuille).",
+        "key_concepts": [
+          "Legge di Gravitazione Universale",
+          "Leggi di Keplero",
+          "Dinamica dei fluidi ideali"
+        ],
+        "name": "4. Fluidi e Gravitazione"
+      },
+      {
+        "core_contents": "Calorimetria e dilatazione termica. Primo principio della termodinamica e trasformazioni dei gas ideali. Secondo principio, macchine termiche (Carnot) ed Entropia. Cenni ai gas reali (Van der Waals) e teoria cinetica.",
+        "key_concepts": [
+          "Primo Principio Termodinamica",
+          "Trasformazioni Gas Ideali",
+          "Secondo Principio Termodinamica"
+        ],
+        "name": "5. Termodinamica"
+      },
+      {
+        "core_contents": "Elettrostatica: Legge di Coulomb, Campo Elettrico, Potenziale e Condensatori. Corrente continua: Legge di Ohm e circuiti RC. Magnetismo: Forza di Lorentz, sorgenti del campo (Biot-Savart/Ampère). Induzione elettromagnetica (Faraday-Lenz).",
+        "key_concepts": [
+          "Leggi fondamentali Elettrostatica",
+          "Campo e Potenziale Elettrico",
+          "Condensatori e Dielettrici"
+        ],
+        "name": "6. Elettromagnetismo"
+      },
+      {
+        "core_contents": "Crisi della fisica classica (corpo nero, effetto fotoelettrico). Dualismo onda-particella (De Broglie). Relatività Ristretta (dilatazione tempi/contrazione lunghezze). Modello atomico di Bohr e quantizzazione.",
+        "key_concepts": [
+          "Crisi della Fisica Classica",
+          "Dualismo Onda-Particella",
+          "Quantizzazione dell'Energia"
+        ],
+        "name": "7. Elementi di Fisica Moderna"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "L-25 Scienze e tecnologie agrarie",
+      "L-26 Scienze e tecnologie alimentari",
+      "L-27 Scienze chimiche",
+      "L-29 Scienze farmaceutiche",
+      "L-32 Scienze naturali e ambientali",
+      "L-34 Geologia",
+      "LM-13 Farmacia"
+    ]
+  },
+  "context_strategy": "Corso di servizio per scienze della vita. La distinzione non è sugli argomenti ma sul livello di formalismo (uso di integrali vs formule finite) e contesto. Chimici richiedono elettromagnetismo/termodinamica rigorosi; Biologi focus su fluidi/elettricità fisiologica; Geologi su meccanica/gravitazione",
+  "id": "fisica_generale_life_sciences_framework",
+  "name": "Fisica Generale (Area Bio-Geo-Chimica)",
+  "subject": "Fisica"
+}

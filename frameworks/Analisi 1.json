@@ -1,0 +1,158 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "L-35 Matematica",
+        "priority_modules": "Cruciale il massimo rigore teorico su tutti i moduli. Focus assoluto sulle dimostrazioni (costruzione di R, topologia, teoremi globali). I moduli 9 e 10 (Serie e Successioni di funzioni) sono centrali per l'Analisi successiva. Meno enfasi sul calcolo meccanico ripetitivo, più sulla logica deduttiva."
+      },
+      {
+        "name": "L-30 Fisica",
+        "priority_modules": "Cruciale la padronanza operativa e teorica di derivate, integrali e serie (Moduli 6, 7, 9) e le equazioni differenziali (13). Fondamentale l'espansione di Taylor per le approssimazioni fisiche. Necessario un ottimo equilibrio tra rigore formale e intuizione applicativa."
+      },
+      {
+        "name": "L-7-8-9 Ingegneria",
+        "priority_modules": "Focus strategico sul 'saper fare i calcoli': studio di funzione (6), integrali (7), numeri complessi (spesso inclusi nel cap 1 o a parte) e serie (9). Le dimostrazioni più astratte di topologia (2) sono marginali. Fondamentale l'introduzione alle funzioni di più variabili (11) e ODE (13) come base per corsi successivi."
+      },
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Focus strumentale su derivate e integrali (6, 7) per la termodinamica e cinetica. Fondamentali le equazioni differenziali (13). Meno rilevante la topologia astratta, la continuità uniforme o le serie di funzioni complesse. Serve un approccio pratico."
+      },
+      {
+        "name": "L-34 Geologia",
+        "priority_modules": "Livello base. Focus essenziale su limiti, derivate e integrali semplici (Moduli 4, 6, 7) per comprendere i modelli fisici. Tutto ciò che è astrazione teorica, serie complesse o topologia avanzata è marginale."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Costruzione assiomatica dei numeri reali (Assioma di completezza/Dedekind). Concetti di estremo superiore/inferiore, valore assoluto, disuguaglianze fondamentali e topologia della retta.",
+        "key_concepts": [
+          "Costruzione assiomatica numeri reali",
+          "Assioma di completezza",
+          "Estremo superiore e inferiore"
+        ],
+        "name": "1. Numeri reali e strutture algebriche"
+      },
+      {
+        "core_contents": "Definizioni topologiche essenziali: intorni, punti di accumulazione, insiemi aperti/chiusi. Teoremi sui compatti (Heine-Borel) e connessi.",
+        "key_concepts": [
+          "Intorni sulla retta reale",
+          "Punti di accumulazione",
+          "Insiemi aperti e chiusi"
+        ],
+        "name": "2. Topologia della retta reale"
+      },
+      {
+        "core_contents": "Limiti di successioni, teoremi di convergenza, successioni di Cauchy e completezza. Criteri di convergenza, gerarchia degli infiniti e numero di Nepero.",
+        "key_concepts": [
+          "Limiti di successioni",
+          "Convergenza di successioni",
+          "Successioni di Cauchy"
+        ],
+        "name": "3. Successioni reali"
+      },
+      {
+        "core_contents": "Definizione formale (epsilon-delta), algebra dei limiti, forme indeterminate e limiti notevoli. Concetti di 'o piccolo', asintotici e simboli di Landau.",
+        "key_concepts": [
+          "Definizione formale limite (epsilon-delta)",
+          "Algebra dei limiti",
+          "Limiti notevoli"
+        ],
+        "name": "4. Limiti di funzioni"
+      },
+      {
+        "core_contents": "Funzioni continue, classificazione delle discontinuità. Teoremi globali fondamentali: Zeri, Valori Intermedi, Weierstrass. Continuità uniforme.",
+        "key_concepts": [
+          "Definizione di funzione continua",
+          "Classificazione delle discontinuità",
+          "Discontinuità di prima specie"
+        ],
+        "name": "5. Continuità"
+      },
+      {
+        "core_contents": "Definizione di derivata e significato geometrico/fisico. Calcolo differenziale, Teoremi di Rolle, Lagrange, Cauchy. Sviluppi di Taylor/Maclaurin con resto (Peano/Lagrange) e studio completo di funzione (convessità, flessi).",
+        "key_concepts": [
+          "Definizione di Derivata",
+          "Significato Geometrico Derivata",
+          "Calcolo Differenziale"
+        ],
+        "name": "6. Derivabilità"
+      },
+      {
+        "core_contents": "Costruzione dell'integrale (somme inferiori/superiori), integrabilità. Teorema Fondamentale del Calcolo Integrale. Tecniche di integrazione (parti, sostituzione) e applicazioni geometriche (aree, volumi).",
+        "key_concepts": [
+          "Teorema Fondamentale del Calcolo Integrale",
+          "Definizione Integrale di Riemann",
+          "Condizioni di Integrabilità"
+        ],
+        "name": "7. Integrale di Riemann"
+      },
+      {
+        "core_contents": "Integrazione su intervalli illimitati o funzioni non limitate. Criteri di convergenza e confronto asintotico.",
+        "key_concepts": [
+          "Integrali Impropri",
+          "Integrazione Intervalli Illimitati",
+          "Funzioni Non Limitate"
+        ],
+        "name": "8. Integrali impropri"
+      },
+      {
+        "core_contents": "Carattere di una serie. Criteri per serie a termini positivi (radice, rapporto, confronto). Serie a segni alterni (Leibniz) e convergenza assoluta. Serie geometrica e armonica.",
+        "key_concepts": [
+          "Carattere di una serie",
+          "Criteri per serie positive",
+          "Criterio della radice"
+        ],
+        "name": "9. Serie numeriche"
+      },
+      {
+        "core_contents": "Distinzione tra convergenza puntuale e uniforme. Teoremi di passaggio al limite sotto segno di integrale/derivata. Serie di potenze (raggio di convergenza) e basi delle Serie di Fourier.",
+        "key_concepts": [
+          "Convergenza uniforme",
+          "Convergenza puntuale",
+          "Serie di funzioni"
+        ],
+        "name": "10. Successioni e serie di funzioni"
+      },
+      {
+        "core_contents": "Elementi di topologia in R^n, limiti e continuità. Calcolo differenziale multivariato: derivate parziali, gradiente, differenziabilità e piano tangente. Ottimizzazione libera e vincolata (Moltiplicatori di Lagrange).",
+        "key_concepts": [
+          "Topologia Spazi Euclidei R^n",
+          "Limiti Funzioni Multivariabili",
+          "Continuità Funzioni Multivariabili"
+        ],
+        "name": "11. Funzioni di più variabili"
+      },
+      {
+        "core_contents": "Rappresentazione parametrica, regolarità, vettore tangente, calcolo della lunghezza d'arco e curvatura.",
+        "key_concepts": [
+          "Rappresentazione parametrica di curve",
+          "Dominio e codominio della parametrizzazione",
+          "Regolarità delle curve parametriche"
+        ],
+        "name": "12. Curve parametriche"
+      },
+      {
+        "core_contents": "Risoluzione di ODE del primo ordine (variabili separabili, lineari) e secondo ordine a coefficienti costanti. Problema di Cauchy.",
+        "key_concepts": [
+          "Equazioni Differenziali Ordinarie (ODE)",
+          "Problema di Cauchy",
+          "ODE Primo Ordine"
+        ],
+        "name": "13. Equazioni differenziali ordinarie elementari"
+      }
+    ],
+    "target_degrees": [
+      "L-7 Ingegneria",
+      "L-8 Ingegneria",
+      "L-9 Ingegneria",
+      "L-27 Scienze chimiche",
+      "L-30 Fisica",
+      "L-34 Geologia",
+      "L-35 Matematica"
+    ]
+  },
+  "context_strategy": "Corso critico che varia per rigore dimostrativo. I Matematici richiedono la costruzione assiomatica e topologica (teoremi globali). Gli Ingegneri necessitano di 'problem solving' e calcolo efficace (integrali, studi di funzione). Chimici e Geologi cercano un approccio strumentale: derivate e integrali come utensili per la termodinamica, senza eccessiva astrazione",
+  "id": "analisi_matematica_1_framework",
+  "name": "Analisi Matematica 1",
+  "subject": "Matematica"
+}

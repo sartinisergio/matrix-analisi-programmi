@@ -1,0 +1,138 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "mathematical_rigor": "Verificare il livello: Calculus-based spinto (integrali di linea, equazioni differenziali per oscillatore armonico)? O semplificato?",
+      "problem_solving_style": "Esercizi simbolici/teorici (Fisica/Matematica) vs numerici/applicativi (Ingegneria)?",
+      "relativity_inclusion": "La Relatività Ristretta è un capitolo strutturale o solo un'appendice facoltativa?",
+      "rigid_body_depth": "Il corpo rigido è trattato con il tensore d'inerzia (per Fisici) o solo con assi fissi/principali (per Ingegneri)?",
+      "thermodynamics_approach": "L'entropia è introdotta statisticamente (Boltzmann) o solo macroscopicamente (Clausius)?"
+    },
+    "program_profiles": [
+      {
+        "name": "L-30 Fisica / L-35 Matematica",
+        "priority_modules": "Focus sul rigore teorico assoluto. Cruciali i Moduli 1-3 (formalismi vettoriali), 5 (Corpo Rigido complesso) e 9 (Entropia teorica). Fondamentale la Relatività (10). Meno enfasi sugli aspetti tecnici dei fluidi o delle macchine termiche reali."
+      },
+      {
+        "name": "L-7-8-9 Ingegneria Industriale/Civile",
+        "priority_modules": "Focus sul 'Problem Solving' applicativo. Priorità assoluta ai Moduli 3 (Energia), 5 (Corpo Rigido per la Meccanica Razionale futura), 8-9 (Termodinamica per Energetica/Macchine). La Relatività è spesso marginale o assente. I fluidi (6) sono essenziali per Civili/Aerospaziali."
+      },
+      {
+        "name": "L-8 Ingegneria dell'Informazione",
+        "priority_modules": "Focus su Oscillazioni e Onde (7) come base per Segnali e Campi. Meccanica (1-3) fondamentale. Meno enfasi su Fluidi (6) e Termodinamica applicata alle macchine (8-9), spesso ridotta ai concetti base di entropia/informazione."
+      },
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Focus su Energia e Termodinamica. Cruciali i Moduli 3 (Lavoro/Energia) e soprattutto 8-9 (Termodinamica formale) come prerequisito per Chimica Fisica. Meccanica del corpo rigido (5) e Relatività (10) sono meno prioritarie rispetto alla comprensione dei gas e dell'energia."
+      },
+      {
+        "name": "L-34 Geologia",
+        "priority_modules": "Focus su Gravità e Fluidi. Cruciali i Moduli 4 (Gravitazione/Maree), 6 (Fluidi/Elasticità per la geofisica) e 1-2 (Dinamica base). Tutto ciò che è corpo rigido complesso o relatività è marginale."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Moto rettilineo e curvilineo (circolare uniforme/vario). Vettori posizione, velocità, accelerazione (tangenziale/normale). Moto relativo (trasformazioni di Galileo).",
+        "key_concepts": [
+          "Vettore Posizione",
+          "Vettore Velocità Istantanea",
+          "Vettore Accelerazione"
+        ],
+        "name": "1. Cinematica del Punto Materiale"
+      },
+      {
+        "core_contents": "I tre principi di Newton. Classificazione delle forze (attrito, tensione, elastiche). Sistemi di riferimento non inerziali e forze fittizie (Coriolis, centrifuga). Dinamica del moto circolare.",
+        "key_concepts": [
+          "Principi di Newton",
+          "Dinamica del Punto Materiale",
+          "Classificazione delle Forze"
+        ],
+        "name": "2. Dinamica del Punto e Forze"
+      },
+      {
+        "core_contents": "Teorema dell'energia cinetica e lavoro di forze variabili (integrale). Forze conservative e potenziale. Conservazione dell'energia meccanica. Teorema dell'impulso, conservazione della quantità di moto e urti (elastici/anelastici/centrali).",
+        "key_concepts": [
+          "Conservazione Energia Meccanica",
+          "Teorema Energia Cinetica",
+          "Forze Conservative e Potenziale"
+        ],
+        "name": "3. Lavoro, Energia e Quantità di Moto"
+      },
+      {
+        "core_contents": "Legge di Newton e campo gravitazionale. Leggi di Keplero, orbite satellitari, velocità di fuga e potenziale effettivo. Effetti mareali.",
+        "key_concepts": [
+          "Legge di Gravitazione Universale",
+          "Campo Gravitazionale",
+          "Leggi di Keplero"
+        ],
+        "name": "4. Gravitazione Universale"
+      },
+      {
+        "core_contents": "Centro di massa e teoremi di König. Momento d'inerzia (Huygens-Steiner). Equazioni cardinali della dinamica. Moto di rotolamento puro, momento angolare e sua conservazione. Fenomeni giroscopici.",
+        "key_concepts": [
+          "Equazioni cardinali dinamica",
+          "Centro di massa",
+          "Momento d'inerzia"
+        ],
+        "name": "5. Dinamica dei Sistemi e del Corpo Rigido"
+      },
+      {
+        "core_contents": "Statica (Stevino, Archimede). Dinamica dei fluidi ideali (Bernoulli) e reali (Poiseuille, Reynolds). Moduli di elasticità (Young, taglio) e legge di Hooke generalizzata.",
+        "key_concepts": [
+          "Statica dei fluidi",
+          "Principio di Archimede",
+          "Legge di Stevino"
+        ],
+        "name": "6. Meccanica dei Fluidi ed Elasticità"
+      },
+      {
+        "core_contents": "Oscillatore armonico semplice, smorzato e forzato (risonanza). Equazione delle onde, sovrapposizione, interferenza, stazionarie, battimenti ed effetto Doppler.",
+        "key_concepts": [
+          "Oscillatore armonico semplice",
+          "Risonanza fisica",
+          "Equazione delle onde"
+        ],
+        "name": "7. Oscillazioni e Onde Meccaniche"
+      },
+      {
+        "core_contents": "Calorimetria e trasmissione del calore. Primo principio, energia interna e lavoro termodinamico. Trasformazioni dei gas perfetti e Teoria Cinetica (distribuzione di Maxwell-Boltzmann).",
+        "key_concepts": [
+          "Primo Principio della Termodinamica",
+          "Energia Interna",
+          "Lavoro Termodinamico"
+        ],
+        "name": "8. Termodinamica: Primo Principio e Gas"
+      },
+      {
+        "core_contents": "Cicli termodinamici (Carnot, Otto, Diesel). Enunciati del Secondo Principio, teorema di Clausius e definizione di Entropia. Irreversibilità e potenziale termodinamico.",
+        "key_concepts": [
+          "Secondo Principio della Termodinamica",
+          "Definizione di Entropia",
+          "Ciclo di Carnot"
+        ],
+        "name": "9. Termodinamica: Secondo Principio ed Entropia"
+      },
+      {
+        "core_contents": "Postulati di Einstein, trasformazioni di Lorentz. Dilatazione tempi, contrazione lunghezze e dinamica relativistica ($$E=mc^2$$).",
+        "key_concepts": [
+          "Postulati di Einstein",
+          "Trasformazioni di Lorentz",
+          "Dilatazione temporale"
+        ],
+        "name": "10. Cenni di Relatività Ristretta"
+      }
+    ],
+    "target_degrees": [
+      "L-7 Ingegneria",
+      "L-8 Ingegneria",
+      "L-9 Ingegneria",
+      "L-27 Scienze chimiche",
+      "L-30 Fisica",
+      "L-34 Geologia",
+      "L-35 Matematica"
+    ]
+  },
+  "context_strategy": "Meccanica e Termodinamica per Ingegneri/Fisici. Richiede calcolo vettoriale e differenziale avanzato. Distinzione tra rigore teorico assoluto (Fisica/Matematica: entropia statistica, relatività) e problem solving applicativo (Ingegneria: macchine termiche, statica strutture)",
+  "id": "fisica_generale_1_framework",
+  "name": "Fisica Generale 1 (Meccanica e Termodinamica)",
+  "subject": "Fisica"
+}

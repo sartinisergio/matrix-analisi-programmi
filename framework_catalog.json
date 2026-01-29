@@ -1,0 +1,704 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-01-29",
+  "total_frameworks": 21,
+  "by_subject": {
+    "Matematica": [
+      "analisi_matematica_1_framework",
+      "analisi_matematica_2_framework",
+      "matematica_corso_unico_framework"
+    ],
+    "Medicina e Chirurgia": [
+      "biologia_semestre_filtro_framework",
+      "chimica_propedeutica_semestre_filtro_framework",
+      "fisica_semestre_filtro_framework"
+    ],
+    "Chimica": [
+      "chimica_generale_inorganica_framework",
+      "chimica_organica_framework_completo",
+      "chimica_generale_inorganica_framework"
+    ],
+    "Economia": [
+      "economia_politica_framework",
+      "macroeconomia_framework",
+      "microeconomia_avanzata_framework"
+    ],
+    "Fisica": [
+      "fisica_generale_1_framework",
+      "fisica_generale_2_framework",
+      "fisica_generale_life_sciences_framework"
+    ],
+    "Biologia e Medicina": [
+      "biochimica_generale_framework",
+      "biologia_cellulare_molecolare_framework",
+      "biologia_molecolare_gene_framework",
+      "microbiologia_framework"
+    ],
+    "Biologia": [
+      "genetica_generale_framework"
+    ],
+    "Medicina e Biologia": [
+      "istologia_embriologia_framework"
+    ]
+  },
+  "frameworks": [
+    {
+      "id": "analisi_matematica_1_framework",
+      "filename": "Analisi 1.json",
+      "filepath": "frameworks/Analisi 1.json",
+      "name": "Analisi Matematica 1",
+      "subject": "Matematica",
+      "modules_count": 13,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 5,
+      "target_degrees": [
+        "L-7 Ingegneria",
+        "L-8 Ingegneria",
+        "L-9 Ingegneria",
+        "L-27 Scienze chimiche",
+        "L-30 Fisica",
+        "L-34 Geologia",
+        "L-35 Matematica"
+      ]
+    },
+    {
+      "id": "analisi_matematica_2_framework",
+      "filename": "Analisi 2.json",
+      "filepath": "frameworks/Analisi 2.json",
+      "name": "Analisi Matematica 2",
+      "subject": "Matematica",
+      "modules_count": 12,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 6,
+      "target_degrees": [
+        "L-7 Ingegneria",
+        "L-8 Ingegneria",
+        "L-9 Ingegneria",
+        "L-27 Scienze chimiche",
+        "L-30 Fisica",
+        "L-34 Geologia",
+        "L-35 Matematica"
+      ]
+    },
+    {
+      "id": "biologia_semestre_filtro_framework",
+      "filename": "Biologia semestre filtro.json",
+      "filepath": "frameworks/Biologia semestre filtro.json",
+      "name": "Biologia (Semestre Filtro)",
+      "subject": "Medicina e Chirurgia",
+      "modules_count": 7,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 1,
+      "target_degrees": [
+        "LM-41 Medicina e Chirurgia",
+        "LM-42 Medicina Veterinaria",
+        "LM-46 Odontoiatria e Protesi Dentaria"
+      ]
+    },
+    {
+      "id": "chimica_generale_inorganica_framework",
+      "filename": "Chimica Generale.json",
+      "filepath": "frameworks/Chimica Generale.json",
+      "name": "Chimica Generale con Elementi di Chimica Inorganica",
+      "subject": "Chimica",
+      "modules_count": 15,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 7,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-7 Ingegneria",
+        "L-8 Ingegneria",
+        "L-9 Ingegneria",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-27 Scienze chimiche",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "L-34 Geologia",
+        "LM-13 Farmacia"
+      ]
+    },
+    {
+      "id": "chimica_organica_framework_completo",
+      "filename": "Chimica Organica.json",
+      "filepath": "frameworks/Chimica Organica.json",
+      "name": "Chimica Organica",
+      "subject": "Chimica",
+      "modules_count": 30,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 6,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-9 Ingegneria industriale",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-27 Scienze chimiche",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "L-34 Geologia",
+        "LM-13 Farmacia"
+      ]
+    },
+    {
+      "id": "chimica_propedeutica_semestre_filtro_framework",
+      "filename": "Chimica semestre filtro.json",
+      "filepath": "frameworks/Chimica semestre filtro.json",
+      "name": "Chimica e Propedeutica Biochimica (Semestre Filtro)",
+      "subject": "Medicina e Chirurgia",
+      "modules_count": 7,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 1,
+      "target_degrees": [
+        "LM-41 Medicina e Chirurgia",
+        "LM-42 Medicina Veterinaria",
+        "LM-46 Odontoiatria e Protesi Dentaria"
+      ]
+    },
+    {
+      "id": "economia_politica_framework",
+      "filename": "Economia politica.json",
+      "filepath": "frameworks/Economia politica.json",
+      "name": "Economia Politica (Micro & Macro)",
+      "subject": "Economia",
+      "modules_count": 9,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 4,
+      "target_degrees": [
+        "L-12 Mediazione linguistica",
+        "L-14 Scienze dei servizi giuridici",
+        "L-15 Scienze del turismo",
+        "L-16 Scienze dell’amministrazione",
+        "L-18 Economia aziendale",
+        "L-20 Scienze della comunicazione",
+        "L-36 Scienze politiche",
+        "L-37 Servizio sociale",
+        "L-39 Scienze sociali e della cooperazione",
+        "L-40 Sociologia",
+        "L-41 Statistica",
+        "LMG-01 Giurisprudenza"
+      ]
+    },
+    {
+      "id": "fisica_generale_1_framework",
+      "filename": "Fisica 1.json",
+      "filepath": "frameworks/Fisica 1.json",
+      "name": "Fisica Generale 1 (Meccanica e Termodinamica)",
+      "subject": "Fisica",
+      "modules_count": 10,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 5,
+      "target_degrees": [
+        "L-7 Ingegneria",
+        "L-8 Ingegneria",
+        "L-9 Ingegneria",
+        "L-27 Scienze chimiche",
+        "L-30 Fisica",
+        "L-34 Geologia",
+        "L-35 Matematica"
+      ]
+    },
+    {
+      "id": "fisica_generale_2_framework",
+      "filename": "Fisica 2.json",
+      "filepath": "frameworks/Fisica 2.json",
+      "name": "Fisica Generale 2 (Elettromagnetismo e Ottica)",
+      "subject": "Fisica",
+      "modules_count": 10,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 5,
+      "target_degrees": [
+        "L-7 Ingegneria",
+        "L-8 Ingegneria",
+        "L-9 Ingegneria",
+        "L-27 Scienze chimiche",
+        "L-30 Fisica",
+        "L-34 Geologia",
+        "L-35 Matematica"
+      ]
+    },
+    {
+      "id": "fisica_generale_life_sciences_framework",
+      "filename": "Fisica Generale.json",
+      "filepath": "frameworks/Fisica Generale.json",
+      "name": "Fisica Generale (Area Bio-Geo-Chimica)",
+      "subject": "Fisica",
+      "modules_count": 7,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 4,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-27 Scienze chimiche",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "L-34 Geologia",
+        "LM-13 Farmacia"
+      ]
+    },
+    {
+      "id": "fisica_semestre_filtro_framework",
+      "filename": "Fisica semestre filtro.json",
+      "filepath": "frameworks/Fisica semestre filtro.json",
+      "name": "Fisica (Semestre Filtro)",
+      "subject": "Medicina e Chirurgia",
+      "modules_count": 6,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 1,
+      "target_degrees": [
+        "LM-41 Medicina e Chirurgia",
+        "LM-42 Medicina Veterinaria",
+        "LM-46 Odontoiatria e Protesi Dentaria"
+      ]
+    },
+    {
+      "id": "biochimica_generale_framework",
+      "filename": "biochimica.json",
+      "filepath": "frameworks/biochimica.json",
+      "name": "Biochimica Generale",
+      "subject": "Biologia e Medicina",
+      "modules_count": 12,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 6,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-27 Scienze chimiche",
+        "L-29 Scienze farmaceutiche",
+        "LM-13 Farmacia",
+        "LM-13 Chimica e Tecnologia Farmaceutiche (CTF)",
+        "LM-41 Medicina e Chirurgia",
+        "LM-42 Medicina Veterinaria",
+        "L-SNT Professioni sanitarie"
+      ]
+    },
+    {
+      "id": "biologia_cellulare_molecolare_framework",
+      "filename": "biologia cellulare.json",
+      "filepath": "frameworks/biologia cellulare.json",
+      "name": "Biologia Molecolare della Cellula",
+      "subject": "Biologia e Medicina",
+      "modules_count": 16,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 5,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-9 Ingegneria biomedica",
+        "L-13 Scienze biologiche",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "LM-13 Farmacia",
+        "LM-41 Medicina"
+      ]
+    },
+    {
+      "id": "biologia_molecolare_gene_framework",
+      "filename": "biologia molecolare.json",
+      "filepath": "frameworks/biologia molecolare.json",
+      "name": "Biologia Molecolare del Gene",
+      "subject": "Biologia e Medicina",
+      "modules_count": 9,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 4,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "LM-13 Farmacia",
+        "LM-13 Chimica e Tecnologia Farmaceutiche (CTF)",
+        "LM-41 Medicina e Chirurgia",
+        "LM-42 Medicina Veterinaria"
+      ]
+    },
+    {
+      "id": "chimica_generale_inorganica_framework",
+      "filename": "chimica_generale.json",
+      "filepath": "frameworks/chimica_generale.json",
+      "name": "Chimica Generale con Elementi di Chimica Inorganica",
+      "subject": "Chimica",
+      "modules_count": 15,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 7,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-7 Ingegneria",
+        "L-8 Ingegneria",
+        "L-9 Ingegneria",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-27 Scienze chimiche",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "L-34 Geologia",
+        "LM-13 Farmacia"
+      ]
+    },
+    {
+      "id": "genetica_generale_framework",
+      "filename": "genetica.json",
+      "filepath": "frameworks/genetica.json",
+      "name": "Genetica Generale",
+      "subject": "Biologia",
+      "modules_count": 8,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 4,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "LM-13 Farmacia",
+        "LM-41 Medicina e Chirurgia"
+      ]
+    },
+    {
+      "id": "istologia_embriologia_framework",
+      "filename": "istologia.json",
+      "filepath": "frameworks/istologia.json",
+      "name": "Istologia ed Embriologia Umana",
+      "subject": "Medicina e Biologia",
+      "modules_count": 8,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 3,
+      "target_degrees": [
+        "LM-41 Medicina e Chirurgia",
+        "LM-46 Odontoiatria",
+        "LM-13 Farmacia",
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "L-SNT Professioni sanitarie"
+      ]
+    },
+    {
+      "id": "macroeconomia_framework",
+      "filename": "macroeconomia.json",
+      "filepath": "frameworks/macroeconomia.json",
+      "name": "Macroeconomia",
+      "subject": "Economia",
+      "modules_count": 8,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 3,
+      "target_degrees": [
+        "L-18 Economia Aziendale",
+        "L-33 Scienze economiche",
+        "L-36 Scienze politiche"
+      ]
+    },
+    {
+      "id": "matematica_corso_unico_framework",
+      "filename": "matematica per biologia.json",
+      "filepath": "frameworks/matematica per biologia.json",
+      "name": "Istituzioni di Matematiche / Matematica Generale",
+      "subject": "Matematica",
+      "modules_count": 7,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 4,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-27 Scienze chimiche",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "L-34 Geologia",
+        "LM-13 Farmacia"
+      ]
+    },
+    {
+      "id": "microbiologia_framework",
+      "filename": "microbiologia.json",
+      "filepath": "frameworks/microbiologia.json",
+      "name": "Microbiologia Generale e Clinica",
+      "subject": "Biologia e Medicina",
+      "modules_count": 14,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 6,
+      "target_degrees": [
+        "L-2 Biotecnologie",
+        "L-13 Scienze biologiche",
+        "L-25 Scienze e tecnologie agrarie",
+        "L-26 Scienze e tecnologie alimentari",
+        "L-29 Scienze farmaceutiche",
+        "L-32 Scienze naturali e ambientali",
+        "LM-13 Farmacia",
+        "LM-41 Medicina e Chirurgia",
+        "LM-42 Medicina Veterinaria",
+        "L-SNT Professioni sanitarie"
+      ]
+    },
+    {
+      "id": "microeconomia_avanzata_framework",
+      "filename": "microeconomia.json",
+      "filepath": "frameworks/microeconomia.json",
+      "name": "Microeconomia",
+      "subject": "Economia",
+      "modules_count": 9,
+      "modules": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "program_profiles_count": 3,
+      "target_degrees": [
+        "L-18 Economia Aziendale",
+        "L-33 Scienze economiche",
+        "L-36 Scienze politiche"
+      ]
+    }
+  ]
+}

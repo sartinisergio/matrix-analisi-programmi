@@ -1,0 +1,108 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "mathematical_formalism": "Livello di astrazione: Modelli dinamici con equazioni alle differenze (per Economisti) o approccio prevalentemente grafico/discorsivo (per Aziendalisti/Politologi)?",
+      "open_economy_depth": "Il modello Mundell-Fleming è trattato formalmente o solo in modo qualitativo? Quanto spazio è dato ai regimi di cambio?",
+      "phillips_curve_treatment": "Come è trattata l'inflazione? Curva di Phillips tradizionale, aumentata dalle aspettative (adattive/razionali) o approccio moderno del 'New Keynesian Phillips Curve'?",
+      "school_of_thought": "Orientamento prevalente: Sintesi Neoclassica (IS-LM standard), Nuovo Consenso (regola di Taylor/3 equazioni), o approcci Post-Keynesiani/Critici?",
+      "time_horizon_sequence": "Struttura del testo: Inizia dal Lungo Periodo (Crescita/Solow -> approccio Classico) o dal Breve Periodo (Ciclo/Keynes -> approccio della domanda)?"
+    },
+    "program_profiles": [
+      {
+        "name": "L-33 Scienze Economiche",
+        "priority_modules": "Focus sul rigore modellistico. Cruciale l'analisi formale dei Moduli 2 (Solow dinamico), 5-6 (IS-LM/AD-AS con formule) e 4 (Meccanismi di trasmissione monetaria). Il testo deve trattare le aspettative in modo esplicito. Fondamentale il dibattito sulle scuole di pensiero."
+      },
+      {
+        "name": "L-18 Economia Aziendale",
+        "priority_modules": "Focus sul contesto operativo per l'impresa. Priorità assoluta ai Moduli 4 (Tassi di interesse/Banche Centrali), 7 (Cambi/Export) e 1 (Contabilità). I modelli teorici complessi (crescita endogena o dinamica AD-AS avanzata) sono meno rilevanti rispetto alla comprensione degli shock esterni e delle politiche fiscali (8)."
+      },
+      {
+        "name": "L-36 Scienze Politiche",
+        "priority_modules": "Focus sulle implicazioni sociali e di policy. Cruciali i Moduli 3 (Disoccupazione/Lavoro), 8 (Debito/Welfare) e 1 (Disuguaglianze/Sostenibilità). Il formalismo matematico deve essere minimo (grafico/qualitativo), privilegiando la storia economica e l'economia politica delle scelte pubbliche."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Definizione degli aggregati (PIL, PNL, Reddito Nazionale). Identità fondamentali (Risparmio-Investimento). Indicatori di benessere alternativi (BES, HDI) e limiti del PIL come misura di benessere.",
+        "key_concepts": [
+          "Prodotto Interno Lordo (PIL)",
+          "Contabilità Nazionale",
+          "Identità Risparmio-Investimento"
+        ],
+        "name": "1. Fondamenti e Contabilità Nazionale"
+      },
+      {
+        "core_contents": "Fattori della crescita: accumulazione di capitale fisico, umano e progresso tecnologico. Funzione di produzione aggregata e rendimenti di scala. Modello di Solow (convergenza, stato stazionario) e cenni alla sostenibilità ambientale.",
+        "key_concepts": [
+          "Modello di Solow",
+          "Fattori della crescita economica",
+          "Accumulazione di capitale fisico"
+        ],
+        "name": "2. Crescita Economica (Lungo Periodo)"
+      },
+      {
+        "core_contents": "Definizioni di disoccupazione (frizionale, ciclica, strutturale) e Legge di Okun. Determinazione dei salari e dei prezzi (WS-PS setting). Concetto di tasso naturale di disoccupazione (NAIRU) e rigidità del mercato.",
+        "key_concepts": [
+          "Tasso Naturale di Disoccupazione (NAIRU)",
+          "Determinazione Salari e Prezzi (WS-PS)",
+          "Legge di Okun"
+        ],
+        "name": "3. Mercato del Lavoro e Disoccupazione"
+      },
+      {
+        "core_contents": "Funzioni della moneta e ruolo delle Banche Centrali. Creazione di base monetaria e moltiplicatore dei depositi. Strumenti di policy (tassi ufficiali, Quantitative Easing). Misurazione dell'inflazione, costi sociali e Curva di Phillips (relazione inflazione-disoccupazione).",
+        "key_concepts": [
+          "Funzioni della Moneta",
+          "Ruolo Banche Centrali",
+          "Moltiplicatore dei Depositi"
+        ],
+        "name": "4. Moneta, Finanza e Inflazione"
+      },
+      {
+        "core_contents": "Modello Reddito-Spesa (moltiplicatore keynesiano). Costruzione e analisi del modello IS-LM (mercato beni e moneta). Efficacia della politica fiscale e monetaria nel breve termine. Derivazione della Domanda Aggregata (AD).",
+        "key_concepts": [
+          "Modello IS-LM",
+          "Domanda Aggregata (AD)",
+          "Politica Fiscale (Breve Periodo)"
+        ],
+        "name": "5. Il Breve Periodo: Domanda Aggregata (IS-LM)"
+      },
+      {
+        "core_contents": "Offerta Aggregata (AS) e aggiustamento dei prezzi/salari. Equilibrio di medio periodo e ritorno al potenziale. Analisi degli shock di domanda e offerta (stagflazione).",
+        "key_concepts": [
+          "Modello AD-AS",
+          "Offerta Aggregata",
+          "Aggiustamento Prezzi Salari"
+        ],
+        "name": "6. Il Medio Periodo: Modello AD-AS"
+      },
+      {
+        "core_contents": "Bilancia dei pagamenti e tassi di cambio (nominali/reali). Parità dei tassi di interesse. Modello Mundell-Fleming (IS-LM in economia aperta): efficacia delle politiche con cambi fissi vs flessibili.",
+        "key_concepts": [
+          "Modello Mundell-Fleming",
+          "Efficacia politiche economiche",
+          "Cambi fissi e flessibili"
+        ],
+        "name": "7. Economia Aperta"
+      },
+      {
+        "core_contents": "Vincolo di bilancio del governo. Dinamica del rapporto Debito/PIL. Regole fiscali (es. Patto di Stabilità) e interazione tra politica monetaria e fiscale.",
+        "key_concepts": [
+          "Vincolo di bilancio intertemporale",
+          "Dinamica rapporto Debito/PIL",
+          "Sostenibilità del debito pubblico"
+        ],
+        "name": "8. Politica Economica e Debito Pubblico"
+      }
+    ],
+    "target_degrees": [
+      "L-18 Economia Aziendale",
+      "L-33 Scienze economiche",
+      "L-36 Scienze politiche"
+    ]
+  },
+  "context_strategy": "Materia soggetta a forti dibattiti teorici. Cruciale identificare l'orientamento (Sintesi Neoclassica vs Nuovo Consenso) e il focus: modelli dinamici di crescita per Economisti; politiche fiscali/monetarie operative per Aziendalisti; implicazioni sociali/welfare per Scienze Politiche",
+  "id": "macroeconomia_framework",
+  "name": "Macroeconomia",
+  "subject": "Economia"
+}

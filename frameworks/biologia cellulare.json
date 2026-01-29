@@ -1,0 +1,185 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "L-2 Biotecnologie",
+        "priority_modules": "Cruciale la 'manipolabilità' della cellula: focus assoluto su DNA/RNA (Moduli 3-6), sintesi proteica (7) e Tecniche avanzate (16, CRISPR). Fondamentale il traffico vescicolare (9) per la produzione di proteine ricombinanti. Meno rilevante l'istologia e l'adesione cellulare complessa."
+      },
+      {
+        "name": "LM-41 Medicina / LM-13 Farmacia",
+        "priority_modules": "Focus patologico e farmacologico. Cruciale la Segnalazione cellulare (13) target dei farmaci, il Ciclo cellulare/Cancro (14-15) e i recettori di membrana. Fondamentale il Citoscheletro (11) e l'Adesione (12) per capire l'istologia. Tecniche di laboratorio meno prioritarie rispetto ai meccanismi molecolari."
+      },
+      {
+        "name": "L-13 Scienze Biologiche",
+        "priority_modules": "Approccio olistico ed evolutivo. Tutti i moduli sono importanti, con particolare enfasi su Bioenergetica (10), Citoscheletro (11) e Regolazione genica (5). Fondamentale la comprensione della diversità cellulare e degli organismi modello."
+      },
+      {
+        "name": "L-9 Ingegneria Biomedica",
+        "priority_modules": "Focus strutturale e meccanico. Cruciale il Citoscheletro (11), l'Adesione/ECM (12) e le proprietà fisiche della membrana (8). Importante la Segnalazione (13) per la biosensoristica. Meno rilevante il dettaglio fine della maturazione dell'RNA o della trascrizione."
+      },
+      {
+        "name": "L-32 Scienze Naturali",
+        "priority_modules": "Focus comparativo ed evolutivo. Fondamentali i concetti di base (1-2), la Bioenergetica (10, inclusa fotosintesi) e la Meiosi (14). Molto meno approfondita la parte di Segnalazione molecolare complessa (13) e le Tecniche di editing genomico (16)."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Teoria cellulare, diversità tra procarioti ed eucarioti. Panoramica sulle tecniche fondamentali: microscopia (ottica, elettronica, fluorescenza), frazionamento cellulare e colture in vitro.",
+        "key_concepts": [
+          "Teoria Cellulare",
+          "Diversità Procarioti Eucarioti",
+          "Microscopia Ottica"
+        ],
+        "name": "1. Introduzione e metodi"
+      },
+      {
+        "core_contents": "Struttura e funzione delle macromolecole biologiche: proteine (folding), acidi nucleici, lipidi e carboidrati. Principi di bioenergetica e termodinamica cellulare.",
+        "key_concepts": [
+          "Struttura e funzione macromolecole",
+          "Proteine e folding proteico",
+          "Acidi nucleici (DNA/RNA)"
+        ],
+        "name": "2. Chimica della vita e macromolecole"
+      },
+      {
+        "core_contents": "Struttura della doppia elica, organizzazione della cromatina (istoni, nucleosomi) e dei cromosomi. Concetti di epigenetica e modificazioni istoniche. Differenze genomiche procarioti/eucarioti.",
+        "key_concepts": [
+          "Struttura doppia elica DNA",
+          "Organizzazione della cromatina",
+          "Concetto di nucleosoma"
+        ],
+        "name": "3. Genoma e organizzazione del DNA"
+      },
+      {
+        "core_contents": "Meccanismi molecolari della replicazione (enzimi, forcella). Telomeri e telomerasi. Sistemi di riparazione del danno al DNA e meccanismi di ricombinazione omologa/non omologa.",
+        "key_concepts": [
+          "Replicazione DNA molecolare",
+          "Forcella di replicazione",
+          "Enzimi della replicazione"
+        ],
+        "name": "4. Replicazione e mantenimento del DNA"
+      },
+      {
+        "core_contents": "Funzionamento delle RNA polimerasi, promotori, enhancer e fattori di trascrizione. Regolazione dell'espressione genica e ruolo degli RNA non codificanti (miRNA, siRNA).",
+        "key_concepts": [
+          "Regolazione Espressione Genica",
+          "Funzionamento RNA Polimerasi",
+          "Fattori di Trascrizione"
+        ],
+        "name": "5. Trascrizione e regolazione genica"
+      },
+      {
+        "core_contents": "Processamento dell'mRNA eucariotico: Capping, Splicing (e splicing alternativo), Poliadenilazione. Editing e meccanismi di trasporto nucleo-citoplasma.",
+        "key_concepts": [
+          "Splicing dell'mRNA eucariotico",
+          "Splicing alternativo",
+          "Capping 5' mRNA"
+        ],
+        "name": "6. Maturazione dell'RNA"
+      },
+      {
+        "core_contents": "Meccanismo della sintesi proteica sul ribosoma (codice genetico, tRNA). Folding assistito da chaperoni, modificazioni post-traduzionali e degradazione via ubiquitina-proteasoma o autofagia.",
+        "key_concepts": [
+          "Sintesi proteica ribosomiale",
+          "Codice genetico",
+          "Ruolo del tRNA"
+        ],
+        "name": "7. Traduzione e proteostasi"
+      },
+      {
+        "core_contents": "Modello a mosaico fluido, asimmetria lipidica e raft. Meccanismi di trasporto: diffusione, canali ionici, pompe ATPasi e cotrasportatori. Potenziale di membrana.",
+        "key_concepts": [
+          "Modello a mosaico fluido",
+          "Trasporto di membrana",
+          "Asimmetria lipidica"
+        ],
+        "name": "8. Struttura e trasporto di membrana"
+      },
+      {
+        "core_contents": "Struttura e funzione di RE, Golgi, Lisosomi. Traffico vescicolare (COP, Clatrina, SNARE), meccanismi di endocitosi ed esocitosi. Sorting e indirizzamento delle proteine (segnali).",
+        "key_concepts": [
+          "Sistema delle endomembrane",
+          "Struttura e funzione RE",
+          "Struttura e funzione Golgi"
+        ],
+        "name": "9. Sistema delle endomembrane e traffico"
+      },
+      {
+        "core_contents": "Struttura dei mitocondri e meccanismo chemiosmotico della fosforilazione ossidativa. Cenni su cloroplasti e fotosintesi. Teoria endosimbiotica.",
+        "key_concepts": [
+          "Fosforilazione ossidativa",
+          "Meccanismo chemiosmotico",
+          "Struttura dei mitocondri"
+        ],
+        "name": "10. Bioenergetica: Mitocondri e Cloroplasti"
+      },
+      {
+        "core_contents": "Microtubuli, microfilamenti (actina) e filamenti intermedi. Proteine motrici (chinesine, dineine, miosine). Ruolo nella mitosi, nel trasporto intracellulare e nella contrazione muscolare.",
+        "key_concepts": [
+          "Citoscheletro: Componenti Strutturali",
+          "Microtubuli: Struttura e Funzione",
+          "Microfilamenti (Actina): Ruolo Cellulare"
+        ],
+        "name": "11. Citoscheletro e motilità"
+      },
+      {
+        "core_contents": "Giunzioni cellulari (tight, gap, desmosomi, aderenti). Molecole di adesione (integrine, cadherine). Composizione della ECM (collagene, proteoglicani) e interazione cellula-ambiente.",
+        "key_concepts": [
+          "Giunzioni cellulari",
+          "Matrice Extracellulare (ECM)",
+          "Molecole di adesione"
+        ],
+        "name": "12. Adesione e matrice extracellulare (ECM)"
+      },
+      {
+        "core_contents": "Recettori di membrana (GPCR, RTK) e vie di trasduzione del segnale. Secondi messaggeri (cAMP, Calcio), cascate di chinasi e regolazione della risposta cellulare.",
+        "key_concepts": [
+          "Trasduzione del segnale",
+          "Recettori di membrana",
+          "Recettori accoppiati a proteine G (GPCR)"
+        ],
+        "name": "13. Segnalazione cellulare (Signal Transduction)"
+      },
+      {
+        "core_contents": "Fasi del ciclo e sistema di controllo (Ciclina-CDK, checkpoint). Meccanica della divisione mitotica e meiotica. Origine della variabilità genetica nei gameti.",
+        "key_concepts": [
+          "Ciclo Cellulare: Fasi",
+          "Sistema di Controllo (Ciclina-CDK)",
+          "Meccanismo della Mitosi"
+        ],
+        "name": "14. Ciclo cellulare, Mitosi e Meiosi"
+      },
+      {
+        "core_contents": "Apoptosi (vie intrinseca/estrinseca). Biologia delle cellule staminali (potenza, differenziamento, iPSC). Basi molecolari del cancro (oncogeni, oncosoppressori, metastasi).",
+        "key_concepts": [
+          "Apoptosi",
+          "Vie intrinseca apoptosi",
+          "Vie estrinseca apoptosi"
+        ],
+        "name": "15. Morte cellulare, Staminali e Cancro"
+      },
+      {
+        "core_contents": "Editing genomico (CRISPR), sequenziamento massivo (NGS), tecniche omiche. Principali organismi modello nella ricerca biologica.",
+        "key_concepts": [
+          "Editing Genomico CRISPR-Cas9",
+          "Sequenziamento Massivo NGS",
+          "Tecnologie Omiche"
+        ],
+        "name": "16. Tecniche avanzate e Organismi modello"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-9 Ingegneria biomedica",
+      "L-13 Scienze biologiche",
+      "L-29 Scienze farmaceutiche",
+      "L-32 Scienze naturali e ambientali",
+      "LM-13 Farmacia",
+      "LM-41 Medicina"
+    ]
+  },
+  "context_strategy": "Pilastro trasversale con sfumature diverse: per i Biotecnologi è 'ingegneria della vita' (manipolazione, traffico vescicolare per produzione proteine); per i Medici è la base della patologia (segnalazione, cancro, istologia); per i Naturalisti è evoluzione e diversità. Distinguere tra approccio meccanicistico e fisiologico",
+  "id": "biologia_cellulare_molecolare_framework",
+  "name": "Biologia Molecolare della Cellula",
+  "subject": "Biologia e Medicina"
+}

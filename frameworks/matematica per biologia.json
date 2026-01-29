@@ -1,0 +1,110 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "algebra_depth": "L'algebra lineare si ferma alle matrici 3x3 per risolvere sistemi (approccio pratico) o tratta spazi vettoriali astratti e diagonalizzazione (approccio teorico)?",
+      "calculus_approach": "Il calcolo integrale è trattato con rigore (somme di Riemann) o come insieme di regole di calcolo per le aree?",
+      "differential_equations": "Sono presenti le equazioni differenziali? Se sì, sono focalizzate sui modelli di crescita/decadimento (Malthus, cinetica chimica)?",
+      "proofs_inclusion": "Il testo include le dimostrazioni dei teoremi (es. Rolle, Lagrange) o si limita agli enunciati e alle applicazioni?",
+      "statistics_weight": "La statistica è un'appendice finale o è integrata come strumento fondamentale (cruciale per biologi/medici)?"
+    },
+    "program_profiles": [
+      {
+        "name": "L-13 Scienze Biologiche / L-2 Biotecnologie / LM-13 Farmacia",
+        "priority_modules": "Focus 'Statistico-Modellistico'. Priorità assoluta al Modulo 7 (Statistica - indispensabile per i laboratori) e al Modulo 3 (Studio di funzione). Le ODE (5) sono importanti per la dinamica di popolazioni/cinetica enzimatica. L'algebra lineare astratta (6) è spesso marginale o limitata al calcolo matriciale base.",
+        "textbook_advice": "Cercare testi con molti esempi biologici e poca astrazione teorica."
+      },
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Focus 'Strumentale-Algebrico'. Cruciale il Modulo 6 (Algebra Lineare/Autovalori) per la meccanica quantistica futura. Fondamentale il Calcolo Differenziale e Integrale (3, 4) e le ODE (5) per la cinetica e termodinamica. La Statistica (7) è importante per l'analisi dell'errore. Serve un rigore maggiore rispetto ai biologi."
+      },
+      {
+        "name": "L-34 Geologia / L-32 Scienze Naturali",
+        "priority_modules": "Focus 'Geometrico-Descrittivo'. Importante la Geometria Analitica e i Vettori (6) per la cartografia e cristallografia. Calcolo (3, 4) essenziale per la fisica terrestre. Statistica (7) utile per l'analisi dati ambientali."
+      },
+      {
+        "name": "L-25/L-26 Agraria e Alimentare",
+        "priority_modules": "Focus 'Applicativo'. Priorità a Funzioni (1, 3) e Statistica (7) per l'analisi dati e controllo qualità. Algebra Lineare e Serie complesse sono spesso superflue."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Insiemistica e logica di base. Numeri reali (sup/inf) e Cenni ai Numeri Complessi (forme algebriche/polari). Funzioni elementari e loro grafici.",
+        "key_concepts": [
+          "Funzioni elementari e grafici",
+          "Numeri reali: estremo superiore",
+          "Insiemistica e logica di base"
+        ],
+        "name": "1. Fondamenti e Numeri"
+      },
+      {
+        "core_contents": "Limiti di successioni. Serie numeriche e criteri di convergenza. Spesso propedeutico allo studio di popolazioni discrete.",
+        "key_concepts": [
+          "Limiti di successioni",
+          "Convergenza di successioni",
+          "Serie numeriche"
+        ],
+        "name": "2. Successioni e Serie"
+      },
+      {
+        "core_contents": "Limiti e continuità. Derivate e regole di calcolo. Teoremi fondamentali (Rolle, Lagrange, De L'Hôpital). Studio di funzione (massimi, minimi, flessi) e sviluppo di Taylor.",
+        "key_concepts": [
+          "Derivate di funzioni",
+          "Limiti e continuità",
+          "Regole di derivazione"
+        ],
+        "name": "3. Calcolo Differenziale (Funzioni di 1 variabile)"
+      },
+      {
+        "core_contents": "Integrale definito e indefinito. Metodi di integrazione (sostituzione, parti). Teorema Fondamentale del Calcolo. Integrali impropri.",
+        "key_concepts": [
+          "Teorema Fondamentale del Calcolo",
+          "Integrale Definito",
+          "Integrale Indefinito"
+        ],
+        "name": "4. Calcolo Integrale"
+      },
+      {
+        "core_contents": "Equazioni a variabili separabili e lineari del primo ordine. Equazioni lineari del secondo ordine a coefficienti costanti. Modelli di crescita esponenziale e logistica.",
+        "key_concepts": [
+          "Equazioni Differenziali Ordinarie",
+          "Modelli crescita biologica",
+          "Equazioni variabili separabili"
+        ],
+        "name": "5. Equazioni Differenziali Ordinarie (ODE)"
+      },
+      {
+        "core_contents": "Vettori nel piano e nello spazio. Matrici e determinanti. Sistemi lineari (Cramer, Rouché-Capelli). Autovalori e autovettori (diagonalizzazione). Elementi di geometria analitica (rette, piani, coniche).",
+        "key_concepts": [
+          "Sistemi di equazioni lineari",
+          "Matrici e loro operazioni",
+          "Vettori nello spazio euclideo"
+        ],
+        "name": "6. Algebra Lineare e Geometria"
+      },
+      {
+        "core_contents": "Statistica descrittiva (media, moda, varianza). Calcolo combinatorio. Probabilità elementare e condizionata (Bayes). Distribuzioni discrete (Binomiale, Poisson) e continue (Gaussiana).",
+        "key_concepts": [
+          "Statistica Descrittiva",
+          "Misure di Tendenza Centrale",
+          "Misure di Dispersione"
+        ],
+        "name": "7. Probabilità e Statistica"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "L-25 Scienze e tecnologie agrarie",
+      "L-26 Scienze e tecnologie alimentari",
+      "L-27 Scienze chimiche",
+      "L-29 Scienze farmaceutiche",
+      "L-32 Scienze naturali e ambientali",
+      "L-34 Geologia",
+      "LM-13 Farmacia"
+    ]
+  },
+  "context_strategy": "Questo insegnamento è un ibrido diffuso nelle lauree scientifiche non-matematiche (Biologia, Chimica, Farmacia, Geologia). Deve condensare in un solo esame elementi di Analisi 1, Analisi 2, Algebra Lineare e Statistica. La sfida chiave è il 'dosaggio': un libro per biologi richiede molta statistica e zero algebra astratta; un libro per chimici necessita di più algebra lineare (per la quantistica) e calcolo differenziale (per la termodinamica).",
+  "id": "matematica_corso_unico_framework",
+  "name": "Istituzioni di Matematiche / Matematica Generale",
+  "subject": "Matematica"
+}

@@ -1,0 +1,153 @@
+{
+  "content": {
+    "program_profiles": [
+      {
+        "name": "L-35 Matematica",
+        "priority_modules": "Cruciale il rigore teorico assoluto. Il modulo 8 (Lebesgue) è fondamentale e distingue questo corso da tutti gli altri. Essenziali i moduli 1, 3 (Dini) e 11 (Spazi di Hilbert). Le trasformate (10) e i calcoli ingegneristici sono secondari rispetto alla comprensione profonda della topologia e della misura."
+      },
+      {
+        "name": "L-30 Fisica",
+        "priority_modules": "Focus critico sui moduli 7 (Calcolo Vettoriale), 9 (PDE), 10 (Fourier) e 11 (Ortogonali/Hilbert). Questi sono gli strumenti base per la Meccanica Quantistica e l'Elettromagnetismo. Lebesgue (8) è utile ma spesso trattato in modo più funzionale che costruttivo."
+      },
+      {
+        "name": "L-7-8-9 Ingegneria (Industriale/Informazione)",
+        "priority_modules": "Strategico il 'saper calcolare'. Cruciali le Trasformate di Laplace (10) per Controlli/Elettronica, le ODE (2) e il Calcolo Vettoriale (6-7) per Fisica Tecnica/Campi. I moduli teorici come Lebesgue (8) o la teoria fine delle serie di funzioni (1) sono spesso marginali o del tutto assenti. Focus su stabilità (Lyapunov)."
+      },
+      {
+        "name": "L-7-8 Ingegneria (Civile/Edile)",
+        "priority_modules": "Focus pesante su Meccanica del Continuo: fondamentali i moduli 4 (Hessiana), 5 (Integrali multipli per baricentri/inerzia) e 6-7 (Calcolo vettoriale). Meno enfasi su Trasformate e PDE complesse."
+      },
+      {
+        "name": "L-27 Scienze Chimiche",
+        "priority_modules": "Serve una solida base di calcolo multivariabile (Moduli 3, 4, 5) per la Termodinamica. Importante l'introduzione alle funzioni d'onda e ortogonali (11, 12) per la Chimica Fisica/Quantistica. Lebesgue e Analisi Funzionale astratta sono trascurabili."
+      },
+      {
+        "name": "L-34 Geologia",
+        "priority_modules": "Versione applicativa ridotta. Focus su Integrali Multipli (5) e Vettoriali (6-7) per la fluidodinamica sotterranea. ODE base (2). Tutto il resto (Lebesgue, Hilbert, Trasformate, Funzioni implicite complesse) è generalmente fuori target."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Distinzione critica tra convergenza puntuale e uniforme. Teoremi di continuità, derivabilità e integrabilità sotto il segno di serie (incluso Weierstrass). Studio approfondito delle Serie di Potenze (raggio di convergenza) e introduzione alle Serie di Fourier (convergenza quadratica e puntuale).",
+        "key_concepts": [
+          "Convergenza uniforme",
+          "Convergenza puntuale",
+          "Serie di funzioni"
+        ],
+        "name": "1. Successioni e serie di funzioni"
+      },
+      {
+        "core_contents": "Teoria generale: esistenza e unicità locale e globale (Cauchy-Lipschitz). Metodi risolutivi per equazioni lineari a coefficienti costanti e sistemi di ODE. Analisi qualitativa e stabilità delle soluzioni (Metodo di Lyapunov).",
+        "key_concepts": [
+          "Equazioni differenziali ordinarie",
+          "Teorema di Cauchy-Lipschitz",
+          "Esistenza e unicità locale"
+        ],
+        "name": "2. Equazioni differenziali ordinarie (ODE)"
+      },
+      {
+        "core_contents": "Topologia in Rn. Concetto di differenziabilità, piano tangente e matrice Jacobiana. Teorema delle Funzioni Implicite (Dini) e applicazioni all'invertibilità locale. Ottimizzazione vincolata tramite Moltiplicatori di Lagrange.",
+        "key_concepts": [
+          "Differenziabilità funzioni più variabili",
+          "Matrice Jacobiana",
+          "Teorema Funzioni Implicite (Dini)"
+        ],
+        "name": "3. Calcolo differenziale per funzioni di più variabili"
+      },
+      {
+        "core_contents": "Formula di Taylor multivariata, matrice Hessiana e studio della natura dei punti critici (massimi, minimi, sella).",
+        "key_concepts": [
+          "Formula di Taylor multivariata",
+          "Punti critici",
+          "Matrice Hessiana"
+        ],
+        "name": "4. Serie e polinomi di Taylor in più variabili"
+      },
+      {
+        "core_contents": "Costruzione dell'integrale multiplo (Riemann), domini normali e Teoremi di Fubini/Tonelli. Tecniche di cambio di variabile tramite Jacobiano (coordinate polari, cilindriche, sferiche). Integrali impropri in più dimensioni.",
+        "key_concepts": [
+          "Integrale multiplo di Riemann",
+          "Domini di integrazione normali",
+          "Teorema di Fubini-Tonelli"
+        ],
+        "name": "5. Calcolo integrale in più variabili"
+      },
+      {
+        "core_contents": "Curve e superfici parametriche. Integrali di prima specie (massa/area) e seconda specie (lavoro/flusso). Concetto di campo conservativo, potenziale e irrotazionalità.",
+        "key_concepts": [
+          "Integrali di linea",
+          "Integrali di superficie",
+          "Curve parametriche"
+        ],
+        "name": "6. Integrali di linea e di superficie"
+      },
+      {
+        "core_contents": "Operatori differenziali vettoriali: Gradiente, Divergenza, Rotore. I grandi teoremi dell'analisi vettoriale: Green (piano), Stokes (rotore) e Gauss (divergenza). Applicazioni fisiche dei flussi.",
+        "key_concepts": [
+          "Teoremi fondamentali analisi vettoriale",
+          "Operatori differenziali vettoriali",
+          "Teorema di Stokes"
+        ],
+        "name": "7. Calcolo vettoriale e teoremi fondamentali"
+      },
+      {
+        "core_contents": "Fondamenti di teoria della misura (insiemi misurabili, misura nulla). Costruzione dell'integrale di Lebesgue e confronto con Riemann. Teoremi di passaggio al limite (Convergenza Monotona di Beppo Levi, Convergenza Dominata).",
+        "key_concepts": [
+          "Integrale di Lebesgue",
+          "Teoria della Misura",
+          "Insiemi Misurabili"
+        ],
+        "name": "8. Misura e integrazione di Lebesgue"
+      },
+      {
+        "core_contents": "Classificazione base delle PDE. Metodo di separazione delle variabili. Analisi delle equazioni modello: Calore (parabolica), Onde (iperbolica), Laplace (ellittica).",
+        "key_concepts": [
+          "Equazioni alle derivate parziali (PDE)",
+          "Classificazione base delle PDE",
+          "Metodo di separazione delle variabili"
+        ],
+        "name": "9. Equazioni alle derivate parziali (PDE) elementari"
+      },
+      {
+        "core_contents": "Trasformata di Laplace: definizione, proprietà e applicazione alla risoluzione di ODE. Trasformata di Fourier: proprietà e legame con la frequenza. Convoluzione.",
+        "key_concepts": [
+          "Trasformata di Laplace: Definizione",
+          "Proprietà della Trasformata di Laplace",
+          "Risoluzione di ODE tramite Laplace"
+        ],
+        "name": "10. Trasformate integrali"
+      },
+      {
+        "core_contents": "Cenni agli Spazi di Hilbert e L2. Basi ortonormali, serie di Fourier generalizzate e teoria di Sturm-Liouville.",
+        "key_concepts": [
+          "Serie di Fourier generalizzate",
+          "Spazi di Hilbert",
+          "Spazio delle funzioni L2"
+        ],
+        "name": "11. Serie e sistemi di funzioni ortogonali"
+      },
+      {
+        "core_contents": "Funzioni Gamma e Beta di Eulero. Polinomi ortogonali (Legendre, Chebyshev, Hermite) come soluzioni di equazioni differenziali notevoli.",
+        "key_concepts": [
+          "Funzione Gamma di Eulero",
+          "Funzione Beta di Eulero",
+          "Polinomi ortogonali"
+        ],
+        "name": "12. Funzioni speciali"
+      }
+    ],
+    "target_degrees": [
+      "L-7 Ingegneria",
+      "L-8 Ingegneria",
+      "L-9 Ingegneria",
+      "L-27 Scienze chimiche",
+      "L-30 Fisica",
+      "L-34 Geologia",
+      "L-35 Matematica"
+    ]
+  },
+  "context_strategy": "Corso spartiacque. Per i Matematici è l'ingresso nell'analisi funzionale (misura di Lebesgue). Per gli Ingegneri è la 'cassetta degli attrezzi' per controlli ed elettromagnetismo (Trasformate, ODE, curve e superfici). Per i Fisici è la base della meccanica quantistica (Spazi di Hilbert). I programmi divergono nettamente su Lebesgue e Trasformate",
+  "id": "analisi_matematica_2_framework",
+  "name": "Analisi Matematica 2",
+  "subject": "Matematica"
+}

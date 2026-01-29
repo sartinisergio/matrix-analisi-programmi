@@ -1,0 +1,115 @@
+{
+  "content": {
+    "evaluation_criteria": {
+      "applied_focus": "Il testo include moduli specifici per il miglioramento genetico vegetale/animale (Agraria) o si limita alla genetica medica/umana?",
+      "integration_level": "Verifica critica: Il testo è un volume autonomo (approfondito) o progettato per corsi integrati 'Biologia e Genetica' (sintetico, essenziale)?",
+      "molecular_redundancy": "Quanto si sovrappone alla Biologia Molecolare? (Se il corso è integrato, questa parte deve essere snella per evitare duplicazioni con la prima parte dell'esame).",
+      "quantitative_depth": "La genetica di popolazioni è trattata con rigore matematico (statistica, varianza) o solo descrittiva?"
+    },
+    "program_profiles": [
+      {
+        "name": "LM-41 Medicina / LM-13 Farmacia / L-29 Scienze Farmaceutiche",
+        "priority_modules": "ATTENZIONE: Corso spesso integrato con Biologia. Richiede un testo sintetico o una sezione dedicata. Priorità assoluta ai Moduli 1 (Mendel), 3 (Mutazioni patologiche) e 7 (Genetica Umana/Malattie). Il Modulo 8 (Agraria) è totalmente inutile. I Moduli 4 e 5 devono essere essenziali per non duplicare Biologia Molecolare/Microbiologia."
+      },
+      {
+        "name": "L-13 Scienze Biologiche / L-32 Scienze Naturali",
+        "priority_modules": "Corso Standalone. Richiede copertura completa. Cruciale la Genetica di Popolazioni (6) e la Citogenetica (2) per la visione evolutiva. Fondamentale il rigore negli esercizi di genetica formale (1). Il Modulo 8 è opzionale ma gradito se orientato alla conservazione della biodiversità."
+      },
+      {
+        "name": "L-25 Scienze Agrarie / Produzioni Animali",
+        "priority_modules": "Focus Applicativo. Il Modulo 8 (Miglioramento Genetico) è il cuore del corso e differenzia il libro. Cruciale la Genetica Quantitativa (6) e la Citogenetica (2, specialmente poliploidie vegetali). La Genetica Umana (7) è marginale o va sostituita con esempi animali/vegetali."
+      },
+      {
+        "name": "L-2 Biotecnologie",
+        "priority_modules": "Focus Tecnologico. Priorità assoluta ai Moduli 5 (Molecolare), 7 (Tecnologie/CRISPR) e 4 (Batterica per il clonaggio). Meno rilevante la genetica di popolazioni classica o i pedigree medici descrittivi. Serve un approccio sperimentale."
+      }
+    ],
+    "syllabus_modules": [
+      {
+        "core_contents": "Leggi di Mendel e calcolo delle probabilità. Analisi statistica (Chi-quadro). Estensioni: alleli multipli, epistasi, pleiotropia, penetranza ed espressività.",
+        "key_concepts": [
+          "Leggi di Mendel",
+          "Calcolo delle probabilità",
+          "Segregazione allelica"
+        ],
+        "name": "1. Genetica Mendeliana e Estensioni"
+      },
+      {
+        "core_contents": "Struttura del cromosoma eucariotico e cariotipo. Meccanismi della Meiosi e Teoria Cromosomica. Linkage, Crossing-over e costruzione di mappe genetiche (frequenza di ricombinazione).",
+        "key_concepts": [
+          "Meiosi",
+          "Teoria Cromosomica dell'Eredità",
+          "Struttura del Cromosoma Eucariotico"
+        ],
+        "name": "2. Citogenetica e Mappatura"
+      },
+      {
+        "core_contents": "Classificazione delle mutazioni geniche (puntiformi) e cromosomiche (strutturali/numeriche). Meccanismi di insorgenza e sistemi di riparazione del DNA.",
+        "key_concepts": [
+          "Mutazioni geniche e cromosomiche",
+          "Classificazione delle mutazioni",
+          "Mutazioni puntiformi"
+        ],
+        "name": "3. Mutazioni e Riparazione"
+      },
+      {
+        "core_contents": "Trasferimento genico orizzontale (coniugazione, trasformazione, trasduzione). Genetica dei fagi e regolazione negli operoni batterici.",
+        "key_concepts": [
+          "Regolazione operoni batterici",
+          "Trasferimento genico orizzontale",
+          "Coniugazione batterica"
+        ],
+        "name": "4. Genetica Microbica (Procarioti e Virus)"
+      },
+      {
+        "core_contents": "Dogma centrale (Replicazione, Trascrizione, Traduzione). Regolazione dell'espressione genica negli eucarioti ed epigenetica. (Modulo spesso condiviso con Biologia Molecolare).",
+        "key_concepts": [
+          "Dogma Centrale della Biologia",
+          "Replicazione del DNA",
+          "Trascrizione genica"
+        ],
+        "name": "5. Genetica Molecolare e Regolazione"
+      },
+      {
+        "core_contents": "Legge di Hardy-Weinberg e fattori evolutivi (deriva, selezione, migrazione). Genetica quantitativa (tratti poligenici ed ereditabilità).",
+        "key_concepts": [
+          "Legge di Hardy-Weinberg",
+          "Fattori evolutivi",
+          "Deriva genetica"
+        ],
+        "name": "6. Genetica di Popolazioni ed Evoluzionistica"
+      },
+      {
+        "core_contents": "Analisi dei pedigree umani. Patologie monogeniche e complesse. Tecnologie del DNA ricombinante (PCR, NGS, CRISPR) e diagnostica.",
+        "key_concepts": [
+          "Analisi dei Pedigree Umani",
+          "Patologie Monogeniche",
+          "Tecnologie DNA Ricombinante"
+        ],
+        "name": "7. Genetica Umana e Tecnologie"
+      },
+      {
+        "core_contents": "Miglioramento genetico (breeding) animale e vegetale. Eterosi, ibridi, poliploidia nelle colture. Marcatori molecolari (QTL) per la selezione.",
+        "key_concepts": [
+          "Miglioramento genetico (breeding)",
+          "Selezione assistita da marcatori (MAS)",
+          "Quantitative Trait Loci (QTL)"
+        ],
+        "name": "8. Genetica Applicata (Agraria/Veterinaria)"
+      }
+    ],
+    "target_degrees": [
+      "L-2 Biotecnologie",
+      "L-13 Scienze biologiche",
+      "L-25 Scienze e tecnologie agrarie",
+      "L-29 Scienze farmaceutiche",
+      "L-32 Scienze naturali e ambientali",
+      "LM-13 Farmacia",
+      "LM-41 Medicina e Chirurgia"
+    ]
+  },
+  "context_strategy": "In Medicina e Farmacia è spesso un modulo integrato nel corso di Biologia (richiede sintesi). In Biologia/Naturali è un corso autonomo (richiede genetica di popolazione ed evolutiva). In Agraria il cuore è il miglioramento genetico e la genetica quantitativa. In Biotecnologie focus su molecolare e tecnologie",
+  "id": "genetica_generale_framework",
+  "name": "Genetica Generale",
+  "subject": "Biologia"
+}
