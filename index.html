@@ -686,25 +686,20 @@
                 const framework = await fetch(frameworkPath).then(r => r.json());
                 CURRENT_FRAMEWORK = framework;
                 
-                console.log('✅ Framework caricato:', frameworkPath, 'Nome:', frameworkName);
+                console.log('✅ Framework caricato:', frameworkPath);
                 
                 // Popola contesti dal framework
                 populateContestoSelect(framework.content.program_profiles);
                 
-                // Determina il subject corretto per i manuali basandosi sul nome del framework
-                let manualSubject = frameworkName;
+                // Ottieni il subject dal framework per filtrare i manuali
+                const frameworkObj = FRAMEWORK_CATALOG.frameworks.find(f => f.filepath === frameworkPath);
+                const frameworkSubject = frameworkObj ? frameworkObj.subject : frameworkName;
                 
-                // Mapping specifico per Chimica
-                if (frameworkName.includes('Generale') || frameworkName.includes('Inorganica')) {
-                    manualSubject = 'Chimica Generale';
-                } else if (frameworkName.includes('Organica')) {
-                    manualSubject = 'Chimica Organica';
-                }
+                console.log('🔍 Filtro manuali per subject:', frameworkSubject);
                 
-                console.log('🔍 Filtro manuali per subject:', manualSubject);
-                
-                // Popola manuali filtrati per subject corretto
-                populateManualeSelect(manualSubject);
+                // Popola manuali (principali e alternativi) filtrati per subject
+                populateManualeSelect(frameworkSubject);
+                populateManualiAlternativi(frameworkSubject);
                 
                 // Mostra conferma
                 const displayName = frameworkPath.split('/').pop().replace('.json', '');
@@ -757,7 +752,10 @@
                 zanichelli.forEach(manual => {
                     const option = document.createElement('option');
                     option.value = manual.id;
-                    option.textContent = `${manual.title} (${manual.publisher})`;
+                    // Mostra: Autore - Titolo (Editore)
+                    option.textContent = manual.author 
+                        ? `${manual.author} - ${manual.title}` 
+                        : `${manual.title} (${manual.publisher})`;
                     optgroup.appendChild(option);
                 });
                 select.appendChild(optgroup);
@@ -770,7 +768,10 @@
                 competitor.forEach(manual => {
                     const option = document.createElement('option');
                     option.value = manual.id;
-                    option.textContent = `${manual.title} (${manual.publisher})`;
+                    // Mostra: Autore - Titolo (Editore)
+                    option.textContent = manual.author 
+                        ? `${manual.author} - ${manual.title} (${manual.publisher})` 
+                        : `${manual.title} (${manual.publisher})`;
                     optgroup.appendChild(option);
                 });
                 select.appendChild(optgroup);
@@ -783,6 +784,57 @@
             select.appendChild(optionAltro);
             
             console.log(`✅ Caricati ${manualsForSubject.length} manuali (${zanichelli.length} Zanichelli, ${competitor.length} Competitor)`);
+        }
+
+        // Popola checkbox manuali alternativi filtrati per subject
+        function populateManualiAlternativi(frameworkSubject) {
+            // Trova i container dei manuali alternativi
+            const zanichellContainer = document.querySelector('.space-y-2.bg-gray-50 > div:first-child');
+            const competitorContainer = document.querySelector('.space-y-2.bg-gray-50 > div:nth-child(2)');
+            
+            if (!zanichellContainer || !competitorContainer || !MANUAL_CATALOG) return;
+            
+            // Filtra manuali per subject
+            const manualsForSubject = Object.values(MANUAL_CATALOG.manuals).filter(m => 
+                m.subject === frameworkSubject
+            );
+            
+            // Separa Zanichelli e Competitor
+            const zanichelli = manualsForSubject.filter(m => m.type === 'zanichelli');
+            const competitor = manualsForSubject.filter(m => m.type === 'competitor');
+            
+            // Popola Zanichelli
+            const zanichellHTML = zanichelli.slice(0, 5).map(manual => `
+                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <input type="checkbox" id="alt${manual.id}" value="${manual.id}" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <span class="text-sm text-gray-700">${manual.author || manual.title}</span>
+                </label>
+            `).join('');
+            
+            // Popola Competitor
+            const competitorHTML = competitor.slice(0, 5).map(manual => `
+                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <input type="checkbox" id="alt${manual.id}" value="${manual.id}" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <span class="text-sm text-gray-700">${manual.author ? `${manual.author} (${manual.publisher})` : manual.title}</span>
+                </label>
+            `).join('');
+            
+            // Aggiorna i container (mantiene il titolo "Zanichelli" / "Altri Editori")
+            const zanichellTitle = zanichellContainer.querySelector('.text-xs.font-semibold');
+            if (zanichellTitle) {
+                zanichellContainer.innerHTML = '';
+                zanichellContainer.appendChild(zanichellTitle);
+                zanichellContainer.insertAdjacentHTML('beforeend', zanichellHTML);
+            }
+            
+            const competitorTitle = competitorContainer.querySelector('.text-xs.font-semibold');
+            if (competitorTitle) {
+                competitorContainer.innerHTML = '';
+                competitorContainer.appendChild(competitorTitle);
+                competitorContainer.insertAdjacentHTML('beforeend', competitorHTML);
+            }
+            
+            console.log(`✅ Popolati ${zanichelli.length} manuali alternativi Zanichelli, ${competitor.length} Competitor`);
         }
 
         // Inizializzazione

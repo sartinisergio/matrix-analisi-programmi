@@ -135,7 +135,7 @@
       "filename": "Chimica Generale.json",
       "filepath": "frameworks/Chimica Generale.json",
       "name": "Chimica Generale con Elementi di Chimica Inorganica",
-      "subject": "Chimica",
+      "subject": "Chimica Generale",
       "modules_count": 15,
       "modules": [
         "",
@@ -175,7 +175,7 @@
       "filename": "Chimica Organica.json",
       "filepath": "frameworks/Chimica Organica.json",
       "name": "Chimica Organica",
-      "subject": "Chimica",
+      "subject": "Chimica Organica",
       "modules_count": 30,
       "modules": [
         "",
