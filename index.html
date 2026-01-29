@@ -1211,50 +1211,44 @@
                 
                 let fase0;
                 try {
-                    const analisiPreliminare = await callLLM(`Sei un esperto analista di programmi didattici universitari.
+                    const analisiPreliminare = await callLLM(`Analizza questo programma universitario di ${materiaName} e fornisci un'analisi preliminare.
 
-Analizza il seguente programma del corso e genera:
+IMPORTANTE: Rispondi ESCLUSIVAMENTE con un oggetto JSON valido. Non aggiungere testo prima o dopo il JSON.
+Usa SEMPRE virgolette doppie per le stringhe. Non usare apici singoli.
+Evita caratteri speciali non escapati nelle stringhe.
 
-1. QUADRO GENERALE:
-   - Visione d'insieme dei contenuti
-   - Struttura logica del corso
-   - Distribuzione tematica (percentuali per macro-area)
-   - Livello di complessità generale (base/intermedio/avanzato)
-
-2. PROFILO PEDAGOGICO DEL DOCENTE:
-   - Approccio didattico prevalente (teorico/applicativo/sperimentale/interdisciplinare)
-   - Livello di approfondimento (base/intermedio/avanzato)
-   - Enfasi particolari (argomenti privilegiati)
-   - Stile didattico (classico/moderno/innovativo)
-   - Orientamento disciplinare (puro/applicato)
-
-PROGRAMMA:
-${testo}
+PROGRAMMA DEL CORSO:
+${testo.substring(0, 3000)}
 
 CONTESTO:
+- Materia: ${materiaName}
 - Classe di Laurea: ${contesto}
 - CFU: ${cfu || 'Non specificato'}
 - Ore: ${ore || 'Non specificato'}
 
-Rispondi SOLO con un JSON valido, senza altri testi:
+Genera un JSON con questa struttura esatta:
+
 {
   "quadro_generale": {
-    "tipologia": "descrizione sintetica del tipo di corso",
+    "tipologia": "descrizione breve del tipo di corso (max 100 caratteri)",
     "distribuzione_tematica": [
-      {"area": "nome macro-area", "percentuale": numero}
+      {"area": "nome area", "percentuale": 40},
+      {"area": "altra area", "percentuale": 30}
     ],
-    "livello_complessita": "base|intermedio|avanzato",
-    "note": "osservazioni generali"
+    "livello_complessita": "base o intermedio o avanzato",
+    "note": "osservazioni generali (max 200 caratteri)"
   },
   "profilo_pedagogico": {
-    "approccio": "teorico|applicativo|sperimentale|interdisciplinare|misto",
-    "livello": "base|intermedio|avanzato|intermedio-avanzato",
-    "enfasi": ["argomento1", "argomento2"],
-    "stile": "classico|moderno|innovativo|tradizionale",
-    "orientamento": "puro|applicato|misto",
-    "note": "caratteristiche distintive del docente"
+    "approccio": "teorico o applicativo o sperimentale o interdisciplinare o misto",
+    "livello": "base o intermedio o avanzato",
+    "enfasi": ["argomento1", "argomento2", "argomento3"],
+    "stile": "classico o moderno o innovativo o tradizionale",
+    "orientamento": "puro o applicato o misto",
+    "note": "caratteristiche distintive (max 150 caratteri)"
   }
-}`, 0.2);
+}
+
+RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`, 0.1);
 
                     console.log('📝 Risposta Fase 0 (lunghezza):', analisiPreliminare.length);
                     fase0 = JSON.parse(sanitizeJSON(analisiPreliminare));
@@ -1273,24 +1267,25 @@ Rispondi SOLO con un JSON valido, senza altri testi:
                 
                 let metadataObj;
                 try {
-                    const metadata = await callLLM( `Analizza il seguente programma universitario di ${materiaName} ed estrai i seguenti metadati:
+                    const metadata = await callLLM(`Estrai i metadati da questo programma universitario di ${materiaName}.
 
-Testo del programma:
+IMPORTANTE: Rispondi ESCLUSIVAMENTE con un oggetto JSON valido.
+Usa SEMPRE virgolette doppie, non apici singoli.
+Se un campo non è presente, usa stringa vuota "".
+
+TESTO DEL PROGRAMMA:
 ${testo.substring(0, 2000)}
 
-Estrai:
-- università: nome dell'università
-- corso_laurea_nome: nome del corso di laurea
-- denominazione_corso: nome del corso/insegnamento
-- docente: nome del docente
+Estrai questi campi e rispondi SOLO con questo JSON:
 
-Rispondi SOLO con un JSON valido, senza altri testi:
 {
-  "università": "...",
-  "corso_laurea_nome": "...",
-  "denominazione_corso": "...",
-  "docente": "..."
-}`, 0.3);
+  "universita": "nome universita (senza accenti nei nomi campo)",
+  "corso_laurea_nome": "nome corso di laurea",
+  "denominazione_corso": "nome insegnamento",
+  "docente": "nome docente"
+}
+
+RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`, 0.1);
 
                     console.log('📝 Risposta Fase 1 (lunghezza):', metadata.length);
                     metadataObj = JSON.parse(sanitizeJSON(metadata));
@@ -2018,7 +2013,7 @@ Rispondi SOLO con un JSON valido:
                             <div>
                                 <h2 class="text-2xl font-bold">${prog.denominazione_corso}</h2>
                                 <div class="mt-2 space-y-1 text-sm text-gray-600">
-                                    <p><strong>Università:</strong> ${prog.università}</p>
+                                    <p><strong>Università:</strong> ${prog.universita}</p>
                                     <p><strong>Corso di Laurea:</strong> ${prog.corso_laurea_nome} (${prog.contesto})</p>
                                     ${prog.docente ? `<p><strong>Docente:</strong> ${prog.docente}</p>` : ''}
                                     ${prog.cfu ? `<p><strong>CFU:</strong> ${prog.cfu}</p>` : ''}
@@ -2551,7 +2546,7 @@ Rispondi SOLO con un JSON valido:
                                     ${prog.tipo_analisi === 'avanzata' ? '🔬 Avanzata' : '⚡ Base'}
                                 </span>
                             </div>
-                            <p class="text-sm text-gray-600">${prog.università} - ${prog.contesto}</p>
+                            <p class="text-sm text-gray-600">${prog.universita} - ${prog.contesto}</p>
                             <p class="text-xs text-gray-500 mt-1">Manuale: ${prog.manuale_adottato} | ${new Date(prog.created_at).toLocaleDateString('it-IT')}</p>
                         </div>
                         <div class="flex items-center space-x-3 ml-4">
@@ -2625,7 +2620,7 @@ Rispondi SOLO con un JSON valido:
             
             doc.setFontSize(10);
             doc.setFont('helvetica', 'normal');
-            doc.text(`${prog.università} | ${prog.corso_laurea_nome || prog.contesto}`, margin, y);
+            doc.text(`${prog.universita} | ${prog.corso_laurea_nome || prog.contesto}`, margin, y);
             y += 6;
             doc.text(`Docente: ${prog.docente || 'N/D'} | CFU: ${prog.cfu || 'N/D'}`, margin, y);
             y += 6;
@@ -2721,7 +2716,7 @@ Rispondi SOLO con un JSON valido:
             }
             
             // Salva PDF
-            const filename = `Analisi_${prog.università.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+            const filename = `Analisi_${prog.universita.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
             doc.save(filename);
         }
 
