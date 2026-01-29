@@ -259,6 +259,39 @@
         <div id="viewUpload" class="hidden">
             <div class="max-w-4xl mx-auto space-y-6">
                 
+                <!-- Step 0: Selezione Materia e Framework -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold mb-2">🎯 Selezione Materia e Framework</h2>
+                    <p class="text-sm text-gray-600 mb-6">Seleziona la materia e il framework specifico per l'analisi</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Dropdown 1: Materia -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Materia *</label>
+                            <select id="materiaSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">📚 Seleziona materia...</option>
+                                <!-- Popolato dinamicamente da matrix_config.json -->
+                            </select>
+                        </div>
+                        
+                        <!-- Dropdown 2: Framework (appare solo dopo selezione materia) -->
+                        <div id="frameworkContainer" style="display: none;">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Framework Specifico *</label>
+                            <select id="frameworkSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Seleziona framework...</option>
+                                <!-- Popolato dinamicamente in base alla materia -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Info framework caricato -->
+                    <div id="frameworkInfo" class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200" style="display: none;">
+                        <p class="text-sm text-blue-800">
+                            ✅ <strong>Framework caricato:</strong> <span id="frameworkName" class="font-medium"></span>
+                        </p>
+                    </div>
+                </div>
+                
                 <!-- Step 1: Informazioni Contesto -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <h2 class="text-xl font-bold mb-2">1. Informazioni sul Contesto</h2>
@@ -580,9 +613,207 @@
         let currentProgramma = null;
         let fileContent = null;
         let postItGenerati = [];
+        
+        // Variabili MATRIX
+        let MATRIX_CONFIG = null;
+        let FRAMEWORK_CATALOG = null;
+        let MANUAL_CATALOG = null;
+        let CURRENT_FRAMEWORK = null;
+
+        // Funzioni MATRIX - Caricamento configurazione
+        async function loadMATRIXConfig() {
+            try {
+                const [config, frameworks, manuals] = await Promise.all([
+                    fetch('matrix_config.json').then(r => r.json()),
+                    fetch('framework_catalog.json').then(r => r.json()),
+                    fetch('manual_catalog.json').then(r => r.json())
+                ]);
+                
+                MATRIX_CONFIG = config;
+                FRAMEWORK_CATALOG = frameworks;
+                MANUAL_CATALOG = manuals;
+                
+                console.log('✅ MATRIX Config caricato:', {
+                    subjects: MATRIX_CONFIG.supported_subjects.length,
+                    frameworks: FRAMEWORK_CATALOG.total_frameworks,
+                    manuals: MANUAL_CATALOG.total_manuals
+                });
+                
+                populateMateriaDropdown();
+            } catch (error) {
+                console.error('❌ Errore caricamento MATRIX Config:', error);
+                alert('Errore caricamento configurazione MATRIX. Ricarica la pagina.');
+            }
+        }
+
+        // Popola dropdown materie
+        function populateMateriaDropdown() {
+            const select = document.getElementById('materiaSelect');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">📚 Seleziona materia...</option>';
+            
+            MATRIX_CONFIG.supported_subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = `${subject.icon} ${subject.name}`;
+                select.appendChild(option);
+            });
+        }
+
+        // Popola dropdown framework in base alla materia selezionata
+        function populateFrameworkDropdown(subject) {
+            const select = document.getElementById('frameworkSelect');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">Seleziona framework...</option>';
+            
+            subject.frameworks.forEach(frameworkId => {
+                const framework = FRAMEWORK_CATALOG.frameworks.find(f => f.id === frameworkId);
+                if (framework) {
+                    const option = document.createElement('option');
+                    option.value = framework.filepath;
+                    option.textContent = framework.name;
+                    option.dataset.subject = framework.subject;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        // Carica framework JSON e popola form
+        async function loadFramework(frameworkPath, frameworkSubject) {
+            try {
+                const framework = await fetch(frameworkPath).then(r => r.json());
+                CURRENT_FRAMEWORK = framework;
+                
+                console.log('✅ Framework caricato:', frameworkPath);
+                
+                // Popola contesti dal framework
+                populateContestoSelect(framework.content.program_profiles);
+                
+                // Popola manuali filtrati per subject
+                populateManualeSelect(frameworkSubject);
+                
+                // Mostra conferma
+                const frameworkName = frameworkPath.split('/').pop().replace('.json', '');
+                document.getElementById('frameworkInfo').style.display = 'block';
+                document.getElementById('frameworkName').textContent = frameworkName;
+                
+            } catch (error) {
+                console.error('❌ Errore caricamento framework:', error);
+                alert('Errore caricamento framework. Riprova.');
+            }
+        }
+
+        // Popola dropdown contesti dal framework
+        function populateContestoSelect(profiles) {
+            const select = document.getElementById('contestoSelect');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">Seleziona contesto...</option>';
+            
+            profiles.forEach(profile => {
+                const option = document.createElement('option');
+                option.value = profile.name;
+                option.textContent = profile.name;
+                select.appendChild(option);
+            });
+            
+            console.log(`✅ Caricati ${profiles.length} contesti`);
+        }
+
+        // Popola dropdown manuali filtrati per subject
+        function populateManualeSelect(frameworkSubject) {
+            const select = document.getElementById('manualeSelect');
+            if (!select || !MANUAL_CATALOG) return;
+            
+            // Filtra manuali per subject
+            const manualsForSubject = Object.values(MANUAL_CATALOG.manuals).filter(m => 
+                m.subject === frameworkSubject
+            );
+            
+            // Separa Zanichelli e Competitor
+            const zanichelli = manualsForSubject.filter(m => m.type === 'zanichelli');
+            const competitor = manualsForSubject.filter(m => m.type === 'competitor');
+            
+            select.innerHTML = '<option value="">Seleziona manuale principale...</option>';
+            
+            // Optgroup Zanichelli
+            if (zanichelli.length > 0) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = '📗 Manuali Zanichelli';
+                zanichelli.forEach(manual => {
+                    const option = document.createElement('option');
+                    option.value = manual.id;
+                    option.textContent = `${manual.title} (${manual.publisher})`;
+                    optgroup.appendChild(option);
+                });
+                select.appendChild(optgroup);
+            }
+            
+            // Optgroup Altri Editori
+            if (competitor.length > 0) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = '📕 Altri Editori';
+                competitor.forEach(manual => {
+                    const option = document.createElement('option');
+                    option.value = manual.id;
+                    option.textContent = `${manual.title} (${manual.publisher})`;
+                    optgroup.appendChild(option);
+                });
+                select.appendChild(optgroup);
+            }
+            
+            // Opzione "Altro"
+            const optionAltro = document.createElement('option');
+            optionAltro.value = 'Altro';
+            optionAltro.textContent = 'Altro manuale (specificare sotto)';
+            select.appendChild(optionAltro);
+            
+            console.log(`✅ Caricati ${manualsForSubject.length} manuali (${zanichelli.length} Zanichelli, ${competitor.length} Competitor)`);
+        }
 
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
+            // Carica configurazione MATRIX
+            loadMATRIXConfig();
+            
+            // Event listener cambio materia
+            const materiaSelect = document.getElementById('materiaSelect');
+            if (materiaSelect) {
+                materiaSelect.addEventListener('change', function() {
+                    const materiaId = this.value;
+                    const frameworkContainer = document.getElementById('frameworkContainer');
+                    const frameworkInfo = document.getElementById('frameworkInfo');
+                    
+                    if (!materiaId) {
+                        frameworkContainer.style.display = 'none';
+                        frameworkInfo.style.display = 'none';
+                        return;
+                    }
+                    
+                    const subject = MATRIX_CONFIG.supported_subjects.find(s => s.id === materiaId);
+                    if (subject) {
+                        populateFrameworkDropdown(subject);
+                        frameworkContainer.style.display = 'block';
+                        frameworkInfo.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Event listener cambio framework
+            const frameworkSelect = document.getElementById('frameworkSelect');
+            if (frameworkSelect) {
+                frameworkSelect.addEventListener('change', function() {
+                    const frameworkPath = this.value;
+                    if (!frameworkPath) return;
+                    
+                    const selectedOption = this.options[this.selectedIndex];
+                    const frameworkSubject = selectedOption.dataset.subject;
+                    
+                    loadFramework(frameworkPath, frameworkSubject);
+                });
+            }
             checkApiKey();
             showView('upload');
             
