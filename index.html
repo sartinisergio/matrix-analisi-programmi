@@ -1313,6 +1313,16 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`, 0.1);
                     return `   - ${prof.name}: ${prof.priority_modules}`;
                 }).join('\n');
                 
+                // Genera evaluation_criteria se esistono
+                let evaluationCriteriaText = '';
+                if (frameworkData.content.evaluation_criteria) {
+                    const criteriaEntries = Object.entries(frameworkData.content.evaluation_criteria);
+                    if (criteriaEntries.length > 0) {
+                        evaluationCriteriaText = '\nCRITERI DI VALUTAZIONE SPECIFICI PER ' + materiaName.toUpperCase() + ':\n' +
+                            criteriaEntries.map(([key, value]) => `   • ${value}`).join('\n') + '\n';
+                    }
+                }
+                
                 const valutazione = await callLLM( `Analizza questo programma universitario di ${materiaName} secondo il FRAMEWORK DI VALUTAZIONE STRUTTURATO.
 
 CONTESTO:
@@ -1340,7 +1350,7 @@ ${moduliList}
    
    PRIORITÀ SPECIFICHE PER CLASSE DI LAUREA:
 ${profilesList}
-   
+${evaluationCriteriaText}   
    Organizzazione didattica e materiale (0-13): Qualità supporti, esercizi, esempi
 
 3. METODOLOGIA DIDATTICA (max 40 punti):
@@ -1399,6 +1409,16 @@ Rispondi SOLO con un JSON valido:
                     return `   - ${prof.name}: ${prof.priority_modules}`;
                 }).join('\n');
                 
+                // Genera evaluation_criteria se esistono (Fase 3)
+                let evaluationCriteriaText3 = '';
+                if (frameworkData3.content.evaluation_criteria) {
+                    const criteriaEntries = Object.entries(frameworkData3.content.evaluation_criteria);
+                    if (criteriaEntries.length > 0) {
+                        evaluationCriteriaText3 = '\nCRITERI DI VALUTAZIONE SPECIFICI PER ' + materiaName.toUpperCase() + ':\n' +
+                            criteriaEntries.map(([key, value]) => `   • ${value}`).join('\n') + '\n';
+                    }
+                }
+                
                 // Prompt diverso per Base vs Avanzata
                 const istruzioniDettaglio = tipoAnalisi === 'avanzata' ? `
 MODALITÀ ANALISI AVANZATA:
@@ -1440,6 +1460,7 @@ ${moduliList3}
    
    PRIORITÀ SPECIFICHE PER CLASSE DI LAUREA:
 ${profilesList3}
+${evaluationCriteriaText3}
 
 3. METODOLOGIA DIDATTICA (max 40):
    - Didattica attiva, Materiali, Valutazione, Supporto studente
@@ -1507,6 +1528,7 @@ ${moduliList3}
    
    PRIORITÀ SPECIFICHE PER CLASSE DI LAUREA:
 ${profilesList3}
+${evaluationCriteriaText3}
 
 3. METODOLOGIA DIDATTICA (max 40):
    - Didattica attiva, Materiali, Valutazione, Supporto studente
