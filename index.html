@@ -1118,11 +1118,12 @@
             }
             
             // Raccogli manuali alternativi
+            // Raccogli manuali alternativi selezionati (checkbox dinamici con id che inizia per "alt")
             const manualiAlternativi = [];
-            ['altMcMurryBiologico', 'altHart', 'altMcMurryFondamenti', 'altBotta', 'altBrown', 'altBruice', 'altGorzynski', 'altWade', 'altAltro'].forEach(id => {
-                const checkbox = document.getElementById(id);
-                if (checkbox && checkbox.checked && checkbox.value !== manuale) {
+            document.querySelectorAll('input[type="checkbox"][id^="alt"]').forEach(checkbox => {
+                if (checkbox.checked && checkbox.value && checkbox.value !== manuale) {
                     manualiAlternativi.push(checkbox.value);
+                    console.log(`✅ Manuale alternativo selezionato: ${checkbox.value}`);
                 }
             });
 
