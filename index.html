@@ -1692,6 +1692,24 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                     
                     for (const manualeAlt of manualiAlternativi) {
                         const manualeInfo = MANUALI_DB[manualeAlt] || {};
+                        
+                        // Carica indice completo del manuale alternativo dal JSON
+                        let indiceManuale = '';
+                        try {
+                            const catalogEntry = MANUAL_CATALOG.manuals.find(m => m.id === manualeAlt);
+                            if (catalogEntry && catalogEntry.filepath) {
+                                const manualeData = await fetch(catalogEntry.filepath).then(r => r.json());
+                                if (manualeData.chapters && manualeData.chapters.length > 0) {
+                                    const firstChapters = manualeData.chapters.slice(0, 15);
+                                    indiceManuale = '\n   INDICE:\n' + firstChapters.map(ch => 
+                                        `   ${ch.number}. ${ch.title}`
+                                    ).join('\n');
+                                }
+                            }
+                        } catch (err) {
+                            console.warn(`⚠️ Impossibile caricare indice di ${manualeAlt}:`, err.message);
+                        }
+                        
                         const gapAlt = await callLLM(`Valuta il manuale "${manualeAlt}" (${manualeInfo.editore || ''}) rispetto a questo programma di ${materiaName} usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
 
 MATERIA: ${materiaName}
@@ -1705,7 +1723,10 @@ CONTESTO:
 - CFU: ${cfu || 'Non specificato'}
 - Ore: ${ore || 'Non specificato'}
 
-CARATTERISTICHE MANUALE ${manualeAlt}:
+MANUALE ALTERNATIVO: ${manualeAlt}
+EDITORE: ${manualeInfo.editore || 'N/D'}${indiceManuale}
+
+CARATTERISTICHE MANUALE:
 ${JSON.stringify(manualeInfo.caratteristiche || [])}
 
 FRAMEWORK VALUTAZIONE MANUALI (270 punti):
