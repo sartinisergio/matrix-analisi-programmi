@@ -2925,6 +2925,93 @@ Rispondi SOLO con un JSON valido:
                         ` : ''}
                     </div>
 
+                    <!-- Riepilogo Colloquio (solo Analisi Avanzata) -->
+                    ${tipoAnalisi === 'avanzata' && (prog.profilo_docente_insights || prog.insights_vendita || prog.strategia_adozione) ? `
+                        <div class="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg p-6 shadow-lg">
+                            <div class="flex items-center space-x-2 mb-4">
+                                <span class="text-2xl">🗣️</span>
+                                <h3 class="text-lg font-bold text-green-900">Riepilogo per il Colloquio</h3>
+                                <span class="px-2 py-1 bg-green-200 text-green-800 text-xs font-bold rounded">CHEAT SHEET</span>
+                            </div>
+                            
+                            <!-- Argomenti Chiave -->
+                            ${prog.insights_vendita?.opportunita_zanichelli?.length > 0 || prog.valutazione?.analisi_criteri ? `
+                                <div class="mb-4">
+                                    <h4 class="font-semibold text-green-900 mb-2">📌 Argomenti Chiave da Discutere:</h4>
+                                    <ul class="space-y-1 text-sm text-green-800">
+                                        ${prog.insights_vendita?.opportunita_zanichelli?.slice(0, 5).map(opp => `
+                                            <li class="flex items-start">
+                                                <span class="mr-2">•</span>
+                                                <span><strong>${opp.problema_identificato}:</strong> ${opp.soluzione_zanichelli}</span>
+                                            </li>
+                                        `).join('') || ''}
+                                        ${prog.valutazione?.analisi_criteri ? Object.entries(prog.valutazione.analisi_criteri).slice(0, 3).map(([key, value]) => `
+                                            <li class="flex items-start">
+                                                <span class="mr-2">•</span>
+                                                <span><strong>${key.replace(/_/g, ' ')}:</strong> ${value.split('.')[0]}.</span>
+                                            </li>
+                                        `).join('') : ''}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                            
+                            <!-- Obiezioni e Risposte -->
+                            ${prog.strategia_adozione?.obiezioni_risposte?.length > 0 ? `
+                                <div class="mb-4">
+                                    <h4 class="font-semibold text-green-900 mb-2">💬 Obiezioni Probabili + Risposte:</h4>
+                                    <div class="space-y-2">
+                                        ${prog.strategia_adozione.obiezioni_risposte.slice(0, 3).map(o => `
+                                            <div class="bg-white border border-green-200 rounded p-2 text-sm">
+                                                <p class="font-medium text-red-700 mb-1">❌ <strong>Obiezione:</strong> "${o.obiezione}"</p>
+                                                <p class="text-green-700">✅ <strong>Risposta:</strong> ${o.risposta}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <!-- Manuale Raccomandato -->
+                            ${prog.zanichelli?.manuali?.length > 0 ? `
+                                <div class="bg-white border-2 border-green-400 rounded-lg p-4">
+                                    <h4 class="font-semibold text-green-900 mb-2">📖 Raccomandazione Finale:</h4>
+                                    ${(() => {
+                                        const topManuale = prog.zanichelli.manuali[0];
+                                        const compatColor = topManuale.compatibilita >= 80 ? 'green' : topManuale.compatibilita >= 60 ? 'yellow' : 'red';
+                                        return `
+                                            <div class="flex items-start space-x-3">
+                                                <span class="text-3xl flex-shrink-0">📚</span>
+                                                <div class="flex-1">
+                                                    <p class="font-bold text-gray-900 mb-1">${topManuale.nome}</p>
+                                                    <p class="text-sm text-gray-700 mb-2">${topManuale.autore}</p>
+                                                    <div class="flex items-center space-x-2 mb-2">
+                                                        <span class="px-2 py-1 bg-${compatColor}-100 text-${compatColor}-800 text-xs font-bold rounded">
+                                                            Compatibilità: ${topManuale.compatibilita}/100
+                                                        </span>
+                                                        ${topManuale.raccomandazione === 'RACCOMANDATO' ? `
+                                                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded">✓ RACCOMANDATO</span>
+                                                        ` : ''}
+                                                    </div>
+                                                    ${topManuale.quando_preferirlo ? `
+                                                        <p class="text-sm text-gray-700">${topManuale.quando_preferirlo.substring(0, 200)}...</p>
+                                                    ` : ''}
+                                                </div>
+                                            </div>
+                                        `;
+                                    })()}
+                                </div>
+                            ` : ''}
+                            
+                            <!-- Approccio Consigliato -->
+                            ${prog.profilo_docente_insights?.approccio_consigliato ? `
+                                <div class="mt-4 bg-blue-50 border border-blue-300 rounded p-3">
+                                    <p class="text-sm text-blue-900">
+                                        <strong>💡 Approccio Consigliato:</strong> ${prog.profilo_docente_insights.approccio_consigliato}
+                                    </p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
                     <div class="flex space-x-4 mb-4">
                         <button onclick="showView('upload'); resetForm();" class="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
                             Nuova Analisi
