@@ -1320,7 +1320,10 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`, 0.1);
                     if (criteriaEntries.length > 0) {
                         evaluationCriteriaText = '\nCRITERI DI VALUTAZIONE SPECIFICI PER ' + materiaName.toUpperCase() + ':\n' +
                             criteriaEntries.map(([key, value]) => `   • ${value}`).join('\n') + '\n';
+                        console.log('✅ FASE 2: Inclusi ' + criteriaEntries.length + ' evaluation_criteria per ' + materiaName);
                     }
+                } else {
+                    console.log('ℹ️ FASE 2: Nessun evaluation_criteria per ' + materiaName);
                 }
                 
                 const valutazione = await callLLM( `Analizza questo programma universitario di ${materiaName} secondo il FRAMEWORK DI VALUTAZIONE STRUTTURATO.
@@ -1416,7 +1419,10 @@ Rispondi SOLO con un JSON valido:
                     if (criteriaEntries.length > 0) {
                         evaluationCriteriaText3 = '\nCRITERI DI VALUTAZIONE SPECIFICI PER ' + materiaName.toUpperCase() + ':\n' +
                             criteriaEntries.map(([key, value]) => `   • ${value}`).join('\n') + '\n';
+                        console.log('✅ FASE 3: Inclusi ' + criteriaEntries.length + ' evaluation_criteria per ' + materiaName);
                     }
+                } else {
+                    console.log('ℹ️ FASE 3: Nessun evaluation_criteria per ' + materiaName);
                 }
                 
                 // Prompt diverso per Base vs Avanzata
