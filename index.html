@@ -1466,6 +1466,32 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 updateLoadingText('Fase 3/5: Analisi gap con manuale adottato...');
                 const manualeInfo = MANUALI_DB[manuale] || {};
                 
+                // Carica indice completo del manuale adottato (se presente nel catalogo)
+                let indiceManualeAdottato = '';
+                try {
+                    console.log(`🔍 Ricerca manuale adottato nel MANUAL_CATALOG: "${manuale}"`);
+                    const catalogEntryAdottato = MANUAL_CATALOG.manuals.find(m => 
+                        m.id === manuale || 
+                        m.title.toLowerCase().includes(manuale.toLowerCase()) ||
+                        (m.author && manuale.toLowerCase().includes(m.author.toLowerCase()))
+                    );
+                    
+                    if (catalogEntryAdottato && catalogEntryAdottato.filepath) {
+                        console.log(`✅ Manuale adottato trovato nel catalog: ${catalogEntryAdottato.title}`);
+                        const manualeAdottatoData = await fetch(catalogEntryAdottato.filepath).then(r => r.json());
+                        if (manualeAdottatoData.chapters && manualeAdottatoData.chapters.length > 0) {
+                            indiceManualeAdottato = '\n\nINDICE COMPLETO DEL MANUALE ADOTTATO:\n' + manualeAdottatoData.chapters.map(ch => 
+                                `   ${ch.number}. ${ch.title}`
+                            ).join('\n');
+                            console.log(`✅ Indice manuale adottato caricato (${manualeAdottatoData.chapters.length} capitoli)`);
+                        }
+                    } else {
+                        console.warn(`⚠️ Manuale adottato "${manuale}" non trovato nel MANUAL_CATALOG`);
+                    }
+                } catch (err) {
+                    console.warn(`⚠️ Impossibile caricare indice del manuale adottato:`, err.message);
+                }
+                
                 // Costruzione dinamica del prompt basato sul framework caricato
                 const frameworkData3 = CURRENT_FRAMEWORK;
                 if (!frameworkData3 || !frameworkData3.content) {
@@ -1519,7 +1545,10 @@ CONTESTO:
 - CFU: ${cfu || 'Non specificato'}
 - Ore: ${ore || 'Non specificato'}
 
-CARATTERISTICHE MANUALE ${manuale}:
+MANUALE ADOTTATO: ${manuale}
+EDITORE: ${manualeInfo.editore || 'N/D'}${indiceManualeAdottato}
+
+CARATTERISTICHE MANUALE:
 ${JSON.stringify(manualeInfo.caratteristiche || [])}
 
 FRAMEWORK VALUTAZIONE MANUALI (270 punti):
