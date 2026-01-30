@@ -1470,11 +1470,17 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 let indiceManualeAdottato = '';
                 try {
                     console.log(`🔍 Ricerca manuale adottato nel MANUAL_CATALOG: "${manuale}"`);
-                    const catalogEntryAdottato = MANUAL_CATALOG.manuals.find(m => 
-                        m.id === manuale || 
-                        m.title.toLowerCase().includes(manuale.toLowerCase()) ||
-                        (m.author && manuale.toLowerCase().includes(m.author.toLowerCase()))
-                    );
+                    // Ricerca più precisa: priorità a ID esatto, poi match parziali più stringenti
+                    const catalogEntryAdottato = MANUAL_CATALOG.manuals.find(m => m.id === manuale) ||
+                        MANUAL_CATALOG.manuals.find(m => {
+                            const manualeWords = manuale.toLowerCase().split(/[_\s-]+/);
+                            const titleWords = m.title.toLowerCase().split(/[_\s-]+/);
+                            const authorWords = (m.author || '').toLowerCase().split(/[_\s-]+/);
+                            // Match se almeno 2 parole del manuale appaiono nel titolo o 1 parola nel titolo + 1 nell'autore
+                            const titleMatches = manualeWords.filter(w => w.length > 2 && titleWords.some(tw => tw.includes(w) || w.includes(tw)));
+                            const authorMatches = manualeWords.filter(w => w.length > 2 && authorWords.some(aw => aw.includes(w) || w.includes(aw)));
+                            return titleMatches.length >= 2 || (titleMatches.length >= 1 && authorMatches.length >= 1);
+                        });
                     
                     if (catalogEntryAdottato && catalogEntryAdottato.filepath) {
                         console.log(`✅ Manuale adottato trovato nel catalog: ${catalogEntryAdottato.title}`);
