@@ -1666,11 +1666,11 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                     console.log(`📖 File caricato, capitoli trovati: ${manualeData.chapters?.length || 0}`);
                                     
                                     if (manualeData.chapters && manualeData.chapters.length > 0) {
-                                        const firstChapters = manualeData.chapters.slice(0, 15);
-                                        indiceManuale = '\n   INDICE:\n' + firstChapters.map(ch => 
+                                        // Include TUTTI i capitoli (non limitare a 15)
+                                        indiceManuale = '\n   INDICE:\n' + manualeData.chapters.map(ch => 
                                             `   ${ch.number}. ${ch.title}`
                                         ).join('\n');
-                                        console.log(`✅ Indice generato (${firstChapters.length} capitoli)`);
+                                        console.log(`✅ Indice generato (${manualeData.chapters.length} capitoli)`);
                                     }
                                 }
                             }
@@ -1784,9 +1784,31 @@ Rispondi SOLO con un JSON valido:
                         nota: `Nessun manuale Zanichelli disponibile nel catalogo per ${materiaName}`
                     };
                 } else {
+                    // Carica indici completi dei manuali Zanichelli
+                    const manualiConIndici = [];
+                    for (const manuale of manualiZanichelliPerMateria.slice(0, 3)) {
+                        let indice = '';
+                        try {
+                            const manualeData = await fetch(manuale.filepath).then(r => r.json());
+                            if (manualeData.chapters && manualeData.chapters.length > 0) {
+                                // Include TUTTI i capitoli
+                                indice = '\n   INDICE:\n' + manualeData.chapters.map(ch => 
+                                    `   ${ch.number}. ${ch.title}`
+                                ).join('\n');
+                                console.log(`✅ Indice Zanichelli caricato: ${manuale.title} (${manualeData.chapters.length} capitoli)`);
+                            }
+                        } catch (err) {
+                            console.warn(`⚠️ Impossibile caricare indice di ${manuale.title}:`, err.message);
+                        }
+                        manualiConIndici.push({
+                            info: `${manuale.author} - ${manuale.title} (${manuale.pages} pag, €${manuale.price || 'N/D'})`,
+                            indice: indice
+                        });
+                    }
+                    
                     // Genera valutazione dinamica per i manuali Zanichelli
-                    const manualiInfo = manualiZanichelliPerMateria.slice(0, 3).map((m, idx) => 
-                        `${idx + 1}. ${m.author} - ${m.title} (${m.pages} pag, €${m.price || 'N/D'})`
+                    const manualiInfo = manualiConIndici.map((m, idx) => 
+                        `${idx + 1}. ${m.info}${m.indice}`
                     ).join('\n');
                     
                     const zanichelliPrompt = `Sei un esperto valutatore di manuali universitari.
