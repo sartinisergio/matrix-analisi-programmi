@@ -1644,23 +1644,37 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                     updateLoadingText(`Fase 3b/4: Analisi ${manualiAlternativi.length} manuali alternativi...`);
                     
                     for (const manualeAlt of manualiAlternativi) {
+                        console.log(`🔍 Elaborazione manuale alternativo: "${manualeAlt}"`);
                         const manualeInfo = MANUALI_DB[manualeAlt] || {};
                         
                         // Carica indice completo del manuale alternativo dal JSON
                         let indiceManuale = '';
                         try {
+                            console.log(`📚 Ricerca nel MANUAL_CATALOG per ID: "${manualeAlt}"`);
                             const catalogEntry = MANUAL_CATALOG.manuals.find(m => m.id === manualeAlt);
-                            if (catalogEntry && catalogEntry.filepath) {
-                                const manualeData = await fetch(catalogEntry.filepath).then(r => r.json());
-                                if (manualeData.chapters && manualeData.chapters.length > 0) {
-                                    const firstChapters = manualeData.chapters.slice(0, 15);
-                                    indiceManuale = '\n   INDICE:\n' + firstChapters.map(ch => 
-                                        `   ${ch.number}. ${ch.title}`
-                                    ).join('\n');
+                            
+                            if (!catalogEntry) {
+                                console.warn(`❌ Manuale "${manualeAlt}" NON trovato nel MANUAL_CATALOG`);
+                                console.log(`📋 Manuali disponibili:`, MANUAL_CATALOG.manuals.map(m => m.id).join(', '));
+                            } else {
+                                console.log(`✅ Trovato nel catalog:`, catalogEntry.title, `- filepath: ${catalogEntry.filepath}`);
+                                
+                                if (catalogEntry.filepath) {
+                                    console.log(`🔄 Caricamento file JSON: ${catalogEntry.filepath}`);
+                                    const manualeData = await fetch(catalogEntry.filepath).then(r => r.json());
+                                    console.log(`📖 File caricato, capitoli trovati: ${manualeData.chapters?.length || 0}`);
+                                    
+                                    if (manualeData.chapters && manualeData.chapters.length > 0) {
+                                        const firstChapters = manualeData.chapters.slice(0, 15);
+                                        indiceManuale = '\n   INDICE:\n' + firstChapters.map(ch => 
+                                            `   ${ch.number}. ${ch.title}`
+                                        ).join('\n');
+                                        console.log(`✅ Indice generato (${firstChapters.length} capitoli)`);
+                                    }
                                 }
                             }
                         } catch (err) {
-                            console.warn(`⚠️ Impossibile caricare indice di ${manualeAlt}:`, err.message);
+                            console.error(`⚠️ Errore caricamento indice di ${manualeAlt}:`, err);
                         }
                         
                         const gapAlt = await callLLM(`Valuta il manuale "${manualeAlt}" (${manualeInfo.editore || ''}) rispetto a questo programma di ${materiaName} usando il FRAMEWORK DI VALUTAZIONE MANUALI.${istruzioniDettaglio}
