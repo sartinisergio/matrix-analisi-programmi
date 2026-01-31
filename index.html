@@ -2274,9 +2274,8 @@
         let editingFrameworkId = null;
         let currentFrameworkData = null;
         
-        function loadFrameworkList() {
+        async function loadFrameworkList() {
             console.log('📋 Caricamento lista framework...');
-            console.log('🔍 FRAMEWORK_CATALOG:', window.FRAMEWORK_CATALOG);
             
             const tbody = document.getElementById('frameworkTableBody');
             if (!tbody) {
@@ -2284,11 +2283,21 @@
                 return;
             }
             
+            // Se FRAMEWORK_CATALOG non è caricato, caricalo ORA
             if (!window.FRAMEWORK_CATALOG) {
-                console.error('❌ FRAMEWORK_CATALOG non caricato!');
-                tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-red-600">❌ Errore: FRAMEWORK_CATALOG non caricato</td></tr>';
-                return;
+                console.warn('⚠️ FRAMEWORK_CATALOG non caricato, carico ora...');
+                try {
+                    const response = await fetch('framework_catalog.json');
+                    window.FRAMEWORK_CATALOG = await response.json();
+                    console.log('✅ FRAMEWORK_CATALOG caricato:', window.FRAMEWORK_CATALOG);
+                } catch (error) {
+                    console.error('❌ Errore caricamento FRAMEWORK_CATALOG:', error);
+                    tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-red-600">❌ Errore caricamento framework: ' + error.message + '</td></tr>';
+                    return;
+                }
             }
+            
+            console.log('🔍 FRAMEWORK_CATALOG:', window.FRAMEWORK_CATALOG);
             
             // Carica framework originali + custom + modificati
             const originalFrameworks = getFrameworksAsObject();
