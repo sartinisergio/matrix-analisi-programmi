@@ -820,15 +820,33 @@
         // Funzioni MATRIX - Caricamento configurazione
         async function loadMATRIXConfig() {
             try {
+                console.log('🔄 Inizio caricamento MATRIX Config...');
+                
                 const [config, frameworks, manuals] = await Promise.all([
-                    fetch('matrix_config.json').then(r => r.json()),
-                    fetch('framework_catalog.json').then(r => r.json()),
-                    fetch('manual_catalog.json').then(r => r.json())
+                    fetch('matrix_config.json').then(r => {
+                        console.log('📥 Caricato matrix_config.json');
+                        return r.json();
+                    }),
+                    fetch('framework_catalog.json').then(r => {
+                        console.log('📥 Caricato framework_catalog.json');
+                        return r.json();
+                    }),
+                    fetch('manual_catalog.json').then(r => {
+                        console.log('📥 Caricato manual_catalog.json');
+                        return r.json();
+                    })
                 ]);
+                
+                console.log('📦 Config ricevuto:', config);
+                console.log('📦 Frameworks ricevuto:', frameworks);
+                console.log('📦 Manuals ricevuto:', manuals);
                 
                 MATRIX_CONFIG = config;
                 FRAMEWORK_CATALOG = frameworks;
                 MANUAL_CATALOG = manuals;
+                
+                console.log('✅ Variabili globali assegnate');
+                console.log('🔍 window.FRAMEWORK_CATALOG dopo assegnazione:', window.FRAMEWORK_CATALOG);
                 
                 console.log('✅ MATRIX Config caricato:', {
                     subjects: MATRIX_CONFIG?.supported_subjects?.length || 0,
@@ -840,6 +858,7 @@
                 populateMateriaDropdown();
             } catch (error) {
                 console.error('❌ Errore caricamento MATRIX Config:', error);
+                console.error('❌ Stack trace:', error.stack);
                 alert('Errore caricamento configurazione MATRIX. Ricarica la pagina.');
             }
         }
