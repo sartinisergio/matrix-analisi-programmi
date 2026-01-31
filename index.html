@@ -1691,6 +1691,12 @@
             document.getElementById('manualeTipo').value = '';
             document.getElementById('manualeJsonFile').value = '';
             
+            // Mostra STEP 2 (upload JSON) per nuovi manuali
+            const step2Upload = document.querySelector('#manualeModal .bg-green-50');
+            if (step2Upload) {
+                step2Upload.classList.remove('hidden');
+            }
+            
             document.getElementById('materieDatalist').innerHTML = '';
             document.getElementById('jsonFileInfo').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
@@ -1729,8 +1735,11 @@
                 manuale.materia = mapped.materia;
             }
             
+            // Imposta titolo modal
             document.getElementById('manualeModalTitle').textContent = '✏️ Modifica Manuale';
-            document.getElementById('manualeId').value = manuale.id;
+            
+            // STEP 1: Popola identificativi
+            document.getElementById('manualeId').value = manuale.id || '';
             document.getElementById('manualeId').disabled = true; // ID non modificabile
             document.getElementById('manualeMacroarea').value = manuale.macroarea || '';
             document.getElementById('manualeMateria').value = manuale.materia || '';
@@ -1739,16 +1748,36 @@
             // Aggiorna autocomplete per la macroarea selezionata
             updateMaterieAutocomplete();
             
-            document.getElementById('jsonFileInfo').classList.add('hidden');
-            document.getElementById('previewSection').classList.add('hidden');
-            document.getElementById('validationErrors').classList.add('hidden');
-            
-            // Se è un manuale custom, prova a caricare il JSON completo
-            if (customManuals[manualeId]) {
-                currentManualeData = customManuals[manualeId];
-                showPreview(currentManualeData);
+            // STEP 2: Nascondi upload JSON e mostra preview dati esistenti
+            const step2Upload = document.querySelector('#manualeModal .bg-green-50');
+            if (step2Upload) {
+                step2Upload.classList.add('hidden');
             }
             
+            // Carica JSON completo se disponibile
+            if (customManuals[manualeId]) {
+                // Manuale custom: carica da localStorage
+                currentManualeData = customManuals[manualeId];
+                showPreview(currentManualeData);
+            } else if (manuale.filepath) {
+                // Manuale originale: carica da file
+                fetch(manuale.filepath)
+                    .then(r => r.json())
+                    .then(data => {
+                        currentManualeData = data;
+                        showPreview(currentManualeData);
+                    })
+                    .catch(err => {
+                        console.error('❌ Errore caricamento JSON:', err);
+                        // Mostra preview con dati base
+                        showPreview(manuale);
+                    });
+            } else {
+                // Nessun JSON disponibile, mostra dati base
+                showPreview(manuale);
+            }
+            
+            document.getElementById('validationErrors').classList.add('hidden');
             document.getElementById('manualeModal').classList.remove('hidden');
         }
         
