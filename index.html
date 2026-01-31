@@ -1432,6 +1432,21 @@
                 return;
             }
             
+            // Reset filtri su "Tutte" di default
+            const filterMacroarea = document.getElementById('filterMacroarea');
+            const filterMateria = document.getElementById('filterMateria');
+            const filterEditore = document.getElementById('filterEditore');
+            const filterTipo = document.getElementById('filterTipo');
+            const searchInput = document.getElementById('searchManuali');
+            
+            if (filterMacroarea) filterMacroarea.value = '';
+            if (filterMateria) filterMateria.value = '';
+            if (filterEditore) filterEditore.value = '';
+            if (filterTipo) filterTipo.value = '';
+            if (searchInput) searchInput.value = '';
+            
+            console.log('🔄 Filtri resettati su "Tutte"');
+            
             tbody.innerHTML = '';
             
             const manualiArray = Object.values(allManuals);
@@ -1537,6 +1552,18 @@
             populateFilterMaterie([...materieSet].sort());
             
             console.log(`✅ Tabella popolata con ${tbody.children.length} righe`);
+            
+            // Se la tabella è vuota, mostra un messaggio
+            if (tbody.children.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `
+                    <td colspan="9" class="px-6 py-8 text-center text-gray-500">
+                        <div class="text-lg mb-2">📭 Nessun manuale trovato</div>
+                        <div class="text-sm">Prova a modificare i filtri o ad aggiungere un nuovo manuale</div>
+                    </td>
+                `;
+                tbody.appendChild(emptyRow);
+            }
             
             // Aggiorna contatore
             const countEl = document.getElementById('manualiCount');
