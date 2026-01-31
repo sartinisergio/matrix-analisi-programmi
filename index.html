@@ -2256,12 +2256,18 @@
         
         function loadFrameworkList() {
             console.log('📋 Caricamento lista framework...');
+            console.log('🔍 FRAMEWORK_CATALOG:', window.FRAMEWORK_CATALOG);
             
             const tbody = document.getElementById('frameworkTableBody');
-            if (!tbody) return;
+            if (!tbody) {
+                console.error('❌ Element frameworkTableBody not found!');
+                return;
+            }
             
             // Carica framework originali + custom + modificati
             const originalFrameworks = getFrameworksAsObject();
+            console.log('📦 Original frameworks:', Object.keys(originalFrameworks).length, originalFrameworks);
+            
             const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
             const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
             
@@ -2332,14 +2338,25 @@
         
         function getFrameworksAsObject() {
             // Converti FRAMEWORK_CATALOG in oggetto per coerenza
-            if (!window.FRAMEWORK_CATALOG) return {};
+            console.log('🔧 getFrameworksAsObject called');
+            console.log('🔍 window.FRAMEWORK_CATALOG:', window.FRAMEWORK_CATALOG);
+            
+            if (!window.FRAMEWORK_CATALOG) {
+                console.error('❌ FRAMEWORK_CATALOG is not defined!');
+                return {};
+            }
             
             const frameworks = {};
             if (FRAMEWORK_CATALOG.frameworks) {
+                console.log('✅ Found FRAMEWORK_CATALOG.frameworks:', FRAMEWORK_CATALOG.frameworks.length);
                 FRAMEWORK_CATALOG.frameworks.forEach(fw => {
                     frameworks[fw.id] = fw;
                 });
+            } else {
+                console.error('❌ FRAMEWORK_CATALOG.frameworks is missing!');
             }
+            
+            console.log('📦 Returning frameworks object with', Object.keys(frameworks).length, 'items');
             return frameworks;
         }
         
