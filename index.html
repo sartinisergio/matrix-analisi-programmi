@@ -1370,14 +1370,23 @@
             console.log('📚 Caricamento lista manuali...');
             
             try {
-                // Carica manuali originali
-                const originalManuals = { ...MANUAL_CATALOG };
+                // Carica manuali originali dal catalog
+                if (!MANUAL_CATALOG || !MANUAL_CATALOG.manuals) {
+                    console.error('❌ MANUAL_CATALOG non caricato o vuoto');
+                    alert('Errore: il catalogo manuali non è stato caricato. Ricarica la pagina.');
+                    return;
+                }
+                
+                const originalManuals = { ...MANUAL_CATALOG.manuals }; // ✅ FIX: accesso corretto a .manuals
+                console.log(`📦 Manuali originali caricati: ${Object.keys(originalManuals).length}`);
                 
                 // Carica manuali custom da localStorage
                 const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+                console.log(`🆕 Manuali custom: ${Object.keys(customManuals).length}`);
                 
                 // Carica modifiche da localStorage
                 const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+                console.log(`✏️ Manuali modificati: ${Object.keys(modifiedManuals).length}`);
                 
                 // Merge: modifiche sovrascrivono originali, custom si aggiungono
                 const allManuals = {
@@ -1386,7 +1395,7 @@
                     ...customManuals
                 };
                 
-                console.log(`✅ Caricati ${Object.keys(allManuals).length} manuali`);
+                console.log(`✅ Totale manuali caricati: ${Object.keys(allManuals).length}`);
                 
                 // Popola registry materie da manuali esistenti
                 populateRegistryFromManuals(allManuals);
