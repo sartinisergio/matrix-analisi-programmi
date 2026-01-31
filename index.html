@@ -258,9 +258,27 @@
         
         <!-- Upload View -->
         <div id="viewUpload" class="hidden">
-            <div class="max-w-4xl mx-auto space-y-6">
-                
-                <!-- Step 0: Selezione Materia e Framework -->
+            
+            <!-- Tab Navigation -->
+            <div class="mb-6 border-b border-gray-200">
+                <nav class="flex space-x-8 max-w-4xl mx-auto" aria-label="Tabs">
+                    <button id="tabAnalisi" onclick="switchTab('analisi')" class="tab-button border-b-2 border-indigo-500 py-4 px-1 text-indigo-600 font-medium text-sm whitespace-nowrap">
+                        📊 Analisi Programma
+                    </button>
+                    <button id="tabValutazione" onclick="switchTab('valutazione')" class="tab-button border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm whitespace-nowrap">
+                        📚 Valutazione Manuali
+                    </button>
+                    <button id="tabCataloghi" onclick="switchTab('cataloghi')" class="tab-button border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm whitespace-nowrap">
+                        ⚙️ Gestione Cataloghi
+                    </button>
+                </nav>
+            </div>
+            
+            <!-- Tab Content: Analisi Programma (DEFAULT - contains all existing content) -->
+            <div id="tabContentAnalisi" class="tab-content">
+                <div class="max-w-4xl mx-auto space-y-6">
+                    
+                    <!-- Step 0: Selezione Materia e Framework -->
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h2 class="text-xl font-bold mb-2">🎯 Selezione Materia e Framework</h2>
                     <p class="text-sm text-gray-600 mb-6">Seleziona la materia e il framework specifico per l'analisi</p>
@@ -482,6 +500,41 @@
                     </div>
                 </div>
             </div>
+            </div>
+            <!-- END Tab Content: Analisi Programma -->
+            
+            <!-- Tab Content: Valutazione Manuali (PLACEHOLDER) -->
+            <div id="tabContentValutazione" class="tab-content hidden">
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold mb-4">📚 Valutazione Assoluta Manuali</h2>
+                        <p class="text-gray-600">Funzionalità in fase di implementazione...</p>
+                        <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-sm text-blue-800">
+                                Questa sezione permetterà di valutare manuali indipendentemente da un programma specifico.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Tab Content: Valutazione Manuali -->
+            
+            <!-- Tab Content: Gestione Cataloghi (PLACEHOLDER) -->
+            <div id="tabContentCataloghi" class="tab-content hidden">
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold mb-4">⚙️ Gestione Cataloghi</h2>
+                        <p class="text-gray-600">Funzionalità in fase di implementazione...</p>
+                        <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-sm text-blue-800">
+                                Questa sezione permetterà di aggiungere, modificare ed eliminare framework e manuali.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Tab Content: Gestione Cataloghi -->
+            
         </div>
 
         <!-- Risultati View -->
@@ -1034,6 +1087,35 @@
             if (activeBtn) {
                 activeBtn.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
                 activeBtn.classList.add('bg-indigo-600', 'text-white');
+            }
+        }
+        
+        // Tab switching function (for tabs inside viewUpload)
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active state from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('border-indigo-500', 'text-indigo-600');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById('tabContent' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+            
+            // Activate selected tab button
+            const selectedButton = document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedButton) {
+                selectedButton.classList.remove('border-transparent', 'text-gray-500');
+                selectedButton.classList.add('border-indigo-500', 'text-indigo-600');
             }
         }
 
