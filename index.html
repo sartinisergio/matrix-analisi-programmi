@@ -1388,6 +1388,9 @@
                 
                 console.log(`✅ Caricati ${Object.keys(allManuals).length} manuali`);
                 
+                // Popola registry materie da manuali esistenti
+                populateRegistryFromManuals(allManuals);
+                
                 // Popola la tabella
                 displayManualiTable(allManuals, customManuals, modifiedManuals);
                 
@@ -1395,6 +1398,29 @@
                 console.error('❌ Errore caricamento manuali:', error);
                 alert('Errore nel caricamento dei manuali: ' + error.message);
             }
+        }
+        
+        function populateRegistryFromManuals(manuals) {
+            console.log('🔄 Popolamento registry materie da manuali esistenti...');
+            
+            Object.values(manuals).forEach(manuale => {
+                try {
+                    // Se ha già macroarea/materia, aggiungili
+                    if (manuale.macroarea && manuale.materia) {
+                        addMateriaToRegistry(manuale.macroarea, manuale.materia);
+                    } 
+                    // Altrimenti mappa da subject legacy
+                    else if (manuale.subject) {
+                        const mapped = mapSubjectToMacroareaMateria(manuale.subject);
+                        addMateriaToRegistry(mapped.macroarea, mapped.materia);
+                    }
+                } catch (error) {
+                    console.error('❌ Errore popolamento registry per', manuale.id, error);
+                }
+            });
+            
+            const registry = getMaterieRegistry();
+            console.log('✅ Registry popolato:', registry);
         }
         
         function displayManualiTable(allManuals, customManuals, modifiedManuals) {
@@ -1416,29 +1442,39 @@
             
             // Sort per macroarea, materia e titolo
             manualiArray.sort((a, b) => {
-                // Gestisci legacy: se esiste subject ma non macroarea, mappa
-                if (!a.macroarea && a.subject) {
-                    const mapped = mapSubjectToMacroareaMateria(a.subject);
-                    a.macroarea = mapped.macroarea;
-                    a.materia = mapped.materia;
+                try {
+                    // Gestisci legacy: se esiste subject ma non macroarea, mappa
+                    if (!a.macroarea && a.subject) {
+                        const mapped = mapSubjectToMacroareaMateria(a.subject);
+                        a.macroarea = mapped.macroarea;
+                        a.materia = mapped.materia;
+                        console.log(`🔄 Mapped ${a.id}: ${a.subject} → ${a.macroarea} / ${a.materia}`);
+                    }
+                    if (!b.macroarea && b.subject) {
+                        const mapped = mapSubjectToMacroareaMateria(b.subject);
+                        b.macroarea = mapped.macroarea;
+                        b.materia = mapped.materia;
+                        console.log(`🔄 Mapped ${b.id}: ${b.subject} → ${b.macroarea} / ${b.materia}`);
+                    }
+                    
+                    const macroareaA = a.macroarea || '';
+                    const macroareaB = b.macroarea || '';
+                    const materiaA = a.materia || '';
+                    const materiaB = b.materia || '';
+                    const titleA = a.title || '';
+                    const titleB = b.title || '';
+                    
+                    if (macroareaA !== macroareaB) return macroareaA.localeCompare(macroareaB);
+                    if (materiaA !== materiaB) return materiaA.localeCompare(materiaB);
+                    return titleA.localeCompare(titleB);
+                } catch (error) {
+                    console.error('❌ Errore nel sort:', error, 'A:', a.id, 'B:', b.id);
+                    return 0; // Fallback: mantieni ordine originale
                 }
-                if (!b.macroarea && b.subject) {
-                    const mapped = mapSubjectToMacroareaMateria(b.subject);
-                    b.macroarea = mapped.macroarea;
-                    b.materia = mapped.materia;
-                }
-                
-                const macroareaA = a.macroarea || '';
-                const macroareaB = b.macroarea || '';
-                const materiaA = a.materia || '';
-                const materiaB = b.materia || '';
-                const titleA = a.title || '';
-                const titleB = b.title || '';
-                
-                if (macroareaA !== macroareaB) return macroareaA.localeCompare(macroareaB);
-                if (materiaA !== materiaB) return materiaA.localeCompare(materiaB);
-                return titleA.localeCompare(titleB);
             });
+            
+            console.log(`📋 Dopo sort: ${manualiArray.length} manuali`);
+            console.log(`📝 Primi 3 manuali:`, manualiArray.slice(0, 3).map(m => ({ id: m.id, macroarea: m.macroarea, materia: m.materia })));
             
             manualiArray.forEach(manuale => {
                 try {
