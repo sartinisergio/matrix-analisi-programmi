@@ -58,10 +58,18 @@
         "biologia_cellulare_molecolare_framework",
         "biologia_molecolare_gene_framework",
         "genetica_generale_framework",
-        "istologia_embriologia_framework",
         "microbiologia_framework",
         "biologia_semestre_filtro_framework",
         "chimica_propedeutica_semestre_filtro_framework"
+      ],
+      "manual_directory": []
+    },
+    {
+      "id": "istologia",
+      "name": "Istologia",
+      "icon": "🔬",
+      "frameworks": [
+        "istologia_embriologia_framework"
       ],
       "manual_directory": ["istologia"]
     }

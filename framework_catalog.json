@@ -37,7 +37,7 @@
     "Biologia": [
       "genetica_generale_framework"
     ],
-    "Medicina e Biologia": [
+    "Istologia": [
       "istologia_embriologia_framework"
     ]
   },
@@ -563,7 +563,7 @@
       "filename": "istologia.json",
       "filepath": "frameworks/istologia.json",
       "name": "Istologia ed Embriologia Umana",
-      "subject": "Medicina e Biologia",
+      "subject": "Istologia",
       "modules_count": 8,
       "modules": [
         "",
