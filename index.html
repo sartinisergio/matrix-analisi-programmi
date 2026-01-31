@@ -644,9 +644,78 @@
                         
                         <!-- FRAMEWORK TAB -->
                         <div id="catalogTabFramework" class="catalog-tab-content hidden">
-                            <div class="p-8 text-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                                <p class="text-gray-600 mb-2">📋 <strong>Gestione Framework</strong></p>
-                                <p class="text-sm text-gray-500">Funzionalità in fase di implementazione...</p>
+                            
+                            <!-- Header con filtri e azioni -->
+                            <div class="mb-6">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                                    <div class="flex-1">
+                                        <input type="text" id="searchFramework" placeholder="🔍 Cerca per nome, materia..." 
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                                            onkeyup="filterFramework()">
+                                    </div>
+                                    <button onclick="openAddFrameworkModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium whitespace-nowrap">
+                                        ➕ Nuovo Framework
+                                    </button>
+                                </div>
+                                
+                                <!-- Filtri -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <select id="filterFrameworkMateria" onchange="filterFramework()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">📚 Tutte le materie</option>
+                                        <option value="Matematica">Matematica</option>
+                                        <option value="Fisica">Fisica</option>
+                                        <option value="Chimica">Chimica</option>
+                                        <option value="Biologia">Biologia</option>
+                                        <option value="Economia">Economia</option>
+                                        <option value="Medicina e Chirurgia">Medicina e Chirurgia</option>
+                                        <option value="Istologia">Istologia</option>
+                                    </select>
+                                    
+                                    <select id="filterFrameworkTipo" onchange="filterFramework()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">🏷️ Tutti i tipi</option>
+                                        <option value="originale">Originale</option>
+                                        <option value="modificato">Modificato</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Tabella framework -->
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-24">ID</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-32">Nome</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-20">Materia</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-12">Moduli</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-12">Profili</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-16">Tipo</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-14">Azioni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="frameworkTableBody" class="bg-white divide-y divide-gray-200">
+                                        <!-- Popolato dinamicamente da JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Footer con stats e export -->
+                            <div class="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-gray-200">
+                                <div class="text-sm text-gray-600">
+                                    <span id="frameworkCount">Caricamento...</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="exportFrameworkCatalog()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        💾 Export JSON
+                                    </button>
+                                    <button onclick="exportFrameworkZIP()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        📦 Export ZIP
+                                    </button>
+                                    <button onclick="importFrameworkCatalog()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        📥 Import
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <!-- END FRAMEWORK TAB -->
@@ -1279,6 +1348,8 @@
             // Load data for the selected tab
             if (tabName === 'manuali') {
                 loadManualiList();
+            } else if (tabName === 'framework') {
+                loadFrameworkList();
             }
         }
         
@@ -2174,6 +2245,573 @@
         
         function importCatalog() {
             alert('📥 Funzionalità Import in fase di implementazione...\n\nPer ora aggiungi i manuali uno per uno con "Nuovo Manuale".');
+        }
+
+        // ============================================
+        // CRUD FRAMEWORK - CARICAMENTO LISTA
+        // ============================================
+        
+        let editingFrameworkId = null;
+        let currentFrameworkData = null;
+        
+        function loadFrameworkList() {
+            console.log('📋 Caricamento lista framework...');
+            
+            const tbody = document.getElementById('frameworkTableBody');
+            if (!tbody) return;
+            
+            // Carica framework originali + custom + modificati
+            const originalFrameworks = getFrameworksAsObject();
+            const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
+            const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
+            
+            // Merge con priorità: modificati > custom > originali
+            const allFrameworks = {
+                ...originalFrameworks,
+                ...customFrameworks,
+                ...modifiedFrameworks
+            };
+            
+            console.log(`✅ Framework totali: ${Object.keys(allFrameworks).length}`);
+            
+            // Ordina per nome
+            const sortedFrameworks = Object.values(allFrameworks).sort((a, b) => 
+                (a.name || '').localeCompare(b.name || '')
+            );
+            
+            // Genera righe tabella
+            tbody.innerHTML = sortedFrameworks.map(fw => {
+                // Determina badge di stato
+                let badge = '';
+                if (modifiedFrameworks[fw.id]) {
+                    badge = '<span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">🟡 Modificato</span>';
+                } else if (customFrameworks[fw.id]) {
+                    badge = '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">🔵 Custom</span>';
+                } else {
+                    badge = '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">🟢 Originale</span>';
+                }
+                
+                const modulesCount = fw.modules_count || (fw.content?.syllabus_modules?.length) || 0;
+                const profilesCount = fw.program_profiles_count || (fw.content?.program_profiles?.length) || 0;
+                
+                return `
+                    <tr class="framework-row" data-id="${fw.id}" data-subject="${fw.subject || ''}" data-tipo="${badge.includes('Originale') ? 'originale' : (badge.includes('Modificato') ? 'modificato' : 'custom')}">
+                        <td class="px-1 py-1 text-xs text-gray-900 break-words">${fw.id}</td>
+                        <td class="px-1 py-1 text-xs text-gray-900 break-words">${fw.name || '—'}</td>
+                        <td class="px-1 py-1 text-xs text-gray-900 break-words">${fw.subject || '—'}</td>
+                        <td class="px-1 py-1 text-xs text-center text-gray-900">${modulesCount}</td>
+                        <td class="px-1 py-1 text-xs text-center text-gray-900">${profilesCount}</td>
+                        <td class="px-1 py-1 text-xs">${badge}</td>
+                        <td class="px-1 py-1 text-xs">
+                            <div class="flex gap-1">
+                                <button onclick="editFramework('${fw.id}')" class="text-indigo-600 hover:text-indigo-800" title="Modifica">
+                                    ✏️
+                                </button>
+                                <button onclick="deleteFramework('${fw.id}')" class="text-red-600 hover:text-red-800" title="Elimina">
+                                    🗑️
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Aggiorna contatori
+            const originalCount = Object.keys(originalFrameworks).length;
+            const modifiedCount = Object.keys(modifiedFrameworks).length;
+            const customCount = Object.keys(customFrameworks).length;
+            const total = Object.keys(allFrameworks).length;
+            
+            document.getElementById('frameworkCount').innerHTML = `
+                📋 <strong>${total}</strong> framework totali
+                • ${originalCount} originali
+                • ${modifiedCount} modificati
+                • ${customCount} custom
+            `;
+        }
+        
+        function getFrameworksAsObject() {
+            // Converti FRAMEWORK_CATALOG in oggetto per coerenza
+            if (!window.FRAMEWORK_CATALOG) return {};
+            
+            const frameworks = {};
+            if (FRAMEWORK_CATALOG.frameworks) {
+                FRAMEWORK_CATALOG.frameworks.forEach(fw => {
+                    frameworks[fw.id] = fw;
+                });
+            }
+            return frameworks;
+        }
+        
+        function filterFramework() {
+            const searchText = document.getElementById('searchFramework').value.toLowerCase();
+            const filterMateria = document.getElementById('filterFrameworkMateria').value;
+            const filterTipo = document.getElementById('filterFrameworkTipo').value;
+            
+            const rows = document.querySelectorAll('.framework-row');
+            
+            rows.forEach(row => {
+                const id = row.dataset.id.toLowerCase();
+                const subject = row.dataset.subject;
+                const tipo = row.dataset.tipo;
+                const text = row.textContent.toLowerCase();
+                
+                const matchSearch = !searchText || text.includes(searchText);
+                const matchMateria = !filterMateria || subject === filterMateria;
+                const matchTipo = !filterTipo || tipo === filterTipo;
+                
+                if (matchSearch && matchMateria && matchTipo) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // ============================================
+        // CRUD FRAMEWORK - MODAL AGGIUNGI/MODIFICA
+        // ============================================
+        
+        function openAddFrameworkModal() {
+            console.log('➕ Apertura modal nuovo framework');
+            
+            editingFrameworkId = null;
+            currentFrameworkData = null;
+            
+            document.getElementById('frameworkModalTitle').textContent = '➕ Nuovo Framework';
+            document.getElementById('frameworkId').value = '';
+            document.getElementById('frameworkId').disabled = false;
+            document.getElementById('frameworkName').value = '';
+            document.getElementById('frameworkSubject').value = '';
+            
+            // Reset upload JSON
+            document.getElementById('frameworkJsonFile').value = '';
+            document.getElementById('frameworkJsonFileInfo').classList.add('hidden');
+            document.getElementById('frameworkPreviewSection').classList.add('hidden');
+            document.getElementById('frameworkJsonEditorSection').classList.add('hidden');
+            document.getElementById('frameworkValidationErrors').classList.add('hidden');
+            
+            // Mostra sezione upload JSON
+            const step2Upload = document.querySelector('#frameworkModal .bg-green-50');
+            if (step2Upload) {
+                step2Upload.classList.remove('hidden');
+            }
+            
+            document.getElementById('frameworkModal').classList.remove('hidden');
+        }
+        
+        function editFramework(frameworkId) {
+            console.log('✏️ Modifica framework:', frameworkId);
+            
+            editingFrameworkId = frameworkId;
+            
+            // Carica dati framework
+            const originalFrameworks = getFrameworksAsObject();
+            const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
+            const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
+            
+            const framework = modifiedFrameworks[frameworkId] || customFrameworks[frameworkId] || originalFrameworks[frameworkId];
+            
+            if (!framework) {
+                alert('Framework non trovato');
+                return;
+            }
+            
+            document.getElementById('frameworkModalTitle').textContent = '✏️ Modifica Framework';
+            document.getElementById('frameworkId').value = framework.id;
+            document.getElementById('frameworkId').disabled = true;
+            document.getElementById('frameworkName').value = framework.name || '';
+            document.getElementById('frameworkSubject').value = framework.subject || '';
+            
+            // Nascondi upload JSON e mostra preview dati esistenti
+            const step2Upload = document.querySelector('#frameworkModal .bg-green-50');
+            if (step2Upload) {
+                step2Upload.classList.add('hidden');
+            }
+            
+            // Carica JSON completo se disponibile
+            if (customFrameworks[frameworkId]) {
+                // Framework custom: carica da localStorage
+                currentFrameworkData = customFrameworks[frameworkId];
+                showFrameworkPreview(currentFrameworkData);
+                showFrameworkJsonEditor(currentFrameworkData);
+            } else if (framework.filepath) {
+                // Framework originale: carica da file
+                fetch(framework.filepath)
+                    .then(r => r.json())
+                    .then(data => {
+                        currentFrameworkData = data;
+                        showFrameworkPreview(currentFrameworkData);
+                        showFrameworkJsonEditor(currentFrameworkData);
+                    })
+                    .catch(err => {
+                        console.error('❌ Errore caricamento JSON:', err);
+                        // Mostra preview con dati base
+                        showFrameworkPreview(framework);
+                    });
+            } else {
+                // Nessun JSON disponibile, mostra dati base
+                showFrameworkPreview(framework);
+            }
+            
+            document.getElementById('frameworkValidationErrors').classList.add('hidden');
+            document.getElementById('frameworkModal').classList.remove('hidden');
+        }
+        
+        function closeFrameworkModal() {
+            document.getElementById('frameworkModal').classList.add('hidden');
+            editingFrameworkId = null;
+            currentFrameworkData = null;
+        }
+        
+        // ============================================
+        // CRUD FRAMEWORK - UPLOAD E VALIDAZIONE JSON
+        // ============================================
+        
+        async function handleFrameworkJsonUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            console.log('📁 Caricamento file JSON framework:', file.name);
+            
+            // Mostra info file
+            document.getElementById('frameworkJsonFileName').textContent = file.name;
+            document.getElementById('frameworkJsonFileSize').textContent = `${(file.size / 1024).toFixed(2)} KB`;
+            document.getElementById('frameworkJsonFileInfo').classList.remove('hidden');
+            
+            try {
+                const text = await file.text();
+                const json = JSON.parse(text);
+                
+                console.log('✅ JSON parsato con successo');
+                
+                // Valida struttura
+                const errors = validateFrameworkJson(json);
+                
+                if (errors.length > 0) {
+                    showFrameworkValidationErrors(errors);
+                    currentFrameworkData = null;
+                    document.getElementById('frameworkPreviewSection').classList.add('hidden');
+                    return;
+                }
+                
+                // JSON valido
+                currentFrameworkData = json;
+                document.getElementById('frameworkValidationErrors').classList.add('hidden');
+                showFrameworkPreview(json);
+                
+            } catch (error) {
+                console.error('❌ Errore parsing JSON:', error);
+                showFrameworkValidationErrors(['Errore nel parsing del file JSON: ' + error.message]);
+                currentFrameworkData = null;
+            }
+        }
+        
+        function validateFrameworkJson(json) {
+            const errors = [];
+            
+            if (!json.id || typeof json.id !== 'string') {
+                errors.push('Campo "id" obbligatorio (stringa)');
+            }
+            
+            if (!json.name || typeof json.name !== 'string') {
+                errors.push('Campo "name" obbligatorio (stringa)');
+            }
+            
+            if (!json.subject || typeof json.subject !== 'string') {
+                errors.push('Campo "subject" obbligatorio (stringa)');
+            }
+            
+            // Valida content
+            if (!json.content || typeof json.content !== 'object') {
+                errors.push('Campo "content" obbligatorio (oggetto)');
+            } else {
+                if (!json.content.syllabus_modules || !Array.isArray(json.content.syllabus_modules)) {
+                    errors.push('Campo "content.syllabus_modules" obbligatorio (array)');
+                } else if (json.content.syllabus_modules.length === 0) {
+                    errors.push('Il framework deve avere almeno un modulo');
+                }
+                
+                if (!json.content.program_profiles || !Array.isArray(json.content.program_profiles)) {
+                    errors.push('Campo "content.program_profiles" obbligatorio (array)');
+                }
+                
+                if (!json.content.target_degrees || !Array.isArray(json.content.target_degrees)) {
+                    errors.push('Campo "content.target_degrees" obbligatorio (array)');
+                }
+            }
+            
+            return errors;
+        }
+        
+        function showFrameworkValidationErrors(errors) {
+            const errorList = document.getElementById('frameworkErrorList');
+            errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+            document.getElementById('frameworkValidationErrors').classList.remove('hidden');
+        }
+        
+        function showFrameworkPreview(json) {
+            const content = json.content || {};
+            
+            document.getElementById('frameworkPreviewName').textContent = json.name || '—';
+            document.getElementById('frameworkPreviewSubject').textContent = json.subject || '—';
+            document.getElementById('frameworkPreviewModules').textContent = content.syllabus_modules ? content.syllabus_modules.length : '—';
+            document.getElementById('frameworkPreviewProfiles').textContent = content.program_profiles ? content.program_profiles.length : '—';
+            document.getElementById('frameworkPreviewDegrees').textContent = content.target_degrees ? content.target_degrees.length : '—';
+            
+            document.getElementById('frameworkPreviewSection').classList.remove('hidden');
+        }
+        
+        function showFrameworkJsonEditor(json) {
+            const editor = document.getElementById('frameworkJsonEditor');
+            if (editor) {
+                editor.value = JSON.stringify(json, null, 2);
+                document.getElementById('frameworkJsonEditorSection').classList.remove('hidden');
+            }
+        }
+        
+        // ============================================
+        // CRUD FRAMEWORK - SALVATAGGIO
+        // ============================================
+        
+        async function saveFrameworkData() {
+            console.log('💾 Salvataggio framework...');
+            
+            // Valida form
+            const id = document.getElementById('frameworkId').value.trim();
+            const name = document.getElementById('frameworkName').value.trim();
+            const subject = document.getElementById('frameworkSubject').value;
+            
+            const errors = [];
+            
+            if (!id) {
+                errors.push('ID framework obbligatorio');
+            } else if (!/^[a-zA-Z0-9_]+$/.test(id)) {
+                errors.push('ID deve contenere solo lettere, numeri e underscore');
+            }
+            
+            if (!name) {
+                errors.push('Nome framework obbligatorio');
+            }
+            
+            if (!subject) {
+                errors.push('Materia obbligatoria');
+            }
+            
+            if (!currentFrameworkData && !editingFrameworkId) {
+                errors.push('File JSON obbligatorio per nuovi framework');
+            }
+            
+            // Controllo duplicati (solo per nuovi)
+            if (!editingFrameworkId) {
+                const originalFrameworks = getFrameworksAsObject();
+                const allFrameworks = { 
+                    ...originalFrameworks, 
+                    ...JSON.parse(localStorage.getItem('custom_frameworks') || '{}'),
+                    ...JSON.parse(localStorage.getItem('modified_frameworks') || '{}')
+                };
+                
+                if (allFrameworks[id]) {
+                    errors.push('ID già esistente. Scegli un ID diverso.');
+                }
+            }
+            
+            if (errors.length > 0) {
+                showFrameworkValidationErrors(errors);
+                return;
+            }
+            
+            // Prepara dati da salvare
+            let frameworkToSave;
+            
+            // Se l'editor JSON è visibile, leggi da lì
+            const jsonEditorSection = document.getElementById('frameworkJsonEditorSection');
+            if (jsonEditorSection && !jsonEditorSection.classList.contains('hidden')) {
+                const jsonEditorContent = document.getElementById('frameworkJsonEditor').value;
+                try {
+                    const parsedJson = JSON.parse(jsonEditorContent);
+                    frameworkToSave = {
+                        ...parsedJson,
+                        id: id,
+                        name: name,
+                        subject: subject
+                    };
+                    console.log('✅ JSON letto dall\'editor');
+                } catch (e) {
+                    errors.push('JSON non valido nell\'editor: ' + e.message);
+                    showFrameworkValidationErrors(errors);
+                    return;
+                }
+            } else if (currentFrameworkData) {
+                // Nuovo framework o sostituzione JSON
+                frameworkToSave = {
+                    ...currentFrameworkData,
+                    id: id,
+                    name: name,
+                    subject: subject
+                };
+            } else {
+                // Modifica solo metadata (mantieni JSON originale)
+                const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
+                const originalFrameworks = getFrameworksAsObject();
+                const originalFramework = customFrameworks[editingFrameworkId] || originalFrameworks[editingFrameworkId];
+                
+                frameworkToSave = {
+                    ...originalFramework,
+                    name: name,
+                    subject: subject
+                };
+            }
+            
+            // Salva in localStorage
+            try {
+                const originalFrameworks = getFrameworksAsObject();
+                
+                if (!editingFrameworkId || !originalFrameworks[id]) {
+                    // Nuovo framework custom
+                    const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
+                    customFrameworks[id] = frameworkToSave;
+                    localStorage.setItem('custom_frameworks', JSON.stringify(customFrameworks));
+                    console.log('✅ Nuovo framework custom salvato');
+                } else {
+                    // Modifica di framework esistente
+                    const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
+                    modifiedFrameworks[id] = frameworkToSave;
+                    localStorage.setItem('modified_frameworks', JSON.stringify(modifiedFrameworks));
+                    console.log('✅ Framework modificato salvato');
+                }
+                
+                // Chiudi modal e ricarica lista
+                closeFrameworkModal();
+                loadFrameworkList();
+                
+                alert('✅ Framework salvato con successo!');
+                
+            } catch (error) {
+                console.error('❌ Errore salvataggio:', error);
+                alert('Errore nel salvataggio: ' + error.message);
+            }
+        }
+        
+        // ============================================
+        // CRUD FRAMEWORK - ELIMINAZIONE
+        // ============================================
+        
+        let deleteFrameworkTargetId = null;
+        
+        function deleteFramework(frameworkId) {
+            console.log('🗑️ Richiesta eliminazione framework:', frameworkId);
+            
+            // Carica dati del framework
+            const originalFrameworks = getFrameworksAsObject();
+            const allFrameworks = { 
+                ...originalFrameworks, 
+                ...JSON.parse(localStorage.getItem('custom_frameworks') || '{}'),
+                ...JSON.parse(localStorage.getItem('modified_frameworks') || '{}')
+            };
+            
+            const framework = allFrameworks[frameworkId];
+            if (!framework) {
+                console.error(`❌ Framework "${frameworkId}" non trovato`);
+                alert(`Framework "${frameworkId}" non trovato nel catalogo`);
+                return;
+            }
+            
+            console.log('✅ Framework trovato per eliminazione:', framework);
+            
+            deleteFrameworkTargetId = frameworkId;
+            document.getElementById('deleteFrameworkName').textContent = `${framework.name} (${framework.subject})`;
+            document.getElementById('deleteFrameworkModal').classList.remove('hidden');
+        }
+        
+        function closeDeleteFrameworkModal() {
+            document.getElementById('deleteFrameworkModal').classList.add('hidden');
+            deleteFrameworkTargetId = null;
+        }
+        
+        function confirmDeleteFramework() {
+            if (!deleteFrameworkTargetId) return;
+            
+            console.log('🗑️ Eliminazione confermata:', deleteFrameworkTargetId);
+            
+            try {
+                // Rimuovi da custom
+                const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
+                if (customFrameworks[deleteFrameworkTargetId]) {
+                    delete customFrameworks[deleteFrameworkTargetId];
+                    localStorage.setItem('custom_frameworks', JSON.stringify(customFrameworks));
+                }
+                
+                // Rimuovi da modified
+                const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
+                if (modifiedFrameworks[deleteFrameworkTargetId]) {
+                    delete modifiedFrameworks[deleteFrameworkTargetId];
+                    localStorage.setItem('modified_frameworks', JSON.stringify(modifiedFrameworks));
+                }
+                
+                console.log('✅ Framework eliminato');
+                
+                closeDeleteFrameworkModal();
+                loadFrameworkList();
+                
+                alert('✅ Framework eliminato con successo!');
+                
+            } catch (error) {
+                console.error('❌ Errore eliminazione:', error);
+                alert('Errore nell\'eliminazione: ' + error.message);
+            }
+        }
+        
+        // ============================================
+        // CRUD FRAMEWORK - EXPORT/IMPORT
+        // ============================================
+        
+        function exportFrameworkCatalog() {
+            console.log('💾 Export framework catalog JSON...');
+            
+            try {
+                const originalFrameworks = getFrameworksAsObject();
+                
+                // Merge tutti i cataloghi
+                const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
+                const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
+                
+                const fullCatalog = {
+                    version: '1.0.0',
+                    last_updated: new Date().toISOString().split('T')[0],
+                    total_frameworks: Object.keys({ ...originalFrameworks, ...modifiedFrameworks, ...customFrameworks }).length,
+                    frameworks: Object.values({
+                        ...originalFrameworks,
+                        ...modifiedFrameworks,
+                        ...customFrameworks
+                    })
+                };
+                
+                // Crea file JSON
+                const blob = new Blob([JSON.stringify(fullCatalog, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `framework_catalog_updated_${fullCatalog.last_updated}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                console.log('✅ Export completato');
+                
+            } catch (error) {
+                console.error('❌ Errore export:', error);
+                alert('Errore nell\'export: ' + error.message);
+            }
+        }
+        
+        function exportFrameworkZIP() {
+            alert('📦 Funzionalità Export ZIP in fase di implementazione...\n\nPer ora usa "Export JSON" e carica manualmente i file JSON dei framework custom.');
+        }
+        
+        function importFrameworkCatalog() {
+            alert('📥 Funzionalità Import in fase di implementazione...\n\nPer ora aggiungi i framework uno per uno con "Nuovo Framework".');
         }
 
         // Gestione file
@@ -4573,6 +5211,177 @@ Rispondi SOLO con un JSON valido:
                         Annulla
                     </button>
                     <button onclick="confirmDeleteManuale()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">
+                        🗑️ Elimina
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
+
+    <!-- MODAL: Aggiungi/Modifica Framework -->
+    <div id="frameworkModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 shadow-lg rounded-lg bg-white">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
+                <h3 id="frameworkModalTitle" class="text-xl font-bold">➕ Nuovo Framework</h3>
+                <button onclick="closeFrameworkModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- STEP 1: Identificativi -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-blue-900 mb-3">📝 STEP 1: Identificativi</h4>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">ID Framework *</label>
+                            <input type="text" id="frameworkId" placeholder="es: chimica_organica_framework" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                                pattern="[a-zA-Z0-9_]+" title="Solo lettere, numeri e underscore">
+                            <p class="text-xs text-gray-500 mt-1">Solo lettere, numeri e underscore. Deve essere univoco.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nome Framework *</label>
+                                <input type="text" id="frameworkName" placeholder="es: Chimica Organica"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Materia *</label>
+                                <select id="frameworkSubject" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona materia...</option>
+                                    <option value="Matematica">Matematica</option>
+                                    <option value="Fisica">Fisica</option>
+                                    <option value="Chimica">Chimica</option>
+                                    <option value="Chimica Generale">Chimica Generale</option>
+                                    <option value="Chimica Organica">Chimica Organica</option>
+                                    <option value="Biologia">Biologia</option>
+                                    <option value="Economia">Economia</option>
+                                    <option value="Medicina e Chirurgia">Medicina e Chirurgia</option>
+                                    <option value="Istologia">Istologia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- STEP 2: Carica JSON -->
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-green-900 mb-3">📁 STEP 2: Carica File JSON</h4>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                File JSON del Framework *
+                            </label>
+                            <div class="flex items-center justify-center w-full">
+                                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white hover:bg-gray-50">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                        </svg>
+                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Clicca per caricare</span> o trascina qui</p>
+                                        <p class="text-xs text-gray-500">File JSON (MAX 10MB)</p>
+                                    </div>
+                                    <input id="frameworkJsonFile" type="file" accept=".json" class="hidden" onchange="handleFrameworkJsonUpload(event)">
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">
+                                Il file JSON deve contenere: syllabus_modules, program_profiles, target_degrees.
+                            </p>
+                        </div>
+                        
+                        <div id="frameworkJsonFileInfo" class="hidden p-3 bg-white border border-gray-300 rounded-lg">
+                            <p class="text-sm font-medium text-gray-700">File caricato:</p>
+                            <p id="frameworkJsonFileName" class="text-sm text-gray-600"></p>
+                            <p id="frameworkJsonFileSize" class="text-xs text-gray-500"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- STEP 3: Preview Dati -->
+                <div id="frameworkPreviewSection" class="hidden bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-purple-900 mb-3">👁️ STEP 3: Preview Dati</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Nome:</span>
+                            <span id="frameworkPreviewName" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Materia:</span>
+                            <span id="frameworkPreviewSubject" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Moduli Programma:</span>
+                            <span id="frameworkPreviewModules" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Profili Studente:</span>
+                            <span id="frameworkPreviewProfiles" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Corsi di Laurea:</span>
+                            <span id="frameworkPreviewDegrees" class="font-medium text-gray-900"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- EDITOR JSON (solo in modifica) -->
+                <div id="frameworkJsonEditorSection" class="hidden bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-yellow-900 mb-3">📝 Editor JSON</h4>
+                    <textarea id="frameworkJsonEditor" class="w-full h-96 p-3 border border-gray-300 rounded-lg font-mono text-xs"
+                        placeholder="Contenuto JSON del framework..."></textarea>
+                    <p class="text-xs text-gray-500 mt-2">
+                        Modifica il JSON direttamente. Assicurati che la sintassi sia valida prima di salvare.
+                    </p>
+                </div>
+                
+                <!-- Errori validazione -->
+                <div id="frameworkValidationErrors" class="hidden bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-red-900 mb-2">⚠️ Errori di Validazione</h4>
+                    <ul id="frameworkErrorList" class="list-disc list-inside text-sm text-red-700 space-y-1">
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer con azioni -->
+            <div class="mt-6 flex justify-end gap-3 pt-4 border-t border-gray-200">
+                <button onclick="closeFrameworkModal()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                    ❌ Annulla
+                </button>
+                <button onclick="saveFrameworkData()" id="btnSaveFramework" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                    💾 Salva Framework
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
+
+    <!-- MODAL: Conferma Eliminazione Framework -->
+    <div id="deleteFrameworkModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-1/3 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Conferma Eliminazione</h3>
+                <p class="text-sm text-gray-500 mb-1">Stai per eliminare il framework:</p>
+                <p id="deleteFrameworkName" class="text-sm font-semibold text-gray-900 mb-4"></p>
+                <p class="text-xs text-red-600 mb-6">Questa azione non può essere annullata.</p>
+                
+                <div class="flex justify-center gap-3">
+                    <button onclick="closeDeleteFrameworkModal()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                        Annulla
+                    </button>
+                    <button onclick="confirmDeleteFramework()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">
                         🗑️ Elimina
                     </button>
                 </div>
