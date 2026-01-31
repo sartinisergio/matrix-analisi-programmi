@@ -1321,59 +1321,76 @@
         }
         
         function displayManualiTable(allManuals, customManuals, modifiedManuals) {
+            console.log('📊 Rendering tabella manuali...');
+            
             const tbody = document.getElementById('manualiTableBody');
-            if (!tbody) return;
+            if (!tbody) {
+                console.error('❌ Elemento manualiTableBody non trovato!');
+                return;
+            }
             
             tbody.innerHTML = '';
             
             const manualiArray = Object.values(allManuals);
+            console.log(`📋 Manuali da visualizzare: ${manualiArray.length}`);
             
-            // Sort per materia e titolo
+            // Sort per materia e titolo (gestisce valori undefined)
             manualiArray.sort((a, b) => {
-                if (a.subject !== b.subject) return a.subject.localeCompare(b.subject);
-                return a.title.localeCompare(b.title);
+                const subjectA = a.subject || '';
+                const subjectB = b.subject || '';
+                const titleA = a.title || '';
+                const titleB = b.title || '';
+                
+                if (subjectA !== subjectB) return subjectA.localeCompare(subjectB);
+                return titleA.localeCompare(titleB);
             });
             
             manualiArray.forEach(manuale => {
-                const isCustom = customManuals[manuale.id];
-                const isModified = modifiedManuals[manuale.id];
-                
-                const badge = isCustom ? '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">🔵 Custom</span>' :
-                              isModified ? '<span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">🟡 Modificato</span>' :
-                              '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">🟢 Originale</span>';
-                
-                const tipoBadge = manuale.type === 'zanichelli' ? 
-                    '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Zanichelli</span>' :
-                    '<span class="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded">Competitor</span>';
-                
-                const row = document.createElement('tr');
-                row.className = 'manuale-row hover:bg-gray-50';
-                row.dataset.id = manuale.id;
-                row.dataset.subject = manuale.subject || '';
-                row.dataset.publisher = manuale.publisher || '';
-                row.dataset.type = manuale.type || '';
-                row.dataset.title = manuale.title || '';
-                row.dataset.author = manuale.author || '';
-                
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.id}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">
-                        <div class="font-medium">${manuale.title}</div>
-                        <div class="text-xs text-gray-500">${badge}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.author}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.publisher}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.subject}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.chapters_count || '—'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">${tipoBadge}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <button onclick="editManuale('${manuale.id}')" class="text-indigo-600 hover:text-indigo-900">✏️</button>
-                        <button onclick="deleteManuale('${manuale.id}')" class="text-red-600 hover:text-red-900">🗑️</button>
-                    </td>
-                `;
-                
-                tbody.appendChild(row);
+                try {
+                    const isCustom = customManuals[manuale.id];
+                    const isModified = modifiedManuals[manuale.id];
+                    
+                    const badge = isCustom ? '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">🔵 Custom</span>' :
+                                  isModified ? '<span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">🟡 Modificato</span>' :
+                                  '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">🟢 Originale</span>';
+                    
+                    const tipoBadge = manuale.type === 'zanichelli' ? 
+                        '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Zanichelli</span>' :
+                        '<span class="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded">Competitor</span>';
+                    
+                    const row = document.createElement('tr');
+                    row.className = 'manuale-row hover:bg-gray-50';
+                    row.dataset.id = manuale.id || '';
+                    row.dataset.subject = manuale.subject || '';
+                    row.dataset.publisher = manuale.publisher || '';
+                    row.dataset.type = manuale.type || '';
+                    row.dataset.title = manuale.title || '';
+                    row.dataset.author = manuale.author || '';
+                    
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.id || '—'}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            <div class="font-medium">${manuale.title || '—'}</div>
+                            <div class="text-xs text-gray-500">${badge}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.author || '—'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.publisher || '—'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.subject || '—'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.chapters_count || '—'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">${tipoBadge}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="editManuale('${manuale.id}')" class="text-indigo-600 hover:text-indigo-900">✏️</button>
+                            <button onclick="deleteManuale('${manuale.id}')" class="text-red-600 hover:text-red-900">🗑️</button>
+                        </td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                } catch (error) {
+                    console.error('❌ Errore rendering manuale:', manuale.id, error);
+                }
             });
+            
+            console.log(`✅ Tabella popolata con ${tbody.children.length} righe`);
             
             // Aggiorna contatore
             const countEl = document.getElementById('manualiCount');
