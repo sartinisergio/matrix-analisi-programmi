@@ -2276,6 +2276,14 @@
         
         function loadFrameworkList() {
             console.log('📋 Caricamento lista framework...');
+            
+            // CRITICAL: Aspetta che FRAMEWORK_CATALOG sia caricato
+            if (!window.FRAMEWORK_CATALOG) {
+                console.warn('⚠️ FRAMEWORK_CATALOG non ancora caricato, ritento tra 500ms...');
+                setTimeout(loadFrameworkList, 500);
+                return;
+            }
+            
             console.log('🔍 FRAMEWORK_CATALOG:', window.FRAMEWORK_CATALOG);
             
             const tbody = document.getElementById('frameworkTableBody');
