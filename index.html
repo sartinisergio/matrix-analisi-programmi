@@ -605,15 +605,15 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-24">ID</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-32">Titolo</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-24">Autore</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-20">Editore</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-20">Macroarea</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-24">Materia</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-12">Cap.</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-20">Tipo</th>
-                                            <th class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase w-16">Azioni</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-20">ID</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-28">Titolo</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-20">Autore</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-16">Edit.</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-16">Macro</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-24">Materia</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-10">Cap</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-16">Tipo</th>
+                                            <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase w-14">Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="manualiTableBody" class="bg-white divide-y divide-gray-200">
@@ -1561,18 +1561,18 @@
                     row.dataset.author = manuale.author || '';
                     
                     row.innerHTML = `
-                        <td class="px-1 py-2 text-xs text-gray-500 w-24 truncate">${manuale.id || '—'}</td>
-                        <td class="px-1 py-2 text-xs w-32 truncate">
-                            <div class="font-medium text-gray-900 truncate">${manuale.title || '—'}</div>
+                        <td class="px-1 py-1 text-xs text-gray-500 w-20 break-words">${manuale.id || '—'}</td>
+                        <td class="px-1 py-1 text-xs w-28">
+                            <div class="font-medium text-gray-900 break-words">${manuale.title || '—'}</div>
                             <div class="text-xs text-gray-500">${badge}</div>
                         </td>
-                        <td class="px-1 py-2 text-xs text-gray-500 w-24 truncate">${manuale.author || '—'}</td>
-                        <td class="px-1 py-2 text-xs text-gray-500 w-20 truncate">${manuale.publisher || '—'}</td>
-                        <td class="px-1 py-2 text-xs text-gray-500 w-20 truncate">${manuale.macroarea || '—'}</td>
-                        <td class="px-1 py-2 text-xs text-gray-500 w-24 truncate">${manuale.materia || '—'}</td>
-                        <td class="px-1 py-2 text-xs text-gray-500 w-12 text-center">${manuale.chapters_count || '—'}</td>
-                        <td class="px-1 py-2 text-xs w-20 truncate">${tipoBadge}</td>
-                        <td class="px-1 py-2 text-sm font-medium w-16 whitespace-nowrap">
+                        <td class="px-1 py-1 text-xs text-gray-500 w-20 break-words">${manuale.author || '—'}</td>
+                        <td class="px-1 py-1 text-xs text-gray-500 w-16 break-words">${manuale.publisher || '—'}</td>
+                        <td class="px-1 py-1 text-xs text-gray-500 w-16 break-words">${manuale.macroarea || '—'}</td>
+                        <td class="px-1 py-1 text-xs text-gray-500 w-24 break-words">${manuale.materia || '—'}</td>
+                        <td class="px-1 py-1 text-xs text-gray-500 w-10 text-center">${manuale.chapters_count || '—'}</td>
+                        <td class="px-1 py-1 text-xs w-16">${tipoBadge}</td>
+                        <td class="px-1 py-1 text-sm font-medium w-14 whitespace-nowrap">
                             <button onclick="editManuale('${manuale.id}')" class="text-indigo-600 hover:text-indigo-900" title="Modifica">✏️</button>
                             <button onclick="deleteManuale('${manuale.id}')" class="text-red-600 hover:text-red-900" title="Elimina">🗑️</button>
                         </td>
