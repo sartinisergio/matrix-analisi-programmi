@@ -831,10 +831,11 @@
                 MANUAL_CATALOG = manuals;
                 
                 console.log('✅ MATRIX Config caricato:', {
-                    subjects: MATRIX_CONFIG.supported_subjects.length,
-                    frameworks: FRAMEWORK_CATALOG.total_frameworks,
-                    manuals: MANUAL_CATALOG.total_manuals
+                    subjects: MATRIX_CONFIG?.supported_subjects?.length || 0,
+                    frameworks: FRAMEWORK_CATALOG?.total_frameworks || 0,
+                    manuals: MANUAL_CATALOG?.total_manuals || 0
                 });
+                console.log('📋 FRAMEWORK_CATALOG:', FRAMEWORK_CATALOG);
                 
                 populateMateriaDropdown();
             } catch (error) {
