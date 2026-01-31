@@ -28,14 +28,11 @@
       "fisica_generale_2_framework",
       "fisica_generale_life_sciences_framework"
     ],
-    "Biologia e Medicina": [
+    "Biologia": [
       "biochimica_generale_framework",
       "biologia_cellulare_molecolare_framework",
       "biologia_molecolare_gene_framework",
       "microbiologia_framework"
-    ],
-    "Biologia": [
-      "genetica_generale_framework"
     ],
     "Istologia": [
       "istologia_embriologia_framework"
@@ -396,7 +393,7 @@
       "filename": "biochimica.json",
       "filepath": "frameworks/biochimica.json",
       "name": "Biochimica Generale",
-      "subject": "Biologia e Medicina",
+      "subject": "Biologia",
       "modules_count": 12,
       "modules": [
         "",
@@ -431,7 +428,7 @@
       "filename": "biologia cellulare.json",
       "filepath": "frameworks/biologia cellulare.json",
       "name": "Biologia Molecolare della Cellula",
-      "subject": "Biologia e Medicina",
+      "subject": "Biologia",
       "modules_count": 16,
       "modules": [
         "",
@@ -467,7 +464,7 @@
       "filename": "biologia molecolare.json",
       "filepath": "frameworks/biologia molecolare.json",
       "name": "Biologia Molecolare del Gene",
-      "subject": "Biologia e Medicina",
+      "subject": "Biologia",
       "modules_count": 9,
       "modules": [
         "",
@@ -643,7 +640,7 @@
       "filename": "microbiologia.json",
       "filepath": "frameworks/microbiologia.json",
       "name": "Microbiologia Generale e Clinica",
-      "subject": "Biologia e Medicina",
+      "subject": "Biologia",
       "modules_count": 14,
       "modules": [
         "",

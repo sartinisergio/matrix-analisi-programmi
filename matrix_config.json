@@ -51,7 +51,7 @@
     },
     {
       "id": "biologia",
-      "name": "Biologia e Medicina",
+      "name": "Biologia",
       "icon": "🔬",
       "frameworks": [
         "biochimica_generale_framework",

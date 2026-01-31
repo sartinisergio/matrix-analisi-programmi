@@ -1,0 +1,89 @@
+From 4ed70159734ffacc31a0f751219508f0da732363 Mon Sep 17 00:00:00 2001
+From: sartinisergio <genspark_dev@genspark.ai>
+Date: Fri, 30 Jan 2026 16:35:45 +0000
+Subject: [PATCH] fix(CRITICAL): Include COMPLETE manual TOC (all chapters) in
+ analysis
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PROBLEMA: LLM was seeing only first 15 chapters, missing critical content
+- Bruice Elementi has 21 chapters (Cap 16-17: biomolecules/amino acids/proteins)
+- slice(0, 15) cut chapters 16-21 → LLM said 'missing biomolecules'
+- Same issue for ALL manuals with >15 chapters
+
+SOLUZIONE: Include ALL chapters in TOC, not just first 15
+- Alternative manuals (Phase 3b): removed .slice(0, 15)
+- Zanichelli manuals (Phase 4): added full TOC loading (like Phase 3b)
+  - Load JSON for each Zanichelli manual
+  - Extract ALL chapters
+  - Include in LLM prompt: 'INDICE: 1. ... 2. ... N.'
+
+IMPATTO: Much more accurate gap analysis
+- LLM now sees complete manual structure
+- Can identify coverage of ALL topics (not just first 15 chapters)
+- More precise recommendations
+
+TEST CASE: Bruice Elementi
+- Before: 'Manca copertura di biomolecole' (WRONG - Cap 16-17 exist!)
+- After: 'Copre biomolecole nei Cap. 16-17' (CORRECT)
+---
+ index.html | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
+
+diff --git a/index.html b/index.html
+index bb2e9a5..bef79e9 100644
+--- a/index.html
++++ b/index.html
+@@ -1666,11 +1666,11 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
+                                     console.log(`📖 File caricato, capitoli trovati: ${manualeData.chapters?.length || 0}`);
+                                     
+                                     if (manualeData.chapters && manualeData.chapters.length > 0) {
+-                                        const firstChapters = manualeData.chapters.slice(0, 15);
+-                                        indiceManuale = '\n   INDICE:\n' + firstChapters.map(ch => 
++                                        // Include TUTTI i capitoli (non limitare a 15)
++                                        indiceManuale = '\n   INDICE:\n' + manualeData.chapters.map(ch => 
+                                             `   ${ch.number}. ${ch.title}`
+                                         ).join('\n');
+-                                        console.log(`✅ Indice generato (${firstChapters.length} capitoli)`);
++                                        console.log(`✅ Indice generato (${manualeData.chapters.length} capitoli)`);
+                                     }
+                                 }
+                             }
+@@ -1784,9 +1784,31 @@ Rispondi SOLO con un JSON valido:
+                         nota: `Nessun manuale Zanichelli disponibile nel catalogo per ${materiaName}`
+                     };
+                 } else {
++                    // Carica indici completi dei manuali Zanichelli
++                    const manualiConIndici = [];
++                    for (const manuale of manualiZanichelliPerMateria.slice(0, 3)) {
++                        let indice = '';
++                        try {
++                            const manualeData = await fetch(manuale.filepath).then(r => r.json());
++                            if (manualeData.chapters && manualeData.chapters.length > 0) {
++                                // Include TUTTI i capitoli
++                                indice = '\n   INDICE:\n' + manualeData.chapters.map(ch => 
++                                    `   ${ch.number}. ${ch.title}`
++                                ).join('\n');
++                                console.log(`✅ Indice Zanichelli caricato: ${manuale.title} (${manualeData.chapters.length} capitoli)`);
++                            }
++                        } catch (err) {
++                            console.warn(`⚠️ Impossibile caricare indice di ${manuale.title}:`, err.message);
++                        }
++                        manualiConIndici.push({
++                            info: `${manuale.author} - ${manuale.title} (${manuale.pages} pag, €${manuale.price || 'N/D'})`,
++                            indice: indice
++                        });
++                    }
++                    
+                     // Genera valutazione dinamica per i manuali Zanichelli
+-                    const manualiInfo = manualiZanichelliPerMateria.slice(0, 3).map((m, idx) => 
+-                        `${idx + 1}. ${m.author} - ${m.title} (${m.pages} pag, €${m.price || 'N/D'})`
++                    const manualiInfo = manualiConIndici.map((m, idx) => 
++                        `${idx + 1}. ${m.info}${m.indice}`
+                     ).join('\n');
+                     
+                     const zanichelliPrompt = `Sei un esperto valutatore di manuali universitari.
+-- 
+2.39.5
+
