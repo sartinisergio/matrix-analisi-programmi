@@ -566,17 +566,20 @@
                                 </div>
                                 
                                 <!-- Filtri -->
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                    <select id="filterMateria" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-                                        <option value="">📚 Tutte le materie</option>
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                                    <select id="filterMacroarea" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">🗂️ Tutte le macroaree</option>
+                                        <option value="Biologia">Biologia</option>
                                         <option value="Chimica">Chimica</option>
-                                        <option value="Chimica Generale">Chimica Generale</option>
-                                        <option value="Chimica Organica">Chimica Organica</option>
                                         <option value="Fisica">Fisica</option>
                                         <option value="Matematica">Matematica</option>
                                         <option value="Economia">Economia</option>
-                                        <option value="Biologia">Biologia</option>
                                         <option value="Istologia">Istologia</option>
+                                    </select>
+                                    
+                                    <select id="filterMateria" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">📚 Tutte le materie</option>
+                                        <!-- Popolato dinamicamente in base ai manuali caricati -->
                                     </select>
                                     
                                     <select id="filterEditore" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
@@ -606,6 +609,7 @@
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titolo</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autore</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Editore</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Macroarea</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materia</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cap.</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
@@ -1285,6 +1289,79 @@
         let currentManualeData = null; // JSON caricato dall'utente
         let editingManualeId = null; // ID del manuale in modifica (null = nuovo)
         
+        // Mapping subject legacy → macroarea/materia
+        const SUBJECT_TO_MACROAREA_MATERIA = {
+            'Chimica Generale': { macroarea: 'Chimica', materia: 'Chimica Generale' },
+            'Chimica Organica': { macroarea: 'Chimica', materia: 'Chimica Organica' },
+            'Chimica': { macroarea: 'Chimica', materia: 'Chimica Generale' },
+            'Fisica': { macroarea: 'Fisica', materia: 'Fisica Generale' },
+            'Matematica': { macroarea: 'Matematica', materia: 'Matematica Generale' },
+            'Economia': { macroarea: 'Economia', materia: 'Economia Politica' },
+            'Biologia': { macroarea: 'Biologia', materia: 'Biologia Generale' },
+            'Istologia': { macroarea: 'Istologia', materia: 'Istologia ed Embriologia' }
+        };
+        
+        // ============================================
+        // CRUD MANUALI - REGISTRY MATERIE
+        // ============================================
+        
+        function getMaterieRegistry() {
+            return JSON.parse(localStorage.getItem('materie_registry') || '{}');
+        }
+        
+        function saveMaterieRegistry(registry) {
+            localStorage.setItem('materie_registry', JSON.stringify(registry));
+        }
+        
+        function addMateriaToRegistry(macroarea, materia) {
+            const registry = getMaterieRegistry();
+            if (!registry[macroarea]) {
+                registry[macroarea] = [];
+            }
+            if (!registry[macroarea].includes(materia)) {
+                registry[macroarea].push(materia);
+                registry[macroarea].sort();
+                saveMaterieRegistry(registry);
+            }
+        }
+        
+        function getMaterieForMacroarea(macroarea) {
+            const registry = getMaterieRegistry();
+            return registry[macroarea] || [];
+        }
+        
+        function mapSubjectToMacroareaMateria(subject) {
+            // Prima controlla mapping predefinito
+            if (SUBJECT_TO_MACROAREA_MATERIA[subject]) {
+                return SUBJECT_TO_MACROAREA_MATERIA[subject];
+            }
+            
+            // Prova a dedurre da registry
+            const registry = getMaterieRegistry();
+            for (const [macroarea, materie] of Object.entries(registry)) {
+                if (materie.includes(subject)) {
+                    return { macroarea, materia: subject };
+                }
+            }
+            
+            // Fallback: usa subject come entrambi
+            return { macroarea: subject, materia: subject };
+        }
+        
+        function updateMaterieAutocomplete() {
+            const macroarea = document.getElementById('manualeMacroarea').value;
+            const datalist = document.getElementById('materieDatalist');
+            
+            if (!datalist) return;
+            
+            const materie = getMaterieForMacroarea(macroarea);
+            datalist.innerHTML = materie.map(m => `<option value="${m}">`).join('');
+        }
+        
+        function filterMaterieDatalist() {
+            // Placeholder per futuri miglioramenti (filtro dinamico)
+        }
+        
         // ============================================
         // CRUD MANUALI - CARICAMENTO LISTA
         // ============================================
@@ -1334,19 +1411,47 @@
             const manualiArray = Object.values(allManuals);
             console.log(`📋 Manuali da visualizzare: ${manualiArray.length}`);
             
-            // Sort per materia e titolo (gestisce valori undefined)
+            // Raccogli tutte le materie uniche per il filtro
+            const materieSet = new Set();
+            
+            // Sort per macroarea, materia e titolo
             manualiArray.sort((a, b) => {
-                const subjectA = a.subject || '';
-                const subjectB = b.subject || '';
+                // Gestisci legacy: se esiste subject ma non macroarea, mappa
+                if (!a.macroarea && a.subject) {
+                    const mapped = mapSubjectToMacroareaMateria(a.subject);
+                    a.macroarea = mapped.macroarea;
+                    a.materia = mapped.materia;
+                }
+                if (!b.macroarea && b.subject) {
+                    const mapped = mapSubjectToMacroareaMateria(b.subject);
+                    b.macroarea = mapped.macroarea;
+                    b.materia = mapped.materia;
+                }
+                
+                const macroareaA = a.macroarea || '';
+                const macroareaB = b.macroarea || '';
+                const materiaA = a.materia || '';
+                const materiaB = b.materia || '';
                 const titleA = a.title || '';
                 const titleB = b.title || '';
                 
-                if (subjectA !== subjectB) return subjectA.localeCompare(subjectB);
+                if (macroareaA !== macroareaB) return macroareaA.localeCompare(macroareaB);
+                if (materiaA !== materiaB) return materiaA.localeCompare(materiaB);
                 return titleA.localeCompare(titleB);
             });
             
             manualiArray.forEach(manuale => {
                 try {
+                    // Gestisci legacy mapping
+                    if (!manuale.macroarea && manuale.subject) {
+                        const mapped = mapSubjectToMacroareaMateria(manuale.subject);
+                        manuale.macroarea = mapped.macroarea;
+                        manuale.materia = mapped.materia;
+                    }
+                    
+                    // Aggiungi materia al set per filtro
+                    if (manuale.materia) materieSet.add(manuale.materia);
+                    
                     const isCustom = customManuals[manuale.id];
                     const isModified = modifiedManuals[manuale.id];
                     
@@ -1361,7 +1466,8 @@
                     const row = document.createElement('tr');
                     row.className = 'manuale-row hover:bg-gray-50';
                     row.dataset.id = manuale.id || '';
-                    row.dataset.subject = manuale.subject || '';
+                    row.dataset.macroarea = manuale.macroarea || '';
+                    row.dataset.materia = manuale.materia || '';
                     row.dataset.publisher = manuale.publisher || '';
                     row.dataset.type = manuale.type || '';
                     row.dataset.title = manuale.title || '';
@@ -1375,7 +1481,8 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.author || '—'}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.publisher || '—'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.subject || '—'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.macroarea || '—'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.materia || '—'}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.chapters_count || '—'}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">${tipoBadge}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
@@ -1389,6 +1496,9 @@
                     console.error('❌ Errore rendering manuale:', manuale.id, error);
                 }
             });
+            
+            // Popola filtro materie dinamicamente
+            populateFilterMaterie([...materieSet].sort());
             
             console.log(`✅ Tabella popolata con ${tbody.children.length} righe`);
             
@@ -1411,12 +1521,33 @@
             }
         }
         
+        function populateFilterMaterie(materie) {
+            const filterSelect = document.getElementById('filterMateria');
+            if (!filterSelect) return;
+            
+            const currentValue = filterSelect.value;
+            filterSelect.innerHTML = '<option value="">📚 Tutte le materie</option>';
+            
+            materie.forEach(materia => {
+                const option = document.createElement('option');
+                option.value = materia;
+                option.textContent = materia;
+                filterSelect.appendChild(option);
+            });
+            
+            // Ripristina valore selezionato
+            if (currentValue && materie.includes(currentValue)) {
+                filterSelect.value = currentValue;
+            }
+        }
+        
         // ============================================
         // CRUD MANUALI - FILTRI
         // ============================================
         
         function filterManuali() {
             const searchTerm = document.getElementById('searchManuali').value.toLowerCase();
+            const filterMacroarea = document.getElementById('filterMacroarea').value;
             const filterMateria = document.getElementById('filterMateria').value;
             const filterEditore = document.getElementById('filterEditore').value;
             const filterTipo = document.getElementById('filterTipo').value;
@@ -1426,16 +1557,18 @@
             rows.forEach(row => {
                 const title = row.dataset.title.toLowerCase();
                 const author = row.dataset.author.toLowerCase();
-                const subject = row.dataset.subject;
+                const macroarea = row.dataset.macroarea;
+                const materia = row.dataset.materia;
                 const publisher = row.dataset.publisher;
                 const type = row.dataset.type;
                 
                 const matchSearch = title.includes(searchTerm) || author.includes(searchTerm);
-                const matchMateria = !filterMateria || subject === filterMateria;
+                const matchMacroarea = !filterMacroarea || macroarea === filterMacroarea;
+                const matchMateria = !filterMateria || materia === filterMateria;
                 const matchEditore = !filterEditore || publisher === filterEditore;
                 const matchTipo = !filterTipo || type === filterTipo;
                 
-                if (matchSearch && matchMateria && matchEditore && matchTipo) {
+                if (matchSearch && matchMacroarea && matchMateria && matchEditore && matchTipo) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
@@ -1454,10 +1587,12 @@
             document.getElementById('manualeModalTitle').textContent = '➕ Nuovo Manuale';
             document.getElementById('manualeId').value = '';
             document.getElementById('manualeId').disabled = false;
+            document.getElementById('manualeMacroarea').value = '';
             document.getElementById('manualeMateria').value = '';
             document.getElementById('manualeTipo').value = '';
             document.getElementById('manualeJsonFile').value = '';
             
+            document.getElementById('materieDatalist').innerHTML = '';
             document.getElementById('jsonFileInfo').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
             document.getElementById('validationErrors').classList.add('hidden');
@@ -1481,11 +1616,22 @@
             
             editingManualeId = manualeId;
             
+            // Gestisci legacy: se esiste subject ma non macroarea, mappa
+            if (!manuale.macroarea && manuale.subject) {
+                const mapped = mapSubjectToMacroareaMateria(manuale.subject);
+                manuale.macroarea = mapped.macroarea;
+                manuale.materia = mapped.materia;
+            }
+            
             document.getElementById('manualeModalTitle').textContent = '✏️ Modifica Manuale';
             document.getElementById('manualeId').value = manuale.id;
             document.getElementById('manualeId').disabled = true; // ID non modificabile
-            document.getElementById('manualeMateria').value = manuale.subject || '';
+            document.getElementById('manualeMacroarea').value = manuale.macroarea || '';
+            document.getElementById('manualeMateria').value = manuale.materia || '';
             document.getElementById('manualeTipo').value = manuale.type || '';
+            
+            // Aggiorna autocomplete per la macroarea selezionata
+            updateMaterieAutocomplete();
             
             document.getElementById('jsonFileInfo').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
@@ -1599,7 +1745,8 @@
             
             // Valida form
             const id = document.getElementById('manualeId').value.trim();
-            const materia = document.getElementById('manualeMateria').value;
+            const macroarea = document.getElementById('manualeMacroarea').value;
+            const materia = document.getElementById('manualeMateria').value.trim();
             const tipo = document.getElementById('manualeTipo').value;
             
             const errors = [];
@@ -1608,6 +1755,10 @@
                 errors.push('ID manuale obbligatorio');
             } else if (!/^[a-zA-Z0-9_]+$/.test(id)) {
                 errors.push('ID deve contenere solo lettere, numeri e underscore');
+            }
+            
+            if (!macroarea) {
+                errors.push('Macroarea obbligatoria');
             }
             
             if (!materia) {
@@ -1640,6 +1791,9 @@
                 return;
             }
             
+            // Aggiungi materia al registry per autocomplete futuro
+            addMateriaToRegistry(macroarea, materia);
+            
             // Prepara dati da salvare
             let manualeToSave;
             
@@ -1648,7 +1802,9 @@
                 manualeToSave = {
                     ...currentManualeData,
                     id: id,
-                    subject: materia,
+                    macroarea: macroarea,
+                    materia: materia,
+                    subject: materia, // mantieni per backward compatibility
                     type: tipo
                 };
             } else {
@@ -1658,7 +1814,9 @@
                 
                 manualeToSave = {
                     ...originalManual,
-                    subject: materia,
+                    macroarea: macroarea,
+                    materia: materia,
+                    subject: materia, // mantieni per backward compatibility
                     type: tipo
                 };
             }
@@ -4083,28 +4241,38 @@ Rispondi SOLO con un JSON valido:
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Materia *</label>
-                                <select id="manualeMateria" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-                                    <option value="">Seleziona materia...</option>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Macroarea *</label>
+                                <select id="manualeMacroarea" onchange="updateMaterieAutocomplete()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona macroarea...</option>
+                                    <option value="Biologia">Biologia</option>
                                     <option value="Chimica">Chimica</option>
-                                    <option value="Chimica Generale">Chimica Generale</option>
-                                    <option value="Chimica Organica">Chimica Organica</option>
                                     <option value="Fisica">Fisica</option>
                                     <option value="Matematica">Matematica</option>
                                     <option value="Economia">Economia</option>
-                                    <option value="Biologia">Biologia</option>
                                     <option value="Istologia">Istologia</option>
                                 </select>
+                                <p class="text-xs text-gray-500 mt-1">Categoria principale (es: Biologia, Chimica)</p>
                             </div>
                             
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Tipo *</label>
-                                <select id="manualeTipo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-                                    <option value="">Seleziona tipo...</option>
-                                    <option value="zanichelli">Zanichelli</option>
-                                    <option value="competitor">Competitor</option>
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Materia *</label>
+                                <input type="text" id="manualeMateria" list="materieDatalist" placeholder="es: Biologia Vegetale"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                                    oninput="filterMaterieDatalist()">
+                                <datalist id="materieDatalist">
+                                    <!-- Popolato dinamicamente da JavaScript -->
+                                </datalist>
+                                <p class="text-xs text-gray-500 mt-1">Disciplina specifica (campo libero con suggerimenti)</p>
                             </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo *</label>
+                            <select id="manualeTipo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Seleziona tipo...</option>
+                                <option value="zanichelli">Zanichelli</option>
+                                <option value="competitor">Competitor</option>
+                            </select>
                         </div>
                     </div>
                 </div>
