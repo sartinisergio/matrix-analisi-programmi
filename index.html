@@ -605,15 +605,15 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titolo</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autore</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Editore</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Macroarea</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materia</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cap.</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Titolo</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Autore</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Editore</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Macroarea</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Materia</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Cap.</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tipo</th>
+                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="manualiTableBody" class="bg-white divide-y divide-gray-200">
@@ -1561,20 +1561,20 @@
                     row.dataset.author = manuale.author || '';
                     
                     row.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.id || '—'}</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">
-                            <div class="font-medium">${manuale.title || '—'}</div>
+                        <td class="px-2 py-2 text-xs text-gray-500 truncate max-w-xs">${manuale.id || '—'}</td>
+                        <td class="px-2 py-2 text-xs">
+                            <div class="font-medium text-gray-900 truncate max-w-xs">${manuale.title || '—'}</div>
                             <div class="text-xs text-gray-500">${badge}</div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.author || '—'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.publisher || '—'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.macroarea || '—'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.materia || '—'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.chapters_count || '—'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">${tipoBadge}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <button onclick="editManuale('${manuale.id}')" class="text-indigo-600 hover:text-indigo-900">✏️</button>
-                            <button onclick="deleteManuale('${manuale.id}')" class="text-red-600 hover:text-red-900">🗑️</button>
+                        <td class="px-2 py-2 text-xs text-gray-500 truncate max-w-xs">${manuale.author || '—'}</td>
+                        <td class="px-2 py-2 text-xs text-gray-500 truncate">${manuale.publisher || '—'}</td>
+                        <td class="px-2 py-2 text-xs text-gray-500 truncate">${manuale.macroarea || '—'}</td>
+                        <td class="px-2 py-2 text-xs text-gray-500 truncate max-w-xs">${manuale.materia || '—'}</td>
+                        <td class="px-2 py-2 text-xs text-gray-500 text-center">${manuale.chapters_count || '—'}</td>
+                        <td class="px-2 py-2 text-xs">${tipoBadge}</td>
+                        <td class="px-2 py-2 text-sm font-medium space-x-1">
+                            <button onclick="editManuale('${manuale.id}')" class="text-indigo-600 hover:text-indigo-900" title="Modifica">✏️</button>
+                            <button onclick="deleteManuale('${manuale.id}')" class="text-red-600 hover:text-red-900" title="Elimina">🗑️</button>
                         </td>
                     `;
                     
@@ -1700,6 +1700,7 @@
             document.getElementById('materieDatalist').innerHTML = '';
             document.getElementById('jsonFileInfo').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
+            document.getElementById('jsonEditorSection').classList.add('hidden'); // Nascondi editor per nuovi
             document.getElementById('validationErrors').classList.add('hidden');
             
             document.getElementById('manualeModal').classList.remove('hidden');
@@ -1759,6 +1760,7 @@
                 // Manuale custom: carica da localStorage
                 currentManualeData = customManuals[manualeId];
                 showPreview(currentManualeData);
+                showJsonEditor(currentManualeData);
             } else if (manuale.filepath) {
                 // Manuale originale: carica da file
                 fetch(manuale.filepath)
@@ -1766,6 +1768,7 @@
                     .then(data => {
                         currentManualeData = data;
                         showPreview(currentManualeData);
+                        showJsonEditor(currentManualeData);
                     })
                     .catch(err => {
                         console.error('❌ Errore caricamento JSON:', err);
@@ -1871,6 +1874,14 @@
             document.getElementById('previewSection').classList.remove('hidden');
         }
         
+        function showJsonEditor(json) {
+            const editor = document.getElementById('jsonEditor');
+            if (editor) {
+                editor.value = JSON.stringify(json, null, 2);
+                document.getElementById('jsonEditorSection').classList.remove('hidden');
+            }
+        }
+        
         // ============================================
         // CRUD MANUALI - SALVATAGGIO
         // ============================================
@@ -1933,26 +1944,47 @@
             // Prepara dati da salvare
             let manualeToSave;
             
-            if (currentManualeData) {
+            // Se l'editor JSON è visibile, leggi da lì
+            const jsonEditorSection = document.getElementById('jsonEditorSection');
+            if (jsonEditorSection && !jsonEditorSection.classList.contains('hidden')) {
+                const jsonEditorContent = document.getElementById('jsonEditor').value;
+                try {
+                    const parsedJson = JSON.parse(jsonEditorContent);
+                    manualeToSave = {
+                        ...parsedJson,
+                        id: id,
+                        macroarea: macroarea,
+                        materia: materia,
+                        subject: materia,
+                        type: tipo
+                    };
+                    console.log('✅ JSON letto dall\'editor');
+                } catch (e) {
+                    errors.push('JSON non valido nell\'editor: ' + e.message);
+                    showValidationErrors(errors);
+                    return;
+                }
+            } else if (currentManualeData) {
                 // Nuovo manuale o sostituzione JSON
                 manualeToSave = {
                     ...currentManualeData,
                     id: id,
                     macroarea: macroarea,
                     materia: materia,
-                    subject: materia, // mantieni per backward compatibility
+                    subject: materia,
                     type: tipo
                 };
             } else {
                 // Modifica solo metadata (mantieni JSON originale)
                 const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
-                const originalManual = customManuals[editingManualeId] || MANUAL_CATALOG[editingManualeId];
+                const originalManuals = getManualsAsObject();
+                const originalManual = customManuals[editingManualeId] || originalManuals[editingManualeId];
                 
                 manualeToSave = {
                     ...originalManual,
                     macroarea: macroarea,
                     materia: materia,
-                    subject: materia, // mantieni per backward compatibility
+                    subject: materia,
                     type: tipo
                 };
             }
@@ -4489,6 +4521,16 @@ Rispondi SOLO con un JSON valido:
                             <span id="previewPrice" class="font-medium text-gray-900"></span>
                         </div>
                     </div>
+                </div>
+                
+                <!-- EDITOR JSON (solo in modifica) -->
+                <div id="jsonEditorSection" class="hidden bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-yellow-900 mb-3">📝 Editor JSON</h4>
+                    <textarea id="jsonEditor" class="w-full h-96 p-3 border border-gray-300 rounded-lg font-mono text-xs"
+                        placeholder="Contenuto JSON del manuale..."></textarea>
+                    <p class="text-xs text-gray-500 mt-2">
+                        Modifica il JSON direttamente. Assicurati che la sintassi sia valida prima di salvare.
+                    </p>
                 </div>
                 
                 <!-- Errori validazione -->
