@@ -1679,16 +1679,29 @@
         function editManuale(manualeId) {
             console.log('✏️ Modifica manuale:', manualeId);
             
+            // Validazione MANUAL_CATALOG
+            if (!MANUAL_CATALOG || !MANUAL_CATALOG.manuals) {
+                console.error('❌ MANUAL_CATALOG non caricato');
+                alert('Errore: il catalogo manuali non è stato caricato. Ricarica la pagina.');
+                return;
+            }
+            
             // Carica dati del manuale
             const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
             const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
-            const allManuals = { ...MANUAL_CATALOG, ...modifiedManuals, ...customManuals };
+            const allManuals = { ...MANUAL_CATALOG.manuals, ...modifiedManuals, ...customManuals };
+            
+            console.log(`🔍 Cercando manuale con ID: "${manualeId}"`);
+            console.log(`📊 Totale manuali disponibili: ${Object.keys(allManuals).length}`);
             
             const manuale = allManuals[manualeId];
             if (!manuale) {
-                alert('Manuale non trovato');
+                console.error(`❌ Manuale "${manualeId}" non trovato in:`, Object.keys(allManuals));
+                alert(`Manuale "${manualeId}" non trovato nel catalogo`);
                 return;
             }
+            
+            console.log('✅ Manuale trovato:', manuale);
             
             editingManualeId = manualeId;
             
@@ -1851,14 +1864,19 @@
             
             // Controllo duplicati (solo per nuovi)
             if (!editingManualeId) {
-                const allManuals = { 
-                    ...MANUAL_CATALOG, 
-                    ...JSON.parse(localStorage.getItem('custom_manuals') || '{}'),
-                    ...JSON.parse(localStorage.getItem('modified_manuals') || '{}')
-                };
-                
-                if (allManuals[id]) {
-                    errors.push('ID già esistente. Scegli un ID diverso.');
+                // Validazione MANUAL_CATALOG
+                if (!MANUAL_CATALOG || !MANUAL_CATALOG.manuals) {
+                    errors.push('Errore: catalogo manuali non caricato. Ricarica la pagina.');
+                } else {
+                    const allManuals = { 
+                        ...MANUAL_CATALOG.manuals, 
+                        ...JSON.parse(localStorage.getItem('custom_manuals') || '{}'),
+                        ...JSON.parse(localStorage.getItem('modified_manuals') || '{}')
+                    };
+                    
+                    if (allManuals[id]) {
+                        errors.push('ID già esistente. Scegli un ID diverso.');
+                    }
                 }
             }
             
@@ -1961,18 +1979,30 @@
         function deleteManuale(manualeId) {
             console.log('🗑️ Richiesta eliminazione:', manualeId);
             
+            // Validazione MANUAL_CATALOG
+            if (!MANUAL_CATALOG || !MANUAL_CATALOG.manuals) {
+                console.error('❌ MANUAL_CATALOG non caricato');
+                alert('Errore: il catalogo manuali non è stato caricato. Ricarica la pagina.');
+                return;
+            }
+            
             // Carica dati del manuale
             const allManuals = { 
-                ...MANUAL_CATALOG, 
+                ...MANUAL_CATALOG.manuals, 
                 ...JSON.parse(localStorage.getItem('custom_manuals') || '{}'),
                 ...JSON.parse(localStorage.getItem('modified_manuals') || '{}')
             };
             
+            console.log(`🔍 Cercando manuale da eliminare con ID: "${manualeId}"`);
+            
             const manuale = allManuals[manualeId];
             if (!manuale) {
-                alert('Manuale non trovato');
+                console.error(`❌ Manuale "${manualeId}" non trovato`);
+                alert(`Manuale "${manualeId}" non trovato nel catalogo`);
                 return;
             }
+            
+            console.log('✅ Manuale trovato per eliminazione:', manuale);
             
             deleteTargetId = manualeId;
             document.getElementById('deleteManualeName').textContent = `${manuale.title} (${manuale.author})`;
@@ -2032,15 +2062,25 @@
             console.log('💾 Export catalog JSON...');
             
             try {
+                // Validazione MANUAL_CATALOG
+                if (!MANUAL_CATALOG || !MANUAL_CATALOG.manuals) {
+                    alert('Errore: il catalogo manuali non è stato caricato. Ricarica la pagina.');
+                    return;
+                }
+                
                 // Merge tutti i cataloghi
                 const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
                 const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
                 const catalogEntries = JSON.parse(localStorage.getItem('catalog_entries') || '{}');
                 
                 const fullCatalog = {
-                    ...MANUAL_CATALOG,
-                    ...modifiedManuals,
-                    ...catalogEntries
+                    catalog_format_version: MANUAL_CATALOG.catalog_format_version || '1.0.0',
+                    last_updated: new Date().toISOString().split('T')[0],
+                    manuals: {
+                        ...MANUAL_CATALOG.manuals,
+                        ...modifiedManuals,
+                        ...catalogEntries
+                    }
                 };
                 
                 // Download JSON
