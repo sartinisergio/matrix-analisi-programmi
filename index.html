@@ -12,6 +12,18 @@
         body { font-family: system-ui, -apple-system, sans-serif; }
         .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #4F46E5; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Catalog Tab Styles */
+        .catalog-tab-btn.active {
+            border-bottom-color: #4F46E5;
+            color: #4F46E5;
+        }
+        .catalog-tab-content {
+            display: block;
+        }
+        .catalog-tab-content.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
@@ -519,17 +531,122 @@
             </div>
             <!-- END Tab Content: Valutazione Manuali -->
             
-            <!-- Tab Content: Gestione Cataloghi (PLACEHOLDER) -->
+            <!-- Tab Content: Gestione Cataloghi -->
             <div id="tabContentCataloghi" class="tab-content hidden">
-                <div class="max-w-4xl mx-auto">
+                <div class="max-w-7xl mx-auto">
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <h2 class="text-xl font-bold mb-4">⚙️ Gestione Cataloghi</h2>
-                        <p class="text-gray-600">Funzionalità in fase di implementazione...</p>
-                        <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p class="text-sm text-blue-800">
-                                Questa sezione permetterà di aggiungere, modificare ed eliminare framework e manuali.
-                            </p>
+                        <h2 class="text-xl font-bold mb-6">⚙️ Gestione Cataloghi</h2>
+                        
+                        <!-- Sub-tabs: Manuali / Framework -->
+                        <div class="border-b border-gray-200 mb-6">
+                            <nav class="-mb-px flex space-x-8">
+                                <button onclick="switchCatalogTab('manuali')" id="btnTabManuali" class="catalog-tab-btn active py-4 px-1 border-b-2 border-indigo-500 font-medium text-sm text-indigo-600">
+                                    📚 Manuali
+                                </button>
+                                <button onclick="switchCatalogTab('framework')" id="btnTabFramework" class="catalog-tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                    📋 Framework
+                                </button>
+                            </nav>
                         </div>
+                        
+                        <!-- MANUALI TAB -->
+                        <div id="catalogTabManuali" class="catalog-tab-content">
+                            
+                            <!-- Header con filtri e azioni -->
+                            <div class="mb-6">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                                    <div class="flex-1">
+                                        <input type="text" id="searchManuali" placeholder="🔍 Cerca per titolo, autore, editore..." 
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                                            onkeyup="filterManuali()">
+                                    </div>
+                                    <button onclick="openAddManualeModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium whitespace-nowrap">
+                                        ➕ Nuovo Manuale
+                                    </button>
+                                </div>
+                                
+                                <!-- Filtri -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <select id="filterMateria" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">📚 Tutte le materie</option>
+                                        <option value="Chimica">Chimica</option>
+                                        <option value="Chimica Generale">Chimica Generale</option>
+                                        <option value="Chimica Organica">Chimica Organica</option>
+                                        <option value="Fisica">Fisica</option>
+                                        <option value="Matematica">Matematica</option>
+                                        <option value="Economia">Economia</option>
+                                        <option value="Biologia">Biologia</option>
+                                        <option value="Istologia">Istologia</option>
+                                    </select>
+                                    
+                                    <select id="filterEditore" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">🏢 Tutti gli editori</option>
+                                        <option value="Zanichelli">Zanichelli</option>
+                                        <option value="Edises">Edises</option>
+                                        <option value="McGraw-Hill">McGraw-Hill</option>
+                                        <option value="Pearson">Pearson</option>
+                                        <option value="Piccin">Piccin</option>
+                                        <option value="CEA">CEA</option>
+                                    </select>
+                                    
+                                    <select id="filterTipo" onchange="filterManuali()" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">🏷️ Tutti i tipi</option>
+                                        <option value="zanichelli">Zanichelli</option>
+                                        <option value="competitor">Competitor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Tabella manuali -->
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titolo</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autore</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Editore</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materia</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cap.</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="manualiTableBody" class="bg-white divide-y divide-gray-200">
+                                        <!-- Popolato dinamicamente da JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Footer con stats e export -->
+                            <div class="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-gray-200">
+                                <div class="text-sm text-gray-600">
+                                    <span id="manualiCount">Caricamento...</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="exportCatalog()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        💾 Export JSON
+                                    </button>
+                                    <button onclick="exportCatalogZIP()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        📦 Export ZIP
+                                    </button>
+                                    <button onclick="importCatalog()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        📥 Import
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END MANUALI TAB -->
+                        
+                        <!-- FRAMEWORK TAB -->
+                        <div id="catalogTabFramework" class="catalog-tab-content hidden">
+                            <div class="p-8 text-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                                <p class="text-gray-600 mb-2">📋 <strong>Gestione Framework</strong></p>
+                                <p class="text-sm text-gray-500">Funzionalità in fase di implementazione...</p>
+                            </div>
+                        </div>
+                        <!-- END FRAMEWORK TAB -->
+                        
                     </div>
                 </div>
             </div>
@@ -1117,6 +1234,590 @@
                 selectedButton.classList.remove('border-transparent', 'text-gray-500');
                 selectedButton.classList.add('border-indigo-500', 'text-indigo-600');
             }
+            
+            // Se è il tab Cataloghi, carica i manuali
+            if (tabName === 'cataloghi') {
+                loadManualiList();
+            }
+        }
+        
+        // ============================================
+        // GESTIONE CATALOGHI - SUB TABS
+        // ============================================
+        
+        function switchCatalogTab(tabName) {
+            // Hide all catalog tab contents
+            const catalogTabs = document.querySelectorAll('.catalog-tab-content');
+            catalogTabs.forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active state from all catalog tab buttons
+            const catalogButtons = document.querySelectorAll('.catalog-tab-btn');
+            catalogButtons.forEach(btn => {
+                btn.classList.remove('border-indigo-500', 'text-indigo-600', 'active');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected catalog tab
+            const selectedTab = document.getElementById('catalogTab' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+            }
+            
+            // Activate selected button
+            const selectedBtn = document.getElementById('btnTab' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedBtn) {
+                selectedBtn.classList.remove('border-transparent', 'text-gray-500');
+                selectedBtn.classList.add('border-indigo-500', 'text-indigo-600', 'active');
+            }
+            
+            // Load data for the selected tab
+            if (tabName === 'manuali') {
+                loadManualiList();
+            }
+        }
+        
+        // ============================================
+        // CRUD MANUALI - VARIABILI GLOBALI
+        // ============================================
+        
+        let currentManualeData = null; // JSON caricato dall'utente
+        let editingManualeId = null; // ID del manuale in modifica (null = nuovo)
+        
+        // ============================================
+        // CRUD MANUALI - CARICAMENTO LISTA
+        // ============================================
+        
+        async function loadManualiList() {
+            console.log('📚 Caricamento lista manuali...');
+            
+            try {
+                // Carica manuali originali
+                const originalManuals = { ...MANUAL_CATALOG };
+                
+                // Carica manuali custom da localStorage
+                const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+                
+                // Carica modifiche da localStorage
+                const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+                
+                // Merge: modifiche sovrascrivono originali, custom si aggiungono
+                const allManuals = {
+                    ...originalManuals,
+                    ...modifiedManuals,
+                    ...customManuals
+                };
+                
+                console.log(`✅ Caricati ${Object.keys(allManuals).length} manuali`);
+                
+                // Popola la tabella
+                displayManualiTable(allManuals, customManuals, modifiedManuals);
+                
+            } catch (error) {
+                console.error('❌ Errore caricamento manuali:', error);
+                alert('Errore nel caricamento dei manuali: ' + error.message);
+            }
+        }
+        
+        function displayManualiTable(allManuals, customManuals, modifiedManuals) {
+            const tbody = document.getElementById('manualiTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            const manualiArray = Object.values(allManuals);
+            
+            // Sort per materia e titolo
+            manualiArray.sort((a, b) => {
+                if (a.subject !== b.subject) return a.subject.localeCompare(b.subject);
+                return a.title.localeCompare(b.title);
+            });
+            
+            manualiArray.forEach(manuale => {
+                const isCustom = customManuals[manuale.id];
+                const isModified = modifiedManuals[manuale.id];
+                
+                const badge = isCustom ? '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">🔵 Custom</span>' :
+                              isModified ? '<span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">🟡 Modificato</span>' :
+                              '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">🟢 Originale</span>';
+                
+                const tipoBadge = manuale.type === 'zanichelli' ? 
+                    '<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Zanichelli</span>' :
+                    '<span class="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded">Competitor</span>';
+                
+                const row = document.createElement('tr');
+                row.className = 'manuale-row hover:bg-gray-50';
+                row.dataset.id = manuale.id;
+                row.dataset.subject = manuale.subject || '';
+                row.dataset.publisher = manuale.publisher || '';
+                row.dataset.type = manuale.type || '';
+                row.dataset.title = manuale.title || '';
+                row.dataset.author = manuale.author || '';
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.id}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">
+                        <div class="font-medium">${manuale.title}</div>
+                        <div class="text-xs text-gray-500">${badge}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.author}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.publisher}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.subject}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${manuale.chapters_count || '—'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${tipoBadge}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <button onclick="editManuale('${manuale.id}')" class="text-indigo-600 hover:text-indigo-900">✏️</button>
+                        <button onclick="deleteManuale('${manuale.id}')" class="text-red-600 hover:text-red-900">🗑️</button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            // Aggiorna contatore
+            const countEl = document.getElementById('manualiCount');
+            if (countEl) {
+                const customCount = Object.keys(customManuals).length;
+                const modifiedCount = Object.keys(modifiedManuals).length;
+                const originalCount = manualiArray.length - customCount - modifiedCount;
+                
+                countEl.innerHTML = `
+                    📚 <strong>${manualiArray.length}</strong> manuali totali
+                    <span class="text-gray-400">•</span>
+                    <span class="text-green-600">${originalCount} originali</span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-yellow-600">${modifiedCount} modificati</span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-blue-600">${customCount} custom</span>
+                `;
+            }
+        }
+        
+        // ============================================
+        // CRUD MANUALI - FILTRI
+        // ============================================
+        
+        function filterManuali() {
+            const searchTerm = document.getElementById('searchManuali').value.toLowerCase();
+            const filterMateria = document.getElementById('filterMateria').value;
+            const filterEditore = document.getElementById('filterEditore').value;
+            const filterTipo = document.getElementById('filterTipo').value;
+            
+            const rows = document.querySelectorAll('.manuale-row');
+            
+            rows.forEach(row => {
+                const title = row.dataset.title.toLowerCase();
+                const author = row.dataset.author.toLowerCase();
+                const subject = row.dataset.subject;
+                const publisher = row.dataset.publisher;
+                const type = row.dataset.type;
+                
+                const matchSearch = title.includes(searchTerm) || author.includes(searchTerm);
+                const matchMateria = !filterMateria || subject === filterMateria;
+                const matchEditore = !filterEditore || publisher === filterEditore;
+                const matchTipo = !filterTipo || type === filterTipo;
+                
+                if (matchSearch && matchMateria && matchEditore && matchTipo) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // ============================================
+        // CRUD MANUALI - MODAL AGGIUNGI/MODIFICA
+        // ============================================
+        
+        function openAddManualeModal() {
+            editingManualeId = null;
+            currentManualeData = null;
+            
+            document.getElementById('manualeModalTitle').textContent = '➕ Nuovo Manuale';
+            document.getElementById('manualeId').value = '';
+            document.getElementById('manualeId').disabled = false;
+            document.getElementById('manualeMateria').value = '';
+            document.getElementById('manualeTipo').value = '';
+            document.getElementById('manualeJsonFile').value = '';
+            
+            document.getElementById('jsonFileInfo').classList.add('hidden');
+            document.getElementById('previewSection').classList.add('hidden');
+            document.getElementById('validationErrors').classList.add('hidden');
+            
+            document.getElementById('manualeModal').classList.remove('hidden');
+        }
+        
+        function editManuale(manualeId) {
+            console.log('✏️ Modifica manuale:', manualeId);
+            
+            // Carica dati del manuale
+            const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+            const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+            const allManuals = { ...MANUAL_CATALOG, ...modifiedManuals, ...customManuals };
+            
+            const manuale = allManuals[manualeId];
+            if (!manuale) {
+                alert('Manuale non trovato');
+                return;
+            }
+            
+            editingManualeId = manualeId;
+            
+            document.getElementById('manualeModalTitle').textContent = '✏️ Modifica Manuale';
+            document.getElementById('manualeId').value = manuale.id;
+            document.getElementById('manualeId').disabled = true; // ID non modificabile
+            document.getElementById('manualeMateria').value = manuale.subject || '';
+            document.getElementById('manualeTipo').value = manuale.type || '';
+            
+            document.getElementById('jsonFileInfo').classList.add('hidden');
+            document.getElementById('previewSection').classList.add('hidden');
+            document.getElementById('validationErrors').classList.add('hidden');
+            
+            // Se è un manuale custom, prova a caricare il JSON completo
+            if (customManuals[manualeId]) {
+                currentManualeData = customManuals[manualeId];
+                showPreview(currentManualeData);
+            }
+            
+            document.getElementById('manualeModal').classList.remove('hidden');
+        }
+        
+        function closeManualeModal() {
+            document.getElementById('manualeModal').classList.add('hidden');
+            editingManualeId = null;
+            currentManualeData = null;
+        }
+        
+        // ============================================
+        // CRUD MANUALI - UPLOAD E VALIDAZIONE JSON
+        // ============================================
+        
+        async function handleJsonUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            console.log('📁 Caricamento file JSON:', file.name);
+            
+            // Mostra info file
+            document.getElementById('jsonFileName').textContent = file.name;
+            document.getElementById('jsonFileSize').textContent = `${(file.size / 1024).toFixed(2)} KB`;
+            document.getElementById('jsonFileInfo').classList.remove('hidden');
+            
+            try {
+                const text = await file.text();
+                const json = JSON.parse(text);
+                
+                console.log('✅ JSON parsato con successo');
+                
+                // Valida struttura
+                const errors = validateManualeJson(json);
+                
+                if (errors.length > 0) {
+                    showValidationErrors(errors);
+                    currentManualeData = null;
+                    document.getElementById('previewSection').classList.add('hidden');
+                    return;
+                }
+                
+                // JSON valido
+                currentManualeData = json;
+                document.getElementById('validationErrors').classList.add('hidden');
+                showPreview(json);
+                
+            } catch (error) {
+                console.error('❌ Errore parsing JSON:', error);
+                showValidationErrors(['Errore nel parsing del file JSON: ' + error.message]);
+                currentManualeData = null;
+            }
+        }
+        
+        function validateManualeJson(json) {
+            const errors = [];
+            
+            if (!json.id || typeof json.id !== 'string') {
+                errors.push('Campo "id" obbligatorio (stringa)');
+            }
+            
+            if (!json.title || typeof json.title !== 'string') {
+                errors.push('Campo "title" obbligatorio (stringa)');
+            }
+            
+            if (!json.author || typeof json.author !== 'string') {
+                errors.push('Campo "author" obbligatorio (stringa)');
+            }
+            
+            if (!json.chapters || !Array.isArray(json.chapters)) {
+                errors.push('Campo "chapters" obbligatorio (array)');
+            } else if (json.chapters.length === 0) {
+                errors.push('Il manuale deve avere almeno un capitolo');
+            }
+            
+            return errors;
+        }
+        
+        function showValidationErrors(errors) {
+            const errorList = document.getElementById('errorList');
+            errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+            document.getElementById('validationErrors').classList.remove('hidden');
+        }
+        
+        function showPreview(json) {
+            document.getElementById('previewTitle').textContent = json.title || '—';
+            document.getElementById('previewAuthor').textContent = json.author || '—';
+            document.getElementById('previewPublisher').textContent = json.publisher || '—';
+            document.getElementById('previewChapters').textContent = json.chapters ? json.chapters.length : '—';
+            document.getElementById('previewPages').textContent = json.pages || '—';
+            document.getElementById('previewPrice').textContent = json.price ? `€${json.price}` : '—';
+            
+            document.getElementById('previewSection').classList.remove('hidden');
+        }
+        
+        // ============================================
+        // CRUD MANUALI - SALVATAGGIO
+        // ============================================
+        
+        async function saveManualeData() {
+            console.log('💾 Salvataggio manuale...');
+            
+            // Valida form
+            const id = document.getElementById('manualeId').value.trim();
+            const materia = document.getElementById('manualeMateria').value;
+            const tipo = document.getElementById('manualeTipo').value;
+            
+            const errors = [];
+            
+            if (!id) {
+                errors.push('ID manuale obbligatorio');
+            } else if (!/^[a-zA-Z0-9_]+$/.test(id)) {
+                errors.push('ID deve contenere solo lettere, numeri e underscore');
+            }
+            
+            if (!materia) {
+                errors.push('Materia obbligatoria');
+            }
+            
+            if (!tipo) {
+                errors.push('Tipo obbligatorio');
+            }
+            
+            if (!currentManualeData && !editingManualeId) {
+                errors.push('File JSON obbligatorio per nuovi manuali');
+            }
+            
+            // Controllo duplicati (solo per nuovi)
+            if (!editingManualeId) {
+                const allManuals = { 
+                    ...MANUAL_CATALOG, 
+                    ...JSON.parse(localStorage.getItem('custom_manuals') || '{}'),
+                    ...JSON.parse(localStorage.getItem('modified_manuals') || '{}')
+                };
+                
+                if (allManuals[id]) {
+                    errors.push('ID già esistente. Scegli un ID diverso.');
+                }
+            }
+            
+            if (errors.length > 0) {
+                showValidationErrors(errors);
+                return;
+            }
+            
+            // Prepara dati da salvare
+            let manualeToSave;
+            
+            if (currentManualeData) {
+                // Nuovo manuale o sostituzione JSON
+                manualeToSave = {
+                    ...currentManualeData,
+                    id: id,
+                    subject: materia,
+                    type: tipo
+                };
+            } else {
+                // Modifica solo metadata (mantieni JSON originale)
+                const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+                const originalManual = customManuals[editingManualeId] || MANUAL_CATALOG[editingManualeId];
+                
+                manualeToSave = {
+                    ...originalManual,
+                    subject: materia,
+                    type: tipo
+                };
+            }
+            
+            // Salva in localStorage
+            try {
+                if (!editingManualeId || !MANUAL_CATALOG[id]) {
+                    // Nuovo manuale custom
+                    const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+                    customManuals[id] = manualeToSave;
+                    localStorage.setItem('custom_manuals', JSON.stringify(customManuals));
+                    console.log('✅ Nuovo manuale custom salvato');
+                } else {
+                    // Modifica di manuale esistente
+                    const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+                    modifiedManuals[id] = manualeToSave;
+                    localStorage.setItem('modified_manuals', JSON.stringify(modifiedManuals));
+                    console.log('✅ Manuale modificato salvato');
+                }
+                
+                // Rigenera catalog entry
+                regenerateCatalogEntry(id, manualeToSave);
+                
+                // Chiudi modal e ricarica lista
+                closeManualeModal();
+                loadManualiList();
+                
+                alert('✅ Manuale salvato con successo!');
+                
+            } catch (error) {
+                console.error('❌ Errore salvataggio:', error);
+                alert('Errore nel salvataggio: ' + error.message);
+            }
+        }
+        
+        function regenerateCatalogEntry(id, manualeData) {
+            // Genera metadata per il catalog
+            const catalogEntry = {
+                id: id,
+                filename: `${id}.json`,
+                filepath: `custom/${id}.json`,
+                title: manualeData.title,
+                author: manualeData.author,
+                publisher: manualeData.publisher || 'N/A',
+                type: manualeData.type,
+                subject: manualeData.subject,
+                price: manualeData.price || 0,
+                pages: manualeData.pages || 0,
+                edition: manualeData.edition || 'N/A',
+                year: manualeData.year || 'N/A',
+                chapters_count: manualeData.chapters ? manualeData.chapters.length : 0
+            };
+            
+            // Salva nel catalog entries
+            const catalogEntries = JSON.parse(localStorage.getItem('catalog_entries') || '{}');
+            catalogEntries[id] = catalogEntry;
+            localStorage.setItem('catalog_entries', JSON.stringify(catalogEntries));
+        }
+        
+        // ============================================
+        // CRUD MANUALI - ELIMINAZIONE
+        // ============================================
+        
+        let deleteTargetId = null;
+        
+        function deleteManuale(manualeId) {
+            console.log('🗑️ Richiesta eliminazione:', manualeId);
+            
+            // Carica dati del manuale
+            const allManuals = { 
+                ...MANUAL_CATALOG, 
+                ...JSON.parse(localStorage.getItem('custom_manuals') || '{}'),
+                ...JSON.parse(localStorage.getItem('modified_manuals') || '{}')
+            };
+            
+            const manuale = allManuals[manualeId];
+            if (!manuale) {
+                alert('Manuale non trovato');
+                return;
+            }
+            
+            deleteTargetId = manualeId;
+            document.getElementById('deleteManualeName').textContent = `${manuale.title} (${manuale.author})`;
+            document.getElementById('deleteManualeModal').classList.remove('hidden');
+        }
+        
+        function closeDeleteModal() {
+            document.getElementById('deleteManualeModal').classList.add('hidden');
+            deleteTargetId = null;
+        }
+        
+        function confirmDeleteManuale() {
+            if (!deleteTargetId) return;
+            
+            console.log('🗑️ Eliminazione confermata:', deleteTargetId);
+            
+            try {
+                // Rimuovi da custom
+                const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+                if (customManuals[deleteTargetId]) {
+                    delete customManuals[deleteTargetId];
+                    localStorage.setItem('custom_manuals', JSON.stringify(customManuals));
+                }
+                
+                // Rimuovi da modified
+                const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+                if (modifiedManuals[deleteTargetId]) {
+                    delete modifiedManuals[deleteTargetId];
+                    localStorage.setItem('modified_manuals', JSON.stringify(modifiedManuals));
+                }
+                
+                // Rimuovi da catalog entries
+                const catalogEntries = JSON.parse(localStorage.getItem('catalog_entries') || '{}');
+                if (catalogEntries[deleteTargetId]) {
+                    delete catalogEntries[deleteTargetId];
+                    localStorage.setItem('catalog_entries', JSON.stringify(catalogEntries));
+                }
+                
+                console.log('✅ Manuale eliminato');
+                
+                closeDeleteModal();
+                loadManualiList();
+                
+                alert('✅ Manuale eliminato con successo!');
+                
+            } catch (error) {
+                console.error('❌ Errore eliminazione:', error);
+                alert('Errore nell\'eliminazione: ' + error.message);
+            }
+        }
+        
+        // ============================================
+        // CRUD MANUALI - EXPORT/IMPORT
+        // ============================================
+        
+        function exportCatalog() {
+            console.log('💾 Export catalog JSON...');
+            
+            try {
+                // Merge tutti i cataloghi
+                const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+                const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+                const catalogEntries = JSON.parse(localStorage.getItem('catalog_entries') || '{}');
+                
+                const fullCatalog = {
+                    ...MANUAL_CATALOG,
+                    ...modifiedManuals,
+                    ...catalogEntries
+                };
+                
+                // Download JSON
+                const blob = new Blob([JSON.stringify(fullCatalog, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'manual_catalog_updated.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                console.log('✅ Catalog esportato');
+                alert('✅ Catalog esportato con successo!');
+                
+            } catch (error) {
+                console.error('❌ Errore export:', error);
+                alert('Errore nell\'export: ' + error.message);
+            }
+        }
+        
+        function exportCatalogZIP() {
+            alert('📦 Funzionalità Export ZIP in fase di implementazione...\n\nPer ora usa "Export JSON" e carica manualmente i file JSON dei manuali custom.');
+        }
+        
+        function importCatalog() {
+            alert('📥 Funzionalità Import in fase di implementazione...\n\nPer ora aggiungi i manuali uno per uno con "Nuovo Manuale".');
         }
 
         // Gestione file
@@ -3336,6 +4037,173 @@ Rispondi SOLO con un JSON valido:
         // ============================================
 
     </script>
+    
+    <!-- MODAL: Aggiungi/Modifica Manuale -->
+    <div id="manualeModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-lg bg-white">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
+                <h3 id="manualeModalTitle" class="text-xl font-bold">➕ Nuovo Manuale</h3>
+                <button onclick="closeManualeModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- STEP 1: Identificativi -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-blue-900 mb-3">📝 STEP 1: Identificativi</h4>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">ID Manuale *</label>
+                            <input type="text" id="manualeId" placeholder="es: brown_intro" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                                pattern="[a-zA-Z0-9_]+" title="Solo lettere, numeri e underscore">
+                            <p class="text-xs text-gray-500 mt-1">Solo lettere, numeri e underscore. Deve essere univoco.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Materia *</label>
+                                <select id="manualeMateria" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona materia...</option>
+                                    <option value="Chimica">Chimica</option>
+                                    <option value="Chimica Generale">Chimica Generale</option>
+                                    <option value="Chimica Organica">Chimica Organica</option>
+                                    <option value="Fisica">Fisica</option>
+                                    <option value="Matematica">Matematica</option>
+                                    <option value="Economia">Economia</option>
+                                    <option value="Biologia">Biologia</option>
+                                    <option value="Istologia">Istologia</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tipo *</label>
+                                <select id="manualeTipo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona tipo...</option>
+                                    <option value="zanichelli">Zanichelli</option>
+                                    <option value="competitor">Competitor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- STEP 2: Carica JSON -->
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-green-900 mb-3">📁 STEP 2: Carica File JSON</h4>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                File JSON del Manuale *
+                            </label>
+                            <div class="flex items-center justify-center w-full">
+                                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white hover:bg-gray-50">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                        </svg>
+                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Clicca per caricare</span> o trascina qui</p>
+                                        <p class="text-xs text-gray-500">File JSON (MAX 10MB)</p>
+                                    </div>
+                                    <input id="manualeJsonFile" type="file" accept=".json" class="hidden" onchange="handleJsonUpload(event)">
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">
+                                Il file JSON deve contenere la struttura completa del manuale con capitoli e sezioni.
+                            </p>
+                        </div>
+                        
+                        <div id="jsonFileInfo" class="hidden p-3 bg-white border border-gray-300 rounded-lg">
+                            <p class="text-sm font-medium text-gray-700">File caricato:</p>
+                            <p id="jsonFileName" class="text-sm text-gray-600"></p>
+                            <p id="jsonFileSize" class="text-xs text-gray-500"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- STEP 3: Preview Dati -->
+                <div id="previewSection" class="hidden bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-purple-900 mb-3">👁️ STEP 3: Preview Dati</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Titolo:</span>
+                            <span id="previewTitle" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Autore:</span>
+                            <span id="previewAuthor" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Editore:</span>
+                            <span id="previewPublisher" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Capitoli:</span>
+                            <span id="previewChapters" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Pagine:</span>
+                            <span id="previewPages" class="font-medium text-gray-900"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Prezzo:</span>
+                            <span id="previewPrice" class="font-medium text-gray-900"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Errori validazione -->
+                <div id="validationErrors" class="hidden bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-red-900 mb-2">⚠️ Errori di Validazione</h4>
+                    <ul id="errorList" class="list-disc list-inside text-sm text-red-700 space-y-1">
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer con azioni -->
+            <div class="mt-6 flex justify-end gap-3 pt-4 border-t border-gray-200">
+                <button onclick="closeManualeModal()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                    ❌ Annulla
+                </button>
+                <button onclick="saveManualeData()" id="btnSaveManuale" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                    💾 Salva Manuale
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
+    
+    <!-- MODAL: Conferma Eliminazione -->
+    <div id="deleteManualeModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-1/3 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Conferma Eliminazione</h3>
+                <p class="text-sm text-gray-500 mb-1">Stai per eliminare il manuale:</p>
+                <p id="deleteManualeName" class="text-sm font-semibold text-gray-900 mb-4"></p>
+                <p class="text-xs text-red-600 mb-6">Questa azione non può essere annullata.</p>
+                
+                <div class="flex justify-center gap-3">
+                    <button onclick="closeDeleteModal()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                        Annulla
+                    </button>
+                    <button onclick="confirmDeleteManuale()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">
+                        🗑️ Elimina
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
 
 </body>
 </html>
