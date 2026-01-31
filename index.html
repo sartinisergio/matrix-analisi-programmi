@@ -1412,16 +1412,19 @@
         function populateRegistryFromManuals(manuals) {
             console.log('🔄 Popolamento registry materie da manuali esistenti...');
             
+            let processedCount = 0;
             Object.values(manuals).forEach(manuale => {
                 try {
                     // Se ha già macroarea/materia, aggiungili
                     if (manuale.macroarea && manuale.materia) {
                         addMateriaToRegistry(manuale.macroarea, manuale.materia);
+                        processedCount++;
                     } 
                     // Altrimenti mappa da subject legacy
                     else if (manuale.subject) {
                         const mapped = mapSubjectToMacroareaMateria(manuale.subject);
                         addMateriaToRegistry(mapped.macroarea, mapped.materia);
+                        processedCount++;
                     }
                 } catch (error) {
                     console.error('❌ Errore popolamento registry per', manuale.id, error);
@@ -1429,7 +1432,8 @@
             });
             
             const registry = getMaterieRegistry();
-            console.log('✅ Registry popolato:', registry);
+            console.log(`✅ Registry popolato con ${processedCount} manuali processati:`, registry);
+            console.log(`📊 Materie per macroarea:`, Object.keys(registry).map(m => `${m} (${registry[m].length})`).join(', '));
         }
         
         function displayManualiTable(allManuals, customManuals, modifiedManuals) {
