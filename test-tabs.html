@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Tab System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-2xl font-bold mb-6">Test Tab Navigation</h1>
+        
+        <!-- Tab Navigation -->
+        <div class="mb-6 border-b border-gray-200">
+            <nav class="flex space-x-8" aria-label="Tabs">
+                <button id="tabAnalisi" onclick="switchTab('analisi')" class="tab-button border-b-2 border-indigo-500 py-4 px-1 text-indigo-600 font-medium text-sm">
+                    📊 Analisi
+                </button>
+                <button id="tabValutazione" onclick="switchTab('valutazione')" class="tab-button border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700">
+                    📚 Valutazione
+                </button>
+                <button id="tabCataloghi" onclick="switchTab('cataloghi')" class="tab-button border-b-2 border-transparent py-4 px-1 text-gray-500 hover:text-gray-700">
+                    ⚙️ Cataloghi
+                </button>
+            </nav>
+        </div>
+        
+        <!-- Tab Contents -->
+        <div id="tabContentAnalisi" class="tab-content">
+            <h2 class="text-xl font-bold mb-4">Analisi Programma</h2>
+            <p>Questo è il contenuto della tab Analisi. Qui ci sarà tutta l'UI esistente.</p>
+            <div class="mt-4 p-4 bg-blue-50 rounded">
+                <p class="text-sm">Test: Tutti i dropdown, textarea, checkbox esistenti rimarranno qui senza modifiche.</p>
+            </div>
+        </div>
+        
+        <div id="tabContentValutazione" class="tab-content hidden">
+            <h2 class="text-xl font-bold mb-4">Valutazione Manuali</h2>
+            <p>Placeholder per valutazione assoluta manuali.</p>
+        </div>
+        
+        <div id="tabContentCataloghi" class="tab-content hidden">
+            <h2 class="text-xl font-bold mb-4">Gestione Cataloghi</h2>
+            <p>Placeholder per CRUD framework e manuali.</p>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active state from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('border-indigo-500', 'text-indigo-600');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById('tabContent' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+            
+            // Activate selected tab button
+            const selectedButton = document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedButton) {
+                selectedButton.classList.remove('border-transparent', 'text-gray-500');
+                selectedButton.classList.add('border-indigo-500', 'text-indigo-600');
+            }
+        }
+    </script>
+</body>
+</html>
