@@ -11,7 +11,8 @@
       "icon": "🧪",
       "frameworks": [
         "chimica_generale_inorganica_framework",
-        "chimica_organica_framework_completo"
+        "chimica_organica_framework_completo",
+        "chimica_propedeutica_semestre_filtro_framework"
       ],
       "manual_directory": ["chimica_generale", "chimica_organica"]
     },
@@ -59,8 +60,7 @@
         "biologia_molecolare_gene_framework",
         "genetica_generale_framework",
         "microbiologia_framework",
-        "biologia_semestre_filtro_framework",
-        "chimica_propedeutica_semestre_filtro_framework"
+        "biologia_semestre_filtro_framework"
       ],
       "manual_directory": []
     },
