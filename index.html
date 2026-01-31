@@ -1062,9 +1062,9 @@
         }
 
         // Inizializzazione
-        document.addEventListener('DOMContentLoaded', function() {
-            // Carica configurazione MATRIX
-            loadMATRIXConfig();
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Carica configurazione MATRIX e ASPETTA che finisca
+            await loadMATRIXConfig();
             
             // Event listener cambio materia
             const materiaSelect = document.getElementById('materiaSelect');
@@ -2276,14 +2276,6 @@
         
         function loadFrameworkList() {
             console.log('📋 Caricamento lista framework...');
-            
-            // CRITICAL: Aspetta che FRAMEWORK_CATALOG sia caricato
-            if (!window.FRAMEWORK_CATALOG) {
-                console.warn('⚠️ FRAMEWORK_CATALOG non ancora caricato, ritento tra 500ms...');
-                setTimeout(loadFrameworkList, 500);
-                return;
-            }
-            
             console.log('🔍 FRAMEWORK_CATALOG:', window.FRAMEWORK_CATALOG);
             
             const tbody = document.getElementById('frameworkTableBody');
@@ -2292,9 +2284,15 @@
                 return;
             }
             
+            if (!window.FRAMEWORK_CATALOG) {
+                console.error('❌ FRAMEWORK_CATALOG non caricato!');
+                tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-red-600">❌ Errore: FRAMEWORK_CATALOG non caricato</td></tr>';
+                return;
+            }
+            
             // Carica framework originali + custom + modificati
             const originalFrameworks = getFrameworksAsObject();
-            console.log('📦 Original frameworks:', Object.keys(originalFrameworks).length, originalFrameworks);
+            console.log('📦 Original frameworks:', Object.keys(originalFrameworks).length);
             
             const customFrameworks = JSON.parse(localStorage.getItem('custom_frameworks') || '{}');
             const modifiedFrameworks = JSON.parse(localStorage.getItem('modified_frameworks') || '{}');
