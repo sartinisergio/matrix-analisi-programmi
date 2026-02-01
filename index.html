@@ -5300,37 +5300,85 @@ Rispondi SOLO con un JSON valido:
             const select = document.getElementById('evalAbsManuale');
             if (!select) return;
             
-            // Mapping: Macroarea Framework → Subject Manuali
-            const macroareaToSubjects = {
-                'Matematica': ['Matematica', 'Analisi Matematica', 'Matematica Generale', 'Istituzioni di Matematiche'],
-                'Fisica': ['Fisica', 'Fisica Generale'],
-                'Chimica': ['Chimica Generale', 'Chimica Organica', 'Chimica Inorganica'],
-                'Biologia': ['Biochimica', 'Biologia Cellulare', 'Biologia Molecolare', 'Microbiologia', 'Genetica'],
-                'Economia': ['Macroeconomia', 'Microeconomia', 'Economia Politica'],
-                'Medicina e Chirurgia': ['Biologia', 'Chimica', 'Fisica'], // Semestre Filtro
-                'Istologia': ['Istologia', 'Istologia ed Embriologia']
+            // Mapping: Framework Name → Manual Subject
+            const frameworkToManualSubject = {
+                // Matematica
+                'Analisi Matematica 1': 'Matematica',
+                'Analisi Matematica 2': 'Matematica',
+                'Istituzioni di Matematiche / Matematica Generale': 'Matematica',
+                
+                // Fisica
+                'Fisica Generale 1': 'Fisica',
+                'Fisica Generale 2': 'Fisica',
+                'Fisica Generale Life Sciences': 'Fisica',
+                'Fisica (Semestre Filtro)': 'Fisica',
+                
+                // Chimica
+                'Chimica Generale con Elementi di Chimica Inorganica': 'Chimica Generale',
+                'Chimica Organica': 'Chimica Organica',
+                'Chimica (Semestre Filtro)': 'Chimica Generale',
+                
+                // Biologia
+                'Biologia (Semestre Filtro)': 'Biologia',
+                'Biochimica Generale': 'Biochimica',
+                'Biologia Molecolare della Cellula': 'Biologia',
+                'Biologia Molecolare del Gene': 'Biologia',
+                'Microbiologia Generale e Clinica': 'Microbiologia',
+                
+                // Istologia
+                'Istologia ed Embriologia Umana': 'Istologia',
+                
+                // Economia
+                'Macroeconomia': 'Economia',
+                'Microeconomia Generale / Microeconomia Avanzata': 'Economia'
             };
             
-            // Get subjects for selected macroarea
-            const allowedSubjects = macroareaToSubjects[evalAbs_selectedMacroarea] || [];
+            // Determine filter mode
+            let manualSubjectFilter = null;
             
-            console.log('🔍 Filtro per macroarea:', evalAbs_selectedMacroarea);
-            console.log('📚 Subject consentiti:', allowedSubjects);
+            if (evalAbs_selectedMateria) {
+                // User selected a specific materia → use exact mapping
+                manualSubjectFilter = frameworkToManualSubject[evalAbs_selectedMateria];
+                console.log('🔍 Filtro per materia specifica:', evalAbs_selectedMateria, '→', manualSubjectFilter);
+            } else {
+                // User selected only macroarea → use all subjects for that macroarea
+                const macroareaToSubjects = {
+                    'Matematica': ['Matematica'],
+                    'Fisica': ['Fisica'],
+                    'Chimica': ['Chimica Generale', 'Chimica Organica'],
+                    'Biologia': ['Biochimica', 'Biologia', 'Microbiologia'],
+                    'Economia': ['Economia'],
+                    'Medicina e Chirurgia': ['Biologia', 'Chimica Generale', 'Fisica'],
+                    'Istologia': ['Istologia']
+                };
+                
+                const allowedSubjects = macroareaToSubjects[evalAbs_selectedMacroarea] || [];
+                console.log('🔍 Filtro per macroarea:', evalAbs_selectedMacroarea, '→', allowedSubjects);
+                
+                // Use multiple subjects for filtering
+                manualSubjectFilter = allowedSubjects;
+            }
             
-            // Filter manuali by subject
+            // Filter manuali
             const allManuali = getManualsAsObject();
             const filteredManuali = [];
             
             for (const id in allManuali) {
                 const man = allManuali[id];
+                const manSubject = man.subject || '';
                 
-                // Check if manual subject matches allowed subjects
-                if (allowedSubjects.some(subj => {
-                    // Fuzzy match: check if subject contains or is contained
-                    const manSubject = (man.subject || '').toLowerCase();
-                    const targetSubject = subj.toLowerCase();
-                    return manSubject.includes(targetSubject) || targetSubject.includes(manSubject);
-                })) {
+                // Check match
+                let matches = false;
+                
+                if (Array.isArray(manualSubjectFilter)) {
+                    // Multiple subjects (macroarea mode)
+                    matches = manualSubjectFilter.includes(manSubject);
+                } else if (manualSubjectFilter) {
+                    // Single subject (specific materia mode)
+                    matches = manSubject === manualSubjectFilter;
+                }
+                
+                if (matches) {
                     filteredManuali.push(man);
                 }
             }
@@ -5338,6 +5386,10 @@ Rispondi SOLO con un JSON valido:
             console.log('📚 Manuali trovati:', filteredManuali.length);
             
             select.innerHTML = '<option value="">Seleziona manuale...</option>';
+            
+            if (filteredManuali.length === 0) {
+                select.innerHTML += '<option value="" disabled>Nessun manuale disponibile per questa materia</option>';
+            }
             
             // Sort by title
             filteredManuali.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
