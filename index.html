@@ -515,18 +515,120 @@
             </div>
             <!-- END Tab Content: Analisi Programma -->
             
-            <!-- Tab Content: Valutazione Manuali (PLACEHOLDER) -->
+            <!-- Tab Content: Valutazione Manuali -->
             <div id="tabContentValutazione" class="tab-content hidden">
-                <div class="max-w-4xl mx-auto">
+                <div class="max-w-6xl mx-auto">
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <h2 class="text-xl font-bold mb-4">📚 Valutazione Assoluta Manuali</h2>
-                        <p class="text-gray-600">Funzionalità in fase di implementazione...</p>
-                        <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p class="text-sm text-blue-800">
-                                Questa sezione permetterà di valutare manuali indipendentemente da un programma specifico.
-                            </p>
+                        <h2 class="text-xl font-bold mb-6">📚 Valutazione Assoluta Manuali</h2>
+                        
+                        <!-- Form Valutazione -->
+                        <div class="space-y-6">
+                            
+                            <!-- STEP 1: Macroarea -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    STEP 1: Seleziona Macroarea
+                                </label>
+                                <select id="evalAbsMacroarea" onchange="evalAbs_onMacroareaChange()" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona macroarea...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- STEP 2: Materia Specifica (nascosto se non necessario) -->
+                            <div id="evalAbsMateriaContainer" class="hidden">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    STEP 2: Seleziona Materia Specifica
+                                </label>
+                                <select id="evalAbsMateria" onchange="evalAbs_onMateriaChange()" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona materia...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- STEP 3: Manuale -->
+                            <div id="evalAbsManualeContainer" class="hidden">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    STEP 3: Seleziona Manuale
+                                </label>
+                                <select id="evalAbsManuale" onchange="evalAbs_onManualeChange()" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona manuale...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- STEP 4: Framework -->
+                            <div id="evalAbsFrameworkContainer" class="hidden">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    STEP 4: Framework di Riferimento
+                                    <span class="text-xs text-gray-500 ml-2">(auto-selezionato, puoi modificare)</span>
+                                </label>
+                                <select id="evalAbsFramework" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                    <option value="">Seleziona framework...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Bottone Avvia -->
+                            <div id="evalAbsButtonContainer" class="hidden pt-4">
+                                <button onclick="evalAbs_startEvaluation()" 
+                                    class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium text-lg">
+                                    🚀 Avvia Valutazione
+                                </button>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- Loading State -->
+                        <div id="evalAbsLoading" class="hidden mt-8">
+                            <div class="flex flex-col items-center justify-center py-12">
+                                <div class="spinner mb-4"></div>
+                                <p class="text-gray-600 font-medium">⏳ Valutazione in corso...</p>
+                                <p class="text-sm text-gray-500 mt-2">Analisi del manuale con AI (può richiedere 1-2 minuti)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Report Result -->
+                        <div id="evalAbsResult" class="hidden mt-8">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b">
+                                <h3 class="text-lg font-bold">📊 Report Valutazione</h3>
+                                <div class="flex gap-2">
+                                    <button onclick="evalAbs_saveReport()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
+                                        💾 Salva
+                                    </button>
+                                    <button onclick="evalAbs_downloadHTML()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
+                                        📥 Scarica HTML
+                                    </button>
+                                    <button onclick="evalAbs_closeReport()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">
+                                        ← Torna
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="evalAbsReportContent" class="prose max-w-none bg-gray-50 p-6 rounded-lg border">
+                                <!-- Report HTML will be inserted here -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Lista Valutazioni Salvate -->
+                    <div id="evalAbsSavedList" class="bg-white rounded-xl shadow-lg p-6 mt-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold">📋 Valutazioni Salvate</h3>
+                            <div class="flex gap-2">
+                                <button onclick="evalAbs_exportAll()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm">
+                                    📤 Esporta Tutte
+                                </button>
+                                <button onclick="evalAbs_importJSON()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm">
+                                    📥 Importa
+                                </button>
+                            </div>
+                        </div>
+                        <div id="evalAbsSavedListContent" class="space-y-3">
+                            <p class="text-sm text-gray-500 text-center py-8">Nessuna valutazione salvata</p>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <!-- END Tab Content: Valutazione Manuali -->
@@ -1309,6 +1411,11 @@
             // Se è il tab Cataloghi, carica i manuali
             if (tabName === 'cataloghi') {
                 loadManualiList();
+            }
+            
+            // Se è il tab Valutazione, inizializza
+            if (tabName === 'valutazione') {
+                evalAbs_initTab();
             }
         }
         
@@ -5058,6 +5165,840 @@ Rispondi SOLO con un JSON valido:
 
         // ============================================
         // FASE C - FUNZIONI PREPARA COLLOQUIO
+        // ============================================
+
+        // ============================================
+        // VALUTAZIONE ASSOLUTA MANUALI
+        // ============================================
+        
+        // Global variables for evaluation
+        let evalAbs_selectedMacroarea = null;
+        let evalAbs_selectedMateria = null;
+        let evalAbs_selectedManuale = null;
+        let evalAbs_selectedFramework = null;
+        let evalAbs_currentReportData = null;
+
+        // STEP 1: Initialize dropdown on tab load
+        function evalAbs_initTab() {
+            console.log('🔄 Inizializzo tab Valutazione Assoluta');
+            
+            // Wait for FRAMEWORK_CATALOG to be loaded
+            if (!FRAMEWORK_CATALOG || !FRAMEWORK_CATALOG.by_subject) {
+                console.error('❌ FRAMEWORK_CATALOG non ancora caricato!');
+                setTimeout(evalAbs_initTab, 500); // Retry after 500ms
+                return;
+            }
+            
+            evalAbs_loadMacroareeDropdown();
+            evalAbs_loadSavedEvaluations();
+        }
+
+        // Load Macroaree (STEP 1)
+        function evalAbs_loadMacroareeDropdown() {
+            const select = document.getElementById('evalAbsMacroarea');
+            if (!select) return;
+            
+            // Get unique macroaree from FRAMEWORK_CATALOG.by_subject
+            const macroaree = Object.keys(FRAMEWORK_CATALOG.by_subject || {});
+            
+            console.log('📚 Macroaree trovate:', macroaree);
+            
+            select.innerHTML = '<option value="">Seleziona macroarea...</option>';
+            macroaree.forEach(macro => {
+                const opt = document.createElement('option');
+                opt.value = macro;
+                opt.textContent = macro;
+                select.appendChild(opt);
+            });
+        }
+
+        // STEP 1 → STEP 2: On Macroarea change
+        function evalAbs_onMacroareaChange() {
+            const select = document.getElementById('evalAbsMacroarea');
+            const macroarea = select.value;
+            
+            evalAbs_selectedMacroarea = macroarea;
+            
+            if (!macroarea) {
+                // Hide all subsequent steps
+                document.getElementById('evalAbsMateriaContainer').classList.add('hidden');
+                document.getElementById('evalAbsManualeContainer').classList.add('hidden');
+                document.getElementById('evalAbsFrameworkContainer').classList.add('hidden');
+                document.getElementById('evalAbsButtonContainer').classList.add('hidden');
+                return;
+            }
+            
+            console.log('✅ Macroarea selezionata:', macroarea);
+            
+            // Get frameworks for this macroarea
+            const frameworkIds = FRAMEWORK_CATALOG.by_subject[macroarea] || [];
+            
+            // Get unique materias from frameworks
+            const materias = new Set();
+            const frameworks = FRAMEWORK_CATALOG.frameworks || [];
+            
+            frameworkIds.forEach(fwId => {
+                const fw = frameworks.find(f => f.id === fwId);
+                if (fw && fw.name) {
+                    materias.add(fw.name);
+                }
+            });
+            
+            const materiasArray = Array.from(materias);
+            
+            console.log('📖 Materie trovate per', macroarea, ':', materiasArray);
+            
+            // If only 1 materia, skip STEP 2 and go directly to manuali
+            if (materiasArray.length === 1) {
+                evalAbs_selectedMateria = materiasArray[0];
+                document.getElementById('evalAbsMateriaContainer').classList.add('hidden');
+                evalAbs_loadManualiDropdown();
+            } else {
+                // Show STEP 2: Materia dropdown
+                evalAbs_loadMateriaDropdown(materiasArray);
+                document.getElementById('evalAbsMateriaContainer').classList.remove('hidden');
+            }
+            
+            // Hide subsequent steps
+            document.getElementById('evalAbsManualeContainer').classList.add('hidden');
+            document.getElementById('evalAbsFrameworkContainer').classList.add('hidden');
+            document.getElementById('evalAbsButtonContainer').classList.add('hidden');
+        }
+
+        // Load Materia dropdown (STEP 2)
+        function evalAbs_loadMateriaDropdown(materias) {
+            const select = document.getElementById('evalAbsMateria');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">Seleziona materia...</option>';
+            materias.forEach(mat => {
+                const opt = document.createElement('option');
+                opt.value = mat;
+                opt.textContent = mat;
+                select.appendChild(opt);
+            });
+        }
+
+        // STEP 2 → STEP 3: On Materia change
+        function evalAbs_onMateriaChange() {
+            const select = document.getElementById('evalAbsMateria');
+            evalAbs_selectedMateria = select.value;
+            
+            if (!evalAbs_selectedMateria) {
+                document.getElementById('evalAbsManualeContainer').classList.add('hidden');
+                document.getElementById('evalAbsFrameworkContainer').classList.add('hidden');
+                document.getElementById('evalAbsButtonContainer').classList.add('hidden');
+                return;
+            }
+            
+            console.log('✅ Materia selezionata:', evalAbs_selectedMateria);
+            evalAbs_loadManualiDropdown();
+        }
+
+        // Load Manuali dropdown (STEP 3)
+        function evalAbs_loadManualiDropdown() {
+            const select = document.getElementById('evalAbsManuale');
+            if (!select) return;
+            
+            // Mapping: Framework Name → Manual Subject
+            const frameworkToManualSubject = {
+                // Matematica
+                'Analisi Matematica 1': 'Matematica',
+                'Analisi Matematica 2': 'Matematica',
+                'Istituzioni di Matematiche / Matematica Generale': 'Matematica',
+                
+                // Fisica
+                'Fisica Generale 1 (Meccanica e Termodinamica)': 'Fisica',
+                'Fisica Generale 2 (Elettromagnetismo e Ottica)': 'Fisica',
+                'Fisica Generale (Area Bio-Geo-Chimica)': 'Fisica',
+                'Fisica (Semestre Filtro)': 'Fisica',
+                
+                // Chimica
+                'Chimica Generale con Elementi di Chimica Inorganica': 'Chimica Generale',
+                'Chimica Organica': 'Chimica Organica',
+                'Chimica e Propedeutica Biochimica (Semestre Filtro)': 'Chimica Generale',
+                
+                // Biologia
+                'Biologia (Semestre Filtro)': 'Biologia',
+                'Biochimica Generale': 'Biochimica',
+                'Biologia Molecolare della Cellula': 'Biologia',
+                'Biologia Molecolare del Gene': 'Biologia',
+                'Microbiologia Generale e Clinica': 'Microbiologia',
+                'Genetica Generale': 'Biologia',
+                
+                // Istologia
+                'Istologia ed Embriologia Umana': 'Istologia',
+                
+                // Economia
+                'Economia Politica (Micro & Macro)': 'Economia',
+                'Macroeconomia': 'Economia',
+                'Microeconomia Generale / Microeconomia Avanzata': 'Economia',
+                'Microeconomia': 'Economia'
+            };
+            
+            // Determine filter mode
+            let manualSubjectFilter = null;
+            
+            if (evalAbs_selectedMateria) {
+                // User selected a specific materia → use exact mapping
+                manualSubjectFilter = frameworkToManualSubject[evalAbs_selectedMateria];
+                console.log('🔍 Filtro per materia specifica:', evalAbs_selectedMateria, '→', manualSubjectFilter);
+            } else {
+                // User selected only macroarea → use all subjects for that macroarea
+                const macroareaToSubjects = {
+                    'Matematica': ['Matematica'],
+                    'Fisica': ['Fisica'],
+                    'Chimica': ['Chimica Generale', 'Chimica Organica'],
+                    'Biologia': ['Biochimica', 'Biologia', 'Microbiologia'],
+                    'Economia': ['Economia'],
+                    'Medicina e Chirurgia': ['Biologia', 'Chimica Generale', 'Fisica'],
+                    'Istologia': ['Istologia']
+                };
+                
+                const allowedSubjects = macroareaToSubjects[evalAbs_selectedMacroarea] || [];
+                console.log('🔍 Filtro per macroarea:', evalAbs_selectedMacroarea, '→', allowedSubjects);
+                
+                // Use multiple subjects for filtering
+                manualSubjectFilter = allowedSubjects;
+            }
+            
+            // Filter manuali
+            const allManuali = getManualsAsObject();
+            let filteredManuali = [];
+            let usedFallback = false;
+            
+            for (const id in allManuali) {
+                const man = allManuali[id];
+                const manSubject = man.subject || '';
+                
+                // Check match
+                let matches = false;
+                
+                if (Array.isArray(manualSubjectFilter)) {
+                    // Multiple subjects (macroarea mode)
+                    matches = manualSubjectFilter.includes(manSubject);
+                } else if (manualSubjectFilter) {
+                    // Single subject (specific materia mode)
+                    matches = manSubject === manualSubjectFilter;
+                }
+                
+                if (matches) {
+                    filteredManuali.push(man);
+                }
+            }
+            
+            // FALLBACK: If no manuals found with specific subject, try generic subject
+            if (filteredManuali.length === 0 && evalAbs_selectedMateria && !Array.isArray(manualSubjectFilter)) {
+                console.warn('⚠️ Nessun manuale specifico per:', manualSubjectFilter);
+                console.log('🔄 Provo con subject generico della macroarea:', evalAbs_selectedMacroarea);
+                
+                // Try generic subject for macroarea
+                const fallbackMapping = {
+                    'Matematica': 'Matematica',
+                    'Fisica': 'Fisica',
+                    'Chimica': 'Chimica Generale',
+                    'Biologia': 'Biologia',
+                    'Economia': 'Economia',
+                    'Medicina e Chirurgia': 'Biologia',
+                    'Istologia': 'Istologia'
+                };
+                
+                const fallbackSubject = fallbackMapping[evalAbs_selectedMacroarea];
+                
+                if (fallbackSubject) {
+                    for (const id in allManuali) {
+                        const man = allManuali[id];
+                        if (man.subject === fallbackSubject) {
+                            filteredManuali.push(man);
+                        }
+                    }
+                    
+                    if (filteredManuali.length > 0) {
+                        usedFallback = true;
+                        console.log(`✅ Trovati ${filteredManuali.length} manuali generici (${fallbackSubject})`);
+                    }
+                }
+            }
+            
+            console.log('📚 Manuali trovati:', filteredManuali.length, usedFallback ? '(fallback a generici)' : '');
+            
+            select.innerHTML = '<option value="">Seleziona manuale...</option>';
+            
+            if (filteredManuali.length === 0) {
+                select.innerHTML += '<option value="" disabled>Nessun manuale disponibile per questa materia</option>';
+            } else if (usedFallback) {
+                // Add warning message
+                select.innerHTML += `<option value="" disabled style="color: #F59E0B; font-weight: bold;">⚠️ Nessun manuale specifico per ${evalAbs_selectedMateria}</option>`;
+                select.innerHTML += `<option value="" disabled style="color: #6B7280;">Mostro manuali generici di ${evalAbs_selectedMacroarea}:</option>`;
+            }
+            
+            // Sort by title
+            filteredManuali.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+            
+            filteredManuali.forEach(man => {
+                const opt = document.createElement('option');
+                opt.value = man.id;
+                opt.textContent = `${man.title} (${man.author || 'N/A'})`;
+                select.appendChild(opt);
+            });
+            
+            // Show manuale container
+            document.getElementById('evalAbsManualeContainer').classList.remove('hidden');
+            
+            // Hide subsequent steps
+            document.getElementById('evalAbsFrameworkContainer').classList.add('hidden');
+            document.getElementById('evalAbsButtonContainer').classList.add('hidden');
+        }
+
+        // STEP 3 → STEP 4: On Manuale change
+        function evalAbs_onManualeChange() {
+            const select = document.getElementById('evalAbsManuale');
+            evalAbs_selectedManuale = select.value;
+            
+            if (!evalAbs_selectedManuale) {
+                document.getElementById('evalAbsFrameworkContainer').classList.add('hidden');
+                document.getElementById('evalAbsButtonContainer').classList.add('hidden');
+                return;
+            }
+            
+            console.log('✅ Manuale selezionato:', evalAbs_selectedManuale);
+            evalAbs_loadFrameworkDropdown();
+        }
+
+        // Load Framework dropdown (STEP 4) - auto-selected
+        function evalAbs_loadFrameworkDropdown() {
+            const select = document.getElementById('evalAbsFramework');
+            if (!select) return;
+            
+            // Get frameworks for selected macroarea
+            const frameworkIds = FRAMEWORK_CATALOG.by_subject[evalAbs_selectedMacroarea] || [];
+            const frameworks = FRAMEWORK_CATALOG.frameworks || [];
+            
+            const filteredFrameworks = frameworks.filter(fw => frameworkIds.includes(fw.id));
+            
+            console.log('🎯 Framework disponibili:', filteredFrameworks.length);
+            
+            select.innerHTML = '<option value="">Seleziona framework...</option>';
+            
+            filteredFrameworks.forEach(fw => {
+                const opt = document.createElement('option');
+                opt.value = fw.id;
+                opt.textContent = fw.name || fw.id;
+                select.appendChild(opt);
+            });
+            
+            // Auto-select first framework if only 1
+            if (filteredFrameworks.length === 1) {
+                select.value = filteredFrameworks[0].id;
+                evalAbs_selectedFramework = filteredFrameworks[0].id;
+            }
+            
+            // Show framework container and button
+            document.getElementById('evalAbsFrameworkContainer').classList.remove('hidden');
+            document.getElementById('evalAbsButtonContainer').classList.remove('hidden');
+        }
+
+        // Start Evaluation (STEP 5)
+        async function evalAbs_startEvaluation() {
+            // Get selected framework
+            const frameworkSelect = document.getElementById('evalAbsFramework');
+            evalAbs_selectedFramework = frameworkSelect.value;
+            
+            if (!evalAbs_selectedFramework) {
+                alert('⚠️ Seleziona un framework prima di avviare la valutazione');
+                return;
+            }
+            
+            console.log('🚀 Avvio valutazione:', {
+                macroarea: evalAbs_selectedMacroarea,
+                materia: evalAbs_selectedMateria,
+                manuale: evalAbs_selectedManuale,
+                framework: evalAbs_selectedFramework
+            });
+            
+            // Show loading
+            document.getElementById('evalAbsLoading').classList.remove('hidden');
+            document.getElementById('evalAbsResult').classList.add('hidden');
+            
+            try {
+                // Load manual data
+                const manuale = await evalAbs_loadManualeData(evalAbs_selectedManuale);
+                
+                // Load framework data
+                const framework = await evalAbs_loadFrameworkData(evalAbs_selectedFramework);
+                
+                // Build prompt
+                const prompt = evalAbs_buildPrompt(manuale, framework);
+                
+                console.log('📝 Prompt pronto, lunghezza:', prompt.length);
+                
+                // Call LLM
+                const reportHTML = await evalAbs_callLLM(prompt);
+                
+                console.log('✅ Report generato, lunghezza:', reportHTML.length);
+                
+                // Store report data
+                evalAbs_currentReportData = {
+                    manual_id: evalAbs_selectedManuale,
+                    manual_title: manuale.title,
+                    manual_author: manuale.author,
+                    framework_id: evalAbs_selectedFramework,
+                    framework_name: framework.name,
+                    evaluation_date: new Date().toISOString(),
+                    report_html: reportHTML
+                };
+                
+                // Show report
+                evalAbs_showReport(reportHTML);
+                
+            } catch (error) {
+                console.error('❌ Errore valutazione:', error);
+                alert('❌ Errore durante la valutazione: ' + error.message);
+            } finally {
+                document.getElementById('evalAbsLoading').classList.add('hidden');
+            }
+        }
+
+        // Load Manual Data
+        async function evalAbs_loadManualeData(manualeId) {
+            console.log('📖 Carico dati manuale:', manualeId);
+            
+            // First check in custom/modified
+            const customManuals = JSON.parse(localStorage.getItem('custom_manuals') || '{}');
+            const modifiedManuals = JSON.parse(localStorage.getItem('modified_manuals') || '{}');
+            
+            if (modifiedManuals[manualeId]) {
+                console.log('✅ Manuale trovato in modified_manuals');
+                return modifiedManuals[manualeId];
+            }
+            
+            if (customManuals[manualeId]) {
+                console.log('✅ Manuale trovato in custom_manuals');
+                return customManuals[manualeId];
+            }
+            
+            // Load from original catalog
+            const allManuali = getManualsAsObject();
+            const manual = allManuali[manualeId];
+            
+            if (!manual || !manual.filepath) {
+                throw new Error('Manuale non trovato: ' + manualeId);
+            }
+            
+            console.log('📥 Carico JSON da:', manual.filepath);
+            const response = await fetch(manual.filepath);
+            
+            if (!response.ok) {
+                throw new Error('Errore caricamento manuale: ' + response.statusText);
+            }
+            
+            return await response.json();
+        }
+
+        // Load Framework Data
+        async function evalAbs_loadFrameworkData(frameworkId) {
+            console.log('🎯 Carico dati framework:', frameworkId);
+            
+            // Get framework from catalog
+            const frameworks = FRAMEWORK_CATALOG.frameworks || [];
+            const framework = frameworks.find(f => f.id === frameworkId);
+            
+            if (!framework) {
+                throw new Error('Framework non trovato: ' + frameworkId);
+            }
+            
+            // If content is already loaded, return it
+            if (framework.content) {
+                console.log('✅ Framework content già caricato');
+                return framework;
+            }
+            
+            // Load from file
+            if (!framework.filepath) {
+                throw new Error('Framework filepath non trovato per: ' + frameworkId);
+            }
+            
+            console.log('📥 Carico JSON da:', framework.filepath);
+            const response = await fetch(framework.filepath);
+            
+            if (!response.ok) {
+                throw new Error('Errore caricamento framework: ' + response.statusText);
+            }
+            
+            const data = await response.json();
+            framework.content = data.content || data;
+            
+            return framework;
+        }
+
+        // Build Prompt for LLM
+        function evalAbs_buildPrompt(manuale, framework) {
+            // Build Table of Contents (TOC) from manual chapters
+            let toc = '';
+            if (manuale.chapters && Array.isArray(manuale.chapters)) {
+                toc = manuale.chapters.map((ch, idx) => `${idx + 1}. ${ch.title || ch}`).join('\n');
+            }
+            
+            // Build Framework Syllabus
+            let syllabus = '';
+            if (framework.content && framework.content.syllabus_modules) {
+                syllabus = framework.content.syllabus_modules.map((mod, idx) => 
+                    `Modulo ${idx + 1}: ${mod.title || mod.name || mod}\n${mod.description || ''}`
+                ).join('\n\n');
+            }
+            
+            // Build Program Profiles
+            let profiles = '';
+            if (framework.content && framework.content.program_profiles) {
+                profiles = framework.content.program_profiles.map((prof, idx) => 
+                    `Profilo ${idx + 1}: ${prof.name || prof.title || prof}\nTarget: ${prof.target_degrees ? prof.target_degrees.join(', ') : 'N/A'}`
+                ).join('\n\n');
+            }
+            
+            const prompt = `# VALUTAZIONE ASSOLUTA MANUALE ZANICHELLI
+
+## Contesto
+Sei un promotore editoriale Zanichelli esperto. Devi valutare il manuale "${manuale.title}" di ${manuale.author || 'N/A'} (${manuale.publisher || 'Zanichelli'}) rispetto al framework di riferimento "${framework.name}".
+
+## Dati Manuale
+**Titolo**: ${manuale.title}
+**Autore**: ${manuale.author || 'N/A'}
+**Editore**: ${manuale.publisher || 'Zanichelli'}
+**Prezzo**: ${manuale.price || 'N/A'} €
+**Pagine**: ${manuale.pages || 'N/A'}
+**Edizione**: ${manuale.edition || 'N/A'}
+
+### Indice Completo (Capitoli)
+\`\`\`
+${toc || 'Indice non disponibile'}
+\`\`\`
+
+## Framework di Riferimento: ${framework.name}
+
+### Syllabus Moduli
+\`\`\`
+${syllabus || 'Syllabus non disponibile'}
+\`\`\`
+
+### Profili di Programma
+\`\`\`
+${profiles || 'Profili non disponibili'}
+\`\`\`
+
+---
+
+## COMPITO
+Fornisci un report dettagliato di valutazione del manuale. Struttura il report in HTML (usa tag <h3>, <p>, <ul>, <li>, <strong>) con le seguenti sezioni:
+
+### 1. 📚 Struttura dell'Opera
+Descrivi l'organizzazione dei contenuti, la sequenza dei capitoli, e la copertura degli argomenti rispetto al framework.
+
+### 2. ✍️ Chiarezza Espositiva e Stile
+Valuta il linguaggio, la chiarezza delle spiegazioni, e l'approccio didattico.
+
+### 3. 📖 Apparato Didattico
+Analizza esempi, esercizi, figure, tabelle, materiali supplementari.
+
+### 4. 🎯 Supporto allo Studio
+Valuta strumenti come riassunti, mappe concettuali, test di autovalutazione, risorse online.
+
+### 5. 🎓 Pubblico Ideale e Livello
+Indica per quale tipologia di studenti è più adatto il manuale (es. classi di laurea, livello di difficoltà).
+
+### 6. 🏆 Confronto con Framework
+In base al framework "${framework.name}", indica quale pubblico è più adatto motivando la scelta (confronta con i profili di programma).
+
+### 7. ✅ Punti di Forza
+Elenca i principali punti di forza del manuale (contenutistici, didattici, elementi distintivi).
+
+### 8. ⚠️ Debolezze e Criticità
+Indica eventuali ostacoli all'adozione, necessità di aggiornamento, problemi di usabilità, lacune tematiche.
+
+---
+
+**IMPORTANTE**: Restituisci SOLO il contenuto HTML del report (senza tag <html>, <head>, <body>). Usa tag semantici e ben formattati.`;
+
+            return prompt;
+        }
+
+        // Call LLM API (uses existing callLLM function with OpenAI/Perplexity support)
+        async function evalAbs_callLLM(prompt) {
+            console.log('🤖 Chiamo LLM tramite callLLM()...');
+            
+            // Use the existing callLLM function that supports both OpenAI and Perplexity
+            // with retry logic and proper error handling
+            const temperature = 0.2; // Low temperature for consistent, factual evaluation
+            
+            try {
+                const response = await callLLM(prompt, temperature);
+                return response;
+            } catch (error) {
+                console.error('❌ Errore chiamata LLM:', error);
+                throw new Error(`Errore generazione report: ${error.message}`);
+            }
+        }
+
+        // Show Report
+        function evalAbs_showReport(reportHTML) {
+            const container = document.getElementById('evalAbsReportContent');
+            container.innerHTML = reportHTML;
+            
+            document.getElementById('evalAbsResult').classList.remove('hidden');
+            
+            // Scroll to report
+            document.getElementById('evalAbsResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close Report
+        function evalAbs_closeReport() {
+            document.getElementById('evalAbsResult').classList.add('hidden');
+            evalAbs_currentReportData = null;
+        }
+
+        // Save Report to localStorage
+        function evalAbs_saveReport() {
+            if (!evalAbs_currentReportData) {
+                alert('❌ Nessun report da salvare');
+                return;
+            }
+            
+            // Generate unique ID
+            const id = `${evalAbs_currentReportData.manual_id}_${evalAbs_currentReportData.framework_id}`;
+            
+            // Load existing evaluations
+            const evaluations = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+            
+            // Check if already exists
+            if (evaluations[id]) {
+                if (!confirm('⚠️ Esiste già una valutazione per questo manuale/framework. Sovrascrivere?')) {
+                    return;
+                }
+            }
+            
+            // Save
+            evalAbs_currentReportData.id = id;
+            evalAbs_currentReportData.last_edited = new Date().toISOString();
+            evaluations[id] = evalAbs_currentReportData;
+            
+            localStorage.setItem('manual_evaluations_absolute', JSON.stringify(evaluations));
+            
+            console.log('💾 Valutazione salvata:', id);
+            alert('✅ Valutazione salvata con successo!');
+            
+            // Refresh saved list
+            evalAbs_loadSavedEvaluations();
+        }
+
+        // Download Report as HTML
+        function evalAbs_downloadHTML() {
+            if (!evalAbs_currentReportData) {
+                alert('❌ Nessun report da scaricare');
+                return;
+            }
+            
+            const filename = `valutazione_${evalAbs_currentReportData.manual_id}_${new Date().toISOString().split('T')[0]}.html`;
+            
+            const htmlContent = `<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valutazione: ${evalAbs_currentReportData.manual_title}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+        h1, h2, h3 { color: #4F46E5; }
+        h1 { border-bottom: 3px solid #4F46E5; padding-bottom: 10px; }
+        .meta { background: #F3F4F6; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .meta p { margin: 5px 0; }
+        ul { margin-left: 20px; }
+        strong { color: #1F2937; }
+    </style>
+</head>
+<body>
+    <h1>📊 Valutazione Assoluta Manuale Zanichelli</h1>
+    
+    <div class="meta">
+        <p><strong>Manuale:</strong> ${evalAbs_currentReportData.manual_title}</p>
+        <p><strong>Autore:</strong> ${evalAbs_currentReportData.manual_author}</p>
+        <p><strong>Framework:</strong> ${evalAbs_currentReportData.framework_name}</p>
+        <p><strong>Data Valutazione:</strong> ${new Date(evalAbs_currentReportData.evaluation_date).toLocaleDateString('it-IT')}</p>
+    </div>
+    
+    ${evalAbs_currentReportData.report_html}
+    
+    <hr style="margin: 40px 0;">
+    <p style="text-align: center; color: #6B7280; font-size: 0.9em;">
+        Report generato da Matrix Analisi Programmi - Zanichelli
+    </p>
+</body>
+</html>`;
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            console.log('📥 Report scaricato:', filename);
+        }
+
+        // Load Saved Evaluations
+        function evalAbs_loadSavedEvaluations() {
+            const evaluations = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+            const container = document.getElementById('evalAbsSavedListContent');
+            
+            if (Object.keys(evaluations).length === 0) {
+                container.innerHTML = '<p class="text-sm text-gray-500 text-center py-8">Nessuna valutazione salvata</p>';
+                return;
+            }
+            
+            const evaluationsArray = Object.values(evaluations);
+            evaluationsArray.sort((a, b) => new Date(b.evaluation_date) - new Date(a.evaluation_date));
+            
+            let html = '';
+            evaluationsArray.forEach(ev => {
+                const date = new Date(ev.evaluation_date).toLocaleDateString('it-IT');
+                html += `
+                    <div class="border rounded-lg p-4 hover:bg-gray-50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-900">${ev.manual_title}</h4>
+                                <p class="text-sm text-gray-600">Autore: ${ev.manual_author || 'N/A'}</p>
+                                <p class="text-sm text-gray-500">Framework: ${ev.framework_name} | Data: ${date}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="evalAbs_viewSaved('${ev.id}')" class="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 text-sm">
+                                    👁️ Visualizza
+                                </button>
+                                <button onclick="evalAbs_downloadSaved('${ev.id}')" class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+                                    📥 HTML
+                                </button>
+                                <button onclick="evalAbs_deleteSaved('${ev.id}')" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // View Saved Evaluation
+        function evalAbs_viewSaved(id) {
+            const evaluations = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+            const ev = evaluations[id];
+            
+            if (!ev) {
+                alert('❌ Valutazione non trovata');
+                return;
+            }
+            
+            evalAbs_currentReportData = ev;
+            evalAbs_showReport(ev.report_html);
+        }
+
+        // Download Saved Evaluation
+        function evalAbs_downloadSaved(id) {
+            const evaluations = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+            const ev = evaluations[id];
+            
+            if (!ev) {
+                alert('❌ Valutazione non trovata');
+                return;
+            }
+            
+            evalAbs_currentReportData = ev;
+            evalAbs_downloadHTML();
+        }
+
+        // Delete Saved Evaluation
+        function evalAbs_deleteSaved(id) {
+            if (!confirm('⚠️ Sei sicuro di voler eliminare questa valutazione?')) {
+                return;
+            }
+            
+            const evaluations = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+            delete evaluations[id];
+            localStorage.setItem('manual_evaluations_absolute', JSON.stringify(evaluations));
+            
+            console.log('🗑️ Valutazione eliminata:', id);
+            alert('✅ Valutazione eliminata');
+            
+            evalAbs_loadSavedEvaluations();
+        }
+
+        // Export All Evaluations
+        function evalAbs_exportAll() {
+            const evaluations = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+            
+            if (Object.keys(evaluations).length === 0) {
+                alert('⚠️ Nessuna valutazione da esportare');
+                return;
+            }
+            
+            const exportData = {
+                export_date: new Date().toISOString(),
+                total_evaluations: Object.keys(evaluations).length,
+                evaluations: evaluations
+            };
+            
+            const filename = `valutazioni_assolute_${new Date().toISOString().split('T')[0]}.json`;
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            console.log('📤 Export completato:', filename);
+            alert(`✅ Export completato: ${Object.keys(evaluations).length} valutazioni`);
+        }
+
+        // Import Evaluations
+        function evalAbs_importJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                try {
+                    const text = await file.text();
+                    const data = JSON.parse(text);
+                    
+                    if (!data.evaluations || typeof data.evaluations !== 'object') {
+                        throw new Error('Formato JSON non valido');
+                    }
+                    
+                    // Merge with existing
+                    const existing = JSON.parse(localStorage.getItem('manual_evaluations_absolute') || '{}');
+                    const merged = { ...existing, ...data.evaluations };
+                    
+                    localStorage.setItem('manual_evaluations_absolute', JSON.stringify(merged));
+                    
+                    console.log('📥 Import completato:', Object.keys(data.evaluations).length);
+                    alert(`✅ Import completato: ${Object.keys(data.evaluations).length} valutazioni importate`);
+                    
+                    evalAbs_loadSavedEvaluations();
+                    
+                } catch (error) {
+                    console.error('❌ Errore import:', error);
+                    alert('❌ Errore durante l\'import: ' + error.message);
+                }
+            };
+            
+            input.click();
+        }
+
+        // ============================================
+        // END VALUTAZIONE ASSOLUTA MANUALI
         // ============================================
 
     </script>
