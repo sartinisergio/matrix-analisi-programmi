@@ -585,6 +585,7 @@
                                 <div class="spinner mb-4"></div>
                                 <p class="text-gray-600 font-medium">⏳ Valutazione in corso...</p>
                                 <p class="text-sm text-gray-500 mt-2">Analisi del manuale con AI (può richiedere 1-2 minuti)</p>
+                                <p id="evalAbsLoadingProgress" class="text-xs text-indigo-600 font-mono mt-3"></p>
                             </div>
                         </div>
                         
@@ -5728,12 +5729,66 @@ Indica eventuali ostacoli all'adozione, necessità di aggiornamento, problemi di
             // Use the existing callLLM function that supports both OpenAI and Perplexity
             // with retry logic and proper error handling
             const temperature = 0.2; // Low temperature for consistent, factual evaluation
+            const maxRetries = 5; // Increased from 3 to 5 for better reliability
+            
+            // Custom wrapper to show progress
+            const progressEl = document.getElementById('evalAbsLoadingProgress');
             
             try {
-                const response = await callLLM(prompt, temperature);
-                return response;
+                // Show initial progress
+                if (progressEl) progressEl.textContent = '🔄 Tentativo 1/5...';
+                
+                // Call with custom retry handling to update progress
+                for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                    try {
+                        if (progressEl && attempt > 1) {
+                            progressEl.textContent = `🔄 Tentativo ${attempt}/${maxRetries}...`;
+                        }
+                        
+                        console.log(`Tentativo ${attempt}/${maxRetries} per chiamata LLM...`);
+                        
+                        const provider = localStorage.getItem('ai_provider') || 'openai';
+                        let response;
+                        
+                        if (provider === 'openai') {
+                            response = await callOpenAI(prompt, temperature);
+                        } else {
+                            response = await callPerplexity(prompt, temperature);
+                        }
+                        
+                        // Verify response is not empty
+                        if (!response || response.trim().length === 0) {
+                            throw new Error('Risposta vuota da LLM');
+                        }
+                        
+                        console.log(`✅ Risposta ricevuta (${response.length} caratteri)`);
+                        if (progressEl) progressEl.textContent = '✅ Report generato con successo!';
+                        
+                        return response;
+                        
+                    } catch (error) {
+                        console.error(`Tentativo ${attempt} fallito:`, error.message);
+                        
+                        if (attempt === maxRetries) {
+                            // Last attempt failed, throw error
+                            throw new Error(`Chiamata LLM fallita dopo ${maxRetries} tentativi: ${error.message}`);
+                        }
+                        
+                        // Wait before retrying (exponential backoff)
+                        const waitTime = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s, 16s, 32s
+                        console.log(`Attendo ${waitTime/1000}s prima di riprovare...`);
+                        
+                        if (progressEl) {
+                            progressEl.textContent = `⏳ Tentativo ${attempt} fallito, attendo ${waitTime/1000}s prima di riprovare...`;
+                        }
+                        
+                        await new Promise(resolve => setTimeout(resolve, waitTime));
+                    }
+                }
+                
             } catch (error) {
                 console.error('❌ Errore chiamata LLM:', error);
+                if (progressEl) progressEl.textContent = '❌ Errore: ' + error.message;
                 throw new Error(`Errore generazione report: ${error.message}`);
             }
         }
