@@ -5300,16 +5300,37 @@ Rispondi SOLO con un JSON valido:
             const select = document.getElementById('evalAbsManuale');
             if (!select) return;
             
-            // Filter manuali by selected macroarea/materia
+            // Mapping: Macroarea Framework → Subject Manuali
+            const macroareaToSubjects = {
+                'Matematica': ['Matematica', 'Analisi Matematica', 'Matematica Generale', 'Istituzioni di Matematiche'],
+                'Fisica': ['Fisica', 'Fisica Generale'],
+                'Chimica': ['Chimica Generale', 'Chimica Organica', 'Chimica Inorganica'],
+                'Biologia': ['Biochimica', 'Biologia Cellulare', 'Biologia Molecolare', 'Microbiologia', 'Genetica'],
+                'Economia': ['Macroeconomia', 'Microeconomia', 'Economia Politica'],
+                'Medicina e Chirurgia': ['Biologia', 'Chimica', 'Fisica'], // Semestre Filtro
+                'Istologia': ['Istologia', 'Istologia ed Embriologia']
+            };
+            
+            // Get subjects for selected macroarea
+            const allowedSubjects = macroareaToSubjects[evalAbs_selectedMacroarea] || [];
+            
+            console.log('🔍 Filtro per macroarea:', evalAbs_selectedMacroarea);
+            console.log('📚 Subject consentiti:', allowedSubjects);
+            
+            // Filter manuali by subject
             const allManuali = getManualsAsObject();
             const filteredManuali = [];
             
             for (const id in allManuali) {
                 const man = allManuali[id];
-                // Check if manual matches macroarea or materia
-                if (man.macroarea === evalAbs_selectedMacroarea || 
-                    man.subject === evalAbs_selectedMateria || 
-                    man.materia === evalAbs_selectedMateria) {
+                
+                // Check if manual subject matches allowed subjects
+                if (allowedSubjects.some(subj => {
+                    // Fuzzy match: check if subject contains or is contained
+                    const manSubject = (man.subject || '').toLowerCase();
+                    const targetSubject = subj.toLowerCase();
+                    return manSubject.includes(targetSubject) || targetSubject.includes(manSubject);
+                })) {
                     filteredManuali.push(man);
                 }
             }
