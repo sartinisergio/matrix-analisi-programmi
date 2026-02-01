@@ -188,72 +188,60 @@
         
         <!-- Settings View -->
         <div id="viewSettings" class="hidden">
-            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-xl font-bold mb-4">Configurazione AI Provider</h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-4">🤖 Configurazione AI Provider</h2>
+                <p class="text-sm text-gray-600 mb-6">Scegli il provider LLM e configura la tua API key. Dati salvati solo nel tuo browser.</p>
                 
                 <div class="space-y-6">
                     <!-- Provider Selection -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-3">Provider AI</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button onclick="selectProvider('openai')" id="btnProviderOpenAI" class="px-4 py-3 border-2 border-indigo-600 bg-indigo-50 text-indigo-700 rounded-lg font-medium transition hover:bg-indigo-100">
-                                OpenAI
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Seleziona Provider AI</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <!-- Row 1 -->
+                            <button onclick="selectProvider('openai')" id="btnProviderOpenAI" class="provider-btn px-4 py-3 border-2 border-indigo-600 bg-indigo-50 text-indigo-700 rounded-lg font-medium transition hover:bg-indigo-100 text-sm">
+                                <div class="font-semibold">OpenAI</div>
+                                <div class="text-xs opacity-75">Leader mercato</div>
                             </button>
-                            <button onclick="selectProvider('perplexity')" id="btnProviderPerplexity" class="px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50">
-                                Perplexity
+                            <button onclick="selectProvider('anthropic')" id="btnProviderAnthropic" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Claude</div>
+                                <div class="text-xs opacity-75">Sicurezza</div>
+                            </button>
+                            <button onclick="selectProvider('google')" id="btnProviderGoogle" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Gemini</div>
+                                <div class="text-xs opacity-75">Economico</div>
+                            </button>
+                            <!-- Row 2 -->
+                            <button onclick="selectProvider('xai')" id="btnProviderXai" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Grok</div>
+                                <div class="text-xs opacity-75">xAI</div>
+                            </button>
+                            <button onclick="selectProvider('deepseek')" id="btnProviderDeepseek" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">DeepSeek</div>
+                                <div class="text-xs opacity-75">Ultra-low cost</div>
+                            </button>
+                            <button onclick="selectProvider('meta')" id="btnProviderMeta" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Llama</div>
+                                <div class="text-xs opacity-75">Open source</div>
+                            </button>
+                            <!-- Row 3 -->
+                            <button onclick="selectProvider('mistral')" id="btnProviderMistral" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Mistral</div>
+                                <div class="text-xs opacity-75">EU/GDPR</div>
+                            </button>
+                            <button onclick="selectProvider('cohere')" id="btnProviderCohere" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Cohere</div>
+                                <div class="text-xs opacity-75">Enterprise</div>
+                            </button>
+                            <button onclick="selectProvider('perplexity')" id="btnProviderPerplexity" class="provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm">
+                                <div class="font-semibold">Perplexity</div>
+                                <div class="text-xs opacity-75">Web search</div>
                             </button>
                         </div>
                     </div>
 
-                    <!-- OpenAI Configuration -->
-                    <div id="configOpenAI" class="space-y-4">
-                        <div class="border-t pt-4">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-3">Configurazione OpenAI</h3>
-                            
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chiave API OpenAI</label>
-                                    <input type="password" id="apiKeyOpenAI" placeholder="sk-proj-xxxxxxxxxxxxx" 
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                                    <p class="text-xs text-gray-500 mt-1">La chiave viene salvata solo nel tuo browser. <a href="https://platform.openai.com/api-keys" target="_blank" class="text-indigo-600 hover:underline">Ottieni chiave</a></p>
-                                </div>
-                                
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Modello OpenAI</label>
-                                    <select id="modelOpenAI" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-                                        <option value="gpt-4.1-mini">gpt-4.1-mini (Economico, veloce)</option>
-                                        <option value="gpt-4o">gpt-4o (Bilanciato)</option>
-                                        <option value="gpt-4-turbo">gpt-4-turbo (Potente)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Perplexity Configuration -->
-                    <div id="configPerplexity" class="space-y-4 hidden">
-                        <div class="border-t pt-4">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-3">Configurazione Perplexity</h3>
-                            
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chiave API Perplexity</label>
-                                    <input type="password" id="apiKeyPerplexity" placeholder="pplx-xxxxxxxxxxxxx" 
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                                    <p class="text-xs text-gray-500 mt-1">La chiave viene salvata solo nel tuo browser. <a href="https://www.perplexity.ai/settings/api" target="_blank" class="text-indigo-600 hover:underline">Ottieni chiave</a></p>
-                                </div>
-                                
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Modello Perplexity</label>
-                                    <select id="modelPerplexity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-                                        <option value="llama-3.1-sonar-large-128k-online">Sonar (Economico, veloce)</option>
-                                        <option value="llama-3.1-sonar-huge-128k-online">Sonar Pro (Potente, costoso)</option>
-                                        <option value="llama-3.1-sonar-large-128k-reasoning">Sonar Reasoning (Con ragionamento)</option>
-                                    </select>
-                                    <p class="text-xs text-gray-500 mt-1">Sonar è raccomandato per il miglior rapporto qualità/prezzo</p>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Dynamic Provider Configuration -->
+                    <div id="providerConfig" class="border-t pt-4">
+                        <!-- Popolato dinamicamente da selectProvider() -->
                     </div>
 
                     <!-- Save Button -->
@@ -884,6 +872,122 @@
             }
         };
 
+        // Database LLM Providers (Gennaio 2026)
+        const LLM_PROVIDERS = {
+            'openai': {
+                name: 'OpenAI',
+                description: 'Leader di mercato, migliori performance',
+                apiKeyPrefix: 'sk-',
+                apiKeyUrl: 'https://platform.openai.com/api-keys',
+                endpoint: 'https://api.openai.com/v1/chat/completions',
+                models: [
+                    { id: 'gpt-4o-mini', name: 'GPT-4o Mini', input: 0.075, output: 0.30, context: '128K', tier: 'economico', description: 'Bilanciato qualità-prezzo' },
+                    { id: 'gpt-4o', name: 'GPT-4o', input: 1.25, output: 5.00, context: '128K', tier: 'premium', description: 'Prestazioni elevate' },
+                    { id: 'gpt-4.1-mini', name: 'GPT-4.1 Mini', input: 0.125, output: 1.00, context: '400K', tier: 'economico', description: 'Economico, contesto esteso' },
+                    { id: 'o1-mini', name: 'o1 Mini (reasoning)', input: 0.55, output: 2.20, context: '131K', tier: 'medio', description: 'Reasoning economico' }
+                ]
+            },
+            'anthropic': {
+                name: 'Anthropic Claude',
+                description: 'Focus su sicurezza e contesto esteso',
+                apiKeyPrefix: 'sk-ant-',
+                apiKeyUrl: 'https://console.anthropic.com/settings/keys',
+                endpoint: 'https://api.anthropic.com/v1/messages',
+                models: [
+                    { id: 'claude-haiku-4', name: 'Claude Haiku 4', input: 0.25, output: 1.25, context: '200K', tier: 'economico', description: 'Veloce ed economico' },
+                    { id: 'claude-sonnet-4', name: 'Claude Sonnet 4', input: 3.00, output: 15.00, context: '1M', tier: 'premium', description: 'Contesto 1M token' },
+                    { id: 'claude-sonnet-4.5', name: 'Claude Sonnet 4.5', input: 3.00, output: 15.00, context: '200K', tier: 'premium', description: 'Ultima versione' },
+                    { id: 'claude-opus-4.5', name: 'Claude Opus 4.5', input: 5.00, output: 25.00, context: '200K', tier: 'premium', description: 'Top performance' }
+                ]
+            },
+            'google': {
+                name: 'Google Gemini',
+                description: 'Aggressive pricing, contesto massiccio',
+                apiKeyPrefix: 'AI',
+                apiKeyUrl: 'https://aistudio.google.com/apikey',
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/',
+                models: [
+                    { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', input: 0.15, output: 0.60, context: '1M', tier: 'economico', description: 'Ultra-economico, alto volume' },
+                    { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', input: 1.25, output: 10.00, context: '2M', tier: 'premium', description: 'Contesto 2M token' },
+                    { id: 'gemini-2.5-flash-reasoning', name: 'Gemini 2.5 Flash (reasoning)', input: 0.15, output: 3.50, context: '1M', tier: 'medio', description: 'Reasoning economico' }
+                ]
+            },
+            'xai': {
+                name: 'xAI Grok',
+                description: 'Nuovo entrante competitivo',
+                apiKeyPrefix: 'xai-',
+                apiKeyUrl: 'https://console.x.ai',
+                endpoint: 'https://api.x.ai/v1/chat/completions',
+                models: [
+                    { id: 'grok-mini', name: 'Grok Mini', input: 0.30, output: 4.00, context: '131K', tier: 'economico', description: 'Buon rapporto qualità-prezzo' },
+                    { id: 'grok-3', name: 'Grok-3', input: 3.00, output: 15.00, context: '131K', tier: 'premium', description: 'Standard performance' },
+                    { id: 'grok-4.1-fast', name: 'Grok-4.1 Fast Reasoning', input: 0.30, output: 0.50, context: '131K', tier: 'economico', description: 'Fast reasoning' }
+                ]
+            },
+            'deepseek': {
+                name: 'DeepSeek',
+                description: 'Rivoluzione low-cost dalla Cina',
+                apiKeyPrefix: 'sk-',
+                apiKeyUrl: 'https://platform.deepseek.com/api_keys',
+                endpoint: 'https://api.deepseek.com/v1/chat/completions',
+                models: [
+                    { id: 'deepseek-v3.2-exp', name: 'DeepSeek V3.2-Exp', input: 0.28, output: 0.42, context: '64K', tier: 'economico', description: 'Costo minimo, 90% meno di GPT-4' },
+                    { id: 'deepseek-r1', name: 'DeepSeek-R1', input: 0.55, output: 2.19, context: '64K', tier: 'economico', description: 'Reasoning economico' }
+                ]
+            },
+            'meta': {
+                name: 'Meta Llama',
+                description: 'Open source, hosting flessibile',
+                apiKeyPrefix: '',
+                apiKeyUrl: 'https://together.ai (o altro provider)',
+                endpoint: 'https://api.together.xyz/v1/chat/completions',
+                models: [
+                    { id: 'llama-4-maverick', name: 'Llama 4 Maverick', input: 0.150, output: 0.600, context: '1M', tier: 'economico', description: 'Open source, contesto 1M' },
+                    { id: 'llama-3.3-70b', name: 'Llama 3.3 70B', input: 0.100, output: 0.320, context: '131K', tier: 'economico', description: 'Bilanciato' },
+                    { id: 'llama-3.2-3b', name: 'Llama 3.2 3B', input: 0.020, output: 0.020, context: '131K', tier: 'economico', description: 'Ultra-economico, piccolo' }
+                ]
+            },
+            'mistral': {
+                name: 'Mistral AI',
+                description: 'Eccellenza europea, GDPR compliant',
+                apiKeyPrefix: '',
+                apiKeyUrl: 'https://console.mistral.ai/api-keys',
+                endpoint: 'https://api.mistral.ai/v1/chat/completions',
+                models: [
+                    { id: 'ministral-3b', name: 'Ministral 3B', input: 0.040, output: 0.040, context: '131K', tier: 'economico', description: 'Ultra-economico' },
+                    { id: 'ministral-8b', name: 'Ministral 8B', input: 0.100, output: 0.100, context: '131K', tier: 'economico', description: 'Economico, bilanciato' },
+                    { id: 'mistral-small-3.2', name: 'Mistral Small 3.2 24B', input: 0.060, output: 0.180, context: '131K', tier: 'economico', description: 'Buone performance' },
+                    { id: 'mistral-large-3', name: 'Mistral Large 3', input: 0.500, output: 1.500, context: '262K', tier: 'medio', description: 'Top Mistral, contesto esteso' },
+                    { id: 'devstral-2', name: 'Devstral 2 (coding)', input: 0.050, output: 0.220, context: '262K', tier: 'economico', description: 'Specializzato coding' }
+                ]
+            },
+            'cohere': {
+                name: 'Cohere',
+                description: 'Specialista enterprise e RAG',
+                apiKeyPrefix: '',
+                apiKeyUrl: 'https://dashboard.cohere.com/api-keys',
+                endpoint: 'https://api.cohere.ai/v1/chat',
+                models: [
+                    { id: 'command-r7b', name: 'Command R7B', input: 0.075, output: 0.300, context: '128K', tier: 'economico', description: 'Economico, veloce' },
+                    { id: 'command-r', name: 'Command R', input: 0.150, output: 0.600, context: '128K', tier: 'economico', description: 'Bilanciato' },
+                    { id: 'command-r-plus', name: 'Command R+', input: 2.500, output: 10.000, context: '128K', tier: 'premium', description: 'Enterprise grade' },
+                    { id: 'command-a', name: 'Command A', input: 2.500, output: 10.000, context: '256K', tier: 'premium', description: 'Top performance' }
+                ]
+            },
+            'perplexity': {
+                name: 'Perplexity',
+                description: 'Online reasoning e ricerca web',
+                apiKeyPrefix: 'pplx-',
+                apiKeyUrl: 'https://www.perplexity.ai/settings/api',
+                endpoint: 'https://api.perplexity.ai/chat/completions',
+                models: [
+                    { id: 'llama-3.1-sonar-large-128k-online', name: 'Sonar Large (online)', input: 1.00, output: 1.00, context: '128K', tier: 'medio', description: 'Con ricerca web' },
+                    { id: 'llama-3.1-sonar-huge-128k-online', name: 'Sonar Huge (online)', input: 5.00, output: 5.00, context: '128K', tier: 'premium', description: 'Potente con web' },
+                    { id: 'llama-3.1-sonar-large-128k-reasoning', name: 'Sonar Reasoning', input: 1.00, output: 5.00, context: '128K', tier: 'medio', description: 'Reasoning con web' }
+                ]
+            }
+        };
+
         // Database indici manuali Zanichelli (per Fase C - Post-it)
         const INDICI_MANUALI = {"versione":"2.0","data_aggiornamento":"2025-11-09","manuali":[{"id":"hart","nome":"Hart - Fondamenti di chimica organica","editore":"Zanichelli","pagine_totali":520,"capitoli":[{"numero":1,"titolo":"Il legame chimico e l'isomeria","pagina_inizio":1},{"numero":2,"titolo":"Gli alcani e i cicloalcani","pagina_inizio":37},{"numero":3,"titolo":"Gli alcheni e gli alchini","pagina_inizio":68},{"numero":4,"titolo":"I composti aromatici","pagina_inizio":113},{"numero":5,"titolo":"La stereoisomeria","pagina_inizio":140},{"numero":6,"titolo":"Composti organici alogenati","pagina_inizio":170},{"numero":7,"titolo":"Gli alcoli, i fenoli e i tioli","pagina_inizio":193},{"numero":8,"titolo":"Gli eteri e gli epossidi","pagina_inizio":220},{"numero":9,"titolo":"Le aldeidi e i chetoni","pagina_inizio":238},{"numero":10,"titolo":"Acidi carbossilici e derivati","pagina_inizio":272},{"numero":11,"titolo":"Le ammine e altri composti azotati","pagina_inizio":309},{"numero":12,"titolo":"La spettroscopia","pagina_inizio":333},{"numero":13,"titolo":"I composti eterociclici","pagina_inizio":360},{"numero":14,"titolo":"I polimeri sintetici","pagina_inizio":379},{"numero":15,"titolo":"I lipidi e i detergenti","pagina_inizio":405},{"numero":16,"titolo":"I carboidrati","pagina_inizio":426},{"numero":17,"titolo":"Amminoacidi, peptidi e proteine","pagina_inizio":455},{"numero":18,"titolo":"I nucleotidi e gli acidi nucleici","pagina_inizio":486}]},{"id":"mcmurry_fondamenti","nome":"McMurry - Fondamenti di chimica organica","editore":"Zanichelli","pagine_totali":896,"capitoli":[{"numero":1,"titolo":"Struttura e legame chimico; acidi e basi","pagina_inizio":1},{"numero":2,"titolo":"I composti organici: gli alcani","pagina_inizio":31},{"numero":3,"titolo":"Gli alcheni e gli alchini: le reazioni organiche","pagina_inizio":66},{"numero":4,"titolo":"Le reazioni degli alcheni e degli alchini","pagina_inizio":94},{"numero":5,"titolo":"I composti aromatici","pagina_inizio":131},{"numero":6,"titolo":"La stereochimica dei centri tetraedrici","pagina_inizio":161},{"numero":7,"titolo":"Gli organoalogenuri: sostituzioni nucleofile ed eliminazioni","pagina_inizio":190},{"numero":8,"titolo":"Alcoli, fenoli, eteri e loro analoghi solforati","pagina_inizio":221},{"numero":9,"titolo":"Aldeidi e chetoni: le reazioni di addizione nucleofila","pagina_inizio":255},{"numero":10,"titolo":"Gli acidi carbossilici e i loro derivati: reazioni di sostituzione nucleofila acilica","pagina_inizio":281},{"numero":11,"titolo":"Le reazioni di sostituzione in alfa al carbonile e le reazioni di condensazione","pagina_inizio":321},{"numero":12,"titolo":"Le ammine","pagina_inizio":348},{"numero":13,"titolo":"La determinazione della struttura","pagina_inizio":373},{"numero":14,"titolo":"Le biomolecole: i carboidrati","pagina_inizio":404},{"numero":15,"titolo":"Le biomolecole: amminoacidi, peptidi e proteine","pagina_inizio":432},{"numero":16,"titolo":"Le biomolecole: i lipidi e gli acidi nucleici","pagina_inizio":462},{"numero":17,"titolo":"La chimica organica dei percorsi metabolici","pagina_inizio":490}]},{"id":"mcmurry_biologico","nome":"McMurry - Chimica organica: un approccio biologico","editore":"Zanichelli","pagine_totali":1152,"capitoli":[{"numero":1,"titolo":"La struttura e il legame","pagina_inizio":1},{"numero":2,"titolo":"I legami covalenti polari; gli acidi e le basi","pagina_inizio":27},{"numero":3,"titolo":"I composti organici: gli alcani e la loro stereochimica","pagina_inizio":57},{"numero":4,"titolo":"I composti organici: i cicloalcani e la loro stereochimica","pagina_inizio":85},{"numero":5,"titolo":"Una panoramica sulle reazioni organiche","pagina_inizio":109},{"numero":6,"titolo":"Gli alcheni e gli alchini","pagina_inizio":140},{"numero":7,"titolo":"Le reazioni degli alcheni e degli alchini","pagina_inizio":170},{"numero":8,"titolo":"I composti aromatici","pagina_inizio":205},{"numero":9,"titolo":"La stereochimica","pagina_inizio":247},{"numero":10,"titolo":"Gli alogenuri alchilici: le sostituzioni nucleofile e le eliminazioni","pagina_inizio":281},{"numero":11,"titolo":"La determinazione della struttura: spettrometria di massa, spettroscopia infrarossa e ultravioletta","pagina_inizio":323},{"numero":12,"titolo":"La determinazione della struttura: la spettroscopia di risonanza magnetica nucleare","pagina_inizio":355},{"numero":13,"titolo":"Gli alcoli, i fenoli e i tioli; gli eteri e i solfuri","pagina_inizio":390},{"numero":14,"titolo":"Le aldeidi e i chetoni: le reazioni di addizione nucleofila","pagina_inizio":436},{"numero":15,"titolo":"Gli acidi carbossilici e i nitrili","pagina_inizio":470},{"numero":16,"titolo":"I derivati degli acidi carbossilici: le reazioni di sostituzione nucleofila acilica","pagina_inizio":494},{"numero":17,"titolo":"Le reazioni dei composti carbonilici in posizione alfa","pagina_inizio":525},{"numero":18,"titolo":"Le ammine e gli eterocicli","pagina_inizio":557},{"numero":19,"titolo":"Le biomolecole: i carboidrati","pagina_inizio":595},{"numero":20,"titolo":"Le biomolecole: gli amminoacidi, i peptidi e le proteine","pagina_inizio":636},{"numero":21,"titolo":"Le biomolecole: gli enzimi e la vitamina","pagina_inizio":676},{"numero":22,"titolo":"Le biomolecole: i lipidi","pagina_inizio":710},{"numero":23,"titolo":"Le biomolecole: gli acidi nucleici","pagina_inizio":747},{"numero":24,"titolo":"La chimica organica dei percorsi metabolici","pagina_inizio":779}]}]};
 
@@ -1203,23 +1307,29 @@
 
         // Gestione Configurazione
         function checkApiKey() {
-            const provider = localStorage.getItem('ai_provider') || 'openai';
-            const apiKeyOpenAI = localStorage.getItem('openai_api_key');
-            const apiKeyPerplexity = localStorage.getItem('perplexity_api_key');
+            const providerKey = localStorage.getItem('ai_provider') || 'openai';
+            const provider = LLM_PROVIDERS[providerKey];
+            const apiKey = localStorage.getItem(`${providerKey}_api_key`);
             const badge = document.getElementById('apiKeyBadge');
             
-            // Per OpenAI: permetti uso anche senza chiave (userà quella di default su Netlify)
-            // Per Perplexity: richiedi sempre la chiave
-            const hasKey = (provider === 'openai') || (provider === 'perplexity' && apiKeyPerplexity);
+            if (!provider) {
+                badge.textContent = '⚠ Provider non valido';
+                badge.className = 'px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full';
+                badge.classList.remove('hidden');
+                return;
+            }
+            
+            // OpenAI su Netlify può funzionare senza chiave (usa chiave default server-side)
+            const isNetlify = window.location.hostname.includes('netlify.app');
+            const hasKey = apiKey || (providerKey === 'openai' && isNetlify);
             
             if (hasKey) {
-                const providerName = provider === 'openai' ? 'OpenAI' : 'Perplexity';
-                const isUsingDefault = provider === 'openai' && !apiKeyOpenAI;
+                const isUsingDefault = providerKey === 'openai' && !apiKey && isNetlify;
                 if (isUsingDefault) {
-                    badge.textContent = `✓ ${providerName} (Test)`;
+                    badge.textContent = `✓ ${provider.name} (Test)`;
                     badge.className = 'px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full';
                 } else {
-                    badge.textContent = `✓ ${providerName}`;
+                    badge.textContent = `✓ ${provider.name}`;
                     badge.className = 'px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full';
                 }
                 badge.classList.remove('hidden');
@@ -1232,67 +1342,115 @@
         }
 
         // Selezione Provider
-        function selectProvider(provider) {
-            localStorage.setItem('ai_provider', provider);
+        function selectProvider(providerKey) {
+            localStorage.setItem('ai_provider', providerKey);
             
             // Aggiorna UI bottoni
-            const btnOpenAI = document.getElementById('btnProviderOpenAI');
-            const btnPerplexity = document.getElementById('btnProviderPerplexity');
-            const configOpenAI = document.getElementById('configOpenAI');
-            const configPerplexity = document.getElementById('configPerplexity');
+            const allButtons = document.querySelectorAll('.provider-btn');
+            allButtons.forEach(btn => {
+                btn.className = 'provider-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50 text-sm';
+            });
             
-            if (provider === 'openai') {
-                btnOpenAI.className = 'px-4 py-3 border-2 border-indigo-600 bg-indigo-50 text-indigo-700 rounded-lg font-medium transition hover:bg-indigo-100';
-                btnPerplexity.className = 'px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50';
-                configOpenAI.classList.remove('hidden');
-                configPerplexity.classList.add('hidden');
-            } else {
-                btnPerplexity.className = 'px-4 py-3 border-2 border-indigo-600 bg-indigo-50 text-indigo-700 rounded-lg font-medium transition hover:bg-indigo-100';
-                btnOpenAI.className = 'px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium transition hover:bg-gray-50';
-                configPerplexity.classList.remove('hidden');
-                configOpenAI.classList.add('hidden');
+            const selectedBtn = document.getElementById(`btnProvider${providerKey.charAt(0).toUpperCase() + providerKey.slice(1).replace(/([A-Z])/g, (match) => match)}`);
+            if (selectedBtn) {
+                selectedBtn.className = 'provider-btn px-4 py-3 border-2 border-indigo-600 bg-indigo-50 text-indigo-700 rounded-lg font-medium transition hover:bg-indigo-100 text-sm';
+            }
+            
+            // Carica configurazione dinamica
+            const provider = LLM_PROVIDERS[providerKey];
+            if (!provider) {
+                console.error('Provider non trovato:', providerKey);
+                return;
+            }
+            
+            const configDiv = document.getElementById('providerConfig');
+            const savedApiKey = localStorage.getItem(`${providerKey}_api_key`) || '';
+            const savedModel = localStorage.getItem(`${providerKey}_model`) || provider.models[0].id;
+            
+            // Genera HTML configurazione
+            let modelsHTML = '';
+            provider.models.forEach(model => {
+                const costInfo = `$${model.input}/$${model.output} per M token`;
+                const badge = model.tier === 'economico' ? '💰' : model.tier === 'medio' ? '⚖️' : '⭐';
+                modelsHTML += `<option value="${model.id}" ${model.id === savedModel ? 'selected' : ''}>${badge} ${model.name} - ${costInfo}</option>`;
+            });
+            
+            configDiv.innerHTML = `
+                <h3 class="text-sm font-semibold text-gray-900 mb-3">Configurazione ${provider.name}</h3>
+                <p class="text-xs text-gray-600 mb-4">${provider.description}</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Chiave API ${provider.name}</label>
+                        <input type="password" id="providerApiKey" placeholder="${provider.apiKeyPrefix ? provider.apiKeyPrefix + 'xxxxxxxxxxxxx' : 'Inserisci chiave API'}" 
+                               value="${savedApiKey}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <p class="text-xs text-gray-500 mt-1">
+                            La chiave viene salvata solo nel tuo browser. 
+                            <a href="${provider.apiKeyUrl}" target="_blank" class="text-indigo-600 hover:underline">Ottieni chiave →</a>
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Modello</label>
+                        <select id="providerModel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            ${modelsHTML}
+                        </select>
+                        <div id="modelInfo" class="mt-2 p-2 bg-blue-50 rounded text-xs text-blue-800">
+                            <!-- Popolato da updateModelInfo() -->
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Update model info on change
+            document.getElementById('providerModel').addEventListener('change', () => updateModelInfo(providerKey));
+            updateModelInfo(providerKey);
+        }
+        
+        function updateModelInfo(providerKey) {
+            const provider = LLM_PROVIDERS[providerKey];
+            const selectedModelId = document.getElementById('providerModel').value;
+            const model = provider.models.find(m => m.id === selectedModelId);
+            
+            if (model) {
+                const infoDiv = document.getElementById('modelInfo');
+                infoDiv.innerHTML = `
+                    <strong>${model.name}</strong>: ${model.description}<br>
+                    📊 Costo: $${model.input} input / $${model.output} output per M token<br>
+                    📝 Contesto: ${model.context} | Fascia: ${model.tier}
+                `;
             }
         }
 
         function saveConfiguration() {
-            const provider = localStorage.getItem('ai_provider') || 'openai';
-            const status = document.getElementById('configStatus');
+            const providerKey = localStorage.getItem('ai_provider') || 'openai';
+            const provider = LLM_PROVIDERS[providerKey];
             
-            if (provider === 'openai') {
-                const apiKey = document.getElementById('apiKeyOpenAI').value.trim();
-                const model = document.getElementById('modelOpenAI').value;
-                
-                if (!apiKey) {
-                    showConfigStatus('Inserisci una chiave API OpenAI valida', 'error');
-                    return;
-                }
-                
-                if (!apiKey.startsWith('sk-')) {
-                    showConfigStatus('La chiave API OpenAI deve iniziare con "sk-"', 'error');
-                    return;
-                }
-                
-                localStorage.setItem('openai_api_key', apiKey);
-                localStorage.setItem('openai_model', model);
-                showConfigStatus('Configurazione OpenAI salvata con successo!', 'success');
-            } else {
-                const apiKey = document.getElementById('apiKeyPerplexity').value.trim();
-                const model = document.getElementById('modelPerplexity').value;
-                
-                if (!apiKey) {
-                    showConfigStatus('Inserisci una chiave API Perplexity valida', 'error');
-                    return;
-                }
-                
-                if (!apiKey.startsWith('pplx-')) {
-                    showConfigStatus('La chiave API Perplexity deve iniziare con "pplx-"', 'error');
-                    return;
-                }
-                
-                localStorage.setItem('perplexity_api_key', apiKey);
-                localStorage.setItem('perplexity_model', model);
-                showConfigStatus('Configurazione Perplexity salvata con successo!', 'success');
+            if (!provider) {
+                showConfigStatus('Provider non valido', 'error');
+                return;
             }
+            
+            const apiKey = document.getElementById('providerApiKey').value.trim();
+            const model = document.getElementById('providerModel').value;
+            
+            if (!apiKey) {
+                showConfigStatus(`Inserisci una chiave API ${provider.name} valida`, 'error');
+                return;
+            }
+            
+            // Validazione prefix (se presente)
+            if (provider.apiKeyPrefix && !apiKey.startsWith(provider.apiKeyPrefix)) {
+                showConfigStatus(`La chiave API ${provider.name} deve iniziare con "${provider.apiKeyPrefix}"`, 'error');
+                return;
+            }
+            
+            localStorage.setItem(`${providerKey}_api_key`, apiKey);
+            localStorage.setItem(`${providerKey}_model`, model);
+            
+            const modelObj = provider.models.find(m => m.id === model);
+            showConfigStatus(`✅ Configurazione ${provider.name} salvata! Modello: ${modelObj.name}`, 'success');
             
             checkApiKey();
             
@@ -1310,22 +1468,8 @@
         
         // Carica configurazione salvata all'apertura settings
         function loadSavedConfiguration() {
-            const provider = localStorage.getItem('ai_provider') || 'openai';
-            const openaiKey = localStorage.getItem('openai_api_key') || '';
-            const openaiModel = localStorage.getItem('openai_model') || 'gpt-4.1-mini';
-            const perplexityKey = localStorage.getItem('perplexity_api_key') || '';
-            const perplexityModel = localStorage.getItem('perplexity_model') || 'llama-3.1-sonar-large-128k-online';
-            
-            // Imposta provider
-            selectProvider(provider);
-            
-            // Carica valori
-            if (document.getElementById('apiKeyOpenAI')) {
-                document.getElementById('apiKeyOpenAI').value = openaiKey;
-                document.getElementById('modelOpenAI').value = openaiModel;
-                document.getElementById('apiKeyPerplexity').value = perplexityKey;
-                document.getElementById('modelPerplexity').value = perplexityModel;
-            }
+            const providerKey = localStorage.getItem('ai_provider') || 'openai';
+            selectProvider(providerKey);
         }
 
         // Gestione tipo analisi (cambio stile radio buttons)
@@ -4237,169 +4381,195 @@ Rispondi SOLO con un JSON valido:
             }
         }
 
-        // Chiamata LLM Unificata (OpenAI o Perplexity) con Retry Automatico
+        // Chiamata LLM Unificata (tutti i provider) con Retry Automatico
         async function callLLM(prompt, temperature, maxRetries = 3) {
-            const provider = localStorage.getItem('ai_provider') || 'openai';
+            const providerKey = localStorage.getItem('ai_provider') || 'openai';
+            const provider = LLM_PROVIDERS[providerKey];
+            
+            if (!provider) {
+                throw new Error(`Provider '${providerKey}' non trovato`);
+            }
             
             for (let attempt = 1; attempt <= maxRetries; attempt++) {
                 try {
-                    console.log(`Tentativo ${attempt}/${maxRetries} per chiamata LLM...`);
+                    console.log(`🤖 Tentativo ${attempt}/${maxRetries} con ${provider.name}...`);
                     
-                    let response;
-                    if (provider === 'openai') {
-                        response = await callOpenAI(prompt, temperature);
-                    } else {
-                        response = await callPerplexity(prompt, temperature);
-                    }
+                    const response = await callProvider(providerKey, prompt, temperature);
                     
                     // Verifica che la risposta non sia vuota
                     if (!response || response.trim().length === 0) {
-                        throw new Error('Risposta vuota da GPT-4');
+                        throw new Error('Risposta vuota dal LLM');
                     }
                     
-                    console.log(`Risposta ricevuta (${response.length} caratteri)`);
+                    console.log(`✅ Risposta ricevuta (${response.length} caratteri)`);
                     return response;
                     
                 } catch (error) {
-                    console.error(`Tentativo ${attempt} fallito:`, error.message);
+                    console.error(`❌ Tentativo ${attempt} fallito:`, error.message);
                     
                     if (attempt === maxRetries) {
-                        // Ultimo tentativo fallito, lancia errore
                         throw new Error(`Chiamata LLM fallita dopo ${maxRetries} tentativi: ${error.message}`);
                     }
                     
-                    // Attendi prima di riprovare (backoff esponenziale)
-                    const waitTime = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
-                    console.log(`Attendo ${waitTime/1000}s prima di riprovare...`);
+                    // Backoff esponenziale
+                    const waitTime = Math.pow(2, attempt) * 1000;
+                    console.log(`⏳ Attendo ${waitTime/1000}s prima di riprovare...`);
                     await new Promise(resolve => setTimeout(resolve, waitTime));
                 }
             }
         }
         
-        async function callOpenAI(prompt, temperature) {
-            const apiKey = localStorage.getItem('openai_api_key') || null;
-            const model = localStorage.getItem('openai_model') || 'gpt-4o-mini';
+        async function callProvider(providerKey, prompt, temperature) {
+            const provider = LLM_PROVIDERS[providerKey];
+            const apiKey = localStorage.getItem(`${providerKey}_api_key`);
+            const model = localStorage.getItem(`${providerKey}_model`) || provider.models[0].id;
+            
+            if (!apiKey) {
+                throw new Error(`Chiave API ${provider.name} non configurata. Vai in Impostazioni.`);
+            }
+            
+            console.log(`🔑 Uso ${provider.name} - Modello: ${model}`);
             
             // Verifica se siamo su Netlify o in locale
             const isNetlify = window.location.hostname.includes('netlify.app');
             
-            if (isNetlify) {
-                // Su Netlify: usa il proxy
-                const response = await fetch('/.netlify/functions/openai-proxy', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        apiKey: apiKey,
-                        model: model,
-                        messages: [{role: 'user', content: prompt}],
-                        temperature: temperature,
-                        max_tokens: 16000
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error?.message || error.message || 'Errore API OpenAI');
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content.trim();
+            // Provider che supportano direttamente OpenAI API format
+            const openaiCompatible = ['openai', 'xai', 'deepseek', 'meta', 'mistral', 'perplexity'];
+            
+            if (openaiCompatible.includes(providerKey)) {
+                return await callOpenAICompatible(provider, apiKey, model, prompt, temperature, isNetlify, providerKey);
+            } else if (providerKey === 'anthropic') {
+                return await callAnthropic(provider, apiKey, model, prompt, temperature);
+            } else if (providerKey === 'google') {
+                return await callGoogle(provider, apiKey, model, prompt, temperature);
+            } else if (providerKey === 'cohere') {
+                return await callCohere(provider, apiKey, model, prompt, temperature);
             } else {
-                // In locale/sandbox: chiamata diretta a OpenAI
-                if (!apiKey) {
-                    throw new Error('Chiave API OpenAI non configurata. Vai in Impostazioni.');
-                }
-                
-                console.log('🔧 Ambiente locale/sandbox: chiamata diretta a OpenAI API');
-                
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: model,
-                        messages: [{role: 'user', content: prompt}],
-                        temperature: temperature,
-                        max_tokens: 16000
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content.trim();
+                throw new Error(`Provider ${providerKey} non implementato`);
             }
         }
         
-        async function callPerplexity(prompt, temperature) {
-            const apiKey = localStorage.getItem('perplexity_api_key');
-            const model = localStorage.getItem('perplexity_model') || 'llama-3.1-sonar-large-128k-online';
+        async function callOpenAICompatible(provider, apiKey, model, prompt, temperature, isNetlify, providerKey) {
+            let endpoint = provider.endpoint;
+            let headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            };
             
-            if (!apiKey) {
-                throw new Error('Chiave API Perplexity non configurata');
+            let body = {
+                model: model,
+                messages: [{role: 'user', content: prompt}],
+                temperature: temperature,
+                max_tokens: 16000
+            };
+            
+            // OpenAI su Netlify: usa proxy
+            if (providerKey === 'openai' && isNetlify) {
+                console.log('📡 Ambiente Netlify: uso proxy');
+                endpoint = '/.netlify/functions/openai-proxy';
+                body = {
+                    apiKey: apiKey,
+                    model: model,
+                    messages: [{role: 'user', content: prompt}],
+                    temperature: temperature,
+                    max_tokens: 16000
+                };
+                headers = {'Content-Type': 'application/json'};
+            } else if (providerKey === 'openai') {
+                console.log('🏠 Ambiente locale/sandbox: chiamata diretta a OpenAI API');
             }
             
-            // Verifica se siamo su Netlify o in locale
-            const isNetlify = window.location.hostname.includes('netlify.app');
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(body)
+            });
             
-            if (isNetlify) {
-                // Su Netlify: usa il proxy
-                const response = await fetch('/.netlify/functions/perplexity-proxy', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        apiKey: apiKey,
-                        model: model,
-                        messages: [{role: 'user', content: prompt}],
-                        temperature: temperature,
-                        max_tokens: 16000
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error?.message || error.message || 'Errore API Perplexity');
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content.trim();
-            } else {
-                // In locale/sandbox: chiamata diretta a Perplexity
-                console.log('🔧 Ambiente locale/sandbox: chiamata diretta a Perplexity API');
-                
-                const response = await fetch('https://api.perplexity.ai/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: model,
-                        messages: [{role: 'user', content: prompt}],
-                        temperature: temperature,
-                        max_tokens: 16000
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content.trim();
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `Errore API ${provider.name}: ${response.status}`);
             }
+            
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
         }
-
+        
+        async function callAnthropic(provider, apiKey, model, prompt, temperature) {
+            const response = await fetch(provider.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01'
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: [{role: 'user', content: prompt}],
+                    temperature: temperature,
+                    max_tokens: 16000
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `Errore API ${provider.name}: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.content[0].text.trim();
+        }
+        
+        async function callGoogle(provider, apiKey, model, prompt, temperature) {
+            const endpoint = `${provider.endpoint}${model}:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{parts: [{text: prompt}]}],
+                    generationConfig: {
+                        temperature: temperature,
+                        maxOutputTokens: 16000
+                    }
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `Errore API ${provider.name}: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text.trim();
+        }
+        
+        async function callCohere(provider, apiKey, model, prompt, temperature) {
+            const response = await fetch(provider.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: model,
+                    message: prompt,
+                    temperature: temperature,
+                    max_tokens: 16000
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `Errore API ${provider.name}: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.text.trim();
+        }
+        
+        
         // Mostra risultati (continua nel prossimo blocco...)
         // ============================================
         // FASE 5.5: ANALISI STRATEGICA ZANICHELLI
@@ -4446,11 +4616,38 @@ Rispondi SOLO con un JSON valido:
                     return !(altEntry?.publisher === 'Zanichelli' || altEntry?.type === 'zanichelli');
                 });
                 
+                // CALCOLA competitor con punteggio MASSIMO
+                let competitorMigliore = null;
+                let punteggioMassimoCompetitor = prog.gap_manuale.punteggio_framework || 0;
+                
+                if (competitorAlternativi.length > 0) {
+                    competitorMigliore = competitorAlternativi.reduce((max, curr) => {
+                        const punteggioMax = max.punteggio_framework || 0;
+                        const punteggioCurr = curr.punteggio_framework || 0;
+                        return punteggioCurr > punteggioMax ? curr : max;
+                    });
+                    punteggioMassimoCompetitor = competitorMigliore.punteggio_framework || 0;
+                }
+                
+                const haCompetitorSuperiore = punteggioMassimoCompetitor > (prog.gap_manuale.punteggio_framework || 0);
+                
+                console.log('📊 Competitor Analysis:', {
+                    punteggioZanichelli: prog.gap_manuale.punteggio_framework,
+                    competitorMigliore: competitorMigliore?.manuale,
+                    punteggioCompetitorMigliore: punteggioMassimoCompetitor,
+                    haCompetitorSuperiore: haCompetitorSuperiore
+                });
+                
                 promptStrategia = `Sei un consulente strategico per promotori editoriali Zanichelli.
 
-SCENARIO: Il docente ha ADOTTATO un manuale Zanichelli come principale.
+SCENARIO: Il docente ha GIÀ ADOTTATO il manuale Zanichelli "${manualeAdottato}" come testo PRINCIPALE.
 
-MANUALE ZANICHELLI ADOTTATO:
+⚠️ IMPORTANTE: 
+- Il manuale "${manualeAdottato}" è GIÀ IN USO dal docente
+- NON puoi suggerire "${manualeAdottato}" come alternativa (è già adottato!)
+- Devi CONFERMARE questa scelta O suggerire UPGRADE a ALTRO Zanichelli (NON McMurry stesso!)
+
+MANUALE ZANICHELLI ATTUALMENTE ADOTTATO:
 - Nome: ${manualeAdottato}
 - Punteggio Framework: ${prog.gap_manuale.punteggio_framework}/270
 - Copertura: ${prog.gap_manuale.copertura_percentuale}%
@@ -4458,26 +4655,41 @@ MANUALE ZANICHELLI ADOTTATO:
 - Punti di forza: ${JSON.stringify(prog.gap_manuale.punti_forza || [])}
 - Punti di debolezza: ${JSON.stringify(prog.gap_manuale.punti_debolezza || [])}
 
-ALTRI MANUALI ZANICHELLI DISPONIBILI (Catalogo):
+ALTRI MANUALI ZANICHELLI DISPONIBILI NEL CATALOGO (per eventuale upgrade):
 ${JSON.stringify(prog.zanichelli?.manuali || [], null, 2)}
 
-COMPETITOR ALTERNATIVI VALUTATI:
+COMPETITOR ALTERNATIVI CHE IL DOCENTE STA VALUTANDO:
 ${JSON.stringify(competitorAlternativi, null, 2)}
 
-COMPITO:
+⚠️ ATTENZIONE - COMPETITOR PIÙ FORTE:
+${haCompetitorSuperiore ? `
+- Il competitor "${competitorMigliore?.manuale}" ha un punteggio SUPERIORE (${punteggioMassimoCompetitor}/270 vs ${prog.gap_manuale.punteggio_framework}/270)
+- DIFFERENZA: ${punteggioMassimoCompetitor - prog.gap_manuale.punteggio_framework} punti a favore del competitor
+- Il promotore deve DIFENDERE la scelta di "${manualeAdottato}" nonostante il punteggio inferiore
+- Focus su: punti di forza qualitativi, gap risolti, approccio didattico, supporto Zanichelli
+` : `
+- NESSUN competitor ha punteggio superiore a "${manualeAdottato}"
+- Il punteggio di "${manualeAdottato}" (${prog.gap_manuale.punteggio_framework}/270) è il migliore tra tutti
+- Questo rafforza la scelta attuale
+`}
+
+COMPITO DEL PROMOTORE:
 Analizza questa situazione e rispondi a 3 domande critiche:
 
-1. Il manuale Zanichelli adottato è la SCELTA OTTIMALE tra i Zanichelli disponibili?
-   - Confronta con gli altri Zanichelli del catalogo
-   - C'è un altro Zanichelli con compatibilità superiore?
-   - Se sì, quali vantaggi offre?
+1. Il Zanichelli "${manualeAdottato}" ADOTTATO è la scelta OTTIMALE tra i Zanichelli disponibili?
+   - Confronta "${manualeAdottato}" con gli ALTRI Zanichelli del catalogo (NON con sé stesso!)
+   - Esiste un ALTRO Zanichelli (diverso da "${manualeAdottato}") con compatibilità superiore?
+   - Se sì, quali vantaggi offre l'UPGRADE?
 
-2. Come si DIFENDE questo Zanichelli rispetto ai competitor alternativi?
-   - Qualche competitor ha punteggio superiore?
-   - Come giustificare la scelta del Zanichelli?
-   - Quali sono i punti di forza unici di Zanichelli?
+2. Come DIFENDERE la scelta di "${manualeAdottato}" rispetto ai competitor alternativi?
+   - Qualche competitor (Brown, Bruice, etc.) ha punteggio superiore?
+   - Come giustificare la scelta attuale di Zanichelli?
+   - Quali sono i punti di forza unici del "${manualeAdottato}" rispetto ai competitor?
 
-3. RACCOMANDAZIONE: Confermare questa scelta o suggerire upgrade a altro Zanichelli?
+3. RACCOMANDAZIONE FINALE: CONFERMARE "${manualeAdottato}" o suggerire UPGRADE a ALTRO Zanichelli?
+   - Se "${manualeAdottato}" è ottimale: CONFERMA scelta attuale
+   - Se esiste altro Zanichelli superiore: SUGGERISCI UPGRADE (specifica quale, NON "${manualeAdottato}"!)
+   - Se competitor sono superiori: DIFENDI "${manualeAdottato}" con argomenti forti
 
 Rispondi SOLO con un JSON valido:
 {
@@ -4516,7 +4728,24 @@ Rispondi SOLO con un JSON valido:
                 scenario = 'opportunita_conversione';
                 console.log('✅ SCENARIO 2: Competitor principale, Zanichelli tra alternativi');
                 
-                const zanichelliAlt = zanichelliAlternativi[0]; // Prendi il primo
+                // Prendi il Zanichelli alternativo con punteggio PIÙ ALTO
+                const zanichelliAlt = zanichelliAlternativi.reduce((max, curr) => {
+                    const punteggioMax = max.punteggio_framework || 0;
+                    const punteggioCurr = curr.punteggio_framework || 0;
+                    return punteggioCurr > punteggioMax ? curr : max;
+                });
+                
+                const punteggioCompetitor = prog.gap_manuale.punteggio_framework || 0;
+                const punteggioZanichelliAlt = zanichelliAlt.punteggio_framework || 0;
+                const differenzaPunteggio = punteggioZanichelliAlt - punteggioCompetitor;
+                
+                console.log('📊 Scenario 2 Analysis:', {
+                    competitor: manualeAdottato,
+                    punteggioCompetitor: punteggioCompetitor,
+                    zanichelliAlt: zanichelliAlt.manuale,
+                    punteggioZanichelliAlt: punteggioZanichelliAlt,
+                    differenza: differenzaPunteggio
+                });
                 
                 promptStrategia = `Sei un consulente strategico per promotori editoriali Zanichelli.
 
@@ -4530,12 +4759,17 @@ MANUALE COMPETITOR ADOTTATO:
 - Gap identificati: ${JSON.stringify(prog.gap_manuale.gap || [])}
 - Punti di debolezza: ${JSON.stringify(prog.gap_manuale.punti_debolezza || [])}
 
-MANUALE ZANICHELLI ALTERNATIVO:
+MANUALE ZANICHELLI ALTERNATIVO (con punteggio PIÙ ALTO tra gli alternativi):
 - Nome: ${zanichelliAlt.manuale}
 - Punteggio Framework: ${zanichelliAlt.punteggio_framework}/270
 - Copertura: ${zanichelliAlt.copertura_percentuale}%
 - Gap: ${JSON.stringify(zanichelliAlt.gap || [])}
 - Punti di forza: ${JSON.stringify(zanichelliAlt.punti_forza || [])}
+
+⚠️ CONFRONTO DIRETTO:
+- Punteggio Competitor: ${punteggioCompetitor}/270
+- Punteggio Zanichelli Alt: ${punteggioZanichelliAlt}/270
+- DIFFERENZA: ${differenzaPunteggio > 0 ? '+' : ''}${differenzaPunteggio} punti ${differenzaPunteggio > 0 ? 'a favore di Zanichelli ✅' : 'a favore del Competitor ⚠️'}
 
 ALTRI MANUALI ZANICHELLI DISPONIBILI (Catalogo):
 ${JSON.stringify(prog.zanichelli?.manuali || [], null, 2)}
