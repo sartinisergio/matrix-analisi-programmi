@@ -5364,7 +5364,8 @@ Rispondi SOLO con un JSON valido:
             
             // Filter manuali
             const allManuali = getManualsAsObject();
-            const filteredManuali = [];
+            let filteredManuali = [];
+            let usedFallback = false;
             
             for (const id in allManuali) {
                 const man = allManuali[id];
@@ -5386,12 +5387,49 @@ Rispondi SOLO con un JSON valido:
                 }
             }
             
-            console.log('📚 Manuali trovati:', filteredManuali.length);
+            // FALLBACK: If no manuals found with specific subject, try generic subject
+            if (filteredManuali.length === 0 && evalAbs_selectedMateria && !Array.isArray(manualSubjectFilter)) {
+                console.warn('⚠️ Nessun manuale specifico per:', manualSubjectFilter);
+                console.log('🔄 Provo con subject generico della macroarea:', evalAbs_selectedMacroarea);
+                
+                // Try generic subject for macroarea
+                const fallbackMapping = {
+                    'Matematica': 'Matematica',
+                    'Fisica': 'Fisica',
+                    'Chimica': 'Chimica Generale',
+                    'Biologia': 'Biologia',
+                    'Economia': 'Economia',
+                    'Medicina e Chirurgia': 'Biologia',
+                    'Istologia': 'Istologia'
+                };
+                
+                const fallbackSubject = fallbackMapping[evalAbs_selectedMacroarea];
+                
+                if (fallbackSubject) {
+                    for (const id in allManuali) {
+                        const man = allManuali[id];
+                        if (man.subject === fallbackSubject) {
+                            filteredManuali.push(man);
+                        }
+                    }
+                    
+                    if (filteredManuali.length > 0) {
+                        usedFallback = true;
+                        console.log(`✅ Trovati ${filteredManuali.length} manuali generici (${fallbackSubject})`);
+                    }
+                }
+            }
+            
+            console.log('📚 Manuali trovati:', filteredManuali.length, usedFallback ? '(fallback a generici)' : '');
             
             select.innerHTML = '<option value="">Seleziona manuale...</option>';
             
             if (filteredManuali.length === 0) {
                 select.innerHTML += '<option value="" disabled>Nessun manuale disponibile per questa materia</option>';
+            } else if (usedFallback) {
+                // Add warning message
+                select.innerHTML += `<option value="" disabled style="color: #F59E0B; font-weight: bold;">⚠️ Nessun manuale specifico per ${evalAbs_selectedMateria}</option>`;
+                select.innerHTML += `<option value="" disabled style="color: #6B7280;">Mostro manuali generici di ${evalAbs_selectedMacroarea}:</option>`;
             }
             
             // Sort by title
