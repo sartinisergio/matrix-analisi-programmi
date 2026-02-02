@@ -30,8 +30,12 @@
     
     <!-- Redirect to Welcome Page (if not disabled) -->
     <script>
-        // Controlla se l'utente ha disabilitato la welcome page
-        if (!localStorage.getItem('matrix_skip_welcome')) {
+        // Controlla se veniamo dalla welcome page (evita loop infinito)
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromWelcome = urlParams.get('from') === 'welcome';
+        
+        // Se NON veniamo da welcome E l'utente NON ha disabilitato la welcome
+        if (!fromWelcome && !localStorage.getItem('matrix_skip_welcome')) {
             // Redirect a welcome.html
             window.location.href = 'welcome.html';
         }

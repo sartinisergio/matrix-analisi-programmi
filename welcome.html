@@ -395,8 +395,8 @@
                 localStorage.setItem('matrix_skip_welcome', 'true');
             }
             
-            // Naviga all'app principale
-            window.location.href = 'index.html';
+            // Naviga all'app principale con parametro per evitare loop
+            window.location.href = 'index.html?from=welcome';
         }
         
         // Sincronizza i due checkbox
