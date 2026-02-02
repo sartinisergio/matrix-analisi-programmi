@@ -30,9 +30,9 @@
                 <div class="flex items-center space-x-4">
                     <a href="#come-funziona" class="text-gray-600 hover:text-indigo-600 transition">Come Funziona</a>
                     <a href="#funzionalita" class="text-gray-600 hover:text-indigo-600 transition">Funzionalità</a>
-                    <a href="index.html" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">
+                    <button onclick="goToApp()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">
                         🚀 Inizia Subito
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -56,12 +56,18 @@
                 <p class="text-lg mb-10 text-white/90">
                     Analizza programmi universitari, identifica gap, confronta competitor e genera raccomandazioni strategiche personalizzate in pochi secondi.
                 </p>
-                <a href="index.html" class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition font-bold text-lg shadow-lg">
+                <button onclick="goToApp()" class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition font-bold text-lg shadow-lg">
                     🚀 Vai all'Applicazione
                     <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>
-                </a>
+                </button>
+                <div class="mt-6 flex items-center justify-center">
+                    <label class="flex items-center space-x-2 cursor-pointer bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg hover:bg-white/20 transition">
+                        <input type="checkbox" id="skipWelcomeCheckbox" class="w-4 h-4 rounded border-white/30 text-indigo-600 focus:ring-indigo-500">
+                        <span class="text-sm text-white">Non mostrare più questa pagina</span>
+                    </label>
+                </div>
                 <p class="mt-4 text-sm text-indigo-100">
                     ✓ Nessuna installazione richiesta  •  ✓ Gratuito  •  ✓ 9 Provider LLM disponibili
                 </p>
@@ -326,12 +332,18 @@
             <p class="text-xl mb-8 text-indigo-100">
                 Trasforma il tuo approccio di vendita con analisi programmi basate su AI
             </p>
-            <a href="index.html" class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition font-bold text-lg shadow-xl">
+            <button onclick="goToApp()" class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition font-bold text-lg shadow-xl">
                 🚀 Vai all'Applicazione
                 <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
-            </a>
+            </button>
+            <div class="mt-6 flex justify-center">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg hover:bg-white/20 transition">
+                    <input type="checkbox" id="skipWelcomeCheckbox2" class="w-4 h-4 rounded border-white/30 text-indigo-600 focus:ring-indigo-500">
+                    <span class="text-sm text-white">Non mostrare più questa pagina</span>
+                </label>
+            </div>
             <div class="mt-8 flex justify-center space-x-8 text-sm">
                 <div class="flex items-center">
                     <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -369,6 +381,40 @@
             </p>
         </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Funzione per andare all'applicazione
+        function goToApp() {
+            // Controlla se uno dei checkbox è selezionato
+            const checkbox1 = document.getElementById('skipWelcomeCheckbox');
+            const checkbox2 = document.getElementById('skipWelcomeCheckbox2');
+            
+            if (checkbox1 && checkbox1.checked || checkbox2 && checkbox2.checked) {
+                // Salva preferenza in localStorage
+                localStorage.setItem('matrix_skip_welcome', 'true');
+            }
+            
+            // Naviga all'app principale
+            window.location.href = 'index.html';
+        }
+        
+        // Sincronizza i due checkbox
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox1 = document.getElementById('skipWelcomeCheckbox');
+            const checkbox2 = document.getElementById('skipWelcomeCheckbox2');
+            
+            if (checkbox1 && checkbox2) {
+                checkbox1.addEventListener('change', function() {
+                    checkbox2.checked = this.checked;
+                });
+                
+                checkbox2.addEventListener('change', function() {
+                    checkbox1.checked = this.checked;
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>

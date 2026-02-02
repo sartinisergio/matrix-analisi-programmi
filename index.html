@@ -28,6 +28,15 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     
+    <!-- Redirect to Welcome Page (if not disabled) -->
+    <script>
+        // Controlla se l'utente ha disabilitato la welcome page
+        if (!localStorage.getItem('matrix_skip_welcome')) {
+            // Redirect a welcome.html
+            window.location.href = 'welcome.html';
+        }
+    </script>
+    
     <!-- Header -->
     <header class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
