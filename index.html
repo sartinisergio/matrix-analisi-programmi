@@ -3933,6 +3933,141 @@ Rispondi SOLO con un JSON valido:
                     }
                 }
 
+                // Funzione per mostrare UI di selezione manuali
+                const mostraSelezioneManualiFn = (manuali, materia, cfu, classe) => {
+                    return new Promise((resolve) => {
+                        // Crea overlay modal
+                        const overlay = document.createElement('div');
+                        overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                        overlay.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;';
+                        
+                        // Crea modal
+                        const modal = document.createElement('div');
+                        modal.className = 'bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden flex flex-col';
+                        modal.style.cssText = 'background: white; border-radius: 12px; max-width: 800px; width: 90%; max-height: 80vh; display: flex; flex-direction: column;';
+                        
+                        // Header
+                        const header = document.createElement('div');
+                        header.className = 'p-6 border-b border-gray-200';
+                        header.innerHTML = `
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">📚 Selezione Manuali Zanichelli</h3>
+                            <p class="text-sm text-gray-600">
+                                Ho trovato <strong>${manuali.length} manuali</strong> Zanichelli per ${materia}.<br>
+                                Seleziona quali valutare (massimo 5, consigliato 3-5):
+                            </p>
+                        `;
+                        
+                        // Body (scrollable)
+                        const body = document.createElement('div');
+                        body.className = 'p-6 overflow-y-auto flex-1';
+                        body.style.cssText = 'overflow-y: auto; flex: 1;';
+                        
+                        // Lista manuali con checkbox
+                        const checkboxes = [];
+                        manuali.forEach((manuale, idx) => {
+                            const item = document.createElement('div');
+                            item.className = 'flex items-start p-3 hover:bg-gray-50 rounded-lg transition mb-2';
+                            
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.id = `manual-${idx}`;
+                            checkbox.className = 'mt-1 h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500';
+                            checkbox.dataset.manualId = manuale.id;
+                            checkboxes.push(checkbox);
+                            
+                            const label = document.createElement('label');
+                            label.htmlFor = `manual-${idx}`;
+                            label.className = 'ml-3 flex-1 cursor-pointer';
+                            label.innerHTML = `
+                                <div class="font-medium text-gray-900">${manuale.author} - ${manuale.title}</div>
+                                <div class="text-sm text-gray-500">${manuale.chapters_count || 0} capitoli</div>
+                            `;
+                            
+                            item.appendChild(checkbox);
+                            item.appendChild(label);
+                            body.appendChild(item);
+                        });
+                        
+                        // Footer
+                        const footer = document.createElement('div');
+                        footer.className = 'p-6 border-t border-gray-200 bg-gray-50';
+                        
+                        const counter = document.createElement('div');
+                        counter.className = 'text-sm text-gray-600 mb-3';
+                        counter.id = 'selection-counter';
+                        counter.textContent = 'Selezionati: 0 / 5';
+                        
+                        const buttonsContainer = document.createElement('div');
+                        buttonsContainer.className = 'flex justify-between items-center';
+                        
+                        // Pulsante "Seleziona tutti" / "Deseleziona tutti"
+                        const toggleBtn = document.createElement('button');
+                        toggleBtn.className = 'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition';
+                        toggleBtn.textContent = 'Seleziona tutti';
+                        
+                        // Pulsante "Procedi"
+                        const proceedBtn = document.createElement('button');
+                        proceedBtn.className = 'px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed';
+                        proceedBtn.textContent = 'Procedi con Analisi →';
+                        proceedBtn.disabled = true;
+                        
+                        // Logica counter e validazione
+                        const updateCounter = () => {
+                            const selected = checkboxes.filter(cb => cb.checked).length;
+                            counter.textContent = `Selezionati: ${selected} / 5`;
+                            proceedBtn.disabled = selected === 0 || selected > 5;
+                            
+                            // Disabilita checkbox se già 5 selezionati
+                            if (selected >= 5) {
+                                checkboxes.forEach(cb => {
+                                    if (!cb.checked) cb.disabled = true;
+                                });
+                            } else {
+                                checkboxes.forEach(cb => cb.disabled = false);
+                            }
+                        };
+                        
+                        checkboxes.forEach(cb => cb.addEventListener('change', updateCounter));
+                        
+                        // Toggle all/none
+                        toggleBtn.addEventListener('click', () => {
+                            const allChecked = checkboxes.every(cb => cb.checked);
+                            if (allChecked) {
+                                checkboxes.forEach(cb => cb.checked = false);
+                                toggleBtn.textContent = 'Seleziona tutti';
+                            } else {
+                                // Seleziona i primi 5
+                                checkboxes.forEach((cb, idx) => cb.checked = idx < 5);
+                                toggleBtn.textContent = 'Deseleziona tutti';
+                            }
+                            updateCounter();
+                        });
+                        
+                        // Procedi con selezione
+                        proceedBtn.addEventListener('click', () => {
+                            const selectedIds = checkboxes
+                                .filter(cb => cb.checked)
+                                .map(cb => cb.dataset.manualId);
+                            
+                            const selectedManuali = manuali.filter(m => selectedIds.includes(m.id));
+                            
+                            document.body.removeChild(overlay);
+                            resolve(selectedManuali);
+                        });
+                        
+                        buttonsContainer.appendChild(toggleBtn);
+                        buttonsContainer.appendChild(proceedBtn);
+                        footer.appendChild(counter);
+                        footer.appendChild(buttonsContainer);
+                        
+                        modal.appendChild(header);
+                        modal.appendChild(body);
+                        modal.appendChild(footer);
+                        overlay.appendChild(modal);
+                        document.body.appendChild(overlay);
+                    });
+                };
+
                 // Fase 4: Valutazione Manuali Zanichelli (DINAMICA)
                 updateLoadingText('Fase 4/5: Valutazione manuali consigliati...');
                 
@@ -3952,43 +4087,29 @@ Rispondi SOLO con un JSON valido:
                         nota: `Nessun manuale Zanichelli disponibile nel catalogo per ${materiaName}`
                     };
                 } else {
-                    // FASE 4a: Selezione intelligente manuali (max 5)
+                    // FASE 4a: Selezione manuali (manuale se >5, automatica se ≤5)
                     let manualiSelezionati = manualiZanichelliPerMateria;
                     let selectionNote = '';
                     
                     if (manualiZanichelliPerMateria.length > 5) {
-                        console.log(`📚 Ranking intelligente: ${manualiZanichelliPerMateria.length} manuali disponibili, selezione TOP 5`);
+                        console.log(`📚 Selezione manuale necessaria: ${manualiZanichelliPerMateria.length} manuali disponibili`);
                         
-                        // Calcola punteggio di priorità basato su CFU e numero pagine
-                        const cfuNum = parseInt(cfu) || 6;
-                        const targetPages = cfuNum * 100; // ~600 pag per 6 CFU, ~900 per 9 CFU
+                        // Aggiorna UI per indicare attesa selezione
+                        updateLoadingText('⏸️ Attendo selezione manuali...');
                         
-                        const manualiConScore = manualiZanichelliPerMateria.map(m => {
-                            // Score basato su vicinanza al target pagine
-                            const pageDiff = Math.abs(m.pages - targetPages);
-                            const score = 1000 - pageDiff; // Più vicino = score più alto
-                            return { manuale: m, score, pageDiff };
-                        });
+                        // Mostra UI di selezione e attendi la scelta dell'utente
+                        manualiSelezionati = await mostraSelezioneManualiFn(manualiZanichelliPerMateria, materiaName, cfu, contesto);
                         
-                        // Ordina per score e prendi TOP 5
-                        manualiSelezionati = manualiConScore
-                            .sort((a, b) => b.score - a.score)
-                            .slice(0, 5)
-                            .map(m => m.manuale);
-                        
-                        console.log('✅ TOP 5 manuali selezionati:', manualiSelezionati.map(m => 
-                            `${m.author} ${m.title} (${m.pages} pag)`
-                        ));
+                        // Riprendi loading normale
+                        updateLoadingText('Fase 4/5: Valutazione manuali selezionati...');
                         
                         // Crea nota per l'utente
-                        selectionNote = `ℹ️ SELEZIONE MANUALI: In base all'analisi del programma (${cfu} CFU, Classe ${contesto}), ho selezionato i seguenti 5 volumi Zanichelli più compatibili per la valutazione dettagliata (su ${manualiZanichelliPerMateria.length} disponibili nel catalogo):
+                        selectionNote = `ℹ️ SELEZIONE MANUALI: Hai selezionato i seguenti ${manualiSelezionati.length} volumi Zanichelli per la valutazione dettagliata (su ${manualiZanichelliPerMateria.length} disponibili nel catalogo):
 
-${manualiSelezionati.map((m, idx) => `${idx + 1}. ${m.author} - ${m.title} (${m.pages} pag)`).join('\n')}
-
-Altri manuali Zanichelli disponibili nel catalogo non sono stati valutati perché ritenuti meno adatti al profilo del corso.`;
+${manualiSelezionati.map((m, idx) => `${idx + 1}. ${m.author} - ${m.title} (${m.chapters_count || 0} capitoli)`).join('\n')}`;
                         
                     } else {
-                        console.log(`📚 Valutazione completa: ${manualiZanichelliPerMateria.length} manuali (tutti disponibili)`);
+                        console.log(`📚 Valutazione automatica: ${manualiZanichelliPerMateria.length} manuali (tutti disponibili)`);
                         manualiSelezionati = manualiZanichelliPerMateria;
                     }
                     
@@ -4333,11 +4454,11 @@ Rispondi SOLO con un JSON valido:
                     created_at: new Date().toISOString()
                 };
 
-                // Salva nello storico
+                // Salva nello storico (verrà aggiornato dopo FASE 5.5 se necessario)
                 saveToStorico(currentProgramma);
 
-                // Mostra risultati
-                mostraRisultati(currentProgramma);
+                // ⏸️ NON mostrare risultati qui - attendi FASE 5.5
+                // mostraRisultati(currentProgramma); // SPOSTATO DOPO FASE 5.5
                 
                 // ============================================
                 // FASE 5.5: ANALISI STRATEGICA ZANICHELLI (OPZIONALE)
@@ -4394,27 +4515,46 @@ Rispondi SOLO con un JSON valido:
                     tutteOK: (ENABLE_STRATEGIC_ANALYSIS && tipoAnalisi === 'avanzata' && zanichelliInBibliografia)
                 });
                 
-                // ATTIVA ANALISI STRATEGICA solo se Zanichelli è in bibliografia
-                if (ENABLE_STRATEGIC_ANALYSIS && tipoAnalisi === 'avanzata' && zanichelliInBibliografia) {
+                // ATTIVA ANALISI STRATEGICA sempre per Analisi Avanzata
+                if (ENABLE_STRATEGIC_ANALYSIS && tipoAnalisi === 'avanzata') {
                     try {
                         console.log('🎯 FASE 5.5: Analisi Strategica Zanichelli - AVVIO');
-                        console.log('✅ Zanichelli trovato in bibliografia → Analisi strategica attivata');
+                        if (zanichelliInBibliografia) {
+                            console.log('✅ Zanichelli trovato in bibliografia → Analisi strategica di difesa/conversione');
+                        } else {
+                            console.log('✅ Zanichelli NON in bibliografia → Analisi strategica di penetrazione');
+                        }
                         updateLoadingText('Fase 5.5/5: Analisi strategica finale...');
                         
+                        console.log('🔄 Chiamando generaAnalisiStrategica...');
                         await generaAnalisiStrategica(currentProgramma);
+                        console.log('✅ generaAnalisiStrategica completata');
                         
                         // AGGIORNA lo storico con l'analisi strategica
                         console.log('💾 Aggiorno storico con analisi strategica');
                         saveToStorico(currentProgramma);
                         
-                        console.log('✅ FASE 5.5: Analisi Strategica completata');
+                        console.log('✅ FASE 5.5: Analisi Strategica completata', {
+                            hasAnalisiStrategica: !!currentProgramma.analisi_strategica,
+                            scenario: currentProgramma.analisi_strategica?.scenario
+                        });
                     } catch (error) {
-                        console.error('⚠️ FASE 5.5: Errore (non bloccante):', error.message);
-                        // Non blocca: il report principale è già mostrato
+                        console.error('⚠️ FASE 5.5: Errore (non bloccante):', error);
+                        console.error('Stack trace:', error.stack);
+                        // Non blocca: mostra comunque il report
                     }
-                } else if (!zanichelliInBibliografia) {
-                    console.log('ℹ️ FASE 5.5: Zanichelli NON in bibliografia → Mantieni raccomandazioni esistenti (FASE 4)');
+                } else {
+                    console.log('ℹ️ FASE 5.5: Saltata (Analisi Base o FASE 5.5 disabilitata)');
                 }
+                
+                // ============================================
+                // MOSTRA RISULTATI FINALI (dopo FASE 5.5 se Avanzata)
+                // ============================================
+                console.log('📊 DEBUG prima di mostraRisultati:', {
+                    hasAnalisiStrategica: !!currentProgramma.analisi_strategica,
+                    analisiStrategica: currentProgramma.analisi_strategica
+                });
+                mostraRisultati(currentProgramma);
                 // ============================================
                 // FINE FASE 5.5
                 // ============================================
@@ -4964,19 +5104,96 @@ Rispondi SOLO con un JSON valido:
 
             } else {
                 // ==========================================
-                // SCENARIO 3: Competitor principale, NO Zanichelli selezionato
+                // SCENARIO 3: Competitor principale, NO Zanichelli in bibliografia
                 // ==========================================
-                // GIÀ GESTITO DA FASE 4 (Raccomandazioni Zanichelli)
-                console.log('ℹ️  SCENARIO 3: Già gestito da FASE 4 - Skip analisi strategica');
-                return;
+                scenario = 'nessun_zanichelli';
+                console.log('✅ SCENARIO 3: Nessun Zanichelli in bibliografia → Strategia di penetrazione');
+                
+                // Usa i manuali Zanichelli già valutati nella FASE 4
+                const manualiZanichelliValutati = prog.zanichelli?.manuali || [];
+                
+                promptStrategia = `Sei un consulente strategico per promotori editoriali Zanichelli.
+
+SCENARIO: Il docente usa un manuale COMPETITOR (NON Zanichelli) e NON ha Zanichelli nemmeno tra gli alternativi.
+Questo è un'opportunità di PENETRAZIONE di mercato.
+
+MANUALE COMPETITOR ATTUALMENTE ADOTTATO:
+- Nome: ${manualeAdottato}
+- Punteggio Framework: ${prog.gap_manuale.punteggio_framework}/270
+- Copertura: ${prog.gap_manuale.copertura_percentuale}%
+- Gap identificati: ${JSON.stringify(prog.gap_manuale.gap || [])}
+- Punti di forza: ${JSON.stringify(prog.gap_manuale.punti_forza || [])}
+
+MANUALI ZANICHELLI VALUTATI (dalla FASE 4):
+${JSON.stringify(manualiZanichelliValutati, null, 2)}
+
+COMPITO:
+Genera una strategia di PENETRAZIONE per proporre Zanichelli al docente.
+
+Rispondi a 3 domande critiche:
+
+1. Quale Zanichelli è il MIGLIORE per questo programma?
+   - Identifica il Zanichelli con compatibilità più alta
+   - Confronta con il competitor attuale
+   - Analisi gap risolti
+
+2. Quali GAP del competitor Zanichelli RISOLVE?
+   - Gap critici risolti dal Zanichelli raccomandato
+   - Vantaggi concreti per studenti/docente
+   - Miglioramenti nella copertura del programma
+
+3. Come PROPORRE Zanichelli per la prima volta?
+   - Argomenti chiave per primo contatto
+   - Enfasi su gap risolti e miglioramenti
+   - Gestione obiezioni tipiche ("Uso già X da anni", "Studenti si trovano bene")
+
+Rispondi SOLO con un JSON valido:
+{
+  "scenario": "penetrazione_mercato",
+  "zanichelli_raccomandato": {
+    "nome": "nome manuale Zanichelli migliore",
+    "compatibilita": numero/100,
+    "punteggio_framework": numero/270,
+    "superiore_a_competitor": true/false,
+    "differenza_punteggio": numero (Zanichelli - Competitor)
+  },
+  "gap_risolti_da_zanichelli": [
+    {
+      "gap": "nome gap del competitor",
+      "come_zanichelli_risolve": "spiegazione dettagliata (80-100 parole)"
+    }
+  ],
+  "vantaggi_zanichelli": ["vantaggio1 concreto", "vantaggio2 concreto", "vantaggio3 concreto"],
+  "pitch_primo_contatto": {
+    "apertura": "Frase di apertura strategica (50 parole) - come presentarsi e introdurre Zanichelli",
+    "argomenti_chiave": [
+      "argomento1 specifico con dati",
+      "argomento2 specifico con dati",
+      "argomento3 specifico con dati"
+    ],
+    "confronto_diretto": "Confronto Zanichelli raccomandato vs Competitor attuale (150-200 parole) con dati concreti",
+    "obiezioni_probabili": [
+      {
+        "obiezione": "Uso già ${manualeAdottato} da anni",
+        "risposta": "risposta basata su gap e miglioramenti"
+      },
+      {
+        "obiezione": "Gli studenti si trovano bene con il manuale attuale",
+        "risposta": "risposta basata su benefici concreti per studenti"
+      }
+    ]
+  },
+  "raccomandazione_finale": "Strategia completa per promotore (250 parole): quale Zanichelli proporre, come presentarlo, su cosa insistere, come gestire resistenze"
+}`;
             }
             
             // Chiamata LLM
-            console.log('🤖 Chiamo LLM per analisi strategica...');
+            console.log('🤖 Chiamo LLM per analisi strategica...', { scenario, promptLength: promptStrategia.length });
             const strategiaResponse = await callLLM(promptStrategia, 0.2);
-            const strategiaObj = JSON.parse(sanitizeJSON(strategiaResponse));
+            console.log('📥 Risposta LLM ricevuta:', { length: strategiaResponse.length, preview: strategiaResponse.substring(0, 200) });
             
-            console.log('✅ Strategia generata:', strategiaObj);
+            const strategiaObj = JSON.parse(sanitizeJSON(strategiaResponse));
+            console.log('✅ Strategia generata e parsed:', strategiaObj);
             
             // SALVA la strategia in prog per visualizzazione futura (es. storico)
             prog.analisi_strategica = {
@@ -4985,7 +5202,10 @@ Rispondi SOLO con un JSON valido:
                 generata_il: new Date().toISOString()
             };
             
-            console.log('💾 Strategia salvata in prog.analisi_strategica');
+            console.log('💾 Strategia salvata in prog.analisi_strategica:', {
+                hasAnalisiStrategica: !!prog.analisi_strategica,
+                scenario: prog.analisi_strategica?.scenario
+            });
             
             // Aggiungi sezione al report (se il report è già visualizzato)
             aggiungiSezioneStrategica(strategiaObj, scenario);
@@ -5230,6 +5450,145 @@ Rispondi SOLO con un JSON valido:
                     </div>
                 </div>
                 `;
+            } else if (scenario === 'nessun_zanichelli') {
+                // ==========================================
+                // HTML SCENARIO 3: Penetrazione Mercato
+                // ==========================================
+                html = `
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 border-2 border-green-400 rounded-lg p-6 mt-6">
+                    <h3 class="text-2xl font-bold text-green-900 mb-4 flex items-center">
+                        <span class="mr-3">🚀</span>Strategia di Penetrazione Mercato
+                    </h3>
+                    <p class="text-green-800 mb-4 font-medium">
+                        <strong>Scenario:</strong> Nessun Zanichelli in bibliografia → Opportunità di proporre Zanichelli per la prima volta
+                    </p>
+                    
+                    <!-- Zanichelli Raccomandato -->
+                    ${strategia.zanichelli_raccomandato ? `
+                        <div class="bg-white border border-green-300 rounded-lg p-5 mb-4">
+                            <h4 class="font-bold text-xl text-green-900 mb-3 flex items-center">
+                                <span class="mr-2">⭐</span>Zanichelli Raccomandato
+                            </h4>
+                            <div class="space-y-2">
+                                <p class="text-lg font-bold text-gray-900">${strategia.zanichelli_raccomandato.nome}</p>
+                                <div class="grid grid-cols-2 gap-3 mt-3">
+                                    <div class="bg-green-100 rounded p-3">
+                                        <p class="text-xs text-green-700 mb-1">Compatibilità</p>
+                                        <p class="text-2xl font-bold text-green-900">${strategia.zanichelli_raccomandato.compatibilita || 'N/D'}/100</p>
+                                    </div>
+                                    <div class="bg-green-100 rounded p-3">
+                                        <p class="text-xs text-green-700 mb-1">Punteggio Framework</p>
+                                        <p class="text-2xl font-bold text-green-900">${strategia.zanichelli_raccomandato.punteggio_framework || 'N/D'}/270</p>
+                                    </div>
+                                </div>
+                                ${strategia.zanichelli_raccomandato.superiore_a_competitor ? `
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-3 mt-3">
+                                        <p class="text-green-800 font-semibold">
+                                            ✅ SUPERIORE al competitor attuale di ${strategia.zanichelli_raccomandato.differenza_punteggio || 0} punti!
+                                        </p>
+                                    </div>
+                                ` : `
+                                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-3 mt-3">
+                                        <p class="text-yellow-800 font-semibold">
+                                            ⚠️ Punteggio inferiore al competitor (${Math.abs(strategia.zanichelli_raccomandato.differenza_punteggio || 0)} punti), ma offre vantaggi qualitativi significativi
+                                        </p>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Gap Risolti -->
+                    ${strategia.gap_risolti_da_zanichelli && strategia.gap_risolti_da_zanichelli.length > 0 ? `
+                        <div class="bg-white border border-green-300 rounded-lg p-5 mb-4">
+                            <h4 class="font-bold text-lg text-green-900 mb-3 flex items-center">
+                                <span class="mr-2">🔧</span>Gap del Competitor Risolti da Zanichelli
+                            </h4>
+                            <div class="space-y-3">
+                                ${strategia.gap_risolti_da_zanichelli.map(g => `
+                                    <div class="bg-green-50 rounded p-4 border-l-4 border-green-500">
+                                        <p class="font-semibold text-green-900 mb-2">📌 ${g.gap}</p>
+                                        <p class="text-gray-700 leading-relaxed">${g.come_zanichelli_risolve}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Vantaggi Zanichelli -->
+                    ${strategia.vantaggi_zanichelli && strategia.vantaggi_zanichelli.length > 0 ? `
+                        <div class="bg-white border border-green-300 rounded-lg p-5 mb-4">
+                            <h4 class="font-bold text-lg text-green-900 mb-3 flex items-center">
+                                <span class="mr-2">🎯</span>Vantaggi Chiave Zanichelli
+                            </h4>
+                            <ul class="space-y-2">
+                                ${strategia.vantaggi_zanichelli.map(v => `
+                                    <li class="flex items-start">
+                                        <span class="text-green-600 mr-2 font-bold text-xl">✓</span>
+                                        <span class="text-gray-700 font-medium">${v}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Pitch Primo Contatto -->
+                    ${strategia.pitch_primo_contatto ? `
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-300 rounded-lg p-5 mb-4">
+                            <h4 class="font-bold text-lg text-blue-900 mb-3 flex items-center">
+                                <span class="mr-2">💬</span>Pitch per Primo Contatto
+                            </h4>
+                            
+                            ${strategia.pitch_primo_contatto.apertura ? `
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <p class="font-semibold text-gray-800 mb-2">🎤 Apertura:</p>
+                                    <p class="text-gray-700 leading-relaxed italic">"${strategia.pitch_primo_contatto.apertura}"</p>
+                                </div>
+                            ` : ''}
+                            
+                            ${strategia.pitch_primo_contatto.argomenti_chiave && strategia.pitch_primo_contatto.argomenti_chiave.length > 0 ? `
+                                <div class="mb-4">
+                                    <p class="font-semibold text-gray-800 mb-2">🎯 Argomenti Chiave:</p>
+                                    <ol class="list-decimal ml-5 space-y-2">
+                                        ${strategia.pitch_primo_contatto.argomenti_chiave.map(a => `<li class="text-gray-700 font-medium">${a}</li>`).join('')}
+                                    </ol>
+                                </div>
+                            ` : ''}
+                            
+                            ${strategia.pitch_primo_contatto.confronto_diretto ? `
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <p class="font-semibold text-gray-800 mb-2">📊 Confronto Diretto:</p>
+                                    <p class="text-gray-700 leading-relaxed">${strategia.pitch_primo_contatto.confronto_diretto}</p>
+                                </div>
+                            ` : ''}
+                            
+                            ${strategia.pitch_primo_contatto.obiezioni_probabili && strategia.pitch_primo_contatto.obiezioni_probabili.length > 0 ? `
+                                <div class="bg-blue-100 rounded p-4">
+                                    <p class="font-semibold text-gray-800 mb-3">⚠️ Possibili Obiezioni e Risposte:</p>
+                                    <div class="space-y-3">
+                                        ${strategia.pitch_primo_contatto.obiezioni_probabili.map(o => `
+                                            <div class="bg-white rounded p-3">
+                                                <p class="font-semibold text-red-700 mb-1">❓ "${o.obiezione}"</p>
+                                                <p class="text-green-700 mt-2">💡 <strong>Risposta:</strong> ${o.risposta}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Raccomandazione Finale -->
+                    ${strategia.raccomandazione_finale ? `
+                        <div class="bg-green-100 border-2 border-green-500 rounded-lg p-5">
+                            <h4 class="font-bold text-lg text-green-900 mb-3 flex items-center">
+                                <span class="mr-2">📝</span>Strategia Completa per il Promotore
+                            </h4>
+                            <p class="text-gray-800 leading-relaxed whitespace-pre-line">${strategia.raccomandazione_finale}</p>
+                        </div>
+                    ` : ''}
+                </div>
+                `;
             }
             
             return html;
@@ -5280,6 +5639,11 @@ Rispondi SOLO con un JSON valido:
         // ============================================
 
         function mostraRisultati(prog) {
+            console.log('🖼️ mostraRisultati chiamata con prog:', {
+                hasAnalisiStrategica: !!prog.analisi_strategica,
+                analisiStrategicaScenario: prog.analisi_strategica?.scenario
+            });
+            
             const getPunteggioColor = (p, max) => {
                 const perc = (p / max) * 100;
                 return perc >= 80 ? 'text-green-600' : perc >= 60 ? 'text-yellow-600' : 'text-red-600';
