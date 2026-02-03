@@ -39,6 +39,11 @@
             // Redirect a welcome.html
             window.location.href = 'welcome.html';
         }
+        
+        // Rimuovi il parametro dall'URL dopo il controllo (per pulizia)
+        if (fromWelcome) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
     </script>
     
     <!-- Header -->
@@ -3947,9 +3952,49 @@ Rispondi SOLO con un JSON valido:
                         nota: `Nessun manuale Zanichelli disponibile nel catalogo per ${materiaName}`
                     };
                 } else {
-                    // Carica indici completi dei manuali Zanichelli
+                    // FASE 4a: Selezione intelligente manuali (max 5)
+                    let manualiSelezionati = manualiZanichelliPerMateria;
+                    let selectionNote = '';
+                    
+                    if (manualiZanichelliPerMateria.length > 5) {
+                        console.log(`📚 Ranking intelligente: ${manualiZanichelliPerMateria.length} manuali disponibili, selezione TOP 5`);
+                        
+                        // Calcola punteggio di priorità basato su CFU e numero pagine
+                        const cfuNum = parseInt(cfu) || 6;
+                        const targetPages = cfuNum * 100; // ~600 pag per 6 CFU, ~900 per 9 CFU
+                        
+                        const manualiConScore = manualiZanichelliPerMateria.map(m => {
+                            // Score basato su vicinanza al target pagine
+                            const pageDiff = Math.abs(m.pages - targetPages);
+                            const score = 1000 - pageDiff; // Più vicino = score più alto
+                            return { manuale: m, score, pageDiff };
+                        });
+                        
+                        // Ordina per score e prendi TOP 5
+                        manualiSelezionati = manualiConScore
+                            .sort((a, b) => b.score - a.score)
+                            .slice(0, 5)
+                            .map(m => m.manuale);
+                        
+                        console.log('✅ TOP 5 manuali selezionati:', manualiSelezionati.map(m => 
+                            `${m.author} ${m.title} (${m.pages} pag)`
+                        ));
+                        
+                        // Crea nota per l'utente
+                        selectionNote = `ℹ️ SELEZIONE MANUALI: In base all'analisi del programma (${cfu} CFU, Classe ${contesto}), ho selezionato i seguenti 5 volumi Zanichelli più compatibili per la valutazione dettagliata (su ${manualiZanichelliPerMateria.length} disponibili nel catalogo):
+
+${manualiSelezionati.map((m, idx) => `${idx + 1}. ${m.author} - ${m.title} (${m.pages} pag)`).join('\n')}
+
+Altri manuali Zanichelli disponibili nel catalogo non sono stati valutati perché ritenuti meno adatti al profilo del corso.`;
+                        
+                    } else {
+                        console.log(`📚 Valutazione completa: ${manualiZanichelliPerMateria.length} manuali (tutti disponibili)`);
+                        manualiSelezionati = manualiZanichelliPerMateria;
+                    }
+                    
+                    // Carica indici completi dei manuali Zanichelli selezionati
                     const manualiConIndici = [];
-                    for (const manuale of manualiZanichelliPerMateria.slice(0, 3)) {
+                    for (const manuale of manualiSelezionati) {
                         let indice = '';
                         try {
                             const manualeData = await fetch(manuale.filepath).then(r => r.json());
@@ -4056,6 +4101,12 @@ Rispondi SOLO con un JSON valido:
                     try {
                         const zanichelliResponse = await callLLM(zanichelliPrompt, 0.2);
                         zanichelliObj = JSON.parse(sanitizeJSON(zanichelliResponse));
+                        
+                        // Aggiungi nota selezione se presente
+                        if (selectionNote) {
+                            zanichelliObj.selection_note = selectionNote;
+                        }
+                        
                         console.log('✅ Valutazione Zanichelli completata:', zanichelliObj);
                         
                         // Fase 4b: Analisi Avanzata - Strategia Adozione (SOLO se Analisi Avanzata E ci sono manuali)
@@ -5738,6 +5789,19 @@ Rispondi SOLO con un JSON valido:
                         ${prog.zanichelli && prog.zanichelli.nota ? `
                             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
                                 <p class="text-yellow-700">${prog.zanichelli.nota}</p>
+                            </div>
+                        ` : ''}
+                        
+                        ${prog.zanichelli && prog.zanichelli.selection_note ? `
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                                <div class="flex items-start">
+                                    <svg class="h-5 w-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-blue-900 whitespace-pre-line">${prog.zanichelli.selection_note}</p>
+                                    </div>
+                                </div>
                             </div>
                         ` : ''}
                         
