@@ -283,11 +283,14 @@ MATRIX (Manual Assessment and Text Recommendation Intelligence eXpert) è una we
 │ - Strategia e tono consigliati             │
 └─────────────┬───────────────────────────────┘
               │
-              ↓ (Se Zanichelli in bibliografia)
+              ↓ (Solo Modalità Avanzata - SEMPRE)
 ┌─────────────────────────────────────────────┐
 │ FASE 5.5: Analisi Strategica Zanichelli    │
 │ [NOVITÀ - Vedi sezione dedicata]           │
-│ - 3 scenari: Principale/Conversione/Nessuno│
+│ - 3 scenari automatici basati su contesto: │
+│   • Scenario 1: Zanichelli Principale      │
+│   • Scenario 2: Conversione da Competitor  │
+│   • Scenario 3: Penetrazione Mercato       │
 │ - Confronto competitors                     │
 │ - Pitch di vendita personalizzato           │
 └─────────────────────────────────────────────┘
@@ -308,7 +311,7 @@ MATRIX (Manual Assessment and Text Recommendation Intelligence eXpert) è una we
 
 ### 4.1 Introduzione
 
-**NOVITÀ di Febbraio 2026**: La FASE 5.5 è una funzionalità avanzata disponibile **SOLO in Modalità Avanzata** che si attiva automaticamente quando un manuale Zanichelli è presente nella bibliografia (come principale o alternativo).
+**NOVITÀ di Febbraio 2026**: La FASE 5.5 è una funzionalità avanzata disponibile **SOLO in Modalità Avanzata** che si attiva **SEMPRE E AUTOMATICAMENTE** per ogni analisi avanzata.
 
 **Obiettivo**: Fornire al promotore una **strategia di vendita personalizzata** basata sull'analisi dei competitor e dei gap del programma, includendo:
 - Profilo pedagogico del docente
@@ -317,19 +320,33 @@ MATRIX (Manual Assessment and Text Recommendation Intelligence eXpert) è una we
 - Gestione proattiva delle obiezioni
 - Pitch di vendita su misura
 
+**Adattamento Intelligente**: Il sistema identifica automaticamente lo scenario e genera la strategia appropriata:
+- **Scenario 1**: Zanichelli è già il manuale principale → Strategia di **difesa e conferma**
+- **Scenario 2**: Zanichelli è tra gli alternativi → Strategia di **conversione**
+- **Scenario 3**: Zanichelli non considerato → Strategia di **penetrazione mercato**
+
 ### 4.2 Quando si Attiva?
 
-La FASE 5.5 si attiva **SOLO** se:
-1. ✅ **Modalità Avanzata** è selezionata
-2. ✅ **Zanichelli è in bibliografia** (principale O alternativo)
+La FASE 5.5 si attiva **SEMPRE** se:
+✅ **Modalità Avanzata** è selezionata
+
+**Non dipende** dalla presenza di Zanichelli in bibliografia!
 
 **Differenze con Analisi Base**:
-- **Base**: Solo FASE 4 (raccomandazioni dal catalogo con compatibilità/100)
-- **Avanzata**: FASE 4 + FASE 4b (strategia di adozione) + FASE 5.5 (se Zanichelli presente)
 
-Se Zanichelli **NON** è in bibliografia:
-- **Base** → FASE 4 (raccomandazioni proattive)
-- **Avanzata** → FASE 4 + FASE 4b (strategia per proporre Zanichelli)
+| Aspetto | Analisi Base | Analisi Avanzata |
+|---------|--------------|------------------|
+| **Tempo** | 3-5 minuti | 6-9 minuti |
+| **FASE 4** | ✅ Raccomandazioni Zanichelli | ✅ Raccomandazioni Zanichelli |
+| **FASE 4b** | ❌ Non inclusa | ✅ Strategia di adozione |
+| **FASE 5.5** | ❌ Non inclusa | ✅ **SEMPRE attiva** |
+| **Output Strategico** | Solo compatibilità manuali | + Profilo docente, leve, obiezioni, pitch |
+
+**Comportamento FASE 5.5 in Avanzata**:
+- **CON Zanichelli in bibliografia** → Scenario 1 o 2 (difesa/conversione)
+- **SENZA Zanichelli in bibliografia** → Scenario 3 (penetrazione)
+
+**In entrambi i casi genera una strategia completa per il promotore!**
 
 ### 4.3 Scenari Supportati
 
@@ -479,14 +496,84 @@ preparazione biochimica ottimale.
 
 ---
 
-#### ℹ️ **SCENARIO 3: Nessun Zanichelli Selezionato**
+#### 🌱 **SCENARIO 3: Penetrazione di Mercato**
 
 **Situazione**: Il docente non ha considerato Zanichelli (né principale né alternativo).
 
-**Comportamento**: 
-- **NON** genera FASE 5.5
-- Usa **FASE 4** esistente (raccomandazioni proattive dal catalogo)
-- Suggerisce manuali Zanichelli dal catalogo con compatibilità calcolata
+**Analisi fornita**:
+1. **Miglior Zanichelli Disponibile**:
+   - Identifica il Zanichelli con compatibilità più alta (dalla FASE 4)
+   - Confronto diretto con competitor attuale
+   - Differenza punteggi e copertura
+
+2. **Gap Risolti da Zanichelli**:
+   - Quali lacune del competitor Zanichelli copre
+   - Benefici concreti per docente e studenti
+   - Vantaggi competitivi specifici
+
+3. **Pitch di Penetrazione**:
+   - Argomenti chiave per primo approccio
+   - Strategia "soft sell" (consulenza, non vendita aggressiva)
+   - Gestione obiezioni probabili ("Sono abituato al mio", "Costa di più")
+   - Proposta trial/visione manuale
+
+**Esempio Output**:
+```
+🎯 ANALISI STRATEGICA ZANICHELLI
+Scenario: Penetrazione di Mercato
+
+📊 Situazione Attuale
+Competitor Adottato: Brown - Introduzione (Edises)
+Punteggio: 180/270 (67% copertura)
+
+⭐ Zanichelli MIGLIORE Disponibile: McMurry Biologico
+Punteggio: 240/270 (89% copertura)
+✅ +60 punti vs competitor (+22% copertura)
+
+💎 Gap Risolti da McMurry (vs Brown):
+1. Biomolecole e metabolismo (20 punti)
+2. Chimica organica avanzata (15 punti)
+3. Applicazioni biologiche (10 punti)
+4. Stereochimica dettagliata (8 punti)
+5. Preparazione per biochimica (7 punti)
+
+🎯 Strategia di Penetrazione
+
+Approccio Consigliato: SOFT SELL (Consulenza, non vendita)
+
+Primo Contatto:
+"Professoressa, ho analizzato il suo programma di Chimica 
+Organica. Ho notato che enfatizza molto le applicazioni 
+biologiche. Posso condividere con lei un'analisi comparativa 
+che potrebbe interessarle?"
+
+Pitch Principale:
+"Ho confrontato il manuale Brown che usa attualmente con 
+i nostri manuali Zanichelli. Il McMurry con approccio 
+biologico copre il 22% in più del suo programma (89% vs 67%), 
+con particolare focus su biomolecole e metabolismo che 
+nel Brown sono trattati solo marginalmente."
+
+Gestione Obiezioni:
+Q: "Sono abituato al Brown, cambiare è faticoso"
+A: "Capisco perfettamente. McMurry segue una struttura 
+molto simile nei primi capitoli. Le propongo: le invio 
+il manuale in visione, può valutarlo senza impegno per 
+il prossimo anno accademico."
+
+Q: "Costa di più per gli studenti"
+A: "È vero, ma consideri che copre il 22% in più del 
+programma. Molti docenti con Brown integrano con dispense 
+o materiali extra. Con McMurry, il costo extra si compensa 
+eliminando queste integrazioni."
+
+💡 Raccomandazione Finale:
+NON insistere subito sull'adozione.
+PROPORRE: visione del manuale, analisi del suo programma, 
+confronto personalizzato.
+OBIETTIVO: costruire relazione, non vendere subito.
+Se interessata, proporre incontro per approfondire.
+```
 
 ---
 
@@ -992,10 +1079,10 @@ La Prof.ssa Verdi (L-13) usa Bruice (Edises) e non ha mai considerato Zanichelli
 **Step 1**: Analisi MATRIX
 - Manuale principale: Bruice (Edises)
 - Alternativi: Brown, Wade
-- Modalità Avanzata
+- **Modalità Avanzata** (importante!)
 - **Nessun Zanichelli selezionato**
 
-**Step 2**: FASE 4 (NON 5.5!)
+**Step 2**: FASE 4 (Raccomandazioni dal Catalogo)
 ```
 💡 Manuali Zanichelli Consigliati
 
@@ -1016,27 +1103,71 @@ Nota: "Eccellente alternativa a Bruice per corsi
 con focus biologico."
 ```
 
-**Step 3**: Colloquio
+**Step 2b**: FASE 5.5 (Analisi Strategica - SCENARIO 3: Penetrazione)
+```
+🎯 ANALISI STRATEGICA ZANICHELLI
+Scenario: Penetrazione di Mercato
+
+📊 Situazione
+Competitor: Bruice (Edises) - 230/270 (85% copertura)
+Zanichelli Migliore: McMurry Biologico - 240/270 (89% copertura)
+Vantaggio: +10 punti (+4% copertura)
+
+💎 Gap Risolti da McMurry:
+- Metabolismo approfondito (+8 punti)
+- Applicazioni farmacologiche (+5 punti)
+
+🎯 Strategia di Penetrazione
+
+Approccio: SOFT SELL (non vendita aggressiva)
+
+Primo Contatto:
+"Professoressa, ho analizzato il suo programma con Bruice. 
+Ho preparato un confronto con le nostre proposte Zanichelli 
+che potrebbe interessarle."
+
+Pitch:
+"McMurry copre il 4% in più del programma (89% vs 85%) 
+e approfondisce metabolismo e farmacologia. Ideale per 
+studenti che proseguono con biochimica o farmaceutica."
+
+Gestione Obiezioni:
+Q: "Bruice è un ottimo testo, sono abituata"
+A: "Assolutamente, Bruice è eccellente. McMurry ha un 
+approccio simile ma con più focus biologico. Le propongo 
+una copia in visione per il prossimo anno, senza impegno."
+
+💡 Raccomandazione:
+NON spingere l'adozione immediata.
+OBIETTIVO: creare relazione e interesse.
+PROPORRE: visione, analisi personalizzata, follow-up.
+```
+
+**Step 3**: Colloquio Informato
 ```
 Promotore: "Professoressa, ho analizzato il suo programma 
-con il manuale Bruice. È un ottimo testo, copre il 85% 
+con il manuale Bruice. È un ottimo testo, copre l'85% 
 del programma."
 
 Docente: "Sì, lo uso da anni."
 
-Promotore: "Perfetto. Volevo proporle un'alternativa 
-Zanichelli che potrebbe interessarle: McMurry con approccio 
-biologico. Copre il 89% del programma (+4% vs Bruice) e 
-approfondisce di più il metabolismo e le biomolecole. 
-Potrebbe essere utile se vuole potenziare la preparazione 
-per i corsi successivi."
+Promotore: "Ho preparato per lei un confronto con McMurry 
+di Zanichelli. Copre il 89% del programma e ha un focus 
+particolare su metabolismo e applicazioni farmacologiche. 
+Le lascio una copia in visione?"
 
-Docente: "Interessante. Me lo manda in visione?"
+Docente: "Interessante, grazie!"
 
-Promotore: ✅ "Certo!"
+Promotore: ✅ "Le invio anche l'analisi dettagliata del 
+suo programma. Ci sentiamo tra qualche settimana per 
+un feedback?"
 ```
 
-**Risultato**: Apertura a Zanichelli, opportunità futura.
+**Risultato**: Relazione creata, opportunità futura con follow-up strutturato.
+
+**Differenza con Modalità Base**:
+- **Base**: Solo FASE 4 (compatibilità manuali)
+- **Avanzata**: FASE 4 + FASE 5.5 (strategia completa di penetrazione, gestione obiezioni, follow-up consigliato)
 
 ---
 
@@ -1508,6 +1639,20 @@ Dati aggregati da MATRIX rivelano:
 
 **4 Febbraio 2026**:
 
+🔴 **CORREZIONE CRITICA: FASE 5.5 Scenario 3**
+- **Errore precedente**: Report indicava "NON genera FASE 5.5" per Scenario 3
+- **Comportamento reale**: FASE 5.5 **SEMPRE attiva** in Modalità Avanzata
+- **Scenario 3**: Genera strategia di **penetrazione mercato** completa
+- **Documentazione**: Aggiornata con esempio output Scenario 3
+
+✅ **Chiarimento FASE 5.5**
+- FASE 5.5 si attiva **SEMPRE** in Modalità Avanzata
+- Non dipende dalla presenza Zanichelli in bibliografia
+- 3 scenari automatici in base al contesto:
+  - Scenario 1: Zanichelli principale → strategia difesa
+  - Scenario 2: Zanichelli alternativo → strategia conversione
+  - Scenario 3: Zanichelli non considerato → strategia penetrazione
+
 ✅ **Criteri Valutazione v5.7**
 - Bilanciamento completezza/adeguatezza/prezzo/accessibilità
 - Hart e manuali sintetici valorizzati per contesti appropriati
@@ -1520,11 +1665,12 @@ Dati aggregati da MATRIX rivelano:
 
 ✅ **Differenziazione Base vs Avanzata**
 - Chiarimento timing: Base 3-5 min, Avanzata 6-9 min
+- Tabella comparativa modalità
 - Documentazione insights strategici Avanzata
 - Guida uso: quando usare quale modalità
 
 ✅ **Documentazione Aggiornata**
-- Report presentazione v3.1
+- Caso d'uso Scenario 3 con esempio completo
 - Sezione criteri valutazione esplicita
 - Esempi pratici gestione cataloghi estesi
 
@@ -1726,11 +1872,15 @@ git push origin main
 ### Appendice E: Changelog
 
 #### v3.1 (4 Febbraio 2026)
+- ✅ **CORREZIONE CRITICA**: FASE 5.5 Scenario 3 genera strategia di penetrazione (era documentato erroneamente come "non genera FASE 5.5")
+- ✅ Chiarito: FASE 5.5 **SEMPRE attiva** in Modalità Avanzata (non solo con Zanichelli in bibliografia)
+- ✅ 3 scenari automatici: Scenario 1 (difesa), Scenario 2 (conversione), Scenario 3 (penetrazione)
 - ✅ Criteri valutazione v5.7 (bilanciamento completezza/adeguatezza/prezzo)
 - ✅ Gestione intelligente volume manuali (≤5 auto, >5 selezione)
 - ✅ UI selezione manuale con suggerimenti
 - ✅ Documentazione differenze Base vs Avanzata
-- ✅ Report presentazione aggiornato
+- ✅ Tabella comparativa modalità analisi
+- ✅ Caso d'uso Scenario 3 aggiornato con esempio completo
 
 #### v3.0 (1 Febbraio 2026)
 - ✅ Multi-Provider LLM (9 provider, 43 modelli)
@@ -1763,6 +1913,6 @@ git push origin main
 ---
 
 **Data Generazione Report**: 4 Febbraio 2026  
-**Versione Documento**: 1.1  
+**Versione Documento**: 1.2 (Correzione Critica FASE 5.5)  
 **Autore**: Team Matrix  
 **Confidenzialità**: Uso Interno Zanichelli
