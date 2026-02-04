@@ -165,7 +165,7 @@ Prova con 3-4 programmi che conosci già. Confronta le raccomandazioni MATRIX co
 No, è una web app. Si usa direttamente dal browser.
 
 **Funziona per tutte le materie?**  
-Sì. Attualmente supporta 6 materie (Chimica, Fisica, Matematica, Economia, Biologia, Istologia) con 21 framework didattici diversi. La copertura manuali è più completa per Chimica e Fisica.
+MATRIX copre 21 materie organizzate in 6 macroaree disciplinari (Chimica, Fisica, Matematica, Economia, Biologia, Istologia). Esempio: la macroarea Chimica include Chimica Generale, Chimica Organica e Chimica Propedeutica. La copertura manuali è più completa per Chimica e Fisica.
 
 **I docenti sanno che uso un'AI?**  
 MATRIX è uno strumento di analisi. Come lo presenti al docente dipende da te. Puoi dire semplicemente "Ho analizzato il suo programma..."
