@@ -1,10 +1,11 @@
 # 📊 MATRIX - Sistema di Analisi Programmi Didattici
 ## Report Dettagliato per Presentazione ai Promotori Zanichelli
 
-**Versione**: 3.0 (Febbraio 2026)  
+**Versione**: 3.1 (Febbraio 2026)  
 **Autore**: Team Matrix  
 **Destinatari**: Promotori Editoriali Zanichelli  
-**Deployment**: https://classy-haupia-6cbd13.netlify.app/
+**Deployment**: https://classy-haupia-6cbd13.netlify.app/  
+**Ultimo Aggiornamento**: 4 Febbraio 2026
 
 ---
 
@@ -174,15 +175,39 @@ MATRIX (Manual Assessment and Text Recommendation Intelligence eXpert) è una we
 - **Oppure**: Carica esempio predefinito
 
 #### ⚙️ Step 3: Modalità Analisi
-- **Base**: Analisi veloce (FASE 1-3)
-  - Parsing programma
-  - Gap analysis manuale principale
-  - Gap analysis alternativi
-- **Avanzata**: Analisi completa (FASE 1-5.5)
-  - Tutto della modalità Base
-  - + Raccomandazioni Zanichelli dal catalogo
-  - + Strategia di adozione
+
+##### **Analisi Base** (Rapido-Essenziale)
+- **Velocità**: 3-5 minuti
+- **Focus**: Valutazione del programma (270 punti), gap analysis del manuale adottato, raccomandazioni Zanichelli
+- **Output**: 
+  - FASE 1: Valutazione Framework (punteggio/270)
+  - FASE 2: Gap Analysis manuale principale
+  - FASE 3: Gap Analysis manuali alternativi
+  - FASE 4: Raccomandazioni Zanichelli dal catalogo
+- **Ideale per**: Screening iniziale di più programmi, confronto rapido tra corsi
+
+##### **Analisi Avanzata** (Strategico-Commerciale)
+- **Velocità**: 6-9 minuti
+- **Focus**: Tutto ciò che offre Base + 4 sezioni aggiuntive con insights per il promotore
+- **Output**: 
+  - Tutto dell'Analisi Base
+  - + **Profilo docente**: Stile didattico, enfasi programma
+  - + **Leve motivazionali**: Cosa valorizza il docente
+  - + **Opportunità commerciali**: Gap risolti, benefici studenti
+  - + **Impatto adozione**: Preparazione corsi successivi
+  - + **Strategia colloquio**: Argomenti chiave, tono consigliato
+  - + **Obiezioni e risposte**: Prevedere e gestire obiezioni
   - + **FASE 5.5: Analisi Strategica Zanichelli** (se Zanichelli in bibliografia)
+- **Ideale per**: Preparazione colloqui con docenti, sviluppo argomentazioni commerciali, gestione obiezioni
+
+##### **Quando Usare Quale?**
+- **Screening iniziale** di più programmi → Analisi Base
+- **Preparazione colloquio** con docente specifico → Analisi Avanzata  
+- **Argomentazioni commerciali** dettagliate → Analisi Avanzata  
+- **Confronto rapido** tra manuali → Analisi Base  
+- **In dubbio?** → Inizia con Base, poi Avanzata se serve approfondire
+
+> **Nota**: L'Analisi Avanzata valuta anche il **profilo pedagogico del docente** e l'**allineamento strategico**, non solo la copertura degli argomenti.
 
 #### 🚀 Avvia Analisi
 - Validazione pre-analisi
@@ -235,19 +260,27 @@ MATRIX (Manual Assessment and Text Recommendation Intelligence eXpert) è una we
 ┌─────────────────────────────────────────────┐
 │ FASE 4: Raccomandazioni Zanichelli         │
 │ - Ricerca manuali Zanichelli da catalogo   │
+│ - Selezione intelligente manuali:          │
+│   • Se ≤5 manuali: valutazione automatica  │
+│   • Se >5 manuali: utente sceglie 3-5      │
 │ - Valutazione compatibilità (su 100)       │
 │ - Ranking: RACCOMANDATO vs ALTERNATIVA     │
+│ - Criteri: completezza, adeguatezza,       │
+│   qualità/prezzo, accessibilità            │
 │ - Gap risolti, quando preferirlo           │
-│ - Nota sintetica per promotore            │
+│ - Nota sintetica per promotore             │
 └─────────────┬───────────────────────────────┘
               │
-              ↓
+              ↓ (Solo Modalità Avanzata)
 ┌─────────────────────────────────────────────┐
 │ FASE 4b: Strategia di Adozione             │
-│ - Argomenti chiave per il docente          │
+│ - Profilo docente (stile didattico)        │
+│ - Leve motivazionali (cosa valorizza)      │
+│ - Argomenti chiave per il colloquio        │
 │ - Possibili obiezioni e risposte           │
 │ - Confronto con manuale attuale            │
-│ - Note per il colloquio                    │
+│ - Impatto su preparazione studenti         │
+│ - Strategia e tono consigliati             │
 └─────────────┬───────────────────────────────┘
               │
               ↓ (Se Zanichelli in bibliografia)
@@ -275,9 +308,14 @@ MATRIX (Manual Assessment and Text Recommendation Intelligence eXpert) è una we
 
 ### 4.1 Introduzione
 
-**NOVITÀ di Febbraio 2026**: La FASE 5.5 è una funzionalità avanzata che si attiva **automaticamente** quando un manuale Zanichelli è presente nella bibliografia (come principale o alternativo).
+**NOVITÀ di Febbraio 2026**: La FASE 5.5 è una funzionalità avanzata disponibile **SOLO in Modalità Avanzata** che si attiva automaticamente quando un manuale Zanichelli è presente nella bibliografia (come principale o alternativo).
 
-**Obiettivo**: Fornire al promotore una **strategia di vendita personalizzata** basata sull'analisi dei competitor e dei gap del programma.
+**Obiettivo**: Fornire al promotore una **strategia di vendita personalizzata** basata sull'analisi dei competitor e dei gap del programma, includendo:
+- Profilo pedagogico del docente
+- Leve motivazionali specifiche
+- Opportunità commerciali concrete
+- Gestione proattiva delle obiezioni
+- Pitch di vendita su misura
 
 ### 4.2 Quando si Attiva?
 
@@ -285,7 +323,13 @@ La FASE 5.5 si attiva **SOLO** se:
 1. ✅ **Modalità Avanzata** è selezionata
 2. ✅ **Zanichelli è in bibliografia** (principale O alternativo)
 
-Se Zanichelli **NON** è in bibliografia → usa FASE 4 (raccomandazioni proattive)
+**Differenze con Analisi Base**:
+- **Base**: Solo FASE 4 (raccomandazioni dal catalogo con compatibilità/100)
+- **Avanzata**: FASE 4 + FASE 4b (strategia di adozione) + FASE 5.5 (se Zanichelli presente)
+
+Se Zanichelli **NON** è in bibliografia:
+- **Base** → FASE 4 (raccomandazioni proattive)
+- **Avanzata** → FASE 4 + FASE 4b (strategia per proporre Zanichelli)
 
 ### 4.3 Scenari Supportati
 
@@ -516,7 +560,109 @@ saveToStorico(currentProgramma);
 - **Compliance** (GDPR, AI safety, sovranità dati)
 - **Funzionalità** (reasoning, coding, online search)
 
-### 5.2 Provider Supportati
+### 5.2 Criteri di Valutazione Manuali (v5.7)
+
+**AGGIORNAMENTO Febbraio 2026**: Il sistema di valutazione dei manuali Zanichelli è stato raffinato per bilanciare meglio i criteri di scelta.
+
+#### Criteri Principali
+
+1. **Completezza e Copertura** (40%)
+   - Percentuale argomenti programma coperti
+   - Profondità trattazione vs framework
+   - Esempi e applicazioni inclusi
+
+2. **Adeguatezza al Programma** (30%)
+   - Allineamento con stile didattico docente
+   - Compatibilità con contesto (L-13, L-29, etc.)
+   - Sequenza argomenti coerente
+
+3. **Rapporto Qualità/Prezzo** (20%)
+   - Costo accessibile per studenti
+   - Rapporto contenuti/prezzo
+   - Risorse digitali incluse
+
+4. **Accessibilità Didattica** (10%)
+   - Linguaggio appropriato al livello
+   - Gradualità esercizi
+   - Supporti visivi e schemi
+
+#### Implicazioni Pratiche
+
+**Esempio**: Hart (Zanichelli)
+- **Versioni precedenti**: Penalizzato per essere "sintetico"
+- **Versione 5.7**: Valorizzato per:
+  - Programmi brevi (6 CFU)
+  - Budget studenti limitato
+  - Corsi L-25, L-32 (scienze formazione, infermieristica)
+  - Approccio "essenziale ma completo"
+
+**Raccomandazione**: Il sistema ora suggerisce il manuale **più adeguato al contesto**, non necessariamente il più completo.
+
+---
+
+### 5.3 Gestione Intelligente Volume Manuali
+
+**NOVITÀ Febbraio 2026**: Sistema adattivo per cataloghi Zanichelli estesi.
+
+#### Logica di Selezione (FASE 4)
+
+**Scenario A: ≤5 Manuali Disponibili**
+```
+📚 Materia: Chimica Organica
+📗 Manuali Zanichelli trovati: 3
+
+✅ Valutazione automatica:
+- McMurry Biologico
+- Hart Fondamenti
+- Fondamenti McMurry
+
+ℹ️ Tempo stimato: 2-3 minuti
+```
+
+**Scenario B: >5 Manuali Disponibili**
+```
+📚 Materia: Matematica (esempio)
+📗 Manuali Zanichelli trovati: 12
+
+⚠️ Selezione manuale richiesta
+
+Il sistema mostra UI con:
+- Lista completa 12 manuali
+- Info: autore, titolo, capitoli, target (L-13, L-29)
+- Checkbox per selezionare 3-5 manuali
+
+💡 Suggerimento intelligente:
+"Per un programma L-13 da 9 CFU, consigliamo:
+✓ Manuale A (copertura completa)
+✓ Manuale C (approccio biologico)
+✓ Manuale F (sintesi economica)"
+
+Utente seleziona → Analisi procede solo su manuali scelti
+
+ℹ️ Tempo stimato: 3-5 minuti (inclusa selezione)
+```
+
+#### Vantaggi Sistema Adattivo
+
+✅ **Evita Overload**
+- Non valuta 12+ manuali automaticamente (troppo lento)
+- Focalizza su opzioni realistiche
+
+✅ **Personalizzazione**
+- Promotore conosce il contesto locale
+- Può escludere manuali fuori budget/fuori catalogo
+
+✅ **Efficienza**
+- Analisi rapida solo su manuali rilevanti
+- Raccomandazioni più mirate
+
+✅ **Scalabilità**
+- Sistema funziona anche con cataloghi estesi (20+ manuali)
+- Tempo analisi prevedibile (max 5-7 minuti)
+
+---
+
+### 5.4 Provider Supportati
 
 #### 1️⃣ **OpenAI** (4 modelli)
 - GPT-4o Mini: $0.075/$0.30 per M token
@@ -906,13 +1052,21 @@ Promotore: ✅ "Certo!"
 - Preparazione argomenti: 30-60 min
 - **Totale: 4-6 ore per colloquio**
 
-**Con MATRIX**:
-- Analisi automatica: 2-3 minuti
-- Report completo: immediato
-- Argomenti pronti: inclusi
-- **Totale: 5-10 minuti per colloquio**
+**Con MATRIX Base**:
+- Analisi automatica: 3-5 minuti
+- Report punteggi e gap: immediato
+- Raccomandazioni Zanichelli: incluse
+- **Totale: 5-8 minuti per screening**
 
-**ROI Tempo**: 95% di riduzione tempo preparazione
+**Con MATRIX Avanzata**:
+- Analisi completa: 6-9 minuti
+- Report strategico: immediato
+- Profilo docente + pitch personalizzato: inclusi
+- **Totale: 10-15 minuti per colloquio mirato**
+
+**ROI Tempo**: 
+- Modalità Base: 96% riduzione (screening rapido)
+- Modalità Avanzata: 94% riduzione (preparazione completa)
 
 ---
 
@@ -1350,7 +1504,33 @@ Dati aggregati da MATRIX rivelano:
 
 ---
 
-### 12.2 Prossimi Passi Consigliati
+### 12.2 Aggiornamenti Recenti (v3.1)
+
+**4 Febbraio 2026**:
+
+✅ **Criteri Valutazione v5.7**
+- Bilanciamento completezza/adeguatezza/prezzo/accessibilità
+- Hart e manuali sintetici valorizzati per contesti appropriati
+- Raccomandazioni più contestualizzate
+
+✅ **Gestione Volume Manuali**
+- Sistema adattivo: ≤5 auto, >5 selezione utente
+- UI selezione manuale intuitiva
+- Suggerimenti intelligenti basati su CFU e contesto
+
+✅ **Differenziazione Base vs Avanzata**
+- Chiarimento timing: Base 3-5 min, Avanzata 6-9 min
+- Documentazione insights strategici Avanzata
+- Guida uso: quando usare quale modalità
+
+✅ **Documentazione Aggiornata**
+- Report presentazione v3.1
+- Sezione criteri valutazione esplicita
+- Esempi pratici gestione cataloghi estesi
+
+---
+
+### 12.3 Prossimi Passi Consigliati
 
 #### Per Management Zanichelli
 
@@ -1371,7 +1551,7 @@ Dati aggregati da MATRIX rivelano:
 
 ---
 
-### 12.3 Rischi e Mitigazioni
+### 12.4 Rischi e Mitigazioni
 
 #### ⚠️ **Rischi Identificati**
 
@@ -1392,7 +1572,7 @@ Dati aggregati da MATRIX rivelano:
 
 ---
 
-### 12.4 Metriche di Successo
+### 12.5 Metriche di Successo
 
 **KPI da Monitorare** (Trimestre 1):
 
@@ -1545,7 +1725,14 @@ git push origin main
 
 ### Appendice E: Changelog
 
-#### v3.0 (Febbraio 2026)
+#### v3.1 (4 Febbraio 2026)
+- ✅ Criteri valutazione v5.7 (bilanciamento completezza/adeguatezza/prezzo)
+- ✅ Gestione intelligente volume manuali (≤5 auto, >5 selezione)
+- ✅ UI selezione manuale con suggerimenti
+- ✅ Documentazione differenze Base vs Avanzata
+- ✅ Report presentazione aggiornato
+
+#### v3.0 (1 Febbraio 2026)
 - ✅ Multi-Provider LLM (9 provider, 43 modelli)
 - ✅ FASE 5.5: Analisi Strategica Zanichelli
 - ✅ Fix Strategic Analysis SCENARIO 1
@@ -1575,7 +1762,7 @@ git push origin main
 
 ---
 
-**Data Generazione Report**: 1 Febbraio 2026  
-**Versione Documento**: 1.0  
+**Data Generazione Report**: 4 Febbraio 2026  
+**Versione Documento**: 1.1  
 **Autore**: Team Matrix  
 **Confidenzialità**: Uso Interno Zanichelli
