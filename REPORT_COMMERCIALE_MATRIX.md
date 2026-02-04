@@ -85,6 +85,46 @@ Risultato: argomenti personalizzati per quel docente, non generici.
 
 ---
 
+## Materie Supportate
+
+MATRIX analizza programmi per **21 materie** organizzate in **6 macroaree disciplinari**:
+
+### 🧪 Chimica
+- Chimica Generale e Inorganica
+- Chimica Organica
+- Chimica Propedeutica
+
+### ⚛️ Fisica
+- Fisica Generale 1
+- Fisica Generale 2
+- Fisica per Life Sciences
+- Fisica (semestre filtro)
+
+### 📐 Matematica
+- Analisi Matematica 1
+- Analisi Matematica 2
+- Matematica Corso Unico
+
+### 💰 Economia
+- Economia Politica
+- Microeconomia Avanzata
+- Macroeconomia
+
+### 🔬 Biologia
+- Biochimica Generale
+- Biologia Cellulare e Molecolare
+- Biologia Molecolare del Gene
+- Genetica Generale
+- Microbiologia
+- Biologia (semestre filtro)
+
+### 🔬 Istologia
+- Istologia ed Embriologia
+
+**Copertura manuali**: Più completa per Chimica e Fisica (85 manuali totali nel catalogo).
+
+---
+
 ## Come Funziona
 
 ### Passo 1: Carica Programma
