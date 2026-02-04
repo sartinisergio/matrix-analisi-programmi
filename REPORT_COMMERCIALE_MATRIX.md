@@ -141,9 +141,9 @@ Email: matrix-support@zanichelli.it
 
 ## Limitazioni Attuali
 
-- Materie disponibili: **solo Chimica Organica** (altre in sviluppo)
 - Richiede connessione internet (non funziona offline)
 - Qualità analisi dipende dalla qualità del programma caricato
+- Copertura manuali varia per materia (più completa per Chimica e Fisica)
 - Sistema in continuo miglioramento
 
 ---
@@ -165,7 +165,7 @@ Prova con 3-4 programmi che conosci già. Confronta le raccomandazioni MATRIX co
 No, è una web app. Si usa direttamente dal browser.
 
 **Funziona per tutte le materie?**  
-Attualmente solo Chimica Organica. Altre materie in sviluppo.
+Sì. Attualmente supporta 6 materie (Chimica, Fisica, Matematica, Economia, Biologia, Istologia) con 21 framework didattici diversi. La copertura manuali è più completa per Chimica e Fisica.
 
 **I docenti sanno che uso un'AI?**  
 MATRIX è uno strumento di analisi. Come lo presenti al docente dipende da te. Puoi dire semplicemente "Ho analizzato il suo programma..."
