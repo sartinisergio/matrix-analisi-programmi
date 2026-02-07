@@ -3400,8 +3400,8 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                     }
                 }
 
-                // Fase 0.5: Analisi Motivazioni Scelta Manuale (AVANZATA)
-                updateLoadingText('Fase 0.5/5: Logica della scelta editoriale...');
+                // Fase 0.5: Analisi Motivazioni Scelta Manuale (NUOVO)
+                updateLoadingText('Fase 0.5/5: Analisi motivazioni scelta manuale...');
                 
                 let motivazioniScelta = null;
                 try {
@@ -3419,89 +3419,13 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                         author: 'Non specificato',
                         publisher: 'Non specificato',
                         pages: 0,
-                        price: 0,
-                        chapters: []
+                        price: 0
                     };
                     
-                    console.log('🔍 FASE 0.5 AVANZATA - Manuale ID:', manualeId);
-                    console.log('🔍 FASE 0.5 AVANZATA - Manuale Info:', manualeInfo);
-                    console.log('🔍 FASE 0.5 AVANZATA - Manuali Alternativi:', manualiAlternativi);
+                    console.log('🔍 FASE 0.5 - Manuale ID:', manualeId);
+                    console.log('🔍 FASE 0.5 - Manuale Info:', manualeInfo);
                     
-                    // Carica indice completo del manuale principale
-                    let indiceManualePrincipale = 'Indice non disponibile';
-                    if (manualeAdottatoObj && manualeAdottatoObj.filepath) {
-                        try {
-                            const manualeData = await fetch(manualeAdottatoObj.filepath).then(r => r.json());
-                            if (manualeData.chapters && manualeData.chapters.length > 0) {
-                                indiceManualePrincipale = manualeData.chapters.map((cap, i) => 
-                                    `${i+1}. ${cap.title || cap}`
-                                ).join('\n');
-                                console.log(`✅ Indice manuale principale caricato (${manualeData.chapters.length} capitoli)`);
-                            }
-                        } catch (err) {
-                            console.warn('⚠️ Errore caricamento indice manuale principale:', err);
-                        }
-                    }
-                    
-                    // Carica info complete sui manuali alternativi (con indici)
-                    const manualiAlternativiInfo = [];
-                    for (const altId of manualiAlternativi) {
-                        const altObj = MANUAL_CATALOG?.manuals 
-                            ? Object.values(MANUAL_CATALOG.manuals).find(m => m.id === altId)
-                            : null;
-                        
-                        if (altObj) {
-                            const altInfo = {
-                                id: altId,
-                                title: altObj.title,
-                                author: altObj.author,
-                                publisher: altObj.publisher,
-                                pages: altObj.pages,
-                                price: altObj.price,
-                                chapters: []
-                            };
-                            
-                            // Carica indice del manuale alternativo
-                            if (altObj.filepath) {
-                                try {
-                                    const altData = await fetch(altObj.filepath).then(r => r.json());
-                                    if (altData.chapters && altData.chapters.length > 0) {
-                                        altInfo.chapters = altData.chapters.map((cap, i) => 
-                                            `${i+1}. ${cap.title || cap}`
-                                        );
-                                        console.log(`✅ Indice alternativo "${altId}" caricato (${altData.chapters.length} capitoli)`);
-                                    }
-                                } catch (err) {
-                                    console.warn(`⚠️ Errore caricamento indice alternativo "${altId}":`, err);
-                                }
-                            }
-                            
-                            manualiAlternativiInfo.push(altInfo);
-                        }
-                    }
-                    
-                    console.log('📚 Manuali alternativi con indici:', manualiAlternativiInfo.length);
-                    
-                    // Costruisci sezione manuali alternativi per il prompt
-                    let manualiAlternativiSection = '';
-                    if (manualiAlternativiInfo.length > 0) {
-                        manualiAlternativiSection = `
-MANUALI ALTERNATIVI IN BIBLIOGRAFIA:
-${manualiAlternativiInfo.map((alt, idx) => `
-**Alternativo ${idx+1}**:
-- Titolo: ${alt.title}
-- Autore: ${alt.author}
-- Editore: ${alt.publisher}
-- Pagine: ${alt.pages}
-- Prezzo: €${alt.price}
-- INDICE:
-${alt.chapters.length > 0 ? alt.chapters.map(cap => `  ${cap}`).join('\n') : '  Indice non disponibile'}
-`).join('\n')}`;
-                    } else {
-                        manualiAlternativiSection = 'NESSUN MANUALE ALTERNATIVO IN BIBLIOGRAFIA';
-                    }
-                    
-                    const motivazioniPrompt = `Sei un esperto di analisi editoriale universitaria e strategie commerciali per case editrici.
+                    const motivazioniPrompt = `Sei un esperto di didattica universitaria e analisi di scelte editoriali.
 
 PROGRAMMA DIDATTICO:
 ${testo.substring(0, 6000)}
@@ -3509,126 +3433,84 @@ ${testo.substring(0, 6000)}
 ANALISI PRELIMINARE GIÀ EFFETTUATA:
 ${JSON.stringify(fase0, null, 2)}
 
-MANUALE PRINCIPALE ADOTTATO:
+MANUALE ADOTTATO:
 - Titolo: ${manualeInfo.title}
 - Autore: ${manualeInfo.author}
 - Editore: ${manualeInfo.publisher}
 - Pagine: ${manualeInfo.pages}
 - Prezzo: €${manualeInfo.price}
 
-INDICE MANUALE PRINCIPALE:
-${indiceManualePrincipale}
-
-${manualiAlternativiSection}
-
 CONTESTO:
 - Materia: ${materiaName}
 - Classe di Laurea: ${contesto}
 - CFU: ${cfu || 'Non specificato'}
 
----
+COMPITO:
+Analizza **perché il docente ha scelto questo manuale specifico** invece di altri disponibili sul mercato.
 
-## COMPITO: Analisi Strategica in 3 Parti
+Considera:
+1. **Allineamento contenuti**: quali argomenti del programma sono ben coperti da questo manuale?
+2. **Caratteristiche distintive**: cosa rende questo manuale unico/preferibile?
+   - Approccio pedagogico (teorico, applicativo, biologico, farmaceutico)
+   - Livello di approfondimento (base, intermedio, avanzato)
+   - Linguaggio (tecnico, accessibile, divulgativo)
+   - Struttura (compatto, enciclopedico, modulare)
+   - Prezzo (economico, medio, premium)
+   - Risorse aggiuntive (esercizi, online, video)
+3. **Contesto studenti**: per quale tipo di studente è pensato?
+4. **Compromessi accettati**: cosa potrebbe mancare che il docente integra altrimenti?
+5. **Priorità del docente**: cosa ha pesato di più nella scelta?
 
-### PARTE 1: Perché Ha Scelto il Manuale Principale?
-
-Analizza i **fattori decisivi** (3-5 motivazioni con peso alto/medio/basso ed evidenza concisa).
-Identifica la **natura della scelta**: convinta | ereditata | compromesso
-Elenca le **3 priorità TOP** del docente.
-
-### PARTE 2: Relazione tra Testi in Bibliografia
-
-${manualiAlternativiInfo.length > 0 ? `
-**IMPORTANTE**: Hai gli INDICI completi. Usali per analisi precise!
-
-Per OGNI manuale alternativo:
-- **Ruolo**: approfondimento | semplificazione | esercizi | modulo_specifico | alternativa_studenti | riferimento_generale
-- **Cosa rivela**: Perché è stato aggiunto? Quale GAP compensa? (confronta indici)
-
-**Analisi Combinazione**: Perché il docente usa QUESTA combinazione di testi?
-
-**Cosa Verificare con il Docente**: Suggerimento strategico per il promotore su COSA INDAGARE nel colloquio con il docente.
-NON formulare una domanda, ma indicare COSA il promotore dovrebbe verificare/investigare.
-Esempio: "Verificare con il docente quali capitoli di X sono effettivamente utilizzati in aula e per quali argomenti. Se confermato uso sistematico, proporre manuale Zanichelli che unifichi principale + alternativo, evidenziando risparmio per studenti."
-` : `
-**NOTA**: Non ci sono alternativi. Salta questa sezione.
-`}
-
-### PARTE 3: Profilo Decisionale del Docente
-
-- Cosa cerca (3 esigenze)
-- Cosa evita (2 caratteristiche sgradite)
-- Sensibilità prezzo: alta | media | bassa
-- Familiarità Zanichelli: alta | media | bassa | nulla (in base editore attuale)
-- Apertura cambio principale: alta | media | bassa
-- Apertura integrazione alternativo: alta | media | bassa
-
----
-
-## LINEE GUIDA:
-✅ USA linguaggio qualitativo ("probabilmente", "sembra")
-✅ BASA tutto su programma, indici, analisi preliminare
-✅ CONFRONTA indici per gap precisi
-❌ NO dati numerici inventati
-❌ NO affermazioni categoriche
-
----
+IMPORTANTE:
+- USA linguaggio qualitativo: "probabilmente", "potrebbe", "sembra"
+- NON inventare dati numerici specifici
+- Basa tutto su ciò che emerge dal programma e dall'analisi preliminare
 
 FORMATO OUTPUT (JSON):
 {
-  "scelta_manuale_principale": {
-    "motivazioni": [
-      {
-        "fattore": "string (max 100 caratteri)",
-        "peso": "alto|medio|basso",
-        "evidenza": "string (max 200 caratteri)"
-      }
-    ],
-    "natura_scelta": {
-      "tipo": "convinta|ereditata|compromesso",
-      "confidenza": "alta|media|bassa",
-      "spiegazione": "string (max 250 caratteri)"
-    },
-    "priorita_docente": ["string", "string", "string"]
-  },
-  "relazione_testi_bibliografia": {
-    "testi_alternativi_presenti": ${manualiAlternativiInfo.length > 0 ? 'true' : 'false'},
-    "analisi_combinazione": ${manualiAlternativiInfo.length > 0 ? '"string (max 500 caratteri)"' : 'null'},
-    "dettaglio_alternativi": ${manualiAlternativiInfo.length > 0 ? `[
-      {
-        "titolo": "string",
-        "autore": "string",
-        "ruolo": "approfondimento|semplificazione|esercizi|modulo_specifico|alternativa_studenti|riferimento_generale",
-        "cosa_rivela": "string (max 250 caratteri)"
-      }
-    ]` : '[]'},
-    "domanda_chiave": ${manualiAlternativiInfo.length > 0 ? '"Suggerimento strategico: cosa verificare/indagare con il docente (max 300 caratteri)"' : 'null'}
-  },
-  "profilo_decisionale": {
-    "cosa_cerca": ["string", "string", "string"],
-    "cosa_evita": ["string", "string"],
-    "sensibilita_prezzo": "alta|media|bassa",
-    "familiarita_zanichelli": "alta|media|bassa|nulla",
-    "apertura_cambio_principale": "alta|media|bassa",
-    "apertura_integrazione_alternativo": "alta|media|bassa"
-  }
+  "motivazioni_principali": [
+    {
+      "fattore": "es: Focus biologico-applicativo",
+      "peso_stimato": "alto o medio o basso",
+      "evidenza": "Breve spiegazione basata sul programma (max 150 caratteri)"
+    }
+  ],
+  "caratteristiche_privilegiate": [
+    "Caratteristica 1 (es: Trattazione compatta)",
+    "Caratteristica 2 (es: Prezzo contenuto)",
+    "Caratteristica 3 (es: Linguaggio accessibile)"
+  ],
+  "compromessi_accettati": [
+    {
+      "gap": "Argomento potenzialmente ridotto",
+      "probabilmente_integrato_con": "Come il docente potrebbe colmare (es: Dispense, esercitazioni)"
+    }
+  ],
+  "cosa_cerca_il_docente": [
+    "Esigenza 1 (es: Manuale biologico-centrico)",
+    "Esigenza 2 (es: Accessibile economicamente)",
+    "Esigenza 3 (es: Non troppo enciclopedico)"
+  ],
+  "sensibilita_prezzo": "alta o media o bassa",
+  "apertura_a_cambio": "alta o media o bassa",
+  "leva_principale_per_cambio": "Descrizione della leva più efficace per proporre un cambio (max 200 caratteri)"
 }
 
 RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
 
-                    const motivazioniResponse = await callLLM(motivazioniPrompt, 0.3);
-                    console.log('📥 FASE 0.5 AVANZATA RAW RESPONSE (primi 300 char):', motivazioniResponse.substring(0, 300));
+                    const motivazioniResponse = await callLLM(motivazioniPrompt, 0.2);
+                    console.log('📥 FASE 0.5 RAW RESPONSE (primi 300 char):', motivazioniResponse.substring(0, 300));
                     
                     const sanitizedResponse = sanitizeJSON(motivazioniResponse);
                     motivazioniScelta = JSON.parse(sanitizedResponse);
                     
-                    // Salva per uso in FASE 5.5 e per il report
+                    // Salva per uso in FASE 5.5
                     window.currentMotivazioniScelta = motivazioniScelta;
                     
-                    console.log('✅ Fase 0.5 Avanzata (Logica Scelta Editoriale) completata:', motivazioniScelta);
+                    console.log('✅ Fase 0.5 (Motivazioni Scelta) completata:', motivazioniScelta);
                 } catch (error) {
-                    console.error('❌ FASE 0.5 AVANZATA ERROR:', error);
-                    console.warn('⚠️ Fase 0.5 Avanzata (Logica Scelta Editoriale) fallita, continuo comunque:', error.message);
+                    console.error('❌ FASE 0.5 ERROR:', error);
+                    console.warn('⚠️ Fase 0.5 (Motivazioni Scelta) fallita, continuo comunque:', error.message);
                     // Non blocco l'analisi se questa fase fallisce
                 }
 
@@ -6046,227 +5928,103 @@ Rispondi SOLO con un JSON valido:
                                             <p class="text-xs text-gray-600">${prog.analisi_preliminare.profilo_pedagogico.note}</p>
                                         </div>
                                     ` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    ` : ''}
-
-                    <!-- FASE 0.5 AVANZATA: Logica della Scelta Editoriale -->
-                    ${prog.motivazioni_scelta ? `
-                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                        <h2 class="text-2xl font-bold mb-4 text-blue-800 flex items-center gap-2">
-                            <span>🎯</span>
-                            <span>Logica della Scelta Editoriale</span>
-                        </h2>
-                        
-                        <!-- PARTE 1: Scelta Manuale Principale -->
-                        <div class="mb-6">
-                            <h3 class="text-lg font-semibold mb-3 text-gray-800">📚 Perché Questo Manuale Principale?</h3>
-                            
-                            <!-- Motivazioni -->
-                            <div class="space-y-3 mb-4">
-                                ${prog.motivazioni_scelta.scelta_manuale_principale.motivazioni.map((m, idx) => `
-                                    <div class="flex items-start gap-3 bg-gray-50 rounded-lg p-3">
-                                        <span class="flex-shrink-0 w-6 h-6 rounded-full text-sm font-bold flex items-center justify-center ${
-                                            m.peso === 'alto' ? 'bg-green-500 text-white' : 
-                                            m.peso === 'medio' ? 'bg-yellow-400 text-gray-800' : 
-                                            'bg-gray-400 text-white'
-                                        }">${idx + 1}</span>
-                                        <div class="flex-1">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <p class="text-sm font-semibold text-gray-900">${m.fattore}</p>
-                                                <span class="px-2 py-0.5 text-xs font-medium rounded-full ${
-                                                    m.peso === 'alto' ? 'bg-green-100 text-green-700' : 
-                                                    m.peso === 'medio' ? 'bg-yellow-100 text-yellow-700' : 
-                                                    'bg-gray-100 text-gray-600'
-                                                }">Peso: ${m.peso}</span>
+                                    
+                                    <!-- Integrazione FASE 0.5: Motivazioni Scelta Manuale -->
+                                    ${prog.motivazioni_scelta ? `
+                                        <div class="mt-4 pt-4 border-t border-indigo-200">
+                                            <h5 class="text-sm font-semibold text-indigo-900 mb-3 flex items-center">
+                                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                                </svg>
+                                                💡 Perché Ha Scelto Questo Manuale?
+                                            </h5>
+                                            
+                                            <!-- Motivazioni Principali Compatte -->
+                                            <div class="space-y-2 mb-3">
+                                                ${prog.motivazioni_scelta.motivazioni_principali.slice(0, 3).map((m, idx) => `
+                                                    <div class="flex items-start gap-2">
+                                                        <span class="flex-shrink-0 w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center ${
+                                                            m.peso_stimato === 'alto' ? 'bg-red-100 text-red-700' : 
+                                                            m.peso_stimato === 'medio' ? 'bg-yellow-100 text-yellow-700' : 
+                                                            'bg-blue-100 text-blue-700'
+                                                        }">${idx + 1}</span>
+                                                        <div class="flex-1">
+                                                            <p class="text-xs font-semibold text-gray-900">${m.fattore}</p>
+                                                            <p class="text-xs text-gray-600">${m.evidenza.substring(0, 120)}${m.evidenza.length > 120 ? '...' : ''}</p>
+                                                        </div>
+                                                    </div>
+                                                `).join('')}
                                             </div>
-                                            <p class="text-sm text-gray-600">${m.evidenza}</p>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            
-                            <!-- Natura Scelta + Priorità (2 colonne) -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-gradient-to-br ${
-                                    prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo === 'convinta' ? 'from-green-50 to-green-100 border-green-300' :
-                                    prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo === 'ereditata' ? 'from-yellow-50 to-yellow-100 border-yellow-300' :
-                                    'from-orange-50 to-orange-100 border-orange-300'
-                                } border-2 rounded-lg p-4">
-                                    <h4 class="text-sm font-semibold mb-2 flex items-center gap-2">
-                                        <span class="text-lg">${
-                                            prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo === 'convinta' ? '✓' :
-                                            prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo === 'ereditata' ? '🔄' :
-                                            '⚖️'
-                                        }</span>
-                                        <span>Natura della Scelta</span>
-                                    </h4>
-                                    <p class="text-sm font-bold ${
-                                        prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo === 'convinta' ? 'text-green-800' :
-                                        prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo === 'ereditata' ? 'text-yellow-800' :
-                                        'text-orange-800'
-                                    } mb-2">${prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.tipo.toUpperCase()}</p>
-                                    <p class="text-xs text-gray-600 mb-2">${prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.spiegazione}</p>
-                                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${
-                                        prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.confidenza === 'alta' ? 'bg-gray-800 text-white' :
-                                        prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.confidenza === 'media' ? 'bg-gray-500 text-white' :
-                                        'bg-gray-300 text-gray-700'
-                                    }">Confidenza: ${prog.motivazioni_scelta.scelta_manuale_principale.natura_scelta.confidenza}</span>
-                                </div>
-                                
-                                <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-4">
-                                    <h4 class="text-sm font-semibold mb-2 text-blue-800">🎯 Priorità del Docente</h4>
-                                    <ol class="space-y-2">
-                                        ${prog.motivazioni_scelta.scelta_manuale_principale.priorita_docente.map((p, idx) => `
-                                            <li class="flex items-start gap-2">
-                                                <span class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">${idx+1}</span>
-                                                <span class="text-sm text-gray-800">${p}</span>
-                                            </li>
-                                        `).join('')}
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- PARTE 2: Relazione Testi Bibliografia (solo se alternativi presenti) -->
-                        ${prog.motivazioni_scelta.relazione_testi_bibliografia.testi_alternativi_presenti ? `
-                        <div class="mb-6">
-                            <h3 class="text-lg font-semibold mb-3 text-gray-800">🔗 Relazione tra i Testi in Bibliografia</h3>
-                            
-                            <!-- Analisi Combinazione -->
-                            <div class="bg-purple-50 border-l-4 border-purple-500 p-4 mb-4">
-                                <p class="text-sm text-gray-800">${prog.motivazioni_scelta.relazione_testi_bibliografia.analisi_combinazione}</p>
-                            </div>
-                            
-                            <!-- Dettaglio Alternativi -->
-                            <div class="space-y-3 mb-4">
-                                ${prog.motivazioni_scelta.relazione_testi_bibliografia.dettaglio_alternativi.map((alt, idx) => `
-                                    <div class="bg-gray-50 rounded-lg p-4 border-l-4 ${
-                                        alt.ruolo === 'approfondimento' ? 'border-blue-500' :
-                                        alt.ruolo === 'semplificazione' ? 'border-green-500' :
-                                        alt.ruolo === 'esercizi' ? 'border-yellow-500' :
-                                        alt.ruolo === 'modulo_specifico' ? 'border-red-500' :
-                                        alt.ruolo === 'alternativa_studenti' ? 'border-purple-500' :
-                                        'border-gray-400'
-                                    }">
-                                        <div class="flex items-start justify-between mb-2">
-                                            <div class="flex-1">
-                                                <p class="text-sm font-semibold text-gray-900">${alt.titolo}</p>
-                                                ${alt.autore ? `<p class="text-xs text-gray-500 mt-0.5">${alt.autore}</p>` : ''}
+                                            
+                                            <!-- Caratteristiche + Compromessi (2 colonne) -->
+                                            <div class="grid grid-cols-2 gap-3 mb-3">
+                                                <div>
+                                                    <p class="text-xs font-semibold text-indigo-800 mb-1">✨ Caratteristiche Privilegiate</p>
+                                                    <ul class="text-xs text-gray-700 space-y-1">
+                                                        ${prog.motivazioni_scelta.caratteristiche_privilegiate.slice(0, 3).map(c => `
+                                                            <li class="flex items-start">
+                                                                <span class="text-green-600 mr-1">✓</span>
+                                                                <span>${c}</span>
+                                                            </li>
+                                                        `).join('')}
+                                                    </ul>
+                                                </div>
+                                                ${prog.motivazioni_scelta.compromessi_accettati && prog.motivazioni_scelta.compromessi_accettati.length > 0 ? `
+                                                <div>
+                                                    <p class="text-xs font-semibold text-orange-800 mb-1">⚠️ Compromessi Accettati</p>
+                                                    <ul class="text-xs text-gray-700 space-y-1">
+                                                        ${prog.motivazioni_scelta.compromessi_accettati.slice(0, 2).map(c => `
+                                                            <li class="flex items-start">
+                                                                <span class="text-orange-600 mr-1">•</span>
+                                                                <span>${c.gap}</span>
+                                                            </li>
+                                                        `).join('')}
+                                                    </ul>
+                                                </div>
+                                                ` : ''}
                                             </div>
-                                            <span class="px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap ${
-                                                alt.ruolo === 'approfondimento' ? 'bg-blue-100 text-blue-700' :
-                                                alt.ruolo === 'semplificazione' ? 'bg-green-100 text-green-700' :
-                                                alt.ruolo === 'esercizi' ? 'bg-yellow-100 text-yellow-700' :
-                                                alt.ruolo === 'modulo_specifico' ? 'bg-red-100 text-red-700' :
-                                                alt.ruolo === 'alternativa_studenti' ? 'bg-purple-100 text-purple-700' :
-                                                'bg-gray-100 text-gray-700'
-                                            }">${alt.ruolo.replace(/_/g, ' ')}</span>
+                                            
+                                            <!-- Info Strategiche (3 colonne compatte) -->
+                                            <div class="grid grid-cols-3 gap-2 mb-2">
+                                                <div class="bg-gradient-to-br ${
+                                                    prog.motivazioni_scelta.sensibilita_prezzo === 'alta' ? 'from-red-50 to-red-100' : 
+                                                    prog.motivazioni_scelta.sensibilita_prezzo === 'media' ? 'from-yellow-50 to-yellow-100' : 
+                                                    'from-green-50 to-green-100'
+                                                } rounded p-2 text-center">
+                                                    <p class="text-xs text-gray-600 mb-0.5">Sensibilità Prezzo</p>
+                                                    <p class="text-xs font-bold ${
+                                                        prog.motivazioni_scelta.sensibilita_prezzo === 'alta' ? 'text-red-700' : 
+                                                        prog.motivazioni_scelta.sensibilita_prezzo === 'media' ? 'text-yellow-700' : 
+                                                        'text-green-700'
+                                                    }">${prog.motivazioni_scelta.sensibilita_prezzo.toUpperCase()}</p>
+                                                </div>
+                                                <div class="bg-gradient-to-br ${
+                                                    prog.motivazioni_scelta.apertura_a_cambio === 'alta' ? 'from-green-50 to-green-100' : 
+                                                    prog.motivazioni_scelta.apertura_a_cambio === 'media' ? 'from-yellow-50 to-yellow-100' : 
+                                                    'from-red-50 to-red-100'
+                                                } rounded p-2 text-center">
+                                                    <p class="text-xs text-gray-600 mb-0.5">Apertura Cambio</p>
+                                                    <p class="text-xs font-bold ${
+                                                        prog.motivazioni_scelta.apertura_a_cambio === 'alta' ? 'text-green-700' : 
+                                                        prog.motivazioni_scelta.apertura_a_cambio === 'media' ? 'text-yellow-700' : 
+                                                        'text-red-700'
+                                                    }">${prog.motivazioni_scelta.apertura_a_cambio.toUpperCase()}</p>
+                                                </div>
+                                                <div class="bg-indigo-50 rounded p-2">
+                                                    <p class="text-xs text-gray-600 mb-0.5">Cerca</p>
+                                                    <p class="text-xs text-gray-700 truncate" title="${prog.motivazioni_scelta.cosa_cerca_il_docente[0] || ''}">${(prog.motivazioni_scelta.cosa_cerca_il_docente[0] || '').substring(0, 30)}...</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Leva Principale -->
+                                            <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-300 rounded p-3">
+                                                <p class="text-xs font-semibold text-green-900 mb-1 flex items-center">
+                                                    <span class="mr-1">🎯</span>Leva Principale per Cambio
+                                                </p>
+                                                <p class="text-xs text-gray-800">${prog.motivazioni_scelta.leva_principale_per_cambio}</p>
+                                            </div>
                                         </div>
-                                        <p class="text-sm text-gray-600">${alt.cosa_rivela}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            
-                            <!-- Cosa Verificare con il Docente -->
-                            ${prog.motivazioni_scelta.relazione_testi_bibliografia.domanda_chiave ? `
-                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-400 rounded-lg p-4">
-                                <h4 class="text-sm font-bold text-blue-900 mb-2 flex items-center gap-2">
-                                    <span>💡</span>
-                                    <span>Cosa Verificare con il Docente</span>
-                                </h4>
-                                <p class="text-sm text-gray-800">${prog.motivazioni_scelta.relazione_testi_bibliografia.domanda_chiave}</p>
-                            </div>
-                            ` : ''}
-                        </div>
-                        ` : ''}
-                        
-                        <!-- PARTE 3: Profilo Decisionale -->
-                        <div>
-                            <h3 class="text-lg font-semibold mb-3 text-gray-800">💡 Profilo Decisionale del Docente</h3>
-                            
-                            <!-- Cosa Cerca + Cosa Evita (2 colonne) -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div class="bg-green-50 border-l-4 border-green-500 p-4">
-                                    <h4 class="text-sm font-semibold text-green-900 mb-2">✅ Cosa Cerca</h4>
-                                    <ul class="space-y-1">
-                                        ${prog.motivazioni_scelta.profilo_decisionale.cosa_cerca.map(c => `
-                                            <li class="text-sm text-gray-700 flex items-start gap-2">
-                                                <span class="text-green-600 font-bold">•</span>
-                                                <span>${c}</span>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                                
-                                <div class="bg-red-50 border-l-4 border-red-500 p-4">
-                                    <h4 class="text-sm font-semibold text-red-900 mb-2">❌ Cosa Evita</h4>
-                                    <ul class="space-y-1">
-                                        ${prog.motivazioni_scelta.profilo_decisionale.cosa_evita.map(e => `
-                                            <li class="text-sm text-gray-700 flex items-start gap-2">
-                                                <span class="text-red-600 font-bold">×</span>
-                                                <span>${e}</span>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                            <!-- Info Strategiche (griglia 3 colonne) -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <div class="bg-gradient-to-br ${
-                                    prog.motivazioni_scelta.profilo_decisionale.sensibilita_prezzo === 'alta' ? 'from-red-100 to-red-200' :
-                                    prog.motivazioni_scelta.profilo_decisionale.sensibilita_prezzo === 'media' ? 'from-yellow-100 to-yellow-200' :
-                                    'from-green-100 to-green-200'
-                                } rounded-lg p-3 text-center">
-                                    <p class="text-xs text-gray-600 mb-1">💰 Sensibilità Prezzo</p>
-                                    <p class="text-sm font-bold ${
-                                        prog.motivazioni_scelta.profilo_decisionale.sensibilita_prezzo === 'alta' ? 'text-red-800' :
-                                        prog.motivazioni_scelta.profilo_decisionale.sensibilita_prezzo === 'media' ? 'text-yellow-800' :
-                                        'text-green-800'
-                                    }">${prog.motivazioni_scelta.profilo_decisionale.sensibilita_prezzo.toUpperCase()}</p>
-                                </div>
-                                
-                                <div class="bg-gradient-to-br ${
-                                    prog.motivazioni_scelta.profilo_decisionale.familiarita_zanichelli === 'alta' ? 'from-blue-100 to-blue-200' :
-                                    prog.motivazioni_scelta.profilo_decisionale.familiarita_zanichelli === 'media' ? 'from-indigo-100 to-indigo-200' :
-                                    prog.motivazioni_scelta.profilo_decisionale.familiarita_zanichelli === 'bassa' ? 'from-gray-100 to-gray-200' :
-                                    'from-gray-50 to-gray-100'
-                                } rounded-lg p-3 text-center">
-                                    <p class="text-xs text-gray-600 mb-1">📘 Familiarità Zanichelli</p>
-                                    <p class="text-sm font-bold ${
-                                        prog.motivazioni_scelta.profilo_decisionale.familiarita_zanichelli === 'alta' ? 'text-blue-800' :
-                                        prog.motivazioni_scelta.profilo_decisionale.familiarita_zanichelli === 'media' ? 'text-indigo-800' :
-                                        'text-gray-800'
-                                    }">${prog.motivazioni_scelta.profilo_decisionale.familiarita_zanichelli.toUpperCase()}</p>
-                                </div>
-                                
-                                <div class="bg-gradient-to-br ${
-                                    prog.motivazioni_scelta.profilo_decisionale.apertura_cambio_principale === 'alta' ? 'from-green-100 to-green-200' :
-                                    prog.motivazioni_scelta.profilo_decisionale.apertura_cambio_principale === 'media' ? 'from-yellow-100 to-yellow-200' :
-                                    'from-red-100 to-red-200'
-                                } rounded-lg p-3 text-center">
-                                    <p class="text-xs text-gray-600 mb-1">🔄 Apertura Cambio Principale</p>
-                                    <p class="text-sm font-bold ${
-                                        prog.motivazioni_scelta.profilo_decisionale.apertura_cambio_principale === 'alta' ? 'text-green-800' :
-                                        prog.motivazioni_scelta.profilo_decisionale.apertura_cambio_principale === 'media' ? 'text-yellow-800' :
-                                        'text-red-800'
-                                    }">${prog.motivazioni_scelta.profilo_decisionale.apertura_cambio_principale.toUpperCase()}</p>
-                                </div>
-                                
-                                <div class="bg-gradient-to-br ${
-                                    prog.motivazioni_scelta.profilo_decisionale.apertura_integrazione_alternativo === 'alta' ? 'from-green-100 to-green-200' :
-                                    prog.motivazioni_scelta.profilo_decisionale.apertura_integrazione_alternativo === 'media' ? 'from-yellow-100 to-yellow-200' :
-                                    'from-red-100 to-red-200'
-                                } rounded-lg p-3 text-center md:col-span-3">
-                                    <p class="text-xs text-gray-600 mb-1">➕ Apertura Integrazione Alternativo</p>
-                                    <p class="text-sm font-bold ${
-                                        prog.motivazioni_scelta.profilo_decisionale.apertura_integrazione_alternativo === 'alta' ? 'text-green-800' :
-                                        prog.motivazioni_scelta.profilo_decisionale.apertura_integrazione_alternativo === 'media' ? 'text-yellow-800' :
-                                        'text-red-800'
-                                    }">${prog.motivazioni_scelta.profilo_decisionale.apertura_integrazione_alternativo.toUpperCase()}</p>
+                                    ` : ''}
                                 </div>
                             </div>
                         </div>
