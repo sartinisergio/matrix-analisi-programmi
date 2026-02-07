@@ -1,6 +1,6 @@
 # 🎓 MATRIX - Multi-Analysis Teaching Resource Intelligence X-platform
 
-**Versione 1.0.0** | Rilasciato: 29 Gennaio 2025
+**Versione 1.1.0** | Rilasciato: 7 Febbraio 2026 | 🆕 FASE 0.5 Avanzata
 
 ## 📋 Panoramica
 
@@ -122,6 +122,123 @@ Prima della valutazione dettagliata, MATRIX genera:
 ║  Stile: Interdisciplinare (chimica-biologia)                ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
+
+---
+
+### 1.5 **Logica della Scelta Editoriale (Fase 0.5)** 🆕
+
+**Novità Febbraio 2026**: Analisi strategica avanzata per promotori editoriali.
+
+Dopo l'analisi preliminare, MATRIX analizza **perché** il docente ha scelto il manuale principale e **come** si relaziona con eventuali manuali alternativi in bibliografia.
+
+#### **🎯 Obiettivi**
+- Comprendere le **motivazioni** della scelta del manuale principale
+- Analizzare la **relazione** tra manuale principale e alternativi
+- Identificare **opportunità commerciali** per case editrici (es. Zanichelli)
+
+#### **📊 Analisi Tripartita**
+
+##### **1. Scelta Manuale Principale**
+- **Motivazioni** con peso (alto/medio/basso) ed evidenze
+- **Natura della scelta**: Convinta / Ereditata / Compromesso
+- **Priorità docente**: Top 3 esigenze nella scelta
+
+**Esempio:**
+```
+✓ Motivazione 1 (peso: ALTO)
+  "Focus biologico-applicativo allineato al programma"
+  Evidenza: Il programma enfatizza biochimica e metabolismo
+
+✓ Motivazione 2 (peso: MEDIO)  
+  "Trattazione compatta adatta a 6 CFU"
+  Evidenza: 400 pagine vs 800+ enciclopedie
+
+Natura: CONVINTA (confidenza alta)
+Priorità: 1) Linguaggio accessibile  2) Copertura biologica  3) Prezzo contenuto
+```
+
+##### **2. Relazione tra Testi in Bibliografia** *(solo se presenti alternativi)*
+- **Analisi combinazione**: Perché il docente usa QUESTA combinazione?
+- **Ruolo alternativi**: 
+  - `approfondimento` → Argomenti più dettagliati del principale
+  - `semplificazione` → Versione accessibile per studenti deboli
+  - `esercizi` → Focus su problemi/applicazioni
+  - `modulo_specifico` → Copre argomento che il principale non ha
+  - `alternativa_studenti` → Opzione diversa per preferenze personali
+- **Confronto indici**: Gap precisi identificati confrontando capitoli
+- **💡 Cosa Verificare con il Docente**: Suggerimento strategico per promotore
+
+**Esempio:**
+```
+📘 Manuale Alternativo: "Kotz - Chimica"
+   Ruolo: APPROFONDIMENTO
+   
+   Cosa rivela: Confronto indici mostra che Kotz ha 3 capitoli su equilibri 
+   vs 1 in Arnesano. Il docente compensa gap su termodinamica avanzata.
+
+💡 Cosa Verificare:
+   "Verificare con il docente quali capitoli di Kotz sono effettivamente 
+   utilizzati per approfondimenti. Se conferma uso sistematico per equilibri 
+   e cinetica, proporre Zanichelli-Silberberg che integra base biologica + 
+   approfondimenti quantitativi, eliminando doppia adozione e riducendo 
+   costo studenti."
+```
+
+##### **3. Profilo Decisionale del Docente**
+- **Cosa cerca** (3 esigenze)
+- **Cosa evita** (2 caratteristiche sgradite)
+- **Sensibilità prezzo**: alta / media / bassa
+- **Familiarità Zanichelli**: alta / media / bassa / nulla
+- **Apertura cambio principale**: alta / media / bassa
+- **Apertura integrazione alternativo**: alta / media / bassa
+
+**Output JSON:**
+```json
+{
+  "scelta_manuale_principale": {
+    "motivazioni": [
+      {
+        "fattore": "Approccio biologico allineato",
+        "peso": "alto",
+        "evidenza": "Programma enfatizza biochimica"
+      }
+    ],
+    "natura_scelta": {
+      "tipo": "convinta",
+      "confidenza": "alta",
+      "spiegazione": "Allineamento chiaro programma-manuale"
+    },
+    "priorita_docente": ["Linguaggio accessibile", "Copertura biologica", "Prezzo"]
+  },
+  "relazione_testi_bibliografia": {
+    "testi_alternativi_presenti": true,
+    "analisi_combinazione": "Base + approfondimento opzionale",
+    "dettaglio_alternativi": [
+      {
+        "titolo": "Kotz - Chimica",
+        "autore": "Kotz, Treichel, Townsend",
+        "ruolo": "approfondimento",
+        "cosa_rivela": "Compensa gap su equilibri chimici"
+      }
+    ],
+    "domanda_chiave": "Verificare capitoli Kotz usati per proporre alternativa unificata"
+  },
+  "profilo_decisionale": {
+    "cosa_cerca": ["Testi biologico-centrici", "Linguaggio accessibile", "Non enciclopedici"],
+    "cosa_evita": ["Manuali troppo teorici", "Enciclopedie 1000+ pagine"],
+    "sensibilita_prezzo": "alta",
+    "familiarita_zanichelli": "bassa",
+    "apertura_cambio_principale": "media",
+    "apertura_integrazione_alternativo": "alta"
+  }
+}
+```
+
+#### **🎁 Valore per Promotori**
+- ✅ **Preparazione colloqui**: Domande mirate da fare al docente
+- ✅ **Opportunità commerciali**: Individuazione spazi per proporre Zanichelli
+- ✅ **Strategie persuasive**: Leve efficaci (risparmio, completezza, unificazione)
+- ✅ **Riduzione tempo**: Da 2h di analisi manuale a 5 minuti automatici
 
 ---
 
