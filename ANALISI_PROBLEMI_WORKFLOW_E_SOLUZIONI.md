@@ -62,51 +62,76 @@
 
 #### **WORKFLOW MATRIX (Proattivo - Strategico)**
 ```
-1. MATRIX analizza TUTTI i programmi del territorio PRIMA dell'uscita libro
+FASE 0 (UNA TANTUM - 3 settimane):
+1. MATRIX analizza TUTTI i programmi del territorio
 2. Creazione "Database Intelligence Permanente"
-3. Quando esce nuova pubblicazione: query mirate sul database
-4. Identificazione immediata dei 10-15 docenti target perfetti
-5. Mail personalizzate con strategia specifica per ciascuno
-6. Follow-up mirati
-7. Alto tasso di successo
+   (Manuali usati, lacune, profili docenti, temi)
+
+[ATTESA NUOVA PUBBLICAZIONE...]
+
+FASE 1 (PER OGNI PUBBLICAZIONE - 2 settimane):
+3. Esce nuova pubblicazione con info complete (indice, punti forza)
+4. Query database: identificazione 10-15 docenti target (10 minuti)
+5. Analisi MATRIX comparativa per ogni target (6 ore totali)
+6. Mail personalizzate con strategia specifica (3 ore)
+7. Follow-up mirati
+8. Alto tasso di successo
 ```
-**Tempo totale**: 2-4 settimane  
+**Tempo Fase 0 (una tantum)**: 3 settimane  
+**Tempo Fase 1 (per pubblicazione)**: 2 settimane  
 **Efficacia**: 25-40% conversione
 
 ---
 
-## 🎓 Soluzione Concreta: "Mappatura Preventiva del Territorio"
+## 🎓 Soluzione Concreta: "Database Intelligence del Territorio"
 
-### **Fase 0: Preparazione Strategica (UNA TANTUM)**
+### **Fase 0: Mappatura Preventiva (UNA TANTUM) - 3 settimane**
 
 **Obiettivo**: Costruire un database intelligence permanente del proprio territorio
+
+**⚠️ IMPORTANTE**: Questa fase NON crea ancora la strategia di promozione (perché non hai ancora info sulla pubblicazione), ma crea la BASE DATI che interrogherai rapidamente quando avrai le informazioni complete sul nuovo libro.
 
 **Azioni**:
 1. **Mappatura completa Atenei di competenza** (esempio: promotore gestisce 5 Atenei)
 2. **Per ogni Ateneo**: identificare tutti i corsi di laurea attivi
 3. **Per ogni corso**: scaricare tutti i programmi didattici disponibili online
 4. **Analisi MATRIX batch**: analizzare TUTTI i programmi con MATRIX
-5. **Creazione repository**: archiviare analisi in formato strutturato
+5. **Creazione database**: archiviare analisi in formato strutturato interrogabile
 
 **Investimento temporale**: 
 - 2-3 settimane di lavoro intensivo
 - Ma **si fa UNA SOLA VOLTA**
 
-**Risultato**:
-- Database con 200-500 programmi analizzati per territorio
+**Risultato - Database Intelligence contenente**:
+- 200-500 programmi analizzati per territorio
+- Manuali attuali utilizzati dai docenti
+- Lacune identificate nei programmi
 - Profili decisionali dei docenti mappati
-- Lacune editoriali identificate
-- Opportunità commerciali pre-classificate
+- Temi trattati in ogni programma
+- Dati contatto docenti
+
+**⚠️ Cosa NON hai ancora**:
+- ❌ Strategia di promozione per pubblicazione specifica
+- ❌ Mail personalizzate (non sai ancora quale libro proporre)
+- ❌ Matching libro-docente (il libro non esiste ancora)
 
 ---
 
-### **Fase 1: Utilizzo Strategico (PERMANENTE)**
+### **Fase 1: Strategia Promozione Pubblicazione Specifica (2 settimane)**
 
-**Quando esce nuova pubblicazione**:
+**Quando esce nuova pubblicazione E hai informazioni complete** (titolo, autore, indice, punti di forza):
 
 #### **Esempio Pratico: Esce "Nuovo Manuale di Chimica Organica Avanzata"**
 
-**Query sul database intelligence**:
+**Informazioni disponibili sulla pubblicazione**:
+- ✅ Titolo: "Chimica Organica Avanzata - Meccanismi e Applicazioni"
+- ✅ Autore: Prof. Bianchi
+- ✅ Indice completo con 15 capitoli
+- ✅ Punti di forza: focus su chimica organometallica, casi studio industriali, meccanismi moderni
+
+---
+
+**Step 1: Query sul database intelligence** (5-10 minuti)
 ```
 Filtro docenti che:
 1. Insegnano Chimica Organica (SSD CHIM/06)
@@ -117,18 +142,37 @@ Filtro docenti che:
 
 **Risultato query**: 12 docenti target perfetti in 4 Atenei
 
-**Azione**:
-- 12 mail personalizzate (non 50 mail generiche)
-- Ogni mail menziona specificamente:
-  - Lacune del manuale attuale del docente
-  - Come il nuovo volume risolve quelle lacune
-  - Capitoli specifici del nuovo volume rilevanti per il suo programma
-  - Suggerimento strategico personalizzato
+---
 
-**Tempo necessario**: 
-- Query database: 5 minuti
-- Preparazione 12 mail personalizzate: 2-3 ore
+**Step 2: Analisi MATRIX Comparativa** (30 minuti per docente = 6 ore totali)
+
+Per ogni docente target:
+1. Recupera dal database l'analisi del suo programma (già fatta in Fase 0)
+2. Inserisci in MATRIX l'indice del nuovo manuale
+3. Esegui **FASE 0.5 comparativa**: confronto manuale attuale vs nuovo manuale per QUEL programma specifico
+4. MATRIX ti fornisce:
+   - Perché il nuovo manuale è migliore per quel programma
+   - Quali capitoli del nuovo libro colmano le lacune specifiche
+   - Strategia di approccio personalizzata per quel docente
+
+---
+
+**Step 3: Preparazione Mail Personalizzate** (2-3 ore totali)
+
+12 mail personalizzate (non 50 mail generiche), ognuna con:
+- Lacune specifiche del manuale attuale del docente
+- Come il nuovo volume risolve quelle lacune
+- Capitoli specifici del nuovo volume rilevanti per il suo programma
+- Suggerimento strategico personalizzato basato su profilo decisionale
+
+---
+
+**Tempo necessario totale**: 
+- Query database: 10 minuti
+- Analisi MATRIX comparativa: 6 ore (1 giorno)
+- Preparazione 12 mail personalizzate: 3 ore
 - Invio e follow-up: 1 settimana
+- **TOTALE: 2 settimane**
 
 **Risultato atteso**: 3-5 adozioni (25-40% conversione vs 5-10% attuale)
 

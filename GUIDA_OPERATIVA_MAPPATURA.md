@@ -1,7 +1,17 @@
-# Guida Operativa: Mappatura Preventiva del Territorio con MATRIX
+# Guida Operativa: Database Intelligence Territoriale con MATRIX
 
 ## 🎯 Obiettivo
-Costruire un **Database Intelligence Permanente** del proprio territorio commerciale per rendere istantanea e strategica la promozione di ogni nuova pubblicazione.
+Costruire un **Database Intelligence Permanente** del proprio territorio commerciale che permetta, quando esce una nuova pubblicazione, di creare rapidamente una strategia di promozione mirata e personalizzata.
+
+## ⚠️ Chiarimento Importante
+
+**Cosa fa questa guida**: Ti insegna a costruire una **base dati di conoscenza del territorio** (Fase 0)
+
+**Cosa NON fa**: Creare la strategia di promozione (quella si crea in Fase 1, DOPO che hai le info sulla pubblicazione)
+
+**Perché è comunque un vantaggio enorme**: 
+- Senza database: quando esce libro parti da ZERO (6+ settimane per avere strategia)
+- Con database: quando esce libro interroghi database + analisi comparativa = strategia pronta in 2 settimane
 
 ---
 
@@ -101,9 +111,19 @@ ROMA_IUS01_Bianchi_DirittoPrivato.pdf
 
 ### **2.1 Preparazione Analisi**
 
+**⚠️ IMPORTANTE**: In questa fase analizzi i programmi per **estrarre informazioni sul territorio**, NON per creare strategie di promozione (quelle verranno in Fase 4 quando avrai info sulla pubblicazione).
+
+**Cosa estrai con MATRIX**:
+- Manuale principale adottato
+- Manuali alternativi utilizzati
+- Lacune nel programma didattico
+- Profilo decisionale del docente
+- Temi principali trattati
+- Focus specifici del programma
+
 **Prioritizzazione Programmi**:
 
-1. **Priorità ALTA**: SSD con pubblicazioni recenti/imminenti
+1. **Priorità ALTA**: SSD con pubblicazioni recenti/imminenti nel catalogo
 2. **Priorità MEDIA**: SSD con catalogo ricco
 3. **Priorità BASSA**: SSD marginali per catalogo
 
@@ -259,13 +279,27 @@ Colonne Database:
 
 ---
 
-## 🎯 Fase 4: Utilizzo Operativo (PERMANENTE)
+## 🎯 Fase 4: Utilizzo Operativo per Nuova Pubblicazione (2 settimane)
+
+### **⚠️ TRIGGER: Esce Nuova Pubblicazione con Informazioni Complete**
+
+**Prerequisiti per iniziare Fase 4**:
+- ✅ Hai informazioni complete sulla pubblicazione:
+  - Titolo, autore
+  - Indice completo del manuale
+  - Punti di forza specifici
+  - Target materie/SSD
+- ✅ Database intelligence (Fase 3) già pronto
+
+---
 
 ### **4.1 Workflow per Nuova Pubblicazione**
 
-**Esempio**: Esce "Nuovo Manuale Economia Circolare"
+**Esempio**: Esce "Nuovo Manuale Economia Circolare" con indice completo e punti di forza definiti
 
-**Step 1: Query Database** (5 minuti)
+---
+
+**Step 1: Query Database Intelligence** (5-10 minuti)
 
 Filtri da applicare:
 ```
@@ -279,7 +313,36 @@ E (Opportunità_Commerciale = "Alta" O "Media")
 
 ---
 
-**Step 2: Preparazione Mail Personalizzate** (2-3 ore)
+**Step 2: Analisi MATRIX Comparativa** (30 minuti per docente = ~6-8 ore totali)
+
+**⚠️ QUESTA È LA FASE CHE CREA LA STRATEGIA DI PROMOZIONE**
+
+Per ognuno dei 15 docenti target:
+
+1. **Recupera dal database** (Fase 3):
+   - Analisi del suo programma (già fatto in Fase 2)
+   - Manuale attuale utilizzato
+   - Lacune identificate
+   - Profilo decisionale
+
+2. **Inserisci in MATRIX**:
+   - Programma docente (già analizzato, recuperi risultati)
+   - **Indice completo del nuovo manuale** (adesso disponibile)
+
+3. **Esegui FASE 0.5 Comparativa**:
+   - Confronto manuale attuale vs nuovo manuale proposto
+   - Per quel programma specifico
+   
+4. **MATRIX ti fornisce**:
+   - Perché nuovo manuale è migliore per questo programma
+   - Quali capitoli del nuovo libro colmano lacune specifiche di questo docente
+   - Strategia personalizzata di approccio per questo profilo decisionale
+
+**Output Step 2**: Dossier strategico per ogni docente target con argomentazioni personalizzate
+
+---
+
+**Step 3: Preparazione Mail Personalizzate** (2-3 ore totali)
 
 Per ognuno dei 15 docenti, prepara mail con:
 
@@ -320,7 +383,7 @@ Resto a disposizione,
 
 ---
 
-**Step 3: Invio e Follow-up** (1 settimana)
+**Step 4: Invio e Follow-up** (1 settimana)
 
 - **Giorno 1**: Invio 15 mail personalizzate
 - **Giorno 4**: Follow-up chi non ha risposto (email sollecito leggero)
@@ -329,6 +392,15 @@ Resto a disposizione,
 **Tracking nel database**:
 - Aggiorna colonna `Ultimo_Contatto` con data
 - Aggiorna colonna `Esito_Ultimo_Contatto` con: "Interessato/Da ricontattare/Non interessato/Adozione confermata"
+
+**Tempo totale Fase 4**: 
+- Query: 10 minuti
+- Analisi MATRIX comparativa: 6-8 ore (1 giorno)
+- Mail personalizzate: 3 ore
+- Follow-up: 1 settimana
+- **TOTALE: 2 settimane dall'uscita libro a chiusura promozione**
+
+**vs Workflow tradizionale**: 6+ settimane partendo da zero
 
 ---
 
