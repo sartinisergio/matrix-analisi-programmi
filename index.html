@@ -3355,9 +3355,9 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`, 0.1);
                     updateLoadingText('Fase 0b/5: Analisi avanzata profilo docente...');
                     
                     try {
-                        const profiloDocentePrompt = `Basandoti ESCLUSIVAMENTE sull'analisi preliminare già effettuata, genera insights per un promotore editoriale.
+                        const profiloDocentePrompt = `Sei un assistente strategico per promotori editoriali.
 
-ANALISI PRELIMINARE GIÀ EFFETTUATA:
+ANALISI PRELIMINARE GIA' EFFETTUATA:
 ${JSON.stringify(fase0, null, 2)}
 
 PROGRAMMA (per contesto):
@@ -3367,21 +3367,49 @@ CONTESTO:
 - Materia: ${materiaName}
 - Classe di Laurea: ${contesto}
 
+⚠️ REGOLA DI SPECIFICITA' OBBLIGATORIA:
+Ogni affermazione DEVE contenere almeno UNO di questi elementi:
+1. Riferimento TESTUALE a qualcosa di specifico trovato nel programma
+   (argomento, metodologia, formulazione particolare)
+2. Dato CONCRETO (distribuzione tematica, peso CFU, 
+   numero ore dedicate a un modulo) — solo se presente nel programma
+3. INFERENZA non ovvia che collega due elementi del programma
+
+❌ ESEMPI DI COSA NON SCRIVERE (troppo generico):
+- "Importanza dell'integrazione tra teoria e pratica"
+- "Supporto a metodologie didattiche innovative"
+- "Focus su applicazioni biologiche della chimica"
+
+✅ ESEMPI DI COSA SCRIVERE (specifico):
+- "Il docente dedica una porzione significativa del programma agli equilibri chimici collegandoli esplicitamente ai processi biologici — questo peso e' superiore alla media per L-13 e suggerisce interesse personale per la bioinorganica"
+- "La menzione esplicita del Team Based Learning E del coteaching (non solo una delle due) indica un docente che ha investito nella formazione pedagogica, non uno che usa TBL come etichetta"
+
+Per "Leve Potenziali" e "Possibili Resistenze":
+- Specifica PERCHE' funzionerebbe con QUESTO docente (non in generale)
+- Indica QUALE elemento del programma te lo fa pensare
+- Per resistenze: indica COME si manifesterebbe nel colloquio
+
 IMPORTANTE: 
-- NON inventare dati numerici (ore, costi, percentuali)
+- NON inventare dati numerici
 - Usa linguaggio qualitativo: "potrebbe", "probabilmente", "tendenzialmente"
-- Basa tutto solo su ciò che emerge dal programma e dall'analisi preliminare
+- Basa tutto su cio' che emerge dal programma e dall'analisi preliminare
 
 Genera un JSON con questa struttura:
 
 {
   "profilo_docente_insights": {
     "tipo_docente": "Tradizionalista / Innovatore / Pragmatico / Accademico (basato su stile e approccio identificati)",
-    "sensibilita_chiave": "Cosa sembra importante per questo docente (basato su enfasi e orientamento)",
-    "approccio_consigliato": "Come presentare un manuale alternativo a questo docente",
-    "leve_potenziali": ["elemento1 che potrebbe interessare", "elemento2 basato su enfasi programma"],
-    "possibili_resistenze": ["resistenza1 basata su stile tradizionale/innovativo", "resistenza2"],
-    "argomenti_rilevanti": ["tipo di contenuto che il programma enfatizza", "aspetto distintivo del programma"]
+    "sensibilita_chiave": "Cosa sembra importante per questo docente (basato su enfasi e orientamento) - DEVE includere riferimento specifico al programma",
+    "approccio_consigliato": "Come presentare un manuale alternativo - DEVE riferirsi a caratteristiche specifiche identificate nel programma",
+    "leve_potenziali": [
+      "leva1 CON spiegazione del perche' funzionerebbe con QUESTO docente e quale elemento del programma lo suggerisce",
+      "leva2 con stessa struttura"
+    ],
+    "possibili_resistenze": [
+      "resistenza1 CON indicazione di quale comportamento/scelta del docente la suggerisce e come si manifesterebbe",
+      "resistenza2 con stessa struttura"
+    ],
+    "argomenti_rilevanti": ["tipo di contenuto specifico enfatizzato nel programma", "aspetto distintivo del programma"]
   }
 }
 
@@ -3780,9 +3808,9 @@ Rispondi SOLO con un JSON valido:
                     updateLoadingText('Fase 2b/5: Analisi avanzata insights adozione...');
                     
                     try {
-                        const insightsPrompt = `Basandoti ESCLUSIVAMENTE sulla valutazione del programma già effettuata, genera insights per un promotore editoriale.
+                        const insightsPrompt = `Basandoti ESCLUSIVAMENTE sulla valutazione del programma gia' effettuata, genera insights per un promotore editoriale.
 
-VALUTAZIONE PROGRAMMA GIÀ EFFETTUATA:
+VALUTAZIONE PROGRAMMA GIA' EFFETTUATA:
 ${JSON.stringify(valutazioneObj, null, 2)}
 
 ${valutazioneObj.analisi_criteri ? `
@@ -3790,23 +3818,52 @@ CRITERI SPECIFICI IDENTIFICATI:
 ${JSON.stringify(valutazioneObj.analisi_criteri, null, 2)}
 ` : ''}
 
+⚠️ REGOLA DI SPECIFICITA' per "Opportunita' Manuale":
+NON descrivere il manuale ideale generico.
+Descrivi ESATTAMENTE cosa manca nell'ecosistema didattico attuale 
+di questo docente (manuale + alternativi + dispense + metodologia) 
+che un prodotto Zanichelli specifico potrebbe colmare.
+
+✅ FAI NOMI di manuali Zanichelli dal catalogo disponibile.
+
+CATALOGO ZANICHELLI DISPONIBILE (usa questi nomi):
+${MANUAL_CATALOG && MANUAL_CATALOG.manuals ? 
+  MANUAL_CATALOG.manuals
+    .filter(m => m.publisher === 'Zanichelli' || m.type === 'zanichelli')
+    .map(m => '- ' + m.title + (m.author ? ' (' + m.author + ')' : ''))
+    .join('\n')
+  : 'Catalogo non disponibile'}
+
 IMPORTANTE:
-- NON inventare dati numerici (ore, percentuali, costi)
-- Basa tutto SOLO sulla valutazione già fatta
+- NON inventare dati numerici (ore, percentuali precise, costi)
+- Basa tutto SOLO sulla valutazione gia' fatta
 - Usa linguaggio qualitativo: "potrebbe", "tendenzialmente", "in generale"
 - NON fare affermazioni categoriche senza evidenza dal programma
+
+Per "Punti Forza Programma" e "Aspetti Migliorabili":
+NON riformulare cio' che e' gia' nella Fase 1.
+Concentrati SOLO su implicazioni COMMERCIALI:
+- Quali punti di forza rendono PIU' FACILE proporre Zanichelli?
+- Quali aspetti migliorabili creano OPPORTUNITA' per un manuale diverso?
+- Quali caratteristiche LIMITANO le possibilita' di cambio?
 
 Genera un JSON con questa struttura:
 
 {
   "insights_adozione": {
-    "punti_forza_programma": ["forza1 basata su punteggi alti", "forza2"],
-    "aspetti_migliorabili": ["aspetto1 basato su punteggi bassi o note critiche", "aspetto2"],
-    "opportunita_manuale": "Descrizione qualitativa (150-200 parole) di che tipo di manuale sarebbe ideale per questo programma, basandoti su: moduli coperti, livello, enfasi, criteri specifici (se presenti)"
+    "punti_forza_programma": [
+      "forza1 commercialmente rilevante (es: 'Metodologia TBL facilita dimostrazione valore aggiunto Zanichelli')",
+      "forza2 con stesso formato"
+    ],
+    "aspetti_migliorabili": [
+      "aspetto1 che crea opportunita' (es: 'Gap termochimica apre spazio per proposta Bertini')",
+      "aspetto2 con stesso formato"
+    ],
+    "opportunita_manuale": "Descrizione SPECIFICA (150-200 parole) con NOMI di manuali Zanichelli che risolvono gap identificati. Esempio: 'Il docente compensa lacune di Arnesano sulla termochimica usando Kotz come approfondimento — Bertini struttura, proprietà e trasformazioni coprirebbe entrambe le esigenze in un unico volume...'"
   }${valutazioneObj.analisi_criteri ? `,
   "analisi_criteri_approfondita": {
-    "implicazioni_didattiche": "Analisi (200-300 parole) di cosa significano i criteri identificati per la scelta del manuale. Es: se programma è Keynesiano, quale tipo di manuale serve? Se sequenza è Breve->Lungo, cosa cercare?",
-    "compatibilita_manuale_ideale": "Descrizione del manuale ideale che rispetta questi criteri"
+    "implicazioni_didattiche": "Analisi (200-300 parole) di cosa significano i criteri identificati per la scelta del manuale. Es: se programma e' Keynesiano, quale tipo di manuale serve? Se sequenza e' Breve->Lungo, cosa cercare?",
+    "compatibilita_manuale_ideale": "Descrizione del manuale ideale che rispetta questi criteri CON NOMI specifici di manuali Zanichelli"
   }` : ''}
 }
 
@@ -4783,9 +4840,26 @@ Rispondi SOLO con un JSON valido:
                 // ============================================
                 // MOSTRA RISULTATI FINALI (dopo FASE 5.5 se Avanzata)
                 // ============================================
+                
+                // Executive Summary (solo per analisi avanzata)
+                if (tipoAnalisi === 'avanzata') {
+                    updateLoadingText('Fase finale: Generazione executive summary...');
+                    try {
+                        const executiveSummary = await generaExecutiveSummary(currentProgramma);
+                        if (executiveSummary) {
+                            currentProgramma.executive_summary = executiveSummary;
+                            saveToStorico(currentProgramma);
+                            console.log('✅ Executive Summary aggiunto al report');
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ Executive Summary fallito, continuo comunque:', error.message);
+                    }
+                }
+                
                 console.log('📊 DEBUG prima di mostraRisultati:', {
                     hasAnalisiStrategica: !!currentProgramma.analisi_strategica,
-                    analisiStrategica: currentProgramma.analisi_strategica
+                    analisiStrategica: currentProgramma.analisi_strategica,
+                    hasExecutiveSummary: !!currentProgramma.executive_summary
                 });
                 mostraRisultati(currentProgramma);
                 // ============================================
@@ -5211,7 +5285,11 @@ Rispondi SOLO con un JSON valido:
       "argomenti_risposta": ["argomento1", "argomento2", "argomento3"]
     }
   },
-  "raccomandazione_finale": "Testo raccomandazione strategica (150-200 parole) per il promotore"
+  "raccomandazione_finale": "Testo raccomandazione strategica (150-200 parole) per il promotore",
+  "pitch": {
+    "primo_contatto": "Pitch per docente NON conosciuto. Tono professionale, presentazione breve, aggancio specifico al programma analizzato. Max 4 righe. Deve contenere un riferimento concreto a un elemento del programma o del manuale.",
+    "docente_conosciuto": "Pitch per docente GIA' conosciuto. Tono diretto e collegiale, niente presentazioni, va dritto al punto con riferimento specifico a un gap o opportunita' emersa dall'analisi. Max 3 righe."
+  }
 }`;
 
             } else if (hasZanichelliAlternativo) {
@@ -5330,7 +5408,9 @@ Rispondi SOLO con un JSON valido:
         "obiezione": "obiezione realistica docente",
         "risposta": "risposta basata su dati analisi"
       }
-    ]
+    ],
+    "pitch_breve_primo_contatto": "Pitch BREVE (max 4 righe) per docente NON conosciuto. Tono professionale, presentazione breve, aggancio specifico al programma e ai gap del competitor. Deve contenere un riferimento concreto al programma.",
+    "pitch_breve_docente_conosciuto": "Pitch BREVE (max 3 righe) per docente GIA' conosciuto. Tono diretto e collegiale, niente presentazioni, va dritto al punto con riferimento specifico al gap del competitor e al vantaggio Zanichelli."
   },
   "raccomandazione_finale": "Strategia CHIARA per promotore (200-250 parole): \n- SE Zanichelli alternativo è superiore: proponi QUELLO\n- SE esiste altro Zanichelli migliore: proponi QUELLO (es. McMurry invece di Solomons)\n- SPECIFICA quale Zanichelli proporre e perché\n- Come presentare il cambio, tono da usare, cosa enfatizzare"
 }`;
@@ -5416,7 +5496,9 @@ Rispondi SOLO con un JSON valido:
         "obiezione": "Gli studenti si trovano bene con il manuale attuale",
         "risposta": "risposta basata su benefici concreti per studenti"
       }
-    ]
+    ],
+    "pitch_breve_primo_contatto": "Pitch BREVE (max 4 righe) per docente NON conosciuto. Tono professionale, presentazione breve, aggancio specifico al programma e ai gap del manuale attuale. Deve contenere un riferimento concreto al programma analizzato.",
+    "pitch_breve_docente_conosciuto": "Pitch BREVE (max 3 righe) per docente GIA' conosciuto. Tono diretto e collegiale, niente presentazioni, va dritto al punto con riferimento specifico a un gap del manuale attuale che Zanichelli risolve."
   },
   "raccomandazione_finale": "Strategia completa per promotore (250 parole): quale Zanichelli proporre, come presentarlo, su cosa insistere, come gestire resistenze"
 }`;
@@ -5446,6 +5528,90 @@ Rispondi SOLO con un JSON valido:
             aggiungiSezioneStrategica(strategiaObj, scenario);
         }
         
+        // ============================================
+        // EXECUTIVE SUMMARY - Generazione sommario ultra-compatto
+        // ============================================
+        async function generaExecutiveSummary(prog) {
+            console.log('📋 Genera Executive Summary');
+            
+            try {
+                // Estrai raccomandazione Zanichelli
+                let zanichelliRaccomandato = 'Non disponibile';
+                let compatibilita = 0;
+                
+                if (prog.zanichelli && prog.zanichelli.manuali && prog.zanichelli.manuali.length > 0) {
+                    const primario = prog.zanichelli.manuali[0];
+                    zanichelliRaccomandato = primario.title || primario.titolo || 'Non specificato';
+                    compatibilita = primario.compatibilita || 0;
+                }
+                
+                // Estrai info da analisi strategica se disponibile
+                let infoStrategica = '';
+                if (prog.analisi_strategica && prog.analisi_strategica.strategia) {
+                    const strat = prog.analisi_strategica.strategia;
+                    if (strat.raccomandazione_finale) {
+                        infoStrategica = `\nRACCOMANDAZIONE STRATEGICA GIA' GENERATA:\n${strat.raccomandazione_finale}`;
+                    }
+                    if (strat.zanichelli_raccomandato && strat.zanichelli_raccomandato.nome) {
+                        zanichelliRaccomandato = strat.zanichelli_raccomandato.nome;
+                        compatibilita = strat.zanichelli_raccomandato.compatibilita || compatibilita;
+                    }
+                }
+                
+                const summaryPrompt = `Sei un assistente strategico per un promotore editoriale universitario.
+
+Hai a disposizione l'analisi completa di un programma didattico:
+
+FASE 0 (Profilo Preliminare):
+${JSON.stringify(prog.analisi_preliminare, null, 2)}
+
+FASE 0.5 (Scelta Editoriale):
+${JSON.stringify(prog.motivazioni_scelta, null, 2)}
+
+FASE 2 (Gap Analysis):
+- Manuale adottato: ${prog.manuale_adottato}
+- Gap identificati: ${JSON.stringify(prog.gap_manuale?.gap || [])}
+- Punti debolezza: ${JSON.stringify(prog.gap_manuale?.punti_debolezza || [])}
+
+RACCOMANDAZIONE ZANICHELLI:
+- Titolo: ${zanichelliRaccomandato}
+- Compatibilita': ${compatibilita}/100
+${infoStrategica}
+
+Il promotore sta per entrare nell'ufficio del docente. 
+Ha 30 SECONDI per leggere questo sommario.
+
+Genera un executive summary con ESATTAMENTE questi 6 campi, 
+ciascuno di MASSIMO 1 riga (max 100 caratteri):
+
+FORMATO OUTPUT (JSON):
+{
+  "docente_in_breve": "Tipo docente (innovatore/conservatore/...), tratto distintivo principale basato sul programma",
+  "situazione_attuale": "Manuale X, punto debole principale, come compensa",
+  "opportunita": "Cosa proporre e perche' in una frase",
+  "zanichelli_raccomandato": "${zanichelliRaccomandato} — compatibilita' ${compatibilita}/100",
+  "approccio_colloquio": "Come aprire e quale tono usare con QUESTO docente",
+  "attenzione": "L'unica cosa da NON fare/dire con questo docente"
+}
+
+Sii TELEGRAFICAMENTE sintetico. 
+Ogni parola in piu' e' una parola che il promotore non legge.
+NON usare frasi generiche. Ogni campo deve essere specifico per QUESTO programma.
+
+RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
+
+                const summaryResponse = await callLLM(summaryPrompt, 0.1);
+                const summaryObj = JSON.parse(sanitizeJSON(summaryResponse));
+                
+                console.log('✅ Executive Summary generato:', summaryObj);
+                return summaryObj;
+                
+            } catch (error) {
+                console.error('❌ Errore generazione Executive Summary:', error);
+                return null;
+            }
+        }
+
         // Funzione helper per generare HTML della sezione strategica
         function renderAnalisiStrategica(strategia, scenario) {
             console.log('🎨 Render Analisi Strategica:', scenario);
@@ -5580,6 +5746,29 @@ Rispondi SOLO con un JSON valido:
                         </h4>
                         <p class="text-gray-800 leading-relaxed">${strategia.raccomandazione_finale}</p>
                     </div>
+                    
+                    <!-- Doppia Variante Pitch -->
+                    ${strategia.pitch ? `
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-5 mt-4 rounded-r-lg">
+                        <h4 class="font-bold text-lg text-blue-900 mb-4 flex items-center">
+                            <span class="mr-2">💬</span>Pitch di Apertura
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 shadow-sm">
+                                <p class="text-sm font-semibold text-blue-800 mb-2 flex items-center">
+                                    <span class="mr-1">📧</span> Primo Contatto
+                                </p>
+                                <p class="text-sm text-gray-700 italic leading-relaxed">"${strategia.pitch.primo_contatto}"</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 shadow-sm">
+                                <p class="text-sm font-semibold text-blue-800 mb-2 flex items-center">
+                                    <span class="mr-1">🤝</span> Docente Conosciuto
+                                </p>
+                                <p class="text-sm text-gray-700 italic leading-relaxed">"${strategia.pitch.docente_conosciuto}"</p>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
                 `;
                 
@@ -5683,6 +5872,29 @@ Rispondi SOLO con un JSON valido:
                         </h4>
                         <p class="text-gray-800 leading-relaxed">${strategia.raccomandazione_finale}</p>
                     </div>
+                    
+                    <!-- Doppia Variante Pitch -->
+                    ${(strategia.pitch_conversione?.pitch_breve_primo_contatto || strategia.pitch?.primo_contatto) ? `
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-5 mt-4 rounded-r-lg">
+                        <h4 class="font-bold text-lg text-blue-900 mb-4 flex items-center">
+                            <span class="mr-2">💬</span>Pitch di Apertura
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 shadow-sm">
+                                <p class="text-sm font-semibold text-blue-800 mb-2 flex items-center">
+                                    <span class="mr-1">📧</span> Primo Contatto
+                                </p>
+                                <p class="text-sm text-gray-700 italic leading-relaxed">"${strategia.pitch_conversione?.pitch_breve_primo_contatto || strategia.pitch?.primo_contatto || ''}"</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 shadow-sm">
+                                <p class="text-sm font-semibold text-blue-800 mb-2 flex items-center">
+                                    <span class="mr-1">🤝</span> Docente Conosciuto
+                                </p>
+                                <p class="text-sm text-gray-700 italic leading-relaxed">"${strategia.pitch_conversione?.pitch_breve_docente_conosciuto || strategia.pitch?.docente_conosciuto || ''}"</p>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
                 `;
             } else if (scenario === 'nessun_zanichelli') {
@@ -5824,6 +6036,29 @@ Rispondi SOLO con un JSON valido:
                             <p class="text-gray-800 leading-relaxed whitespace-pre-line">${strategia.raccomandazione_finale}</p>
                         </div>
                     ` : ''}
+                    
+                    <!-- Doppia Variante Pitch -->
+                    ${(strategia.pitch_primo_contatto?.pitch_breve_primo_contatto || strategia.pitch?.primo_contatto) ? `
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-5 mt-4 rounded-r-lg">
+                        <h4 class="font-bold text-lg text-blue-900 mb-4 flex items-center">
+                            <span class="mr-2">💬</span>Pitch di Apertura
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 shadow-sm">
+                                <p class="text-sm font-semibold text-blue-800 mb-2 flex items-center">
+                                    <span class="mr-1">📧</span> Primo Contatto
+                                </p>
+                                <p class="text-sm text-gray-700 italic leading-relaxed">"${strategia.pitch_primo_contatto?.pitch_breve_primo_contatto || strategia.pitch?.primo_contatto || ''}"</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 shadow-sm">
+                                <p class="text-sm font-semibold text-blue-800 mb-2 flex items-center">
+                                    <span class="mr-1">🤝</span> Docente Conosciuto
+                                </p>
+                                <p class="text-sm text-gray-700 italic leading-relaxed">"${strategia.pitch_primo_contatto?.pitch_breve_docente_conosciuto || strategia.pitch?.docente_conosciuto || ''}"</p>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
                 `;
             }
@@ -5946,6 +6181,51 @@ Rispondi SOLO con un JSON valido:
                             </div>
                         </div>
                     </div>
+
+                    <!-- Executive Summary -->
+                    ${prog.executive_summary ? `
+                    <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-400 rounded-lg p-6 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">📋</span>
+                            <h3 class="text-xl font-bold text-yellow-900">Executive Summary</h3>
+                            <span class="ml-auto text-xs text-yellow-700 font-medium bg-yellow-200 px-2 py-1 rounded">⏱️ Lettura: 30 secondi</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <!-- Colonna 1 -->
+                            <div>
+                                <p class="mb-3">
+                                    <span class="font-semibold text-yellow-900">👤 Docente:</span>
+                                    <span class="text-gray-800"> ${prog.executive_summary.docente_in_breve}</span>
+                                </p>
+                                <p class="mb-3">
+                                    <span class="font-semibold text-yellow-900">📚 Situazione:</span>
+                                    <span class="text-gray-800"> ${prog.executive_summary.situazione_attuale}</span>
+                                </p>
+                                <p class="mb-3">
+                                    <span class="font-semibold text-yellow-900">💡 Opportunità:</span>
+                                    <span class="text-gray-800"> ${prog.executive_summary.opportunita}</span>
+                                </p>
+                            </div>
+                            
+                            <!-- Colonna 2 -->
+                            <div>
+                                <p class="mb-3">
+                                    <span class="font-semibold text-yellow-900">✅ Raccomandato:</span>
+                                    <span class="text-gray-800"> ${prog.executive_summary.zanichelli_raccomandato}</span>
+                                </p>
+                                <p class="mb-3">
+                                    <span class="font-semibold text-yellow-900">🎯 Approccio:</span>
+                                    <span class="text-gray-800"> ${prog.executive_summary.approccio_colloquio}</span>
+                                </p>
+                                <p class="mb-0">
+                                    <span class="font-semibold text-red-700">⚠️ Attenzione:</span>
+                                    <span class="text-gray-800 italic"> ${prog.executive_summary.attenzione}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
 
                     <!-- Sezione 0: Analisi Preliminare (Fase 0) -->
                     ${prog.analisi_preliminare ? `
