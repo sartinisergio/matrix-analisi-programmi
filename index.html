@@ -3810,6 +3810,13 @@ Rispondi SOLO con un JSON valido:
                     try {
                         const insightsPrompt = `Basandoti ESCLUSIVAMENTE sulla valutazione del programma gia' effettuata, genera insights per un promotore editoriale.
 
+CONTESTO GIA' ANALIZZATO (NON ripetere queste informazioni):
+- Profilo docente: ${fase0?.profilo_docente_insights?.tipo_docente || 'N/D'} — ${fase0?.profilo_docente_insights?.sensibilita_chiave?.substring(0, 150) || 'N/D'}
+- Approccio pedagogico: ${fase0?.profilo_pedagogico?.approccio || 'N/D'} (${fase0?.profilo_pedagogico?.stile || 'N/D'})
+- Orientamento: ${fase0?.profilo_pedagogico?.orientamento || 'N/D'}
+- Distribuzione tematica: ${JSON.stringify(fase0?.quadro_generale?.distribuzione_tematica || [])}
+${motivazioniScelta ? `- Logica scelta editoriale: GIA' ANALIZZATA (il promotore conosce le motivazioni del docente)` : ''}
+
 VALUTAZIONE PROGRAMMA GIA' EFFETTUATA:
 ${JSON.stringify(valutazioneObj, null, 2)}
 
@@ -3817,6 +3824,14 @@ ${valutazioneObj.analisi_criteri ? `
 CRITERI SPECIFICI IDENTIFICATI:
 ${JSON.stringify(valutazioneObj.analisi_criteri, null, 2)}
 ` : ''}
+
+⚠️ REGOLA ANTI-RIDONDANZA CRITICA:
+Il promotore ha GIA' letto nel report:
+1. Il quadro generale del programma (distribuzione tematica, complessita')
+2. Il profilo del docente (tipo, sensibilita', approccio consigliato)
+3. Le motivazioni della scelta editoriale attuale
+NON ripetere NESSUNA di queste informazioni.
+Il tuo compito e' AGGIUNGERE SOLO insights COMMERCIALI che NON sono ancora nel report.
 
 ⚠️ REGOLA DI SPECIFICITA' per "Opportunita' Manuale":
 NON descrivere il manuale ideale generico.
@@ -3841,7 +3856,7 @@ IMPORTANTE:
 - NON fare affermazioni categoriche senza evidenza dal programma
 
 Per "Punti Forza Programma" e "Aspetti Migliorabili":
-NON riformulare cio' che e' gia' nella Fase 1.
+NON riformulare cio' che e' gia' nella Fase 1 o nel profilo docente.
 Concentrati SOLO su implicazioni COMMERCIALI:
 - Quali punti di forza rendono PIU' FACILE proporre Zanichelli?
 - Quali aspetti migliorabili creano OPPORTUNITA' per un manuale diverso?
@@ -4046,25 +4061,45 @@ Rispondi SOLO con un JSON valido:
                     updateLoadingText('Fase 3c/5: Analisi avanzata impatto gap...');
                     
                     try {
-                        const gapInsightsPrompt = `Basandoti ESCLUSIVAMENTE sull'analisi gap già effettuata, genera insights per un promotore editoriale.
+                        const gapInsightsPrompt = `Sei un analista di impatto per promotori editoriali.
 
-ANALISI GAP GIÀ EFFETTUATA:
+Il promotore ha GIA' LETTO queste sezioni del report:
+- Profilo docente: ${fase0?.profilo_docente_insights?.tipo_docente || 'N/D'} — ${fase0?.profilo_docente_insights?.sensibilita_chiave?.substring(0, 150) || 'N/D'}
+- Scelta editoriale: ${motivazioniScelta ? 'analizzata' : 'non disponibile'}
+- Valutazione programma: ${valutazioneObj ? totale + '/270' : 'N/D'}
+- Insights adozione: ${valutazioneObj?.insights_adozione ? 'GIA analizzati — punti forza e aspetti migliorabili COMMERCIALI gia nel report' : 'non disponibili'}
+${valutazioneObj?.insights_adozione?.opportunita_manuale ? `- Opportunita manuale gia identificata: "${valutazioneObj.insights_adozione.opportunita_manuale.substring(0, 200)}..."` : ''}
+
+⚠️ REGOLA ANTI-RIDONDANZA CRITICA:
+Il promotore CONOSCE GIA':
+- I gap del manuale (li hai sotto) — NON rielencarli
+- Il profilo del docente — NON ridescriverlo
+- I punteggi di valutazione — NON ripeterli
+- Le opportunita commerciali e i punti forza — NON riformularli
+Se una informazione e' gia' nel report, NON la devi ripetere in nessuna forma.
+
+TU DEVI AGGIUNGERE SOLO informazioni NUOVE:
+1. L'IMPATTO PRATICO di ogni gap: cosa deve fare il docente per compensare?
+2. Il COSTO DELL'INAZIONE: cosa succede se il docente non cambia manuale?
+3. I BENEFICI CONCRETI del cambio: non generici, specifici per QUESTO programma
+
+ANALISI GAP GIA' EFFETTUATA:
 - Manuale analizzato: ${manuale}
 - Gap identificati: ${JSON.stringify(gapManualeObj.gap || [])}
 - Punti debolezza: ${JSON.stringify(gapManualeObj.punti_debolezza || [])}
-- Compatibilità: ${gapManualeObj.compatibilita}
+- Compatibilita': ${gapManualeObj.compatibilita}
 - Copertura: ${gapManualeObj.copertura_percentuale}%
 
 ${gapManualeObj.compatibilita_criteri ? `
-INCOMPATIBILITÀ CRITERI SPECIFICI:
+INCOMPATIBILITA' CRITERI SPECIFICI:
 ${JSON.stringify(gapManualeObj.compatibilita_criteri, null, 2)}
 ` : ''}
 
 IMPORTANTE:
 - NON inventare dati numerici (ore, percentuali precise, costi)
-- Basa tutto SOLO sui gap e incompatibilità già identificate
-- Usa linguaggio qualitativo: "potrebbe richiedere", "probabilmente necessita"
-- Sii specifico ma qualitativo
+- NON riformulare i gap — il promotore li conosce gia'
+- Concentrati SOLO su impatto pratico e conseguenze concrete
+- Sii specifico: "il docente dovra' preparare dispense su X" non "il docente avra' difficolta'"
 
 Genera un JSON con questa struttura:
 
@@ -4072,13 +4107,13 @@ Genera un JSON con questa struttura:
   "analisi_impatto_adozione": {
     "gap_critici_insegnamento": [
       {
-        "gap": "gap identificato dall'analisi",
-        "possibile_impatto_docente": "Cosa il docente potrebbe dover fare (es: preparare materiale integrativo)",
-        "possibile_impatto_studenti": "Come questo gap potrebbe influenzare la preparazione"
+        "gap": "gap identificato dall'analisi (breve, max 10 parole)",
+        "possibile_impatto_docente": "Cosa il docente potrebbe dover fare concretamente per compensare questo gap (es: preparare dispense, cercare materiale esterno, dedicare ore extra)",
+        "possibile_impatto_studenti": "Come questo gap potrebbe influenzare la preparazione degli studenti in modo specifico"
       }
     ],
-    "sintesi_criticita": "Descrizione qualitativa (150-200 parole) delle principali criticità del manuale attuale per questo specifico programma",
-    "benefici_potenziali_cambio": "Descrizione qualitativa (100-150 parole) di cosa un manuale più allineato potrebbe offrire, basandoti sui gap identificati"
+    "costo_inazione": "Cosa succede se il docente NON cambia manuale? Descrizione concreta (100-150 parole) delle conseguenze pratiche per docente e studenti",
+    "benefici_potenziali_cambio": "Cosa migliorerebbe CONCRETAMENTE con un manuale piu' allineato (100-150 parole) — NON ripetere i gap, descrivi i benefici positivi"
   }
 }
 
@@ -4526,12 +4561,27 @@ Rispondi SOLO con un JSON valido:
                             try {
                                 const strategiaPrompt = `Basandoti ESCLUSIVAMENTE sulla valutazione Zanichelli già effettuata, genera una strategia di adozione per un promotore editoriale.
 
+⚠️ CONTESTO GIA' NEL REPORT (NON ripetere):
+- Profilo docente: ${fase0?.profilo_docente_insights?.tipo_docente || 'N/D'} — ${fase0?.profilo_docente_insights?.sensibilita_chiave?.substring(0, 150) || 'N/D'}
+- Approccio consigliato per questo docente: ${fase0?.profilo_docente_insights?.approccio_consigliato?.substring(0, 150) || 'N/D'}
+- Leve potenziali: ${JSON.stringify(fase0?.profilo_docente_insights?.leve_potenziali || [])}
+- Insights commerciali adozione: ${valutazioneObj?.insights_adozione ? 'GIA nel report' : 'non disponibili'}
+${valutazioneObj?.insights_adozione?.opportunita_manuale ? `- Opportunita gia identificata: "${valutazioneObj.insights_adozione.opportunita_manuale.substring(0, 200)}..."` : ''}
+${gapManualeObj?.analisi_impatto_adozione ? `- Impatto gap gia analizzato: costo inazione e benefici cambio GIA nel report` : ''}
+
+REGOLA ANTI-RIDONDANZA: Il promotore ha GIA' letto profilo docente, insights adozione, gap analysis e impatto gap. 
+NON ripetere queste informazioni. TU devi AGGIUNGERE SOLO:
+1. Quale manuale Zanichelli SPECIFICO proporre (dalla valutazione sotto)
+2. Gli argomenti chiave PER LA CONVERSAZIONE (non gia nel report)
+3. Le obiezioni SPECIFICHE di questo docente e come rispondere
+4. Note colloquio PRATICHE (cosa dire nei primi 2 minuti)
+
 VALUTAZIONE ZANICHELLI GIÀ EFFETTUATA:
 ${JSON.stringify(zanichelliObj, null, 2)}
 
 MANUALE ATTUALMENTE ADOTTATO: ${manuale}
 
-GAP MANUALE ATTUALE:
+GAP MANUALE ATTUALE (gia nel report, NON rielencare):
 ${JSON.stringify(gapManualeObj.gap || [])}
 ${JSON.stringify(gapManualeObj.punti_debolezza || [])}
 
@@ -4542,9 +4592,10 @@ ${JSON.stringify(gapManualeObj.compatibilita_criteri, null, 2)}
 
 IMPORTANTE:
 - NON inventare dati (prezzi, percentuali precise, ore esatte)
-- Basa tutto SOLO sulle valutazioni già fatte
+- Basa tutto SOLO sulle valutazioni gia' fatte
 - Usa linguaggio qualitativo e professionale
 - Focus su benefici didattici, non commerciali
+- NON ripetere gap, profilo docente, o insights gia' nel report
 
 Genera un JSON con questa struttura:
 
@@ -4552,16 +4603,16 @@ Genera un JSON con questa struttura:
   "strategia_adozione": {
     "manuale_primario": {
       "nome": "nome del manuale RACCOMANDATO dalla valutazione",
-      "argomenti_chiave": ["argomento1 specifico basato su punti_forza", "argomento2 che risolve gap manuale attuale"],
-      "confronto_manuale_attuale": "Descrizione qualitativa (150-200 parole) di come questo manuale Zanichelli risolve i gap e incompatibilità del manuale attuale, basandoti SOLO su gap identificati",
+      "argomenti_chiave": ["argomento1 NUOVO e specifico per la conversazione (NON rielencare gap)", "argomento2 che aggancia il valore aggiunto per QUESTO docente"],
+      "confronto_manuale_attuale": "Descrizione CONCISA (max 100 parole) — il promotore conosce gia i gap, qui scrivi SOLO come il Zanichelli li risolve concretamente",
       "possibili_obiezioni": [
         {
-          "obiezione": "obiezione realistica che il docente potrebbe sollevare",
-          "risposta": "risposta basata su evidenze dall'analisi (gap risolti, compatibilità criteri)"
+          "obiezione": "obiezione realistica che QUESTO docente potrebbe sollevare (basata sul suo profilo)",
+          "risposta": "risposta basata su evidenze dall'analisi (gap risolti, compatibilita' criteri)"
         }
       ]
     },
-    "note_colloquio": "Suggerimenti (100-150 parole) su come presentare il manuale al docente, basandoti su: profilo docente (se disponibile), gap identificati, compatibilità criteri"
+    "note_colloquio": "GUIDA PRATICA in 5 punti (max 100 parole totali): 1) Come aprire la conversazione, 2) Cosa mostrare prima, 3) Quale domanda fare per coinvolgere, 4) Come gestire il silenzio/dubbio, 5) Come chiudere"
   }
 }
 
@@ -5207,6 +5258,18 @@ Rispondi SOLO con un JSON valido:
                 
                 promptStrategia = `Sei un consulente strategico per promotori editoriali Zanichelli.
 
+⚠️ CONTESTO GIA' NEL REPORT (il promotore ha GIA' letto tutto questo — NON ripetere):
+- Profilo docente: ${prog.analisi_preliminare?.profilo_docente_insights?.tipo_docente || 'N/D'}
+- Sensibilita: ${prog.analisi_preliminare?.profilo_docente_insights?.sensibilita_chiave?.substring(0, 150) || 'N/D'}
+- Valutazione programma: ${prog.punteggi?.totale || 'N/D'}/270
+- Gap manuale gia analizzati (NON rielencare)
+- Insights adozione commerciali: ${prog.valutazione?.insights_adozione ? 'GIA nel report' : 'non presenti'}
+- Impatto gap: ${prog.gap_manuale?.analisi_impatto_adozione ? 'GIA nel report' : 'non presente'}
+${prog.zanichelli?.strategia_adozione ? `- Strategia adozione Zanichelli: GIA nel report con argomenti chiave e note colloquio` : ''}
+
+REGOLA ANTI-RIDONDANZA: NON ripetere gap, profilo docente, insights, impatto.
+Il tuo output deve contenere SOLO informazioni strategiche NUOVE su conferma/upgrade/difesa.
+
 SCENARIO: Il docente ha GIÀ ADOTTATO il manuale Zanichelli "${manualeAdottato}" come testo PRINCIPALE.
 
 ⚠️ IMPORTANTE: 
@@ -5320,6 +5383,18 @@ Rispondi SOLO con un JSON valido:
                 
                 promptStrategia = `Sei un consulente strategico per promotori editoriali Zanichelli.
 
+⚠️ CONTESTO GIA' NEL REPORT (il promotore ha GIA' letto tutto questo — NON ripetere):
+- Profilo docente: ${prog.analisi_preliminare?.profilo_docente_insights?.tipo_docente || 'N/D'}
+- Sensibilita: ${prog.analisi_preliminare?.profilo_docente_insights?.sensibilita_chiave?.substring(0, 150) || 'N/D'}
+- Valutazione programma: ${prog.punteggi?.totale || 'N/D'}/270
+- Gap manuale gia analizzati dettagliatamente (NON rielencare uno per uno)
+- Insights adozione commerciali: ${prog.valutazione?.insights_adozione ? 'GIA nel report' : 'non presenti'}
+- Impatto gap: ${prog.gap_manuale?.analisi_impatto_adozione ? 'GIA nel report' : 'non presente'}
+${prog.zanichelli?.strategia_adozione ? `- Strategia adozione Zanichelli: GIA nel report` : ''}
+
+REGOLA ANTI-RIDONDANZA: NON ripetere gap, profilo docente, insights, impatto.
+Il tuo output deve contenere SOLO la strategia di CONVERSIONE dal competitor a Zanichelli.
+
 SCENARIO: Il docente ha ADOTTATO un manuale COMPETITOR, ma ha considerato un manuale Zanichelli come alternativo.
 
 MANUALE COMPETITOR ADOTTATO:
@@ -5426,6 +5501,17 @@ Rispondi SOLO con un JSON valido:
                 const manualiZanichelliValutati = prog.zanichelli?.manuali || [];
                 
                 promptStrategia = `Sei un consulente strategico per promotori editoriali Zanichelli.
+
+⚠️ CONTESTO GIA' NEL REPORT (il promotore ha GIA' letto tutto questo — NON ripetere):
+- Profilo docente: ${prog.analisi_preliminare?.profilo_docente_insights?.tipo_docente || 'N/D'}
+- Sensibilita: ${prog.analisi_preliminare?.profilo_docente_insights?.sensibilita_chiave?.substring(0, 150) || 'N/D'}
+- Valutazione programma: ${prog.punteggi?.totale || 'N/D'}/270
+- Gap manuale gia analizzati dettagliatamente (NON rielencare uno per uno)
+- Insights adozione commerciali: ${prog.valutazione?.insights_adozione ? 'GIA nel report' : 'non presenti'}
+- Impatto gap: ${prog.gap_manuale?.analisi_impatto_adozione ? 'GIA nel report' : 'non presente'}
+
+REGOLA ANTI-RIDONDANZA: NON ripetere gap, profilo docente, insights, impatto.
+Il tuo output deve contenere SOLO la strategia di PENETRAZIONE per proporre Zanichelli.
 
 SCENARIO: Il docente usa un manuale COMPETITOR (NON Zanichelli) e NON ha Zanichelli nemmeno tra gli alternativi.
 Questo è un'opportunità di PENETRAZIONE di mercato.
