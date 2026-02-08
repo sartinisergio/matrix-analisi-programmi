@@ -3391,6 +3391,7 @@ Per "Leve Potenziali" e "Possibili Resistenze":
 
 IMPORTANTE: 
 - NON inventare dati numerici
+- NON usare punteggi, percentuali, frazioni (es. 95/100, 240/270) o numeri tecnici nelle descrizioni — traduci TUTTO in linguaggio commerciale qualitativo (es. "ottima corrispondenza", "copre quasi tutto il programma")
 - Usa linguaggio qualitativo: "potrebbe", "probabilmente", "tendenzialmente"
 - Basa tutto su cio' che emerge dal programma e dall'analisi preliminare
 
@@ -3851,6 +3852,7 @@ ${MANUAL_CATALOG && MANUAL_CATALOG.manuals ?
 
 IMPORTANTE:
 - NON inventare dati numerici (ore, percentuali precise, costi)
+- NON usare punteggi, percentuali, frazioni (es. 95/100, 240/270) o numeri tecnici nelle descrizioni — traduci TUTTO in linguaggio commerciale qualitativo
 - Basa tutto SOLO sulla valutazione gia' fatta
 - Usa linguaggio qualitativo: "potrebbe", "tendenzialmente", "in generale"
 - NON fare affermazioni categoriche senza evidenza dal programma
@@ -4097,6 +4099,7 @@ ${JSON.stringify(gapManualeObj.compatibilita_criteri, null, 2)}
 
 IMPORTANTE:
 - NON inventare dati numerici (ore, percentuali precise, costi)
+- NON usare punteggi, percentuali, frazioni (es. 95/100, 240/270) o numeri tecnici nelle descrizioni — traduci TUTTO in linguaggio commerciale qualitativo
 - NON riformulare i gap — il promotore li conosce gia'
 - Concentrati SOLO su impatto pratico e conseguenze concrete
 - Sii specifico: "il docente dovra' preparare dispense su X" non "il docente avra' difficolta'"
@@ -4592,6 +4595,7 @@ ${JSON.stringify(gapManualeObj.compatibilita_criteri, null, 2)}
 
 IMPORTANTE:
 - NON inventare dati (prezzi, percentuali precise, ore esatte)
+- NON usare punteggi, percentuali, frazioni (es. 95/100, 240/270) o numeri tecnici nelle descrizioni — traduci TUTTO in linguaggio commerciale qualitativo (es. "ottima corrispondenza", "copre la grande maggioranza del programma")
 - Basa tutto SOLO sulle valutazioni gia' fatte
 - Usa linguaggio qualitativo e professionale
 - Focus su benefici didattici, non commerciali
@@ -5321,6 +5325,8 @@ Analizza questa situazione e rispondi a 3 domande critiche:
    - Se esiste altro Zanichelli superiore: SUGGERISCI UPGRADE (specifica quale, NON "${manualeAdottato}"!)
    - Se competitor sono superiori: DIFENDI "${manualeAdottato}" con argomenti forti
 
+⚠️ REGOLA LINGUAGGIO PROMOTORE: Nei campi di TESTO (motivazione, raccomandazione, pitch, argomenti), NON usare punteggi numerici, percentuali o frazioni (es. 95/100, 240/270). Traduci in linguaggio commerciale qualitativo (es. "ottima corrispondenza col programma", "copre quasi tutto il corso"). I campi numerici del JSON (compatibilita_superiore, punteggio_competitor) POSSONO contenere numeri.
+
 Rispondi SOLO con un JSON valido:
 {
   "scenario": "zanichelli_principale",
@@ -5428,6 +5434,8 @@ IMPORTANTE:
 - Valuta se esistono ALTRI Zanichelli nel catalogo con compatibilità SUPERIORE al competitor
 - La raccomandazione deve essere CHIARA: quale Zanichelli proporre (alternativo o altro dal catalogo)
 
+⚠️ REGOLA LINGUAGGIO PROMOTORE: Nei campi di TESTO (vantaggi, argomenti_chiave, pitch, raccomandazione), NON usare punteggi numerici, percentuali o frazioni (es. 95/100, 240/270). Traduci in linguaggio commerciale qualitativo (es. "ottima corrispondenza col programma", "copre quasi tutto il corso"). I campi numerici del JSON (compatibilita, punteggio_framework, differenza_punteggio) POSSONO contenere numeri.
+
 Rispondi a 4 domande critiche:
 
 1. Il manuale Zanichelli alternativo è SUPERIORE al competitor adottato?
@@ -5528,6 +5536,8 @@ ${JSON.stringify(manualiZanichelliValutati, null, 2)}
 
 COMPITO:
 Genera una strategia di PENETRAZIONE per proporre Zanichelli al docente.
+
+⚠️ REGOLA LINGUAGGIO PROMOTORE: Nei campi di TESTO (vantaggi, argomenti_chiave, pitch, confronto_diretto), NON usare punteggi numerici, percentuali o frazioni (es. 95/100, 240/270). Traduci in linguaggio commerciale qualitativo (es. "ottima corrispondenza col programma", "copre quasi tutto il corso"). I campi numerici del JSON (compatibilita, punteggio_framework, differenza_punteggio) POSSONO contenere numeri.
 
 Rispondi a 3 domande critiche:
 
@@ -5675,7 +5685,7 @@ FORMATO OUTPUT (JSON):
   "docente_in_breve": "Tipo docente (innovatore/conservatore/...), tratto distintivo principale basato sul programma",
   "situazione_attuale": "Manuale X, punto debole principale, come compensa",
   "opportunita": "Cosa proporre e perche' in una frase",
-  "zanichelli_raccomandato": "${zanichelliRaccomandato} — compatibilita' ${compatibilita}/100",
+  "zanichelli_raccomandato": "${zanichelliRaccomandato} — ${getCompatibilitaLabel(compatibilita)}",
   "approccio_colloquio": "Come aprire e quale tono usare con QUESTO docente",
   "attenzione": "L'unica cosa da NON fare/dire con questo docente"
 }
@@ -5683,6 +5693,7 @@ FORMATO OUTPUT (JSON):
 Sii TELEGRAFICAMENTE sintetico. 
 Ogni parola in piu' e' una parola che il promotore non legge.
 NON usare frasi generiche. Ogni campo deve essere specifico per QUESTO programma.
+NON usare punteggi numerici, percentuali o frazioni (es. 95/100). Usa linguaggio commerciale qualitativo.
 
 RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
 
@@ -5697,6 +5708,58 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 return null;
             }
         }
+
+        // === HELPER GLOBALI: Traduzione numeri tecnici in linguaggio promotore ===
+        const getPunteggioColor = (p, max) => {
+            const perc = (p / max) * 100;
+            return perc >= 80 ? 'text-green-600' : perc >= 60 ? 'text-yellow-600' : 'text-red-600';
+        };
+
+        const getPunteggioLabel = (p, max) => {
+            const perc = (p / max) * 100;
+            return perc >= 80 ? 'Ottimo' : perc >= 60 ? 'Buono' : perc >= 40 ? 'Sufficiente' : 'Insufficiente';
+        };
+
+        const getCompatibilitaColor = (comp) => {
+            return comp === 'Alta' ? 'text-green-600' : comp === 'Media' ? 'text-yellow-600' : 'text-red-600';
+        };
+
+        const getCompatibilitaLabel = (valore) => {
+            if (valore >= 90) return 'Eccellente corrispondenza con il programma';
+            if (valore >= 80) return 'Ottima corrispondenza con il programma';
+            if (valore >= 70) return 'Buona corrispondenza con il programma';
+            if (valore >= 60) return 'Discreta corrispondenza';
+            return 'Corrispondenza parziale';
+        };
+
+        const getCompatibilitaBadgeColor = (valore) => {
+            if (valore >= 80) return 'bg-green-100 text-green-800';
+            if (valore >= 60) return 'bg-yellow-100 text-yellow-800';
+            return 'bg-red-100 text-red-800';
+        };
+
+        const getCoperturaProgrammaLabel = (punteggio, max) => {
+            const perc = (punteggio / max) * 100;
+            if (perc >= 90) return 'Copre praticamente tutto il programma';
+            if (perc >= 80) return 'Copre la grande maggioranza del programma';
+            if (perc >= 70) return 'Copre buona parte del programma';
+            if (perc >= 60) return 'Copre una parte significativa del programma';
+            return 'Copertura parziale del programma';
+        };
+
+        const getDifferenzaLabel = (diff) => {
+            const abs = Math.abs(diff);
+            if (diff > 0) {
+                if (abs >= 40) return 'Nettamente migliore del manuale attuale';
+                if (abs >= 20) return 'Significativamente migliore del manuale attuale';
+                if (abs >= 10) return 'Migliore del manuale attuale';
+                return 'Leggermente migliore del manuale attuale';
+            } else {
+                if (abs >= 20) return 'Il manuale attuale ha una copertura superiore, ma Zanichelli offre vantaggi qualitativi';
+                if (abs >= 10) return 'Copertura simile al manuale attuale, con differenze qualitative';
+                return 'Copertura paragonabile al manuale attuale';
+            }
+        };
 
         // Funzione helper per generare HTML della sezione strategica
         function renderAnalisiStrategica(strategia, scenario) {
@@ -5743,7 +5806,7 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                             <div class="bg-white rounded p-4 mb-3">
                                 <p class="font-bold text-lg text-yellow-900">📗 ${strategia.confronto_altri_zanichelli.nome}</p>
                                 ${strategia.confronto_altri_zanichelli.compatibilita_superiore ? 
-                                    `<p class="text-sm text-yellow-700 mt-1">Compatibilità: ${strategia.confronto_altri_zanichelli.compatibilita_superiore}%</p>` : ''}
+                                    `<p class="text-sm text-yellow-700 mt-1">${getCompatibilitaLabel(strategia.confronto_altri_zanichelli.compatibilita_superiore || 0)}</p>` : ''}
                             </div>
                             
                             ${strategia.confronto_altri_zanichelli.vantaggi_upgrade && strategia.confronto_altri_zanichelli.vantaggi_upgrade.length > 0 ? `
@@ -5782,7 +5845,7 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                             <div class="bg-white rounded p-4 mb-3">
                                 <p class="font-bold text-lg text-red-900">📕 ${strategia.confronto_competitor.nome_competitor}</p>
                                 ${strategia.confronto_competitor.punteggio_competitor ? 
-                                    `<p class="text-sm text-red-700 mt-1">Punteggio: ${strategia.confronto_competitor.punteggio_competitor}/270</p>` : ''}
+                                    `<p class="text-sm text-red-700 mt-1">Copertura: ${getCoperturaProgrammaLabel(strategia.confronto_competitor.punteggio_competitor || 0, 270)}</p>` : ''}
                             </div>
                             
                             ${strategia.confronto_competitor.gap_zanichelli_vs_competitor && strategia.confronto_competitor.gap_zanichelli_vs_competitor.length > 0 ? `
@@ -5879,7 +5942,7 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                         ${strategia.differenza_punteggio ? `
                             <div class="bg-green-50 rounded p-4 mb-3">
                                 <p class="text-lg font-bold ${strategia.differenza_punteggio > 0 ? 'text-green-700' : 'text-gray-700'}">
-                                    Differenza Punteggio Framework: ${strategia.differenza_punteggio > 0 ? '+' : ''}${strategia.differenza_punteggio} punti
+                                    ${getDifferenzaLabel(strategia.differenza_punteggio)}
                                     ${strategia.differenza_punteggio > 0 ? '🎉' : ''}
                                 </p>
                             </div>
@@ -6008,24 +6071,24 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                 </p>
                                 <div class="grid grid-cols-2 gap-3 mt-3">
                                     <div class="bg-green-100 rounded p-3">
-                                        <p class="text-xs text-green-700 mb-1">Compatibilità</p>
-                                        <p class="text-2xl font-bold text-green-900">${strategia.zanichelli_raccomandato.compatibilita || 'N/D'}/100</p>
+                                        <p class="text-xs text-green-700 mb-1">Corrispondenza con il Programma</p>
+                                        <p class="text-lg font-bold text-green-900">${getCompatibilitaLabel(strategia.zanichelli_raccomandato.compatibilita || 0)}</p>
                                     </div>
                                     <div class="bg-green-100 rounded p-3">
-                                        <p class="text-xs text-green-700 mb-1">Punteggio Framework</p>
-                                        <p class="text-2xl font-bold text-green-900">${strategia.zanichelli_raccomandato.punteggio_framework || 'N/D'}/270</p>
+                                        <p class="text-xs text-green-700 mb-1">Copertura Argomenti</p>
+                                        <p class="text-lg font-bold text-green-900">${getCoperturaProgrammaLabel(strategia.zanichelli_raccomandato.punteggio_framework || 0, 270)}</p>
                                     </div>
                                 </div>
                                 ${strategia.zanichelli_raccomandato.superiore_a_competitor ? `
                                     <div class="bg-green-50 border-l-4 border-green-500 p-3 mt-3">
                                         <p class="text-green-800 font-semibold">
-                                            ✅ SUPERIORE al competitor attuale di ${strategia.zanichelli_raccomandato.differenza_punteggio || 0} punti!
+                                            ✅ ${getDifferenzaLabel(strategia.zanichelli_raccomandato.differenza_punteggio || 0)}
                                         </p>
                                     </div>
                                 ` : `
                                     <div class="bg-yellow-50 border-l-4 border-yellow-500 p-3 mt-3">
                                         <p class="text-yellow-800 font-semibold">
-                                            ⚠️ Punteggio inferiore al competitor (${Math.abs(strategia.zanichelli_raccomandato.differenza_punteggio || 0)} punti), ma offre vantaggi qualitativi significativi
+                                            ${getDifferenzaLabel(strategia.zanichelli_raccomandato.differenza_punteggio || 0)}
                                         </p>
                                     </div>
                                 `}
@@ -6202,20 +6265,6 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 analisiStrategicaScenario: prog.analisi_strategica?.scenario
             });
             
-            const getPunteggioColor = (p, max) => {
-                const perc = (p / max) * 100;
-                return perc >= 80 ? 'text-green-600' : perc >= 60 ? 'text-yellow-600' : 'text-red-600';
-            };
-
-            const getPunteggioLabel = (p, max) => {
-                const perc = (p / max) * 100;
-                return perc >= 80 ? 'Ottimo' : perc >= 60 ? 'Buono' : perc >= 40 ? 'Sufficiente' : 'Insufficiente';
-            };
-
-            const getCompatibilitaColor = (comp) => {
-                return comp === 'Alta' ? 'text-green-600' : comp === 'Media' ? 'text-yellow-600' : 'text-red-600';
-            };
-
             const html = `
                 <div class="space-y-6">
                     <!-- Disclaimer Situazioni Extra-Didattiche -->
@@ -6258,8 +6307,8 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                 </div>
                             </div>
                             <div class="text-right">
-                                <div class="text-4xl font-bold text-indigo-600">
-                                    ${prog.punteggi.totale}<span class="text-xl text-gray-400">/270</span>
+                                <div class="text-lg font-bold text-indigo-600">
+                                    ${getCoperturaProgrammaLabel(prog.punteggi.totale, 270)}
                                 </div>
                                 <p class="text-sm font-medium mt-1 ${getPunteggioColor(prog.punteggi.totale, 270)}">
                                     ${getPunteggioLabel(prog.punteggi.totale, 270)}
@@ -6701,11 +6750,10 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                 return `
                                     <div class="border rounded-lg p-4">
                                         <h4 class="text-sm font-medium text-gray-600 mb-2">${label}</h4>
-                                        <div class="flex items-baseline space-x-2 mb-2">
-                                            <span class="text-3xl font-bold ${getPunteggioColor(prog.punteggi[dim], max)}">
-                                                ${prog.punteggi[dim]}
+                                        <div class="mb-2">
+                                            <span class="text-lg font-bold ${getPunteggioColor(prog.punteggi[dim], max)}">
+                                                ${getPunteggioLabel(prog.punteggi[dim], max)}
                                             </span>
-                                            <span class="text-gray-400">/${max}</span>
                                         </div>
                                         ${prog.valutazione[dim]?.giudizio ? `<p class="text-sm font-semibold ${getPunteggioColor(prog.punteggi[dim], max)} mb-1">${prog.valutazione[dim].giudizio}</p>` : ''}
                                         ${prog.valutazione[dim]?.note ? `<p class="text-xs text-gray-600">${prog.valutazione[dim].note}</p>` : ''}
@@ -6934,7 +6982,7 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                     <div class="border-2 rounded-lg p-6 hover:shadow-lg transition">
                                         <div class="flex items-center justify-between mb-4">
                                             <h4 class="text-lg font-bold text-gray-900">${alt.manuale}</h4>
-                                            <span class="px-3 py-1 rounded-full text-sm font-bold ${getCompatibilitaColor(alt.compatibilita)}">${alt.compatibilita}</span>
+                                            <span class="px-3 py-1 rounded-full text-sm font-bold ${getCompatibilitaBadgeColor(alt.compatibilita)}">${getCompatibilitaLabel(alt.compatibilita || 0)}</span>
                                         </div>
                                         
 
@@ -7029,8 +7077,8 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                             <h4 class="text-lg font-bold text-gray-900">${man.autore} - ${man.nome}</h4>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-sm text-gray-600">Compatibilità</p>
-                                            <p class="text-2xl font-bold ${man.compatibilita >= 80 ? 'text-green-600' : man.compatibilita >= 60 ? 'text-yellow-600' : 'text-red-600'}">${man.compatibilita}/100</p>
+                                            <p class="text-sm text-gray-600">Corrispondenza</p>
+                                            <p class="text-lg font-bold ${man.compatibilita >= 80 ? 'text-green-600' : man.compatibilita >= 60 ? 'text-yellow-600' : 'text-red-600'}">${getCompatibilitaLabel(man.compatibilita || 0)}</p>
                                         </div>
                                     </div>
                                     
@@ -7203,16 +7251,6 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 return;
             }
 
-            const getPunteggioColor = (p, max) => {
-                const perc = (p / max) * 100;
-                return perc >= 80 ? 'text-green-600' : perc >= 60 ? 'text-yellow-600' : 'text-red-600';
-            };
-
-            const getPunteggioLabel = (p, max) => {
-                const perc = (p / max) * 100;
-                return perc >= 80 ? 'Ottimo' : perc >= 60 ? 'Buono' : perc >= 40 ? 'Sufficiente' : 'Insufficiente';
-            };
-
             container.innerHTML = storico.map((prog, index) => `
                 <div class="border rounded-lg p-4 hover:bg-gray-50 transition">
                     <div class="flex items-start justify-between">
@@ -7228,8 +7266,8 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                         </div>
                         <div class="flex items-center space-x-3 ml-4">
                             <div class="text-right cursor-pointer" onclick='visualizzaProgramma(${JSON.stringify(prog).replace(/'/g, "&apos;")})'>  
-                                <div class="text-2xl font-bold text-indigo-600">
-                                    ${prog.punteggi.totale}<span class="text-sm text-gray-400">/270</span>
+                                <div class="text-sm font-bold text-indigo-600">
+                                    ${getCoperturaProgrammaLabel(prog.punteggi.totale, 270)}
                                 </div>
                                 <p class="text-xs font-medium ${getPunteggioColor(prog.punteggi.totale, 270)}">
                                     ${getPunteggioLabel(prog.punteggi.totale, 270)}
@@ -7321,12 +7359,12 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
             // Valutazione Programma
             addText('VALUTAZIONE PROGRAMMA', 12, true);
             addSpace(3);
-            addText(`Punteggio Totale: ${prog.punteggi.totale}/270`);
-            addText(`Obiettivi Formativi: ${prog.punteggi.obiettivi}/40`);
-            addText(`Contenuti Programmatici: ${prog.punteggi.contenuti}/130`);
-            addText(`Metodologia Didattica: ${prog.punteggi.metodologia}/40`);
-            addText(`Allineamento Curriculum: ${prog.punteggi.allineamento}/30`);
-            addText(`Risultati Attesi: ${prog.punteggi.risultati}/30`);
+            addText(`Valutazione Complessiva: ${getPunteggioLabel(prog.punteggi.totale, 270)} — ${getCoperturaProgrammaLabel(prog.punteggi.totale, 270)}`);
+            addText(`Obiettivi Formativi: ${getPunteggioLabel(prog.punteggi.obiettivi, 40)}`);
+            addText(`Contenuti Programmatici: ${getPunteggioLabel(prog.punteggi.contenuti, 130)}`);
+            addText(`Metodologia Didattica: ${getPunteggioLabel(prog.punteggi.metodologia, 40)}`);
+            addText(`Allineamento Curriculum: ${getPunteggioLabel(prog.punteggi.allineamento, 30)}`);
+            addText(`Risultati Attesi: ${getPunteggioLabel(prog.punteggi.risultati, 30)}`);
             addSpace(8);
             
             // Manuale Adottato
@@ -7359,7 +7397,7 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 addText('RACCOMANDAZIONE ZANICHELLI', 12, true);
                 addSpace(3);
                 addText(`Manuale Raccomandato: ${prog.zanichelli.raccomandato.titolo}`, 11, true);
-                addText(`Compatibilità: ${prog.zanichelli.raccomandato.compatibilita} (${prog.zanichelli.raccomandato.punteggio}/100)`);
+                addText(`Corrispondenza: ${getCompatibilitaLabel(prog.zanichelli.raccomandato.compatibilita || prog.zanichelli.raccomandato.punteggio || 0)}`);
                 addText(`Prezzo: ${prog.zanichelli.raccomandato.prezzo}`);
                 addSpace(5);
                 
