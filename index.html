@@ -5822,6 +5822,7 @@ FORMATO OUTPUT (JSON):
   "alternative_zanichelli": [
     {
       "titolo": "titolo alternativo",
+      "autore": "autore alternativo",
       "compatibilita": numero_0_100,
       "quando_preferirlo": "In una frase",
       "differenza_dal_raccomandato": "In una frase"
@@ -5863,7 +5864,9 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                 
                 if (prog.zanichelli && prog.zanichelli.manuali && prog.zanichelli.manuali.length > 0) {
                     const primario = prog.zanichelli.manuali[0];
-                    zanichelliRaccomandato = primario.title || primario.titolo || 'Non specificato';
+                    const titoloPrimario = primario.title || primario.titolo || primario.nome || 'Non specificato';
+                    const autorePrimario = primario.author || primario.autore || '';
+                    zanichelliRaccomandato = autorePrimario ? `${autorePrimario} - ${titoloPrimario}` : titoloPrimario;
                     compatibilita = primario.compatibilita || 0;
                 }
                 
@@ -5875,7 +5878,9 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                         infoStrategica = `\nRACCOMANDAZIONE STRATEGICA GIA' GENERATA:\n${strat.raccomandazione_finale}`;
                     }
                     if (strat.zanichelli_raccomandato && strat.zanichelli_raccomandato.nome) {
-                        zanichelliRaccomandato = strat.zanichelli_raccomandato.nome;
+                        const nomeStrat = strat.zanichelli_raccomandato.nome;
+                        const autoreStrat = strat.zanichelli_raccomandato.autore || '';
+                        zanichelliRaccomandato = autoreStrat ? `${autoreStrat} - ${nomeStrat}` : nomeStrat;
                         compatibilita = strat.zanichelli_raccomandato.compatibilita || compatibilita;
                     }
                 }
@@ -7490,7 +7495,7 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                                 ${prog.raccomandazione_zanichelli.alternative_zanichelli.map(alt => `
                                     <div class="border rounded-lg p-3 hover:bg-gray-50 transition">
                                         <div class="flex items-center justify-between mb-1">
-                                            <p class="text-sm font-medium text-gray-900">${alt.titolo}</p>
+                                            <p class="text-sm font-medium text-gray-900">${alt.autore ? alt.autore + ' - ' : ''}${alt.titolo}</p>
                                             <span class="text-xs px-2 py-0.5 rounded-full ${getCompatibilitaBadgeColor(alt.compatibilita || 0)}">${getCompatibilitaLabel(alt.compatibilita || 0)}</span>
                                         </div>
                                         ${alt.quando_preferirlo ? `<p class="text-xs text-gray-600"><strong>Quando preferirlo:</strong> ${alt.quando_preferirlo}</p>` : ''}
