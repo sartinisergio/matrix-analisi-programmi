@@ -1,6 +1,6 @@
 # 🎓 MATRIX - Multi-Analysis Teaching Resource Intelligence X-platform
 
-**Versione 1.1.0** | Rilasciato: 7 Febbraio 2026 | 🆕 FASE 0.5 Avanzata
+**Versione 1.2.0** | Aggiornato: 9 Febbraio 2026 | Revisione Analisi (Specifiche A, B, C)
 
 ## 📋 Panoramica
 
@@ -11,8 +11,42 @@
 - **Multi-Materia**: Supporto per 21 framework di valutazione coprendo Chimica, Fisica, Matematica, Economia, Biologia e Medicina
 - **Multi-Editore**: Sistema flessibile che si adatta a qualsiasi editore (Zanichelli, McGraw-Hill, Pearson, EdiSES, Piccin, CEA, etc.)
 - **Doppia Valutazione**: Valutazioni Assolute (permanenti) e Dinamiche (contestuali)
-- **Profilo Pedagogico**: Analisi preliminare del docente e del programma
+- **Profilo Pedagogico Arricchito**: Analisi docente con allineamento classe di laurea e criteri disciplinari
+- **Raccomandazione Zanichelli Strutturata**: Confronto criterio-per-criterio con trasparenza su gap risolti e non risolti
 - **Intelligenza Artificiale**: Utilizzo di GPT-4 e Perplexity per analisi approfondite
+
+---
+
+## 🆕 Novità v1.2.0 — Revisione Analisi (9 Feb 2026)
+
+### Specifica A — Profilo Pedagogico Arricchito
+- **Allineamento con Classe di Laurea**: tabella con colonne Priorità, Soddisfatta, Evidenza, Valutazione (sempre presente)
+- **Criteri di Valutazione Disciplinari**: tabella Criterio / Posizione Docente / Evidenze / Confidenza (solo per i 12 framework che hanno `evaluation_criteria`)
+
+### Specifica B — Tabella Modulo-per-Modulo nella Gap Analysis
+- **Copertura moduli**: tabella colorata che mostra per ogni modulo del framework se è coperto dal manuale adottato
+- Rendering con badge colorati (Verde = coperto, Rosso = non coperto, Giallo = parziale)
+- Prompt Fase 2 arricchito con istruzioni per generare `copertura_moduli`
+
+### Specifica C — Raccomandazione Zanichelli con Confronto Strutturato
+- **Funzione `generaRaccomandazioneZanichelli`**: prompt dedicato che genera un confronto criterio-per-criterio
+- **Gap risolti e gap NON risolti**: trasparenza totale su cosa Zanichelli risolve e cosa no
+- **Alternative Zanichelli**: con badge compatibilità e indicazione "Quando preferirlo"
+- **`generaExecutiveSummary`**: sommario esecutivo generato alla fine di tutte le fasi
+
+### Consolidamento Anti-Ridondanza
+- **Rimossa** la sezione "Strategia di Penetrazione Mercato" (Sez 3.5) dal rendering
+- **Rimossa** la sezione "Strategia Completa per il Promotore"
+- **Rinominata** "Strategia Adozione" → **"Guida al Colloquio con il Docente"** con solo:
+  - Pitch di apertura (Primo Contatto + Docente Conosciuto)
+  - Obiezioni e risposte
+  - Note pratiche per il colloquio
+- **Flusso report senza ridondanze**: Sez 5 (Confronto Strutturato) → Sez 4 (Compatibilità Manuali) → Guida al Colloquio
+
+### Fix Tecnici
+- **Template literal annidati**: corretti 4 casi di backtick escaped dentro template literals (convertiti in concatenazione stringa)
+- **Helper functions** (`getCompatibilitaLabel`, `getDifferenzaLabel`, `getCoperturaProgrammaLabel`) spostati a scope globale
+- **Proxy Netlify rimosso per OpenAI**: le chiamate ora vanno direttamente a `api.openai.com` dal browser (elimina timeout 502/504 sulle Netlify Functions)
 
 ---
 
@@ -20,14 +54,16 @@
 
 ### **Framework di Valutazione: 21**
 
-| Materia | Framework | Moduli |
-|---------|-----------|--------|
-| **Chimica** | Chimica Generale, Chimica Organica | 15, 30 |
-| **Fisica** | Fisica 1, Fisica 2, Fisica Bio-Geo | 10, 10, 7 |
-| **Matematica** | Analisi 1, Analisi 2, Matematica Generale | 13, 12, 7 |
-| **Economia** | Microeconomia, Macroeconomia, Economia Politica | 9, 8, 9 |
-| **Biologia/Medicina** | Biochimica, Biologia Molecolare, Genetica, Istologia, Microbiologia | 12, 16, 9, 8, 14 |
-| **Medicina** | Biologia/Chimica/Fisica (Semestre Filtro) | 7, 7, 6 |
+| Materia | Framework | Moduli | evaluation_criteria |
+|---------|-----------|--------|---------------------|
+| **Chimica** | Chimica Generale, Chimica Organica | 15, 30 | ❌, ❌ |
+| **Fisica** | Fisica 1, Fisica 2, Fisica Bio-Geo | 10, 10, 7 | ❌, ❌, ❌ |
+| **Matematica** | Analisi 1, Analisi 2, Matematica Generale | 13, 12, 7 | ❌, ❌, ❌ |
+| **Economia** | Microeconomia, Macroeconomia, Economia Politica | 9, 8, 9 | ✅, ✅, ✅ |
+| **Biologia/Medicina** | Biochimica, Biologia Molecolare, Genetica, Istologia, Microbiologia | 12, 16, 9, 8, 14 | ✅, ✅, ✅, ✅, ✅ |
+| **Medicina** | Biologia/Chimica/Fisica (Semestre Filtro) | 7, 7, 6 | ✅, ✅, ✅ |
+
+> **Nota**: 12 framework su 21 hanno `evaluation_criteria`. Quando presenti, il report include la sezione "Criteri di Valutazione Disciplinari" e l'analisi criteri approfondita (Avanzata).
 
 ### **Manuali: 85 Totali**
 
@@ -40,325 +76,53 @@
 | **Istologia** | 1 | 4 | 5 |
 | **TOTALE** | **27** | **58** | **85** |
 
-#### **Manuali Zanichelli Disponibili**
-
-**Chimica Generale:**
-- Atkins - Chimica generale
-- Atkins - Fondamenti di Chimica
-- Atkins - Principi di Chimica
-- Bertini, Luchinat, Mani - Chimica
-- Bertini - Chimica: materia, tecnologia, ambiente
-- Bertini - Chimica: struttura, proprietà e trasformazioni
-- Manotti Lanfredi, Tiripicchio - Fondamenti di chimica
-- McQuarrie - Chimica generale
-- Munari, Michelin - Fondamenti di Chimica
-- Nobile, Mastrorilli - La Chimica di base
-- Silvestroni - Chimica generale
-- Silvestroni - Fondamenti di Chimica
-- Zanello, Gobetto, Zanello - Conoscere la Chimica
-
-**Chimica Organica:**
-- Hart - Fondamenti di chimica organica
-- McMurry - Chimica organica: approccio biologico
-- McMurry - Fondamenti di chimica organica
-- Solomons - Chimica organica
-- Vollhardt - Chimica organica
-
-**Fisica:**
-- Contessa, Marzo - Fisica applicata alle scienze biomediche
-- Giancoli - Fisica
-- Giancoli - Fisica con fisica moderna
-- Halliday, Resnick, Walker - Fondamenti di Fisica
-
-**Economia:**
-- Brue Stanley L., McConnell, Flynn - L'essenziale di Economia
-- Krugman Paul, Wells Robin - Essenziale di Economia
-- Mankiw N. Gregory - L'essenziale di Economia
-- Mankiw N. Gregory - Principi di Economia
-
-**Istologia:**
-- Pawlina, Ross - Istologia
-
 ---
 
-## 🔧 Caratteristiche Principali
+## 🔧 Architettura del Report
 
-### 1. **Analisi Preliminare (Fase 0)**
+### Flusso di Analisi (Fasi)
 
-Prima della valutazione dettagliata, MATRIX genera:
-
-#### **Quadro Generale del Programma**
-- Visione d'insieme dei contenuti
-- Struttura logica del corso
-- Distribuzione tematica (es. 40% Teoria, 30% Pratica, 30% Lab)
-- Livello di complessità
-
-#### **Profilo Pedagogico del Docente**
-- **Approccio didattico**: Teorico / Applicativo / Sperimentale / Interdisciplinare
-- **Livello di approfondimento**: Base / Intermedio / Avanzato
-- **Enfasi particolare**: Aree tematiche privilegiate
-- **Stile**: Classico / Moderno / Innovativo
-
-**Esempio Output:**
 ```
-╔══════════════════════════════════════════════════════════════╗
-║  📊 QUADRO GENERALE                                          ║
-╠══════════════════════════════════════════════════════════════╣
-║  Tipologia: Corso fondamentale con orientamento biologico   ║
-║  CFU: 9 | Ore: 72                                           ║
-║  Distribuzione:                                              ║
-║    - Struttura atomica e legame: 25%                        ║
-║    - Termodinamica e cinetica: 40%                          ║
-║    - Equilibri in soluzione: 35%                            ║
-╚══════════════════════════════════════════════════════════════╝
-
-╔══════════════════════════════════════════════════════════════╗
-║  👤 PROFILO PEDAGOGICO DOCENTE                               ║
-╠══════════════════════════════════════════════════════════════╣
-║  Approccio: Teorico-Applicativo                             ║
-║  Livello: Intermedio/Avanzato                               ║
-║  Enfasi: Forte focus su termodinamica e equilibri           ║
-║          chimici con applicazioni biologiche                ║
-║  Stile: Interdisciplinare (chimica-biologia)                ║
-╚══════════════════════════════════════════════════════════════╝
+Fase 0    → Analisi Preliminare (Quadro Generale + Profilo Pedagogico 
+             + Allineamento Classe + Criteri Disciplinari)
+Fase 0b   → [Avanzata] Profilo Docente approfondito
+Fase 0.5  → Logica della Scelta Editoriale (motivazioni + relazione testi)
+Fase 1    → Estrazione Metadata (Università, Corso, Docente, CFU, Ore)
+Fase 2    → Valutazione Programma (5 dimensioni + copertura_moduli)
+Fase 2b   → [Avanzata] Insights Adozione
+Fase 3    → Gap Analysis vs Manuale Adottato
+Fase 3c   → [Avanzata] Impatto Gap
+Fase 3b   → Confronto Manuali Alternativi
+Fase 4    → Valutazione Manuali Zanichelli (Dinamica)
+Fase 4b   → [Avanzata] Guida al Colloquio con il Docente
+Fase 5.5  → [Avanzata] Analisi Strategica Finale
+Post-fasi → generaRaccomandazioneZanichelli (Confronto Strutturato)
+           → generaExecutiveSummary (Sommario Esecutivo)
 ```
 
----
+> Le fasi marcate `[Avanzata]` si eseguono solo con l'opzione "Analisi Avanzata" attivata.
 
-### 1.5 **Logica della Scelta Editoriale (Fase 0.5)** 🆕
+### Sezioni del Report (ordine di rendering)
 
-**Novità Febbraio 2026**: Analisi strategica avanzata per promotori editoriali.
+| # | Sezione | Contenuto | Note |
+|---|---------|-----------|------|
+| 0 | Executive Summary | Sintesi esecutiva generata post-analisi | Spec C |
+| 0 | Analisi Preliminare | Quadro Generale + Profilo Pedagogico | - |
+| - | Allineamento Classe di Laurea | Tabella priorità/evidenza vs classe | Spec A |
+| - | Criteri Disciplinari | Tabella criterio/posizione/evidenze | Spec A, solo se eval_criteria |
+| 0.5 | Logica Scelta Editoriale | Perché il docente ha scelto quel manuale | - |
+| 1 | Analisi Dettagliata Programma | Valutazione su 5 dimensioni | - |
+| 2 | Analisi Manuale Adottato | Gap del manuale attuale | - |
+| 2b | Confronto Manuali Alternativi | Gap vs manuali non adottati | - |
+| 5 | **Raccomandazione Zanichelli** | Confronto criterio-per-criterio, gap risolti/non risolti | Spec C |
+| 4 | Compatibilità Manuali Consigliati | Schede per ogni manuale Zanichelli | - |
+| - | **Guida al Colloquio** | Pitch + Obiezioni + Note pratiche | Consolidata |
 
-Dopo l'analisi preliminare, MATRIX analizza **perché** il docente ha scelto il manuale principale e **come** si relaziona con eventuali manuali alternativi in bibliografia.
+### Logica Condizionale
 
-#### **🎯 Obiettivi**
-- Comprendere le **motivazioni** della scelta del manuale principale
-- Analizzare la **relazione** tra manuale principale e alternativi
-- Identificare **opportunità commerciali** per case editrici (es. Zanichelli)
-
-#### **📊 Analisi Tripartita**
-
-##### **1. Scelta Manuale Principale**
-- **Motivazioni** con peso (alto/medio/basso) ed evidenze
-- **Natura della scelta**: Convinta / Ereditata / Compromesso
-- **Priorità docente**: Top 3 esigenze nella scelta
-
-**Esempio:**
-```
-✓ Motivazione 1 (peso: ALTO)
-  "Focus biologico-applicativo allineato al programma"
-  Evidenza: Il programma enfatizza biochimica e metabolismo
-
-✓ Motivazione 2 (peso: MEDIO)  
-  "Trattazione compatta adatta a 6 CFU"
-  Evidenza: 400 pagine vs 800+ enciclopedie
-
-Natura: CONVINTA (confidenza alta)
-Priorità: 1) Linguaggio accessibile  2) Copertura biologica  3) Prezzo contenuto
-```
-
-##### **2. Relazione tra Testi in Bibliografia** *(solo se presenti alternativi)*
-- **Analisi combinazione**: Perché il docente usa QUESTA combinazione?
-- **Ruolo alternativi**: 
-  - `approfondimento` → Argomenti più dettagliati del principale
-  - `semplificazione` → Versione accessibile per studenti deboli
-  - `esercizi` → Focus su problemi/applicazioni
-  - `modulo_specifico` → Copre argomento che il principale non ha
-  - `alternativa_studenti` → Opzione diversa per preferenze personali
-- **Confronto indici**: Gap precisi identificati confrontando capitoli
-- **💡 Cosa Verificare con il Docente**: Suggerimento strategico per promotore
-
-**Esempio:**
-```
-📘 Manuale Alternativo: "Kotz - Chimica"
-   Ruolo: APPROFONDIMENTO
-   
-   Cosa rivela: Confronto indici mostra che Kotz ha 3 capitoli su equilibri 
-   vs 1 in Arnesano. Il docente compensa gap su termodinamica avanzata.
-
-💡 Cosa Verificare:
-   "Verificare con il docente quali capitoli di Kotz sono effettivamente 
-   utilizzati per approfondimenti. Se conferma uso sistematico per equilibri 
-   e cinetica, proporre Zanichelli-Silberberg che integra base biologica + 
-   approfondimenti quantitativi, eliminando doppia adozione e riducendo 
-   costo studenti."
-```
-
-##### **3. Profilo Decisionale del Docente**
-- **Cosa cerca** (3 esigenze)
-- **Cosa evita** (2 caratteristiche sgradite)
-- **Sensibilità prezzo**: alta / media / bassa
-- **Familiarità Zanichelli**: alta / media / bassa / nulla
-- **Apertura cambio principale**: alta / media / bassa
-- **Apertura integrazione alternativo**: alta / media / bassa
-
-**Output JSON:**
-```json
-{
-  "scelta_manuale_principale": {
-    "motivazioni": [
-      {
-        "fattore": "Approccio biologico allineato",
-        "peso": "alto",
-        "evidenza": "Programma enfatizza biochimica"
-      }
-    ],
-    "natura_scelta": {
-      "tipo": "convinta",
-      "confidenza": "alta",
-      "spiegazione": "Allineamento chiaro programma-manuale"
-    },
-    "priorita_docente": ["Linguaggio accessibile", "Copertura biologica", "Prezzo"]
-  },
-  "relazione_testi_bibliografia": {
-    "testi_alternativi_presenti": true,
-    "analisi_combinazione": "Base + approfondimento opzionale",
-    "dettaglio_alternativi": [
-      {
-        "titolo": "Kotz - Chimica",
-        "autore": "Kotz, Treichel, Townsend",
-        "ruolo": "approfondimento",
-        "cosa_rivela": "Compensa gap su equilibri chimici"
-      }
-    ],
-    "domanda_chiave": "Verificare capitoli Kotz usati per proporre alternativa unificata"
-  },
-  "profilo_decisionale": {
-    "cosa_cerca": ["Testi biologico-centrici", "Linguaggio accessibile", "Non enciclopedici"],
-    "cosa_evita": ["Manuali troppo teorici", "Enciclopedie 1000+ pagine"],
-    "sensibilita_prezzo": "alta",
-    "familiarita_zanichelli": "bassa",
-    "apertura_cambio_principale": "media",
-    "apertura_integrazione_alternativo": "alta"
-  }
-}
-```
-
-#### **🎁 Valore per Promotori**
-- ✅ **Preparazione colloqui**: Domande mirate da fare al docente
-- ✅ **Opportunità commerciali**: Individuazione spazi per proporre Zanichelli
-- ✅ **Strategie persuasive**: Leve efficaci (risparmio, completezza, unificazione)
-- ✅ **Riduzione tempo**: Da 2h di analisi manuale a 5 minuti automatici
-
----
-
-### 2. **Valutazione Assoluta (Statica)**
-
-Valutazione **intrinseca** del manuale rispetto al framework teorico della materia.
-
-**Caratteristiche:**
-- ✅ **Permanente**: memorizzata e riutilizzabile
-- ✅ **Indipendente dal programma**: valida per tutti i corsi
-- ✅ **Oggettiva**: basata su criteri standardizzati
-- ✅ **Confrontabile**: tra manuali diversi
-
-**Dimensioni di Valutazione (270 punti totali):**
-
-| Dimensione | Peso | Punti Max | Descrizione |
-|-----------|------|-----------|-------------|
-| **Copertura Moduli** | 35% | 130 | Percentuale di moduli del framework coperti |
-| **Qualità Didattica** | 20% | 40 | Chiarezza, esempi, esercizi, didattica |
-| **Approfondimento** | 20% | 40 | Livello di dettaglio e rigore scientifico |
-| **Materiali Supplementari** | 15% | 30 | Risorse online, eserciziari, laboratori |
-| **Rapporto Qualità/Prezzo** | 10% | 30 | Valutazione economica |
-
-**Output:**
-```json
-{
-  "valutazione_assoluta": {
-    "data_valutazione": "2025-01-29",
-    "punteggio_totale": 245,
-    "livello": "Eccellente",
-    "dimensioni": {
-      "copertura_moduli": 125,
-      "qualita_didattica": 38,
-      "approfondimento": 35,
-      "materiali_supplementari": 25,
-      "rapporto_qualita_prezzo": 22
-    },
-    "sintesi": "Eccellente copertura con forte orientamento teorico...",
-    "raccomandazioni": {
-      "quando_raccomandare": ["L-27 Chimica", "L-2 Biotecnologie", ...],
-      "quando_non_raccomandare": ["Corsi orientamento applicativo", ...]
-    }
-  }
-}
-```
-
----
-
-### 3. **Valutazione Dinamica (Contestuale)**
-
-Valutazione **rispetto al programma specifico** analizzato.
-
-**Caratteristiche:**
-- 🔄 **Temporanea**: specifica per ogni programma
-- 🎯 **Contestuale**: si adatta al docente e al corso
-- 📊 **Personalizzata**: considera enfasi e priorità
-- 💡 **Actionable**: suggerimenti commerciali mirati
-
-**Dimensioni di Valutazione (270 punti totali):**
-
-| Dimensione | Peso | Punti Max | Descrizione |
-|-----------|------|-----------|-------------|
-| **Copertura Programma** | 40% | 100 | Match con contenuti specifici del corso |
-| **Adeguatezza Livello** | 25% | 70 | Allineamento con livello richiesto |
-| **Allineamento Enfasi** | 20% | 50 | Match con focus del docente |
-| **Rapporto Q/P Contestuale** | 15% | 50 | Valore per questo corso specifico |
-
-**Output:**
-```json
-{
-  "valutazione_dinamica": {
-    "punteggio_totale": 230,
-    "copertura_programma": 85,
-    "adeguatezza_livello": 60,
-    "allineamento_enfasi": 45,
-    "rapporto_qp_contestuale": 40,
-    "raccomandazione": "Altamente Raccomandato",
-    "motivi": [
-      "Eccellente copertura dei moduli richiesti",
-      "Perfetto allineamento con focus su termodinamica",
-      "Livello intermedio-avanzato adeguato"
-    ],
-    "gap": [
-      "Mancanza di esempi applicativi da biochimica",
-      "Esercizi numerici limitati"
-    ]
-  }
-}
-```
-
----
-
-### 4. **Sistema Multi-Editore**
-
-MATRIX si adatta dinamicamente all'editore che utilizza l'applicazione.
-
-**Configurazione Editore:**
-```
-╔════════════════════════════════════════════════════════════╗
-║  🏢 CONFIGURAZIONE EDITORE                                 ║
-╠════════════════════════════════════════════════════════════╣
-║  Seleziona il tuo editore:                                ║
-║   ○ Zanichelli (default)                                  ║
-║   ○ McGraw-Hill                                           ║
-║   ○ Pearson                                               ║
-║   ○ Piccin                                                ║
-║   ○ EdiSES                                                ║
-║   ○ CEA                                                   ║
-║   ○ Altro: [____________]                                 ║
-╚════════════════════════════════════════════════════════════╝
-```
-
-**Logica Dinamica:**
-- Se editore = **Zanichelli** → `type: "zanichelli"` = NOSTRI, altri = competitor
-- Se editore = **McGraw-Hill** → `type: "McGraw-Hill"` = NOSTRI, altri = competitor
-- Se editore = **Pearson** → `type: "Pearson"` = NOSTRI, altri = competitor
-
-**UI Adattiva:**
-- Manuali dell'editore selezionato appaiono come **"Manuali [Editore]"** (evidenziati)
-- Altri manuali appaiono come **"Manuali Competitor"** (secondari)
+- **Framework CON `evaluation_criteria`**: mostra Criteri Disciplinari, Analisi Criteri Approfondita, confronto per criterio nella Raccomandazione Zanichelli
+- **Framework SENZA `evaluation_criteria`**: queste sezioni vengono saltate automaticamente
+- **Analisi Base vs Avanzata**: le fasi 0b, 2b, 3c, 4b, 5.5 si attivano solo in modalità Avanzata
 
 ---
 
@@ -367,77 +131,41 @@ MATRIX si adatta dinamicamente all'editore che utilizza l'applicazione.
 ### **1. Configurazione Iniziale**
 
 1. **Impostazioni AI Provider**:
-   - Scegli provider: OpenAI o Perplexity
+   - Scegli provider: OpenAI, xAI, DeepSeek, Meta, Mistral, Perplexity, Anthropic, Google, Cohere
    - Inserisci API Key
-   - Seleziona modello (es. GPT-4o-mini)
+   - Seleziona modello (es. GPT-4o-mini, GPT-4o)
 
 2. **Impostazioni Editore**:
-   - Seleziona il tuo editore
+   - Seleziona il tuo editore (Zanichelli default)
    - Salva preferenze
 
 ### **2. Avvia Nuova Analisi**
 
-1. **Carica Programma**:
-   - Upload PDF del programma del corso
-   - Oppure incolla testo manualmente
+1. **Carica Programma**: Upload PDF o incolla testo manualmente
+2. **Configura Contesto**: Materia, Universita, Corso di Laurea, CFU, Ore, Docente
+3. **Seleziona Framework**: scegli il framework dalla lista di 21 materie
+4. **Seleziona Manuali**: Zanichelli + Competitor per confronto
+5. **Scegli Tipo Analisi**: Base o Avanzata
 
-2. **Configura Contesto**:
-   - Materia: (es. Chimica Generale)
-   - Università e Corso di Laurea
-   - CFU e Ore
-   - Docente (opzionale)
+### **3. Visualizza Risultati**
 
-3. **Seleziona Framework**:
-   - Scegli il framework appropriato dalla materia
-   - MATRIX caricherà automaticamente i moduli
-
-4. **Seleziona Manuali da Valutare**:
-   - **Manuali Tuo Editore**: seleziona quelli da valutare
-   - **Manuali Competitor**: seleziona per confronto
-   - Opzione "Seleziona Tutti"
-
-### **3. Esegui Analisi**
-
-MATRIX eseguirà in sequenza:
-
-1. **Fase 0**: Analisi Preliminare
-   - Quadro Generale
-   - Profilo Pedagogico
-
-2. **Fase 1**: Estrazione Metadata
-   - Università, Corso, Docente, CFU, Ore
-
-3. **Fase 2**: Valutazione Programma
-   - Valutazione rispetto al framework (270 punti)
-
-4. **Fase 3**: Valutazione Manuali
-   - Per ogni manuale:
-     - Carica/Genera Valutazione Assoluta
-     - Genera Valutazione Dinamica
-     - Confronto con framework
-     - Raccomandazione finale
-
-### **4. Visualizza Risultati**
-
-**Output Completo:**
+Il report completo include:
+- 📋 **Executive Summary** — generato automaticamente
 - 📊 **Quadro Generale** del programma
 - 👤 **Profilo Pedagogico** del docente
-- 📈 **Punteggio Programma** su framework (0-270)
-- 📚 **Valutazioni Manuali**:
-  - Valutazione Assoluta (storica)
-  - Valutazione Dinamica (contestuale)
-  - Gap identificati
-  - Raccomandazione finale
-- 💡 **Post-it Commerciali**: argomenti chiave per il colloquio
+- 🎓 **Allineamento Classe di Laurea** — tabella strutturata
+- 🔬 **Criteri Disciplinari** — se presenti nel framework
+- 🎯 **Logica della Scelta Editoriale** — motivazioni e relazione testi
+- 📚 **Analisi Dettagliata Programma** — 5 dimensioni di valutazione
+- 📖 **Analisi Manuale Adottato** — gap identificati + tabella copertura moduli
+- 📘 **Confronto Manuali Alternativi** — se presenti in bibliografia
+- ✅ **Raccomandazione Zanichelli** — confronto strutturato criterio-per-criterio
+- 📚 **Compatibilità Manuali Consigliati** — schede per ogni manuale Zanichelli
+- 💬 **Guida al Colloquio** — pitch, obiezioni, note colloquio
 
-### **5. Export PDF**
+### **4. Export PDF**
 
-Genera report PDF professionale con:
-- Logo editore
-- Quadro generale e profilo docente
-- Valutazioni assolute e dinamiche
-- Post-it commerciali colorati
-- Raccomandazioni finali
+Genera report PDF professionale con tutte le sezioni, loghi editore e formattazione avanzata.
 
 ---
 
@@ -445,55 +173,33 @@ Genera report PDF professionale con:
 
 ```
 matrix/
-├── index.html                    # Applicazione principale (SPA)
-├── matrix_config.json           # Configurazione MATRIX
-├── framework_catalog.json       # Catalogo framework
-├── manual_catalog.json          # Catalogo manuali (metadata)
+├── index.html                    # Applicazione principale (SPA, ~9200 righe)
+├── welcome.html                  # Landing page con scelta analisi
+├── matrix_config.json           # Configurazione MATRIX (provider, modelli, etc.)
+├── framework_catalog.json       # Catalogo 21 framework (metadata)
+├── manual_catalog.json          # Catalogo 85 manuali (metadata)
 │
 ├── frameworks/                  # 21 Framework JSON
-│   ├── Chimica Generale.json
-│   ├── Chimica Organica.json
-│   ├── Fisica 1.json
-│   ├── Fisica 2.json
-│   ├── Analisi 1.json
-│   ├── Analisi 2.json
-│   ├── Economia politica.json
-│   ├── biochimica.json
-│   ├── istologia.json
+│   ├── Chimica Generale.json    # include priority_modules
+│   ├── Economia politica.json   # include evaluation_criteria
 │   └── ...
 │
 ├── manuali/                     # 85 Manuali JSON (indici completi)
 │   ├── chimica_generale/        # 34 manuali
-│   │   ├── Atkins_Chimica_Zanichelli.json
-│   │   ├── Petrucci_Chimica_Piccin.json
-│   │   └── ...
 │   ├── chimica_organica/        # 15 manuali
-│   │   ├── Hart_Fondamenti_Zanichelli.json
-│   │   ├── McMurry_Fondamenti_Zanichelli.json
-│   │   └── ...
 │   ├── fisica/                  # 17 manuali
-│   │   ├── Giancoli_Fisica_Zanichelli.json
-│   │   ├── Halliday_Fondamenti_Zanichelli.json
-│   │   └── ...
 │   ├── economia/                # 14 manuali
-│   │   ├── Mankiw_Principi_Zanichelli.json
-│   │   └── ...
 │   └── istologia/               # 5 manuali
-│       ├── Pawlina_Istologia_Zanichelli.json
-│       └── ...
 │
 ├── valutazioni_assolute/        # Valutazioni assolute memorizzate
-│   ├── Atkins_Chimica_Zanichelli.json
-│   ├── Petrucci_Chimica_Piccin.json
-│   └── ...
 │
 ├── netlify/
-│   └── functions/               # Proxy backend per API
-│       ├── openai-proxy.js
-│       └── perplexity-proxy.js
+│   └── functions/
+│       ├── openai-proxy.js      # Non piu usato per OpenAI (chiamate dirette)
+│       └── perplexity-proxy.js  # Proxy per Perplexity API
 │
-├── netlify.toml                 # Configurazione Netlify
-├── README_MATRIX.md             # Questo file
+├── netlify.toml                 # Configurazione Netlify (publish, redirects)
+├── README.md                    # Questo file
 ├── IMPLEMENTAZIONE_STATUS.md    # Status implementazione
 └── data_summary.json            # Summary dati caricati
 ```
@@ -503,49 +209,65 @@ matrix/
 ## 🛠️ Tecnologie
 
 ### **Frontend**
-- **HTML5 + Vanilla JavaScript**: Zero dipendenze, performance massime
+- **HTML5 + Vanilla JavaScript**: Zero dipendenze, SPA monolitica (~9200 righe)
 - **Tailwind CSS**: UI professionale e responsive
 - **PDF.js**: Lettura PDF lato client
 - **jsPDF**: Export PDF report
 
-### **Backend (Serverless)**
-- **Netlify Functions**: Proxy sicuro per API
-- **OpenAI GPT-4**: Analisi intelligente
-- **Perplexity**: Ricerca contestuale
+### **AI Providers**
+- **OpenAI GPT-4**: Analisi principale (chiamate dirette dal browser, no proxy)
+- **Perplexity**: Ricerca contestuale (via Netlify Function proxy)
+- **Multi-provider**: Supporto per xAI, DeepSeek, Meta, Mistral, Anthropic, Google, Cohere
+
+### **Hosting**
+- **Netlify**: Deploy automatico da GitHub (branch `main`)
+- **Netlify Functions**: Solo per Perplexity proxy (OpenAI chiama direttamente)
 
 ### **Storage**
-- **localStorage**: Cronologia analisi e valutazioni assolute
+- **localStorage**: Cronologia analisi, valutazioni assolute, preferenze
 - **JSON Files**: Framework e manuali (versionati con Git)
 
 ---
 
-## 📈 Roadmap Futura
+## 🔑 Note Tecniche
 
-### **Fase 2 (Q1 2025)**
-- [ ] Aggiunta Matematica (Algebra Lineare, Geometria)
-- [ ] Aggiunta Informatica (Programmazione, Algoritmi)
-- [ ] Statistiche aggregate su performance manuali
-- [ ] Dashboard analitico per editori
+### Chiamate API
+- **OpenAI**: chiamata diretta dal browser a `api.openai.com/v1/chat/completions` — l'utente fornisce la propria API key, supporto CORS nativo. Questo evita il timeout di 10 secondi delle Netlify Functions che causava errori 502/504 sui prompt piu grandi (Fase 3 con `copertura_moduli` + `evaluation_criteria`).
+- **Perplexity**: via `/.netlify/functions/perplexity-proxy` (no supporto CORS nativo).
+- **Altri provider OpenAI-compatibili** (xAI, DeepSeek, etc.): chiamata diretta al rispettivo endpoint.
 
-### **Fase 3 (Q2 2025)**
-- [ ] Sistema di feedback docenti
-- [ ] Machine Learning per predizioni
-- [ ] API pubblica per integrazioni
-- [ ] Mobile app (iOS/Android)
+### Regole nei Prompt
+- **Anti-numeri**: nessun punteggio numerico, frazioni o percentuali nei report — tutto tradotto in linguaggio qualitativo professionale
+- **Linguaggio promotore**: tono da promotore editoriale esperto, mai accademico
+- **Anti-ridondanza**: i prompt delle fasi successive ricevono contesto sulle fasi precedenti per evitare ripetizioni
+
+### Helper Functions (scope globale)
+- `getCompatibilitaLabel(val)` — converte compatibilita in label colorata
+- `getDifferenzaLabel(val)` — converte differenza in label
+- `getCoperturaProgrammaLabel(val)` — converte copertura in label
 
 ---
 
-## 📞 Supporto
+## 📈 Changelog
 
-### **Documentazione Tecnica**
-- `README_MATRIX.md` (questo file)
-- `IMPLEMENTAZIONE_STATUS.md` (status sviluppo)
-- `README_FASE_C.md` (versione precedente Chimica Organica)
+### v1.2.0 (9 Feb 2026) — Revisione Analisi
+- Specifica A: Profilo Pedagogico arricchito (allineamento classe + criteri disciplinari)
+- Specifica B: Tabella modulo-per-modulo nella Gap Analysis
+- Specifica C: Raccomandazione Zanichelli con confronto strutturato + `generaExecutiveSummary`
+- Consolidamento ridondanze (da 4 sezioni sovrapposte a 3 distinte)
+- Fix template literal annidati e helper a scope globale
+- Rimozione proxy Netlify per OpenAI (chiamate dirette)
 
-### **Troubleshooting**
-- Verificare chiavi API in Impostazioni
-- Controllare console browser (F12) per errori
-- Verificare log Netlify Functions
+### v1.1.0 (7 Feb 2026) — Fase C + Quality Improvements
+- Phase A: Miglioramento pitch, specificita, executive summary
+- Phase B: Anti-ridondanza con contesto cross-fase
+- Phase C: Traduzione punteggi numerici in etichette promotore
+
+### v1.0.0 (29 Gen 2025) — Rilascio Iniziale
+- 21 framework, 85 manuali
+- Analisi Base e Avanzata
+- Fase 0 / 0.5 / 1 / 2 / 3 / 4 + Export PDF
+- Sistema Multi-Editore
 
 ---
 
@@ -559,9 +281,9 @@ Tutti i diritti riservati. Questo software è proprietario e destinato esclusiva
 
 ## 🏆 Credits
 
-**Sviluppato da**: Zanichelli Team AI  
-**Versione**: 1.0.0  
-**Data Rilascio**: 29 Gennaio 2025  
+**Sviluppato da**: Zanichelli Team AI
+**Versione**: 1.2.0
+**Data Aggiornamento**: 9 Febbraio 2026
 **Nome Progetto**: MATRIX - Multi-Analysis Teaching Resource Intelligence X-platform
 
 ---
