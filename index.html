@@ -6548,6 +6548,23 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                         </div>
                     </div>
 
+                    <!-- Banner Scenario Zanichelli -->
+                    ${prog.analisi_strategica?.scenario ? `
+                    <div class="${prog.analisi_strategica.scenario === 'zanichelli_principale' ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400' : prog.analisi_strategica.scenario === 'opportunita_conversione' ? 'bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-400' : 'bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-400'} rounded-lg p-4 shadow">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-3">${prog.analisi_strategica.scenario === 'zanichelli_principale' ? '✅' : prog.analisi_strategica.scenario === 'opportunita_conversione' ? '🎯' : '🔍'}</span>
+                            <div>
+                                <p class="font-bold text-lg ${prog.analisi_strategica.scenario === 'zanichelli_principale' ? 'text-green-900' : prog.analisi_strategica.scenario === 'opportunita_conversione' ? 'text-blue-900' : 'text-orange-900'}">
+                                    ${prog.analisi_strategica.scenario === 'zanichelli_principale' ? 'Zanichelli e gia il manuale principale' : prog.analisi_strategica.scenario === 'opportunita_conversione' ? 'Opportunita di conversione a Zanichelli' : 'Nessun Zanichelli in bibliografia'}
+                                </p>
+                                <p class="text-sm ${prog.analisi_strategica.scenario === 'zanichelli_principale' ? 'text-green-700' : prog.analisi_strategica.scenario === 'opportunita_conversione' ? 'text-blue-700' : 'text-orange-700'}">
+                                    ${prog.analisi_strategica.scenario === 'zanichelli_principale' ? 'Strategia: conferma adozione, difesa da competitor, eventuale upgrade' : prog.analisi_strategica.scenario === 'opportunita_conversione' ? 'Zanichelli e gia tra i testi alternativi — proporre come principale' : 'Strategia: penetrazione — proporre inserimento Zanichelli in bibliografia'}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
+
                     <!-- Executive Summary -->
                     ${prog.executive_summary ? `
                     <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-400 rounded-lg p-6 shadow-lg">
@@ -7603,6 +7620,11 @@ RISPONDI SOLO CON IL JSON, NIENT'ALTRO.`;
                             <div class="bg-red-50 border-l-4 border-red-400 p-4">
                                 <p class="text-red-700">⚠️ Errore nella valutazione: ${prog.zanichelli.errore}</p>
                             </div>
+                        ` : ''}
+
+                        <!-- Analisi Strategica Zanichelli (Fase 5.5) -->
+                        ${prog.analisi_strategica?.strategia ? `
+                            ${renderAnalisiStrategica(prog.analisi_strategica.strategia, prog.analisi_strategica.scenario)}
                         ` : ''}
 
                         ${prog.zanichelli && prog.zanichelli.strategia_adozione ? `
