@@ -5220,20 +5220,13 @@ Rispondi SOLO con un JSON valido:
                 max_tokens: 16000
             };
             
-            // OpenAI su Netlify: usa proxy
-            if (providerKey === 'openai' && isNetlify) {
-                console.log('📡 Ambiente Netlify: uso proxy');
-                endpoint = '/.netlify/functions/openai-proxy';
-                body = {
-                    apiKey: apiKey,
-                    model: model,
-                    messages: [{role: 'user', content: prompt}],
-                    temperature: temperature,
-                    max_tokens: 16000
-                };
-                headers = {'Content-Type': 'application/json'};
-            } else if (providerKey === 'openai') {
-                console.log('🏠 Ambiente locale/sandbox: chiamata diretta a OpenAI API');
+            // OpenAI: chiamata diretta (CORS supportato da api.openai.com)
+            if (providerKey === 'openai') {
+                if (isNetlify) {
+                    console.log('📡 Ambiente Netlify: chiamata diretta a OpenAI API (no proxy)');
+                } else {
+                    console.log('🏠 Ambiente locale/sandbox: chiamata diretta a OpenAI API');
+                }
             }
             
             const response = await fetch(endpoint, {
